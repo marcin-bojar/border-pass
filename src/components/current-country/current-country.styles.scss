@@ -2,4 +2,15 @@
 
 .current-country {
   @include components-common-styles;
+
+  &__title {
+    text-align: center;
+  }
+
+  &__country {
+    display: block;
+    color: #cf4b0e;
+    font-size: 6rem;
+    text-align: center;
+  }
 }
