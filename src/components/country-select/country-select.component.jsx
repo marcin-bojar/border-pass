@@ -11,7 +11,7 @@ const CountrySelect = () => {
   return (
     <div className="country-select">
       {currentCountry && (
-        <h3 className="country-select__title">Do jakiego kraju wjeżdzasz?</h3>
+        <h3 className="country-select__title">Do jakiego kraju wjeżdżasz?</h3>
       )}
       <div className="country-select__options">
         {countries.map(country => (

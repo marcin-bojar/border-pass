@@ -13,4 +13,9 @@
     font-size: 6rem;
     text-align: center;
   }
+
+  &__button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+  }
 }

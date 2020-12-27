@@ -11,4 +11,10 @@
   &__list {
     list-style: none;
   }
+
+  &__button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+  }
 }

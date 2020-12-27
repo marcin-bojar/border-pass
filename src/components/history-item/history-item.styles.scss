@@ -4,6 +4,7 @@
   @include components-common-styles;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   &:not(:last-child) {
     margin-bottom: 1rem;
@@ -19,5 +20,6 @@
 
   &__date {
     font-size: 1.8rem;
+    font-weight: 700;
   }
 }
