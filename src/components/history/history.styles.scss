@@ -1,0 +1,14 @@
+@import '../../sass//mixins.scss';
+
+.history {
+  @include components-common-styles;
+
+  &__title {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  &__list {
+    list-style: none;
+  }
+}

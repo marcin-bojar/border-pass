@@ -1,0 +1,23 @@
+@import '../../sass//mixins.scss';
+
+.history-item {
+  @include components-common-styles;
+  display: flex;
+  justify-content: space-between;
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  &__list-item {
+    font-size: 1.8rem;
+  }
+
+  &__country {
+    font-weight: 700;
+  }
+
+  &__date {
+    font-size: 1.8rem;
+  }
+}

@@ -14,7 +14,7 @@ const CountryOption = ({ name }) => {
       const borderPass = {
         from: currentCountry,
         to: name,
-        timestamp: new Date(),
+        timestamp: Date.now(),
       };
       setBorders([...borders, borderPass]);
     }

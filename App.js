@@ -6,6 +6,7 @@ import Heading from './src/components/heading/heading.component';
 import Welcome from './src/components/welcome/welcome.component';
 import CountrySelect from './src/components/country-select/country-select.component';
 import CurrentCountry from './src/components/current-country/current-country.component';
+import History from './src/components/history/history.component';
 
 import { AppContext } from './src/hooks/useAppState';
 
@@ -13,7 +14,7 @@ import './App.scss';
 
 const App = () => {
   const appState = useAppState();
-  const { currentCountry } = appState;
+  const { currentCountry, borders } = appState;
 
   return (
     <div className="App">
@@ -21,6 +22,7 @@ const App = () => {
         <Heading />
         {currentCountry ? <CurrentCountry /> : <Welcome />}
         <CountrySelect />
+        {borders.length ? <History /> : null}
       </AppContext.Provider>
     </div>
   );
