@@ -1,0 +1,11 @@
+@import '../../sass//mixins.scss';
+
+.country-select {
+  @include components-common-styles;
+
+  &__options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
+    justify-items: center;
+  }
+}

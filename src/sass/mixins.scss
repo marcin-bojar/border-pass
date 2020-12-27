@@ -1,0 +1,10 @@
+@mixin components-common-styles {
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 1rem;
+  border-radius: 5px;
+  color: #000;
+
+  &:not(:last-child) {
+    margin-bottom: 4rem;
+  }
+}
