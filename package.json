@@ -1,0 +1,20 @@
+{
+  "name": "border-pass",
+  "version": "1.0.0",
+  "description": "Log your business trip history",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html --open"
+  },
+  "author": "Marcin Bojar",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.30.0"
+  },
+  "dependencies": {
+    "@svgr/parcel-plugin-svgr": "^5.5.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}

@@ -1,0 +1,19 @@
+.logo {
+  display: flex;
+  justify-content: center;
+
+  &__title {
+    font-family: 'Audiowide', cursive;
+    font-style: italic;
+    font-size: 4rem;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  &__icon {
+    fill: #fff;
+    width: 5rem;
+    height: 5rem;
+    padding: 0 0.5rem 0 1rem;
+  }
+}

@@ -1,0 +1,23 @@
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-image: linear-gradient(to right bottom, #540977, #0d043a);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  height: 100vh;
+  padding: 0 1rem;
+  font-family: 'Dosis', sans-serif;
+  font-size: 1.6rem;
+  color: #fff;
+}
