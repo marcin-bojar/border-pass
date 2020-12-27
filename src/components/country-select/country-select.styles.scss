@@ -3,6 +3,11 @@
 .country-select {
   @include components-common-styles;
 
+  &__title {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
   &__options {
     display: grid;
     gap: 2rem;

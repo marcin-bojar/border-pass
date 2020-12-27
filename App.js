@@ -14,7 +14,7 @@ import './App.scss';
 const App = () => {
   const appState = useAppState();
   const { currentCountry } = appState;
-  console.log(appState);
+
   return (
     <div className="App">
       <AppContext.Provider value={appState}>

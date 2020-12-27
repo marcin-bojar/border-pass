@@ -7,9 +7,12 @@ import './country-select.styles.scss';
 import { AppContext } from '../../hooks/useAppState';
 
 const CountrySelect = () => {
-  const { countries } = useContext(AppContext);
+  const { countries, currentCountry } = useContext(AppContext);
   return (
     <div className="country-select">
+      {currentCountry && (
+        <h3 className="country-select__title">Do jakiego kraju wjeżdzasz?</h3>
+      )}
       <div className="country-select__options">
         {countries.map(country => (
           <CountryOption key={country} name={country} />

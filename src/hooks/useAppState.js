@@ -4,7 +4,7 @@ export const AppContext = createContext(null);
 
 export const useAppState = () => {
   const [currentCountry, setCurrentCountry] = useState(
-    localStorage.getItem('currentCountry')
+    localStorage.getItem('currentCountry') || ''
   );
 
   const [countries, setCountries] = useState([
@@ -20,16 +20,23 @@ export const useAppState = () => {
     'CH',
   ]);
 
-  const [borders, setBorders] = useState(localStorage.getItem('borders') || []);
+  const [borders, setBorders] = useState(
+    JSON.parse(localStorage.getItem('borders')) || []
+  );
 
   useEffect(() => {
     localStorage.setItem('currentCountry', currentCountry);
   }, [currentCountry]);
 
+  useEffect(() => {
+    localStorage.setItem('borders', JSON.stringify(borders));
+  }, [borders]);
+
   return {
     currentCountry,
-    setCurrentCountry: setCurrentCountry,
-    setBorder: setBorders.bind(null, borders),
-    countries: countries,
+    setCurrentCountry,
+    borders,
+    setBorders,
+    countries,
   };
 };

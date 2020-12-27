@@ -4,12 +4,13 @@
   @include components-common-styles;
 
   &__title {
+    font-size: 2.25rem;
     text-align: center;
     margin-bottom: 2rem;
   }
 
   &__text {
-    font-size: 1.8rem;
+    font-size: 1.9rem;
     padding-left: 5%;
   }
 }
