@@ -26,6 +26,8 @@ export const useAppState = () => {
     JSON.parse(localStorage.getItem('borders')) || []
   );
 
+  const [showAll, setShowAll] = useState(false);
+
   useEffect(() => {
     localStorage.setItem('currentCountry', currentCountry);
   }, [currentCountry]);
@@ -45,5 +47,7 @@ export const useAppState = () => {
     setBorders,
     countries,
     setCountries,
+    showAll,
+    setShowAll,
   };
 };

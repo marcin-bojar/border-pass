@@ -3,9 +3,14 @@
   font-family: inherit;
   font-size: inherit;
   border: none;
+  color: #fff;
+  background-color: #540977;
+
+  &:focus {
+    outline: none;
+  }
 
   &.clear {
     background-color: #da1919;
-    color: #fff;
   }
 }
