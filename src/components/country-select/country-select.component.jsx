@@ -9,9 +9,27 @@ import './country-select.styles.scss';
 import { AppContext } from '../../hooks/useAppState';
 
 const CountrySelect = () => {
-  const { countries, currentCountry, showAll, setShowAll } = useContext(
-    AppContext
-  );
+  const {
+    countries,
+    currentCountry,
+    setCurrentCountry,
+    showAll,
+    setShowAll,
+    borders,
+    setBorders,
+  } = useContext(AppContext);
+
+  const clearLastEntry = () => {
+    let length = borders.length;
+    let startCountry;
+    if (length === 1) startCountry = borders[0].from;
+    borders.pop();
+    length = borders.length;
+    if (length) setCurrentCountry(borders[length - 1].to);
+    else setCurrentCountry(startCountry);
+    setBorders([...borders]);
+  };
+
   return (
     <div className="country-select">
       {currentCountry && (
@@ -31,6 +49,13 @@ const CountrySelect = () => {
       <div className="country-select__button-wrapper">
         <CustomButton handleClick={() => setShowAll(!showAll)}>
           {!showAll ? 'Więcej' : 'Ukryj'}
+        </CustomButton>
+        <CustomButton
+          disabled={borders.length === 0}
+          clear
+          handleClick={clearLastEntry}
+        >
+          Cofnij
         </CustomButton>
       </div>
 

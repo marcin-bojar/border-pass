@@ -5,21 +5,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 1.8rem;
+  font-weight: 700;
 
   &:not(:last-child) {
     margin-bottom: 1rem;
   }
 
-  &__list-item {
-    font-size: 1.8rem;
-  }
-
-  &__country {
-    font-weight: 700;
-  }
-
-  &__date {
-    font-size: 1.8rem;
-    font-weight: 700;
+  &__time {
+    color: #540977;
   }
 }

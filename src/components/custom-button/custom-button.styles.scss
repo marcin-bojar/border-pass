@@ -13,4 +13,10 @@
   &.clear {
     background-color: #da1919;
   }
+
+  &:disabled {
+    background-color: inherit;
+    color: #777;
+    border: 1px solid #777;
+  }
 }

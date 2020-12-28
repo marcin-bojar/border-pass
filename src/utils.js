@@ -7,5 +7,8 @@ export const parseDate = timestamp => {
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
 
-  return `${`${h}:${min} ${day} ${month} ${year}`}`;
+  return {
+    time: `${h}:${min}`,
+    date: `${day}.${month}.${year}`,
+  };
 };
