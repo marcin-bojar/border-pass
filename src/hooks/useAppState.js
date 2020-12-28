@@ -7,18 +7,20 @@ export const useAppState = () => {
     localStorage.getItem('currentCountry') || ''
   );
 
-  const [countries, setCountries] = useState([
-    'PL',
-    'CZ',
-    'SK',
-    'DE',
-    'HU',
-    'NL',
-    'BE',
-    'FR',
-    'AT',
-    'CH',
-  ]);
+  const [countries, setCountries] = useState(
+    JSON.parse(localStorage.getItem('countries')) || [
+      'PL',
+      'CZ',
+      'SK',
+      'DE',
+      'HU',
+      'NL',
+      'BE',
+      'FR',
+      'AT',
+      'CH',
+    ]
+  );
 
   const [borders, setBorders] = useState(
     JSON.parse(localStorage.getItem('borders')) || []
@@ -31,6 +33,10 @@ export const useAppState = () => {
   useEffect(() => {
     localStorage.setItem('borders', JSON.stringify(borders));
   }, [borders]);
+
+  useEffect(() => {
+    localStorage.setItem('countries', JSON.stringify(countries));
+  }, [countries]);
 
   return {
     currentCountry,
