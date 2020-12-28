@@ -54,8 +54,8 @@ const CountrySelect = () => {
           {!showAll ? 'Więcej' : 'Ukryj'}
         </CustomButton>
         <CustomButton
-          disabled={borders.length === 0}
           clear
+          disabled={borders.length === 0}
           handleClick={clearLastEntry}
         >
           Cofnij
