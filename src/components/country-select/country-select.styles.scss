@@ -14,4 +14,11 @@
     grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
     justify-items: center;
   }
+
+  &__input-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem auto;
+    width: 10rem;
+  }
 }

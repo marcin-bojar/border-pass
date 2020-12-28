@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import CountryOption from '../country-option/country-option.component';
+import CustomInput from '../custom-input/custom-input.component';
 
 import './country-select.styles.scss';
 
@@ -18,7 +19,9 @@ const CountrySelect = () => {
           <CountryOption key={country} name={country} />
         ))}
       </div>
-      {/* <input type="text" placeholder="Wpisz inny kraj"></input> */}
+      <div className="country-select__input-wrapper">
+        <CustomInput maxLength="3" label="Dodaj kraj" />
+      </div>
     </div>
   );
 };

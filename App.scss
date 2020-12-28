@@ -3,6 +3,7 @@
 *:before {
   margin: 0;
   padding: 0;
+  box-sizing: inherit;
 }
 
 html {
@@ -10,6 +11,7 @@ html {
 }
 
 body {
+  box-sizing: border-box;
   background-image: linear-gradient(to right bottom, #540977, #0d043a);
   background-size: cover;
   background-position: center;

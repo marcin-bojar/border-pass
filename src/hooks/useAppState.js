@@ -38,5 +38,6 @@ export const useAppState = () => {
     borders,
     setBorders,
     countries,
+    setCountries,
   };
 };

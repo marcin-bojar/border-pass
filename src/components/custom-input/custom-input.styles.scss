@@ -1,0 +1,38 @@
+@import '../../sass//mixins.scss';
+
+.custom-input {
+  position: relative;
+  width: 100%;
+
+  &__input {
+    border: none;
+    border-bottom: 1px solid #000;
+    padding: 0.75rem 1.5rem;
+    background-color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+      border-bottom: 1px solid #540977;
+
+      & + label {
+        @include shrink;
+      }
+    }
+  }
+
+  &__label {
+    position: absolute;
+    top: 30%;
+    left: 1.5rem;
+    pointer-events: none;
+    transition: all 0.2s;
+    color: #333;
+
+    &.shrink {
+      @include shrink;
+    }
+  }
+}

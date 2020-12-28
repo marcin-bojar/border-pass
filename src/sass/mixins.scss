@@ -8,3 +8,8 @@
     margin-bottom: 4rem;
   }
 }
+
+@mixin shrink {
+  top: -0.75rem;
+  font-size: 1.3rem;
+}
