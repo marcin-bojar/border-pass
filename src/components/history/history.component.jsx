@@ -15,7 +15,15 @@ const History = () => {
     <div className="history">
       <h3 className="history__title">Historia przekroczeń granic:</h3>
       <div className="history__button-wrapper">
-        <CustomButton handleClick={() => setBorders([])} clear>
+        <CustomButton
+          clear
+          handleClick={() => {
+            const confirm = prompt(
+              "Spowoduje to usunięcie całej historii!\nWpisz 'TAK', aby usunąć."
+            );
+            if (confirm.toUpperCase() === 'TAK') setBorders([]);
+          }}
+        >
           Wyczyść
         </CustomButton>
       </div>

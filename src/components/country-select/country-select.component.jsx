@@ -47,7 +47,10 @@ const CountrySelect = () => {
       </div>
 
       <div className="country-select__button-wrapper">
-        <CustomButton handleClick={() => setShowAll(!showAll)}>
+        <CustomButton
+          disabled={countries.length <= 10}
+          handleClick={() => setShowAll(!showAll)}
+        >
           {!showAll ? 'Więcej' : 'Ukryj'}
         </CustomButton>
         <CustomButton

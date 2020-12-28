@@ -16,8 +16,11 @@ const CustomInput = ({ label, ...props }) => {
 
   const handleSubmit = e => {
     const country = e.target.value.toUpperCase();
-    if (!country || countries.includes(country)) return;
-
+    if (!country) return;
+    if (countries.includes(country)) {
+      alert('Ten kraj jest już na liście.');
+      return;
+    }
     countries.unshift(country);
     setCountries([...countries]);
     setInputValue('');
