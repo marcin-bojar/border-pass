@@ -10,7 +10,6 @@ const HistoryEditorItem = () => {
   const { editedItem } = useContext(AppContext);
   const { from, to, timeAndDate, i } = editedItem;
   const { time, date } = timeAndDate;
-  console.log(from, to, time, date);
 
   return (
     <div className="history-editor-item">

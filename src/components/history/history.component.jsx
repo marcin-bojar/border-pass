@@ -12,13 +12,14 @@ import { AppContext } from '../../hooks/useAppState';
 
 const History = () => {
   const { borders, setBorders, editMode, setEditMode } = useContext(AppContext);
+
   return (
     <div className="history">
       <h3 className="history__title">Historia przekroczeń granic:</h3>
 
       <div className="history__button-wrapper">
         <CustomButton handleClick={() => setEditMode(!editMode)}>
-          Edytuj
+          {editMode ? 'Zamknij' : 'Edytuj'}
         </CustomButton>
 
         <CustomButton
@@ -27,7 +28,7 @@ const History = () => {
             const confirm = prompt(
               "Spowoduje to usunięcie całej historii!\nWpisz 'TAK', aby usunąć."
             );
-            if (confirm.toUpperCase() === 'TAK') setBorders([]);
+            if (confirm && confirm.toUpperCase() === 'TAK') setBorders([]);
           }}
         >
           Wyczyść

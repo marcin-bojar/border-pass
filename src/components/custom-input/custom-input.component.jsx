@@ -3,9 +3,8 @@ import React, { useState, forwardRef, useEffect } from 'react';
 import './custom-input.styles.scss';
 
 const CustomInput = forwardRef(({ label, initialValue, ...props }, ref) => {
-  const [inputValue, setInputValue] = useState(initialValue || '');
+  const [inputValue, setInputValue] = useState(initialValue);
 
-  //TODO - double render! 'A component is changing a controlled input to be uncontrolled.' warning!
   useEffect(() => {
     setInputValue(initialValue);
   }, [initialValue]);
@@ -20,7 +19,7 @@ const CustomInput = forwardRef(({ label, initialValue, ...props }, ref) => {
       <input
         type="text"
         className="custom-input__input"
-        value={inputValue}
+        value={inputValue || ''}
         onChange={handleChange}
         ref={ref}
         {...props}
