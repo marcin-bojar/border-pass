@@ -4,17 +4,23 @@ import { parseDate } from '../../utils';
 
 import HistoryItem from '../history-item/history-item.component';
 import CustomButton from '../custom-button/custom-button.component';
+import HistoryEditor from '../history-editor/history-editor.component';
 
 import './history.styles.scss';
 
 import { AppContext } from '../../hooks/useAppState';
 
 const History = () => {
-  const { borders, setBorders } = useContext(AppContext);
+  const { borders, setBorders, editMode, setEditMode } = useContext(AppContext);
   return (
     <div className="history">
       <h3 className="history__title">Historia przekroczeń granic:</h3>
+
       <div className="history__button-wrapper">
+        <CustomButton handleClick={() => setEditMode(!editMode)}>
+          Edytuj
+        </CustomButton>
+
         <CustomButton
           clear
           handleClick={() => {
@@ -27,6 +33,9 @@ const History = () => {
           Wyczyść
         </CustomButton>
       </div>
+
+      {editMode && <HistoryEditor />}
+
       <ul className="history__list">
         {borders.map((el, i) => {
           const { from, to, timestamp } = el;

@@ -28,6 +28,10 @@ export const useAppState = () => {
 
   const [showAll, setShowAll] = useState(false);
 
+  const [editMode, setEditMode] = useState(false);
+
+  const [editedItem, setEditedItem] = useState(null);
+
   useEffect(() => {
     localStorage.setItem('currentCountry', currentCountry);
   }, [currentCountry]);
@@ -49,5 +53,9 @@ export const useAppState = () => {
     setCountries,
     showAll,
     setShowAll,
+    editMode,
+    setEditMode,
+    editedItem,
+    setEditedItem,
   };
 };

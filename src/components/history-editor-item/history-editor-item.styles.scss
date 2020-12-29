@@ -1,0 +1,41 @@
+@import '../../sass/mixins.scss';
+@import '../../sass/variables';
+
+.history-editor-item {
+  @include components-common-styles;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-top: 2rem;
+
+  &__nr {
+    color: $color-orange;
+    font-size: 1.8rem;
+    margin-right: 5px;
+  }
+
+  &__block {
+    display: flex;
+    align-items: center;
+    // max-width: 35%;
+  }
+
+  &__input-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+
+    &.country input {
+      padding: 0;
+      width: 3.5rem;
+      margin: 2px;
+    }
+    &.time input {
+      padding: 0;
+      width: 8rem;
+    }
+  }
+}

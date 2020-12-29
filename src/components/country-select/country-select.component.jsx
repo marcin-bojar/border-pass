@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import CountryOption from '../country-option/country-option.component';
 import CustomInput from '../custom-input/custom-input.component';
@@ -7,6 +7,7 @@ import CustomButton from '../custom-button/custom-button.component';
 import './country-select.styles.scss';
 
 import { AppContext } from '../../hooks/useAppState';
+import { useCountryInput } from '../../hooks/useCountryInput';
 
 const CountrySelect = () => {
   const {
@@ -18,6 +19,8 @@ const CountrySelect = () => {
     borders,
     setBorders,
   } = useContext(AppContext);
+
+  const inputRef = useCountryInput();
 
   const clearLastEntry = () => {
     let startCountry;
@@ -66,7 +69,7 @@ const CountrySelect = () => {
       </div>
 
       <div className="country-select__input-wrapper">
-        <CustomInput maxLength="3" label="Dodaj kraj" />
+        <CustomInput maxLength="3" label="Dodaj kraj" ref={inputRef} />
       </div>
     </div>
   );
