@@ -5,9 +5,8 @@ import './history-item.styles.scss';
 import { AppContext } from '../../hooks/useAppState';
 
 const HistoryItem = ({ data }) => {
-  const { from, to, timeAndDate, i } = data;
+  const { from, to, time, date, i } = data;
   const { editMode, setEditedItem } = useContext(AppContext);
-  const { time, date } = timeAndDate;
 
   return (
     <li

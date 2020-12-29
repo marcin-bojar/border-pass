@@ -1,8 +1,16 @@
-import { useRef, useEffect, useContext } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { AppContext } from './useAppState';
 
 export const useCountryInput = () => {
   const { countries, setCountries } = useContext(AppContext);
+
+  const [inputValue, setInputValue] = useState('');
+
+  const handleChange = e => {
+    const value = e.target.value;
+    setInputValue(value);
+  };
+
   const inputRef = useRef(null);
 
   const handleSubmit = e => {
@@ -16,7 +24,7 @@ export const useCountryInput = () => {
 
     countries.unshift(country);
     setCountries([...countries]);
-    inputRef.current.value = '';
+    setInputValue('');
   };
 
   const listener = e => {
@@ -36,5 +44,5 @@ export const useCountryInput = () => {
     return () => document.removeEventListener('keyup', listener);
   }, []);
 
-  return inputRef;
+  return { inputRef, inputValue, setInputValue, handleChange };
 };

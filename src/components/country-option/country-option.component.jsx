@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 
+import { parseDate } from '../../utils';
+
 import './country-option.styles.scss';
 
 import { AppContext } from '../../hooks/useAppState';
@@ -21,11 +23,16 @@ const CountryOption = ({ name }) => {
         return;
       }
 
+      const timeAndDate = parseDate(Date.now());
+      const { time, date } = timeAndDate;
+
       const borderPass = {
         from: currentCountry,
         to: name,
-        timestamp: Date.now(),
+        time,
+        date,
       };
+
       setBorders([...borders, borderPass]);
     }
     setCurrentCountry(name);

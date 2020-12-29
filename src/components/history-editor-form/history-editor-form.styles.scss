@@ -1,7 +1,7 @@
 @import '../../sass/mixins.scss';
 @import '../../sass/variables';
 
-.history-editor-item {
+.history-editor-form {
   @include components-common-styles;
   display: flex;
   justify-content: space-between;

@@ -14,5 +14,10 @@
   &__text {
     font-size: 1.7rem;
     text-align: center;
+
+    span {
+      color: $color-red-clear;
+      font-weight: 700;
+    }
   }
 }

@@ -1,7 +1,5 @@
 import React, { useContext } from 'react';
 
-import { parseDate } from '../../utils';
-
 import HistoryItem from '../history-item/history-item.component';
 import CustomButton from '../custom-button/custom-button.component';
 import HistoryEditor from '../history-editor/history-editor.component';
@@ -39,9 +37,7 @@ const History = () => {
 
       <ul className="history__list">
         {borders.map((el, i) => {
-          const { from, to, timestamp } = el;
-          const timeAndDate = parseDate(timestamp);
-          const data = { from, to, timeAndDate, i };
+          const data = { ...el, i };
           return <HistoryItem key={i} data={data} />;
         })}
       </ul>

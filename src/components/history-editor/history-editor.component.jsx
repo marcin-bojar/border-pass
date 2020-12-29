@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 
-import HistoryEditorItem from '../history-editor-item/history-editor-item.component';
+import HistoryEditorForm from '../history-editor-form/history-editor-form.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 import './history-editor.styles.scss';
@@ -17,13 +17,18 @@ const HistoryEditor = () => {
   return (
     <div className="history-editor">
       <h3 className="history-editor__title">Edytor historii</h3>
-      <p className="history-editor__text">
-        Wybierz element z listy, który chcesz edytować.
-      </p>
+      {!editedItem && (
+        <p className="history-editor__text">
+          <span>Wybierz</span> element z listy, który chcesz edytować.
+        </p>
+      )}
       {editedItem && (
         <div className="history-editor__editor">
-          <HistoryEditorItem />
-          <CustomButton>Zatwierdź</CustomButton>
+          <p className="history-editor__text">Co chciałbyś zmienić?</p>
+          <HistoryEditorForm />
+          <CustomButton type="submit" form="form">
+            Zatwierdź
+          </CustomButton>
         </div>
       )}
     </div>

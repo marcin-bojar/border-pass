@@ -20,7 +20,7 @@ const CountrySelect = () => {
     setBorders,
   } = useContext(AppContext);
 
-  const inputRef = useCountryInput();
+  const { inputRef, inputValue, handleChange } = useCountryInput();
 
   const clearLastEntry = () => {
     let startCountry;
@@ -69,7 +69,14 @@ const CountrySelect = () => {
       </div>
 
       <div className="country-select__input-wrapper">
-        <CustomInput maxLength="3" label="Dodaj kraj" ref={inputRef} />
+        <CustomInput
+          type="text"
+          value={inputValue}
+          handleChange={handleChange}
+          maxLength="3"
+          label="Dodaj kraj"
+          ref={inputRef}
+        />
       </div>
     </div>
   );
