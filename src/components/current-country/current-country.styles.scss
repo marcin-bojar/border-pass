@@ -1,4 +1,5 @@
-@import '../../sass//mixins.scss';
+@import '../../sass/mixins.scss';
+@import './src/sass/variables';
 
 .current-country {
   @include components-common-styles;
@@ -9,7 +10,7 @@
 
   &__country {
     display: block;
-    color: #cf4b0e;
+    color: $color-orange;
     font-size: 6rem;
     text-align: center;
   }

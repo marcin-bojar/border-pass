@@ -1,3 +1,5 @@
+@import '../../sass/variables';
+
 .logo {
   display: flex;
   justify-content: center;
@@ -11,7 +13,7 @@
   }
 
   &__icon {
-    fill: #fff;
+    fill: $color-white;
     width: 5rem;
     height: 5rem;
     padding: 0 0.5rem 0 1rem;

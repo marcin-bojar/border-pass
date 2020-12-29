@@ -31,7 +31,7 @@ const History = () => {
         {borders.map((el, i) => {
           const { from, to, timestamp } = el;
           const timeAndDate = parseDate(timestamp);
-          const data = { from, to, timeAndDate };
+          const data = { from, to, timeAndDate, i };
           return <HistoryItem key={i} data={data} />;
         })}
       </ul>

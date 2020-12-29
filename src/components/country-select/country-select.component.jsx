@@ -20,13 +20,15 @@ const CountrySelect = () => {
   } = useContext(AppContext);
 
   const clearLastEntry = () => {
-    let length = borders.length;
     let startCountry;
-    if (length === 1) startCountry = borders[0].from;
+
+    // Before removing last item from the list save the country's value where trip began
+    if (borders.length === 1) startCountry = borders[0].from;
     borders.pop();
-    length = borders.length;
-    if (length) setCurrentCountry(borders[length - 1].to);
-    else setCurrentCountry(startCountry);
+
+    startCountry
+      ? setCurrentCountry(startCountry)
+      : setCurrentCountry(borders[borders.length - 1].to);
     setBorders([...borders]);
   };
 
@@ -53,6 +55,7 @@ const CountrySelect = () => {
         >
           {!showAll ? 'Więcej' : 'Ukryj'}
         </CustomButton>
+
         <CustomButton
           clear
           disabled={borders.length === 0}

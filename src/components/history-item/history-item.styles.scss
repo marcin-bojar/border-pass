@@ -1,4 +1,5 @@
-@import '../../sass//mixins.scss';
+@import '../../sass/mixins.scss';
+@import '../../sass/variables';
 
 .history-item {
   @include components-common-styles;
@@ -12,7 +13,11 @@
     margin-bottom: 1rem;
   }
 
+  &__nr {
+    color: $color-orange;
+  }
+
   &__time {
-    color: #540977;
+    color: $color-primary;
   }
 }
