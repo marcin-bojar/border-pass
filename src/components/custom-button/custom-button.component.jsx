@@ -2,9 +2,11 @@ import React from 'react';
 
 import './custom-button.styles.scss';
 
-const CustomButton = ({ children, handleClick, clear, ...props }) => (
+const CustomButton = ({ children, handleClick, clear, inline, ...props }) => (
   <button
-    className={`${clear ? 'clear' : ''} custom-button`}
+    className={`${clear ? 'clear' : ''} ${
+      inline ? 'inline' : ''
+    } custom-button`}
     onClick={handleClick}
     {...props}
   >

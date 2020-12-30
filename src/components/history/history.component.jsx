@@ -9,7 +9,25 @@ import './history.styles.scss';
 import { AppContext } from '../../hooks/useAppState';
 
 const History = () => {
-  const { borders, setBorders, editMode, setEditMode } = useContext(AppContext);
+  const {
+    borders,
+    setBorders,
+    editMode,
+    setEditMode,
+    isSortedDesc,
+    setIsSortedDesc,
+  } = useContext(AppContext);
+
+  const sortASC = arr => arr.sort((a, b) => a.timestamp - b.timestamp);
+  const sortDESC = arr => arr.sort((a, b) => b.timestamp - a.timestamp);
+
+  const sortBordersByDate = () => {
+    let sortedBorders;
+    if (isSortedDesc) sortedBorders = sortASC(borders);
+    else sortedBorders = sortDESC(borders);
+    setIsSortedDesc(!isSortedDesc);
+    setBorders([...sortedBorders]);
+  };
 
   return (
     <div className="history">
@@ -18,6 +36,10 @@ const History = () => {
       <div className="history__button-wrapper">
         <CustomButton handleClick={() => setEditMode(!editMode)}>
           {editMode ? 'Zamknij' : 'Edytuj'}
+        </CustomButton>
+
+        <CustomButton inline handleClick={sortBordersByDate}>
+          Sortuj wg daty
         </CustomButton>
 
         <CustomButton

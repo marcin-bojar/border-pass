@@ -12,3 +12,18 @@ export const parseDate = timestamp => {
     date: `${day}.${month}.${year}`,
   };
 };
+
+export const parseTimestamp = (time, date) => {
+  const dateArr = date.split('.'); // [d, m, y]
+  const timeArr = time.split(':'); // [h, m]
+
+  for (let i = 0; i < 2; i++) {
+    if (parseInt(dateArr[i]) < 10) dateArr[i] = '0' + dateArr[i];
+    if (parseInt(timeArr[i]) < 10) timeArr[i] = '0' + timeArr[i];
+  }
+
+  const newDate = dateArr.reverse().join('-');
+  const newTime = timeArr.join(':');
+
+  return Date.parse(newDate + 'T' + newTime + ':00');
+};

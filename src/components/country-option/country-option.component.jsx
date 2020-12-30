@@ -23,14 +23,15 @@ const CountryOption = ({ name }) => {
         return;
       }
 
-      const timeAndDate = parseDate(Date.now());
-      const { time, date } = timeAndDate;
+      const timestamp = Date.now();
+      const { time, date } = parseDate(timestamp);
 
       const borderPass = {
         from: currentCountry,
         to: name,
         time,
         date,
+        timestamp,
       };
 
       setBorders([...borders, borderPass]);

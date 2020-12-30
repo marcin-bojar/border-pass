@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 
+import { parseTimestamp } from '../../utils';
+
 import CustomInput from '../custom-input/custom-input.component';
 
 import './history-editor-form.styles.scss';
@@ -14,8 +16,8 @@ const HistoryEditorForm = () => {
     currentCountry,
     setCurrentCountry,
   } = useContext(AppContext);
-  const { from, to, time, date, i } = editedItem;
-  const state = { from, to, time, date };
+  const { from, to, time, date, timestamp, i } = editedItem;
+  const state = { from, to, time, date, timestamp };
 
   const [fields, setFields] = useState(state);
 
@@ -24,9 +26,24 @@ const HistoryEditorForm = () => {
     setFields({ ...state });
   }, [editedItem]);
 
+  useEffect(() => {
+    setFields({ ...fields, timestamp: timestampUpdater() });
+  }, [fields.time, fields.date]);
+
   const handleChange = e => {
     const { name, value } = e.target;
+
     setFields({ ...fields, [name]: value.toUpperCase() });
+  };
+
+  const timestampUpdater = () => {
+    const timestamp = parseTimestamp(fields.time, fields.date);
+
+    if (isNaN(timestamp)) {
+      return fields.timestamp;
+    }
+
+    return timestamp;
   };
 
   const handleSubmit = e => {
@@ -36,8 +53,9 @@ const HistoryEditorForm = () => {
     setBorders([...borders]);
 
     // If last item in the history is being edited make sure the current's country value is up to date
-    const lastItem = i === borders.length - 1;
-    const notUpToDate = borders[i] !== currentCountry;
+    const lastIndex = borders.length - 1;
+    const lastItem = i === lastIndex;
+    const notUpToDate = borders[lastIndex].to !== currentCountry;
 
     if (lastItem && notUpToDate) {
       setCurrentCountry(borders[i].to);

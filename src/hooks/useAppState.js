@@ -32,6 +32,8 @@ export const useAppState = () => {
 
   const [editedItem, setEditedItem] = useState(null);
 
+  const [isSortedDesc, setIsSortedDesc] = useState(false);
+
   useEffect(() => {
     localStorage.setItem('currentCountry', currentCountry);
   }, [currentCountry]);
@@ -57,5 +59,7 @@ export const useAppState = () => {
     setEditMode,
     editedItem,
     setEditedItem,
+    isSortedDesc,
+    setIsSortedDesc,
   };
 };
