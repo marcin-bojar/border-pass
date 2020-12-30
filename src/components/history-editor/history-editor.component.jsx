@@ -25,7 +25,9 @@ const HistoryEditor = () => {
       {editedItem && (
         <div className="history-editor__editor">
           <p className="history-editor__text">Co chciałbyś zmienić?</p>
+
           <HistoryEditorForm />
+
           <CustomButton type="submit" form="form">
             Zatwierdź
           </CustomButton>

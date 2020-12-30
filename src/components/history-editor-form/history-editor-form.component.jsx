@@ -7,7 +7,13 @@ import './history-editor-form.styles.scss';
 import { AppContext } from '../../hooks/useAppState';
 
 const HistoryEditorForm = () => {
-  const { editedItem, borders, setBorders } = useContext(AppContext);
+  const {
+    editedItem,
+    borders,
+    setBorders,
+    currentCountry,
+    setCurrentCountry,
+  } = useContext(AppContext);
   const { from, to, time, date, i } = editedItem;
   const state = { from, to, time, date };
 
@@ -20,7 +26,7 @@ const HistoryEditorForm = () => {
 
   const handleChange = e => {
     const { name, value } = e.target;
-    setFields({ ...fields, [name]: value });
+    setFields({ ...fields, [name]: value.toUpperCase() });
   };
 
   const handleSubmit = e => {
@@ -28,6 +34,14 @@ const HistoryEditorForm = () => {
 
     borders[i] = fields;
     setBorders([...borders]);
+
+    // If last item in the history is being edited make sure the current's country value is up to date
+    const lastItem = i === borders.length - 1;
+    const notUpToDate = borders[i] !== currentCountry;
+
+    if (lastItem && notUpToDate) {
+      setCurrentCountry(borders[i].to);
+    }
   };
 
   return (
