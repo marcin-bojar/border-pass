@@ -1,18 +1,16 @@
 import React, { useContext } from 'react';
 
 import CountryOption from '../country-option/country-option.component';
-import CustomInput from '../custom-input/custom-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import AddCountry from '../add-country/add-country.component';
 
 import './country-select.styles.scss';
 
 import { AppContext } from '../../hooks/useAppState';
-import useSingleInput from '../../hooks/useSingleInput';
 
 const CountrySelect = () => {
   const {
     countries,
-    setCountries,
     currentCountry,
     setCurrentCountry,
     showAll,
@@ -20,24 +18,6 @@ const CountrySelect = () => {
     borders,
     setBorders,
   } = useContext(AppContext);
-
-  const { inputValue, setInputValue, handleChange } = useSingleInput();
-
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    const country = inputValue.toUpperCase();
-
-    if (!country) return;
-    if (countries.includes(country)) {
-      alert('Ten kraj jest już na liście.');
-      return;
-    }
-
-    countries.unshift(country);
-    setCountries([...countries]);
-    setInputValue('');
-  };
 
   const clearLastEntry = () => {
     let startCountry;
@@ -85,17 +65,7 @@ const CountrySelect = () => {
         </CustomButton>
       </div>
 
-      <div className="country-select__input-wrapper">
-        <form onSubmit={handleSubmit}>
-          <CustomInput
-            type="text"
-            value={inputValue}
-            handleChange={handleChange}
-            maxLength="3"
-            label="Dodaj kraj"
-          />
-        </form>
-      </div>
+      <AddCountry />
     </div>
   );
 };
