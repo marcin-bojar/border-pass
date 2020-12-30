@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
 const useSingleInput = () => {
   const [inputValue, setInputValue] = useState('');
@@ -8,9 +8,7 @@ const useSingleInput = () => {
     setInputValue(value);
   };
 
-  const inputRef = useRef(null);
-
-  return { inputRef, inputValue, setInputValue, handleChange };
+  return { inputValue, setInputValue, handleChange };
 };
 
 export default useSingleInput;
