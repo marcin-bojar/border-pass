@@ -4,6 +4,8 @@ import HistoryItem from '../history-item/history-item.component';
 import CustomButton from '../custom-button/custom-button.component';
 import HistoryEditor from '../history-editor/history-editor.component';
 
+import { sortASC, sortDESC } from '../../utils';
+
 import './history.styles.scss';
 
 import { AppContext } from '../../hooks/useAppState';
@@ -17,9 +19,6 @@ const History = () => {
     isSortedDesc,
     setIsSortedDesc,
   } = useContext(AppContext);
-
-  const sortASC = arr => arr.sort((a, b) => a.timestamp - b.timestamp);
-  const sortDESC = arr => arr.sort((a, b) => b.timestamp - a.timestamp);
 
   const sortBordersByDate = () => {
     let sortedBorders;

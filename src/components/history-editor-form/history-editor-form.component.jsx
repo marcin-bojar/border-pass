@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { parseTimestamp } from '../../utils';
+import { parseTimestamp, sortASC, sortDESC } from '../../utils';
 
 import CustomInput from '../custom-input/custom-input.component';
 
@@ -15,6 +15,7 @@ const HistoryEditorForm = () => {
     setBorders,
     currentCountry,
     setCurrentCountry,
+    isSortedDesc,
   } = useContext(AppContext);
   const { from, to, time, date, timestamp, i } = editedItem;
   const state = { from, to, time, date, timestamp };
@@ -50,7 +51,11 @@ const HistoryEditorForm = () => {
     e.preventDefault();
 
     borders[i] = fields;
-    setBorders([...borders]);
+    let sortedBorders;
+    if (isSortedDesc) sortedBorders = sortDESC(borders);
+    else sortedBorders = sortASC(borders);
+
+    setBorders([...sortedBorders]);
 
     // If last item in the history is being edited make sure the current's country value is up to date
     const lastIndex = borders.length - 1;

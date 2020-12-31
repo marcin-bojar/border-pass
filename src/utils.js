@@ -27,3 +27,6 @@ export const parseTimestamp = (time, date) => {
 
   return Date.parse(newDate + 'T' + newTime + ':00');
 };
+
+export const sortASC = arr => arr.sort((a, b) => a.timestamp - b.timestamp);
+export const sortDESC = arr => arr.sort((a, b) => b.timestamp - a.timestamp);
