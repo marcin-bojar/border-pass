@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { parseTimestamp, sortASC, sortDESC } from '../../utils';
+import { parseDate, sortASC, sortDESC } from '../../utils';
 
 import CustomInput from '../custom-input/custom-input.component';
 
@@ -39,7 +39,7 @@ const HistoryEditorForm = () => {
   };
 
   const timestampUpdater = () => {
-    const timestamp = parseTimestamp(fields.time, fields.date);
+    const timestamp = parseDate(fields.time, fields.date);
 
     if (isNaN(timestamp)) {
       return fields.timestamp;

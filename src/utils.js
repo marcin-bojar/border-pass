@@ -1,4 +1,4 @@
-export const parseDate = timestamp => {
+export const parseTimestamp = timestamp => {
   const date = new Date(timestamp);
   const h = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
   const min =
@@ -13,7 +13,7 @@ export const parseDate = timestamp => {
   };
 };
 
-export const parseTimestamp = (time, date) => {
+export const parseDate = (time, date) => {
   const dateArr = date.split('.'); // [d, m, y]
   const timeArr = time.split(':'); // [h, m]
 

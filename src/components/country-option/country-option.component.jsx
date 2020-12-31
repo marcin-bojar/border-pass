@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { parseDate, sortDESC } from '../../utils';
+import { parseTimestamp, sortDESC } from '../../utils';
 
 import './country-option.styles.scss';
 
@@ -25,7 +25,7 @@ const CountryOption = ({ name }) => {
       }
 
       const timestamp = Date.now();
-      const { time, date } = parseDate(timestamp);
+      const { time, date } = parseTimestamp(timestamp);
 
       const borderPass = {
         from: currentCountry,
