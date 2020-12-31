@@ -37,9 +37,14 @@ const History = () => {
           {editMode ? 'Zamknij' : 'Edytuj'}
         </CustomButton>
 
-        <CustomButton inline handleClick={sortBordersByDate}>
-          Sortuj wg daty
-        </CustomButton>
+        <div className="history__button-wrapper sort">
+          <CustomButton inline handleClick={sortBordersByDate}>
+            Sortuj wg daty
+          </CustomButton>
+          <p className="history__sort-status">
+            {isSortedDesc ? 'od najnowszej' : 'od najstarszej'}
+          </p>
+        </div>
 
         <CustomButton
           clear
