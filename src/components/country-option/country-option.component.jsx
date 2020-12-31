@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { parseDate } from '../../utils';
+import { parseDate, sortDESC } from '../../utils';
 
 import './country-option.styles.scss';
 
@@ -14,6 +14,7 @@ const CountryOption = ({ name }) => {
     setBorders,
     countries,
     setCountries,
+    isSortedDesc,
   } = useContext(AppContext);
 
   const handleClick = () => {
@@ -34,7 +35,11 @@ const CountryOption = ({ name }) => {
         timestamp,
       };
 
-      setBorders([...borders, borderPass]);
+      const updatedBorders = isSortedDesc
+        ? sortDESC([...borders, borderPass])
+        : [...borders, borderPass];
+
+      setBorders(updatedBorders);
     }
     setCurrentCountry(name);
 

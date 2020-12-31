@@ -32,7 +32,9 @@ export const useAppState = () => {
 
   const [editedItem, setEditedItem] = useState(null);
 
-  const [isSortedDesc, setIsSortedDesc] = useState(false);
+  const [isSortedDesc, setIsSortedDesc] = useState(
+    Boolean(localStorage.getItem('isSortedDesc') === 'true') || false
+  );
 
   useEffect(() => {
     localStorage.setItem('currentCountry', currentCountry);
@@ -45,6 +47,10 @@ export const useAppState = () => {
   useEffect(() => {
     localStorage.setItem('countries', JSON.stringify(countries));
   }, [countries]);
+
+  useEffect(() => {
+    localStorage.setItem('isSortedDesc', isSortedDesc);
+  }, [isSortedDesc]);
 
   return {
     currentCountry,

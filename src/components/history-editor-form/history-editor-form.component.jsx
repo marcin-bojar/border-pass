@@ -11,6 +11,7 @@ import { AppContext } from '../../hooks/useAppState';
 const HistoryEditorForm = () => {
   const {
     editedItem,
+    setEditedItem,
     borders,
     setBorders,
     currentCountry,
@@ -65,6 +66,8 @@ const HistoryEditorForm = () => {
     if (lastItem && notUpToDate) {
       setCurrentCountry(borders[i].to);
     }
+
+    setEditedItem(null);
   };
 
   return (

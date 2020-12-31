@@ -17,19 +17,34 @@ const CountrySelect = () => {
     setShowAll,
     borders,
     setBorders,
+    isSortedDesc,
   } = useContext(AppContext);
 
   const clearLastEntry = () => {
     let startCountry;
 
-    // Before removing last item from the list save the country's value where trip began
-    if (borders.length === 1) startCountry = borders[0].from;
-    borders.pop();
+    const clearLastAsc = () => {
+      borders.pop();
+      setCurrentCountry(borders[borders.length - 1].to);
+      setBorders([...borders]);
+    };
 
-    startCountry
-      ? setCurrentCountry(startCountry)
-      : setCurrentCountry(borders[borders.length - 1].to);
-    setBorders([...borders]);
+    const clearLastDesc = () => {
+      borders.shift();
+      setCurrentCountry(borders[0].to);
+      setBorders([...borders]);
+    };
+
+    if (borders.length === 1) {
+      // Before removing last item from the list save the country's value where trip began
+      startCountry = borders[0].from;
+
+      borders.pop();
+      setCurrentCountry(startCountry);
+      setBorders([...borders]);
+    } else {
+      isSortedDesc ? clearLastDesc() : clearLastAsc();
+    }
   };
 
   return (
