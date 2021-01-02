@@ -30,3 +30,24 @@ export const parseDate = (time, date) => {
 
 export const sortASC = arr => arr.sort((a, b) => a.timestamp - b.timestamp);
 export const sortDESC = arr => arr.sort((a, b) => b.timestamp - a.timestamp);
+
+//Service Worker utils
+
+export const registerSW = () => {
+  if ('serviceWorker' in navigator) {
+    const swURL = '/sw.js';
+
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register(swURL)
+        .then(reg => {
+          console.log(
+            'Service worker registered successfully. Scope: ' + reg.scope
+          );
+        })
+        .catch(err => {
+          console.log('Error occured while registering service worker: ' + err);
+        });
+    });
+  }
+};

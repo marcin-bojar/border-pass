@@ -4,7 +4,8 @@
   "description": "Log your business trip history",
   "main": "index.js",
   "scripts": {
-    "start": "parcel index.html --open"
+    "start": "parcel ./src/index.html --open",
+    "postbuild": "workbox generateSW"
   },
   "author": "Marcin Bojar",
   "license": "ISC",
