@@ -2,7 +2,7 @@
 @import './src/sass/variables';
 
 .current-country {
-  @include components-common-styles;
+  @include sections-common-styles;
 
   &__title {
     text-align: center;

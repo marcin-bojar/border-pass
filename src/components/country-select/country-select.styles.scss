@@ -1,7 +1,7 @@
 @import '../../sass/mixins.scss';
 
 .country-select {
-  @include components-common-styles;
+  @include sections-common-styles;
 
   &__title {
     margin-bottom: 2rem;

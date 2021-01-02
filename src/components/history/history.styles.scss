@@ -2,7 +2,8 @@
 @import '../../sass/variables.scss';
 
 .history {
-  @include components-common-styles;
+  @include sections-common-styles;
+  padding-bottom: 2rem;
 
   &__title {
     margin-bottom: 2rem;

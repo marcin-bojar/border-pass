@@ -1,14 +1,17 @@
-@import '../../sass/mixins.scss';
 @import '../../sass/variables';
 
 .history-editor-form {
-  @include components-common-styles;
   display: flex;
   justify-content: space-between;
+  background-color: $color-white;
+  padding: 1rem;
+  border-radius: $border-radius-primary;
+  color: $color-black;
   align-items: center;
   font-size: 1.6rem;
   font-weight: 700;
   margin-top: 2rem;
+  margin-bottom: 4rem;
 
   &__nr {
     color: $color-orange;
@@ -35,7 +38,18 @@
     }
     &.time input {
       padding: 0;
-      width: 8rem;
+
+      &[name='time'] {
+        width: 5rem;
+
+        @media only screen and (min-width: 25em) {
+          margin-right: 1.5rem;
+        }
+      }
+
+      &[name='date'] {
+        width: 8rem;
+      }
     }
   }
 }

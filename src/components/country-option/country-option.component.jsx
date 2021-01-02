@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 
 import { parseTimestamp, sortDESC } from '../../utils';
 
-import './country-option.styles.scss';
-
 import { AppContext } from '../../hooks/useAppState';
+
+import './country-option.styles.scss';
 
 const CountryOption = ({ name }) => {
   const {

@@ -1,6 +1,6 @@
 @import './variables';
 
-@mixin components-common-styles {
+@mixin sections-common-styles {
   background-color: rgba(255, 255, 255, 0.75);
   padding: 1rem;
   border-radius: $border-radius-primary;
@@ -8,6 +8,20 @@
 
   &:not(:last-child) {
     margin-bottom: 4rem;
+  }
+
+  @media only screen and (min-width: 31.25em) {
+    max-width: 85%;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  @media only screen and (min-width: 43.75em) {
+    padding: 2rem 5rem;
+  }
+
+  @media only screen and (min-width: 68.75em) {
+    max-width: 50%;
   }
 }
 

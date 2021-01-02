@@ -4,9 +4,9 @@ import { parseDate, sortASC, sortDESC } from '../../utils';
 
 import CustomInput from '../custom-input/custom-input.component';
 
-import './history-editor-form.styles.scss';
-
 import { AppContext } from '../../hooks/useAppState';
+
+import './history-editor-form.styles.scss';
 
 const HistoryEditorForm = () => {
   const {

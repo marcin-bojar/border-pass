@@ -1,17 +1,20 @@
-@import '../../sass/mixins.scss';
 @import '../../sass/variables';
 
 .history-item {
-  @include components-common-styles;
+  background-color: $color-white;
+  padding: 1rem;
+  border-radius: $border-radius-primary;
+  color: inherit;
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 1.8rem;
   font-weight: 700;
-
-  &:not(:last-child) {
-    margin-bottom: 1rem;
-  }
 
   &__nr {
     color: $color-orange;

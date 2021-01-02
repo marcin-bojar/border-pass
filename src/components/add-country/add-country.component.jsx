@@ -3,10 +3,9 @@ import React, { useContext } from 'react';
 import CustomInput from '../custom-input/custom-input.component';
 
 import useSingleInput from '../../hooks/useSingleInput';
+import { AppContext } from '../../hooks/useAppState';
 
 import './add-country.styles.scss';
-
-import { AppContext } from '../../hooks/useAppState';
 
 const AddCountry = () => {
   const { inputValue, setInputValue, handleChange } = useSingleInput();

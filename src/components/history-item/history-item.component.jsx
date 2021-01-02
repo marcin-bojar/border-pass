@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 
-import './history-item.styles.scss';
-
 import { AppContext } from '../../hooks/useAppState';
+
+import './history-item.styles.scss';
 
 const HistoryItem = ({ data }) => {
   const { from, to, time, date, i } = data;
-  const { editMode, setEditedItem } = useContext(AppContext);
+  const { editMode, setEditedItem, isSortedDesc, borders } = useContext(
+    AppContext
+  );
 
   return (
     <li
@@ -15,13 +17,15 @@ const HistoryItem = ({ data }) => {
         if (editMode) setEditedItem(data);
       }}
     >
-      <div className="index-and-border">
-        <span className="history-item__nr">{i + 1}. </span>
+      <div className="history-item__block">
+        <span className="history-item__nr">
+          {isSortedDesc ? borders.length - i : i + 1}.{' '}
+        </span>
         <span className="history-item__country">
           {from} &#8594; {to}
         </span>
       </div>
-      <div className="time-and-date">
+      <div className="hisotry-item__block">
         <span className="history-item__time">{time}</span>{' '}
         <span className="history-item__date">{date}</span>
       </div>

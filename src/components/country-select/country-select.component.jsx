@@ -4,9 +4,9 @@ import CountryOption from '../country-option/country-option.component';
 import CustomButton from '../custom-button/custom-button.component';
 import AddCountry from '../add-country/add-country.component';
 
-import './country-select.styles.scss';
-
 import { AppContext } from '../../hooks/useAppState';
+
+import './country-select.styles.scss';
 
 const CountrySelect = () => {
   const {

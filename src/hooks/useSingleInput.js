@@ -4,7 +4,7 @@ const useSingleInput = () => {
   const [inputValue, setInputValue] = useState('');
 
   const handleChange = e => {
-    const value = e.target.value;
+    const value = e.target.value.toUpperCase();
     setInputValue(value);
   };
 

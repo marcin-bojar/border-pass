@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 
 import CustomButton from '../custom-button/custom-button.component';
 
-import './current-country.styles.scss';
-
 import { AppContext } from '../../hooks/useAppState';
+
+import './current-country.styles.scss';
 
 const CurrentCountry = () => {
   const { currentCountry, setCurrentCountry } = useContext(AppContext);

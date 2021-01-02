@@ -6,9 +6,9 @@ import HistoryEditor from '../history-editor/history-editor.component';
 
 import { sortASC, sortDESC } from '../../utils';
 
-import './history.styles.scss';
-
 import { AppContext } from '../../hooks/useAppState';
+
+import './history.styles.scss';
 
 const History = () => {
   const {

@@ -6,6 +6,10 @@
   padding: 1.5rem 0.75rem;
   margin: 2rem 0;
 
+  @media only screen and (min-width: 43.75em) {
+    padding: 2rem 4rem;
+  }
+
   &__title {
     text-align: center;
     margin-bottom: 2rem;

@@ -3,9 +3,9 @@ import React, { useContext, useEffect } from 'react';
 import HistoryEditorForm from '../history-editor-form/history-editor-form.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import './history-editor.styles.scss';
-
 import { AppContext } from '../../hooks/useAppState';
+
+import './history-editor.styles.scss';
 
 const HistoryEditor = () => {
   const { editedItem, setEditedItem } = useContext(AppContext);
