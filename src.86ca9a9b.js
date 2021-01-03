@@ -53,4 +53,4 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
 },{"react":"n8MK","./components/heading/heading.component":"DOxy","./components/welcome/welcome.component":"OOy9","./components/country-select/country-select.component":"LBE6","./components/current-country/current-country.component":"HkBh","./components/history/history.component":"lcWb","./hooks/useAppState":"czaG","./App.scss":"dcaL"}],"Focm":[function(require,module,exports) {
 "use strict";var e=l(require("react")),r=l(require("react-dom")),t=require("./utils"),u=l(require("./App"));function l(e){return e&&e.__esModule?e:{default:e}}r.default.render(e.default.createElement(u.default,null),document.getElementById("root")),(0,t.registerSW)();
 },{"react":"n8MK","react-dom":"NKHc","./utils":"FOZT","./App":"lY9v"}]},{},["Focm"], null)
-//# sourceMappingURL=/src.86ca9a9b.js.map
+//# sourceMappingURL=%27./src.86ca9a9b.js.map
