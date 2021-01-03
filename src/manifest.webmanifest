@@ -1,10 +1,10 @@
 {
   "name": "Border Pass",
   "short_name": "Border Pass",
-  "start_url": "/",
+  "start_url": "/border-pass/",
   "display": "standalone",
   "background_color": "#540977",
-  "theme-color": "#540977",
+  "theme_color": "#540977",
   "description": "Register your business trip's border corssings with ease",
   "icons": [{
     "src": "/assets/png/transfer512.png",
@@ -21,7 +21,12 @@
     "sizes": "192x192",
     "type": "image/png"
   },
-  
+  {
+    "src": "/assets/png/transfer192-maskable.png",
+    "sizes": "192x192",
+    "type": "image/png",
+    "purpose": "maskable"
+  },
   {
     "src": "/assets/png/transfer128.png",
     "sizes": "128x128",

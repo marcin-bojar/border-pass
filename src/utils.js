@@ -35,7 +35,7 @@ export const sortDESC = arr => arr.sort((a, b) => b.timestamp - a.timestamp);
 
 export const registerSW = () => {
   if ('serviceWorker' in navigator) {
-    const swURL = '/sw.js';
+    const swURL = '/border-pass/sw.js';
 
     window.addEventListener('load', () => {
       navigator.serviceWorker
