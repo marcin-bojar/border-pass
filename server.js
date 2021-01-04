@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+const border = require('./routes/api/border');
+
 const app = express();
 
 app.use(express.json());
@@ -14,6 +16,9 @@ mongoose
   })
   .then(() => console.log('MongoDB connected!'))
   .catch(err => console.log(err));
+
+//Use routes
+app.use('/api/borders', border);
 
 const port = process.env.PORT || 5000;
 
