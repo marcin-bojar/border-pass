@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const border = require('./routes/api/border');
+const country = require('./routes/api/country');
 
 const app = express();
 
@@ -21,6 +22,7 @@ mongoose
 
 //Use routes
 app.use('/api/borders', border);
+app.use('/api/countries', country);
 
 const port = process.env.PORT || 5000;
 

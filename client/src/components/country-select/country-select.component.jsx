@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import CountryOption from '../country-option/country-option.component';
 import CustomButton from '../custom-button/custom-button.component';
 import AddCountry from '../add-country/add-country.component';
+import Loader from '../spinner/loader.component/';
 
 import { AppContext } from '../../hooks/useAppState';
 
@@ -18,6 +19,7 @@ const CountrySelect = () => {
     borders,
     setBorders,
     isSortedDesc,
+    isFetchingCountries,
   } = useContext(AppContext);
 
   const clearLastEntry = () => {
@@ -47,6 +49,13 @@ const CountrySelect = () => {
     }
   };
 
+  if (isFetchingCountries)
+    return (
+      <div className="country-select">
+        <Loader />
+      </div>
+    );
+
   return (
     <div className="country-select">
       {currentCountry && (
@@ -56,11 +65,13 @@ const CountrySelect = () => {
       <div className="country-select__options">
         {showAll
           ? countries.map(country => (
-              <CountryOption key={country} name={country} />
+              <CountryOption key={country.name} name={country.name} />
             ))
           : countries
               .filter((_, i) => i < 10)
-              .map(country => <CountryOption key={country} name={country} />)}
+              .map(country => (
+                <CountryOption key={country.name} name={country.name} />
+              ))}
       </div>
 
       <div className="country-select__button-wrapper">

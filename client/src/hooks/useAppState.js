@@ -8,20 +8,7 @@ export const useAppState = () => {
     localStorage.getItem('currentCountry') || ''
   );
 
-  const [countries, setCountries] = useState(
-    JSON.parse(localStorage.getItem('countries')) || [
-      'PL',
-      'CZ',
-      'SK',
-      'DE',
-      'HU',
-      'NL',
-      'BE',
-      'FR',
-      'AT',
-      'CH',
-    ]
-  );
+  const [countries, setCountries] = useState([]);
 
   const [borders, setBorders] = useState([]);
 
@@ -36,6 +23,7 @@ export const useAppState = () => {
   );
 
   const [isFetchingBorders, setIsFetchingBorders] = useState(true);
+  const [isFetchingCountries, setIsFetchingCountries] = useState(true);
 
   useEffect(() => {
     localStorage.setItem('currentCountry', currentCountry);
@@ -45,9 +33,9 @@ export const useAppState = () => {
   //   localStorage.setItem('borders', JSON.stringify(borders));
   // }, [borders]);
 
-  useEffect(() => {
-    localStorage.setItem('countries', JSON.stringify(countries));
-  }, [countries]);
+  // useEffect(() => {
+  //   localStorage.setItem('countries', JSON.stringify(countries));
+  // }, [countries]);
 
   useEffect(() => {
     localStorage.setItem('isSortedDesc', isSortedDesc);
@@ -62,9 +50,25 @@ export const useAppState = () => {
       })
       .catch(err => console.log(err));
 
+    axios
+      .get('http://localhost:5000/api/countries')
+      .then(res => {
+        setCountries([...res.data]);
+        setIsFetchingCountries(false);
+      })
+      .catch(err => console.log(err));
+
     // borders.forEach(border => {
     //   axios
     //     .post('http://localhost:5000/api/borders', border)
+    //     .then(res => console.log(res.data))
+    //     .catch(err => console.log(err));
+    // });
+
+    // countries.forEach(c => {
+    //   console.log({ name: c });
+    //   axios
+    //     .post('http://localhost:5000/api/countries', { name: c })
     //     .then(res => console.log(res.data))
     //     .catch(err => console.log(err));
     // });
@@ -86,5 +90,6 @@ export const useAppState = () => {
     isSortedDesc,
     setIsSortedDesc,
     isFetchingBorders,
+    isFetchingCountries,
   };
 };

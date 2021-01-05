@@ -24,4 +24,4 @@ const BorderSchema = new Schema({
   },
 });
 
-module.exports = BorderPass = mongoose.model('border', BorderSchema);
+module.exports = Border = mongoose.model('border', BorderSchema);
