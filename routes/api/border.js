@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 // @public
 router.get('/:id', (req, res) => {
   Border.findById(req.params.id)
-    .then(border => res.json(border))
+    .then(border => res.json({ success: true, data: border }))
     .catch(err => res.status(404).json({ success: false, error: err.message }));
 });
 

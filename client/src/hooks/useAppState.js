@@ -90,6 +90,8 @@ export const useAppState = () => {
     isSortedDesc,
     setIsSortedDesc,
     isFetchingBorders,
+    setIsFetchingBorders,
     isFetchingCountries,
+    setIsFetchingCountries,
   };
 };

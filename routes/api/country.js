@@ -11,15 +11,22 @@ router.get('/', (req, res) => {
 });
 
 // @route POST /api/countries
-// @desc Post new countries
+// @desc Post new country
 // @public
 router.post('/', (req, res) => {
-  const newCountry = new Country({ name: req.body.name });
+  Country.find({ name: req.body.name }).then(result => {
+    const countryExists = result.length > 0;
+    if (countryExists)
+      return res.json({ success: false, error: 'Ten kraj jest już na liście' });
 
-  newCountry
-    .save()
-    .then(country => res.status(201).json({ success: true, data: country }))
-    .catch(err => res.status(400).json({ success: false, error: err.message }));
+    const newCountry = new Country({ name: req.body.name });
+    newCountry
+      .save()
+      .then(country => res.status(201).json({ success: true, data: country }))
+      .catch(err =>
+        res.status(400).json({ success: false, error: err.message })
+      );
+  });
 });
 
 module.exports = router;
