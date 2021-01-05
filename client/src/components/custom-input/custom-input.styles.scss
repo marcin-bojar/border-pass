@@ -24,6 +24,15 @@
         @include shrink;
       }
     }
+
+    &:disabled {
+      color: $color-grey-light;
+      border: 1px solid $color-grey-light;
+
+      & + label {
+        color: $color-grey-light;
+      }
+    }
   }
 
   &__label {
@@ -34,7 +43,7 @@
     text-align: center;
     transform: translate(-50%, -50%);
     pointer-events: none;
-    transition: all 0.2s;
+    transition: top 0.2s, left 0.2s, font-size 0.2s;
     color: $color-primary;
     font-weight: 700;
 

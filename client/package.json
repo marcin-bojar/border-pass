@@ -1,0 +1,27 @@
+{
+  "name": "border-pass",
+  "version": "1.0.0",
+  "description": "Log your business trip history",
+  "homepage": "https://marcin-bojar.github.io/border-pass",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel ./src/index.html --open",
+    "build": "parcel build ./src/index.html --public-url ./",
+    "postbuild": "workbox generateSW",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "author": "Marcin Bojar",
+  "license": "ISC",
+  "devDependencies": {
+    "gh-pages": "^3.1.0",
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.30.0"
+  },
+  "dependencies": {
+    "@svgr/parcel-plugin-svgr": "^5.5.0",
+    "axios": "^0.21.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}

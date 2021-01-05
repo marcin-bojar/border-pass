@@ -12,7 +12,7 @@ import './App.scss';
 
 const App = () => {
   const appState = useAppState();
-  const { currentCountry, borders } = appState;
+  const { currentCountry } = appState;
 
   return (
     <div className="App">
@@ -20,7 +20,7 @@ const App = () => {
         <Heading />
         {currentCountry ? <CurrentCountry /> : <Welcome />}
         <CountrySelect />
-        {borders.length ? <History /> : null}
+        <History />
       </AppContext.Provider>
     </div>
   );

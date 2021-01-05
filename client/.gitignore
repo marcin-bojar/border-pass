@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,react,node
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,visualstudiocode,react,node
+# Created by https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,node
+# Edit at https://www.toptal.com/developers/gitignore?templates=windows,visualstudiocode,node
 
 ### Node ###
 # Logs
@@ -113,19 +113,6 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-### react ###
-.DS_*
-**/*.backup.*
-**/*.back.*
-
-node_modules
-
-*.sublime*
-
-psd
-thumb
-sketch
-
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/tasks.json
@@ -163,4 +150,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,react,node
+# End of https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,node
+
+stack
+border-pass-lighthouse.png
