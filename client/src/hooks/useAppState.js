@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from 'react';
+import axios from 'axios';
 
 export const AppContext = createContext(null);
 
@@ -22,9 +23,7 @@ export const useAppState = () => {
     ]
   );
 
-  const [borders, setBorders] = useState(
-    JSON.parse(localStorage.getItem('borders')) || []
-  );
+  const [borders, setBorders] = useState([]);
 
   const [showAll, setShowAll] = useState(false);
 
@@ -36,13 +35,15 @@ export const useAppState = () => {
     Boolean(localStorage.getItem('isSortedDesc') === 'true') || false
   );
 
+  const [isFetchingBorders, setIsFetchingBorders] = useState(true);
+
   useEffect(() => {
     localStorage.setItem('currentCountry', currentCountry);
   }, [currentCountry]);
 
-  useEffect(() => {
-    localStorage.setItem('borders', JSON.stringify(borders));
-  }, [borders]);
+  // useEffect(() => {
+  //   localStorage.setItem('borders', JSON.stringify(borders));
+  // }, [borders]);
 
   useEffect(() => {
     localStorage.setItem('countries', JSON.stringify(countries));
@@ -51,6 +52,23 @@ export const useAppState = () => {
   useEffect(() => {
     localStorage.setItem('isSortedDesc', isSortedDesc);
   }, [isSortedDesc]);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:5000/api/borders')
+      .then(res => {
+        setBorders([...res.data]);
+        setIsFetchingBorders(false);
+      })
+      .catch(err => console.log(err));
+
+    // borders.forEach(border => {
+    //   axios
+    //     .post('http://localhost:5000/api/borders', border)
+    //     .then(res => console.log(res.data))
+    //     .catch(err => console.log(err));
+    // });
+  }, []);
 
   return {
     currentCountry,
@@ -67,5 +85,6 @@ export const useAppState = () => {
     setEditedItem,
     isSortedDesc,
     setIsSortedDesc,
+    isFetchingBorders,
   };
 };

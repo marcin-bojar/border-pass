@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import HistoryItem from '../history-item/history-item.component';
 import CustomButton from '../custom-button/custom-button.component';
 import HistoryEditor from '../history-editor/history-editor.component';
+import Loader from '../spinner/loader.component';
 
 import { sortASC, sortDESC } from '../../utils';
 
@@ -18,6 +19,7 @@ const History = () => {
     setEditMode,
     isSortedDesc,
     setIsSortedDesc,
+    isFetchingBorders,
   } = useContext(AppContext);
 
   const sortBordersByDate = () => {
@@ -27,6 +29,13 @@ const History = () => {
     setIsSortedDesc(!isSortedDesc);
     setBorders([...sortedBorders]);
   };
+
+  if (isFetchingBorders)
+    return (
+      <div className="history">
+        <Loader />
+      </div>
+    );
 
   return (
     <div className="history">
