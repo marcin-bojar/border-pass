@@ -12,15 +12,15 @@
     "type": "image/png"
   },
   {
+    "src": "/assets/png/transfer192-maskable.png",
+    "sizes": "256x256",
+    "type": "image/png",
+    "purpose": "maskable"
+  },
+  {
     "src": "/assets/png/android-chrome-192x192.png",
     "sizes": "192x192",
     "type": "image/png"
-  },
-  {
-    "src": "/assets/png/transfer192-maskable.png",
-    "sizes": "192x192",
-    "type": "image/png",
-    "purpose": "maskable"
   },
   {
     "src": "/assets/png/transfer128.png",

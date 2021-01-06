@@ -35,20 +35,6 @@ const AddCountry = () => {
         }
       })
       .catch(err => alert('Ups... ' + err));
-
-    // e.preventDefault();
-
-    // const country = inputValue.toUpperCase();
-
-    // if (!country) return;
-    // if (countries.includes(country)) {
-    //   alert('Ten kraj jest już na liście.');
-    //   return;
-    // }
-
-    // countries.unshift(country);
-    // setCountries([...countries]);
-    // setInputValue('');
   };
 
   return (

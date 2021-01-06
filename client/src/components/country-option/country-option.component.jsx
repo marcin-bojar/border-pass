@@ -1,21 +1,16 @@
 import React, { useContext } from 'react';
+import axios from 'axios';
 
-import { parseTimestamp, sortDESC } from '../../utils';
+import { parseTimestamp } from '../../utils';
 
 import { AppContext } from '../../hooks/useAppState';
 
 import './country-option.styles.scss';
 
 const CountryOption = ({ name }) => {
-  const {
-    currentCountry,
-    setCurrentCountry,
-    borders,
-    setBorders,
-    countries,
-    setCountries,
-    isSortedDesc,
-  } = useContext(AppContext);
+  const { currentCountry, setCurrentCountry, borders, setBorders } = useContext(
+    AppContext
+  );
 
   const handleClick = () => {
     if (currentCountry) {
@@ -35,18 +30,14 @@ const CountryOption = ({ name }) => {
         timestamp,
       };
 
-      const updatedBorders = isSortedDesc
-        ? sortDESC([...borders, borderPass])
-        : [...borders, borderPass];
-
-      setBorders(updatedBorders);
+      axios
+        .post('/api/borders', borderPass)
+        .then(res => {
+          setBorders([...borders, res.data.data]);
+        })
+        .catch(err => alert('Ups... ' + err));
     }
     setCurrentCountry(name);
-
-    // Put selected country in the beginning of the list
-    const filteredCountries = countries.filter(el => el !== name);
-    filteredCountries.unshift(name);
-    setCountries([...filteredCountries]);
   };
 
   return (

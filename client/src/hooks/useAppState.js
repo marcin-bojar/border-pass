@@ -23,6 +23,7 @@ export const useAppState = () => {
   );
 
   const [isFetchingBorders, setIsFetchingBorders] = useState(true);
+
   const [isFetchingCountries, setIsFetchingCountries] = useState(true);
 
   useEffect(() => {
