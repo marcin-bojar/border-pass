@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import HistoryItem from '../history-item/history-item.component';
 import CustomButton from '../custom-button/custom-button.component';
 import HistoryEditor from '../history-editor/history-editor.component';
-import Loader from '../spinner/loader.component';
+import Loader from '../loader/loader.component';
 
 import { sortASC, sortDESC } from '../../utils';
 
