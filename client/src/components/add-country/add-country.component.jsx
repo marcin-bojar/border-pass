@@ -23,7 +23,7 @@ const AddCountry = () => {
     const newCountry = { name };
 
     axios
-      .post('http://localhost:5000/api/countries', newCountry)
+      .post('/api/countries', newCountry)
       .then(res => {
         if (res.data.success) {
           setCountries([...countries, res.data.data]);

@@ -43,7 +43,7 @@ export const useAppState = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/borders')
+      .get('/api/borders')
       .then(res => {
         setBorders([...res.data.data]);
         setIsFetchingBorders(false);
@@ -51,9 +51,9 @@ export const useAppState = () => {
       .catch(err => console.log(err));
 
     axios
-      .get('http://localhost:5000/api/countries')
+      .get('/api/countries')
       .then(res => {
-        setCountries([...res.data]);
+        setCountries([...res.data.data]);
         setIsFetchingCountries(false);
       })
       .catch(err => console.log(err));

@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
 require('dotenv').config();
 
 const border = require('./routes/api/border');
@@ -9,7 +8,6 @@ const country = require('./routes/api/country');
 const app = express();
 
 app.use(express.json());
-app.use(cors());
 
 //Connect to MongoDB
 mongoose
