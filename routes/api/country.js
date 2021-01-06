@@ -7,7 +7,9 @@ const Country = require('../../models/Country');
 // @desc Get all countries
 // @public
 router.get('/', (req, res) => {
-  Country.find().then(countries => res.json(countries));
+  Country.find()
+    .then(countries => res.json({ success: true, data: countries }))
+    .catch(err => res.status(400).json({ success: false, error: err.message }));
 });
 
 // @route POST /api/countries
