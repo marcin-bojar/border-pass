@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import CountryOption from '../country-option/country-option.component';
 import CustomButton from '../custom-button/custom-button.component';
 import AddCountry from '../add-country/add-country.component';
-import Loader from '../spinner/loader.component/';
+import Loader from '../loader/loader.component/';
 
 import { AppContext } from '../../hooks/useAppState';
 

@@ -45,7 +45,7 @@ export const useAppState = () => {
     axios
       .get('http://localhost:5000/api/borders')
       .then(res => {
-        setBorders([...res.data]);
+        setBorders([...res.data.data]);
         setIsFetchingBorders(false);
       })
       .catch(err => console.log(err));
