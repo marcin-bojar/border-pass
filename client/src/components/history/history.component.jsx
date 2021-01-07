@@ -5,7 +5,7 @@ import CustomButton from '../custom-button/custom-button.component';
 import HistoryEditor from '../history-editor/history-editor.component';
 import Loader from '../loader/loader.component';
 
-import { sortASC, sortDESC } from '../../utils';
+import { sortHistoryListByTimeAndDate } from '../../utils';
 
 import { AppContext } from '../../hooks/useAppState';
 
@@ -23,9 +23,9 @@ const History = () => {
   } = useContext(AppContext);
 
   const sortBordersByDate = () => {
+    const order = isSortedDesc ? 'asc' : 'desc';
     let sortedBorders;
-    if (isSortedDesc) sortedBorders = sortASC(borders);
-    else sortedBorders = sortDESC(borders);
+    sortedBorders = sortHistoryListByTimeAndDate(borders, order);
     setIsSortedDesc(!isSortedDesc);
     setBorders([...sortedBorders]);
   };
