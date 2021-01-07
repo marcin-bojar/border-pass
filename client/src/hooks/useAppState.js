@@ -49,7 +49,7 @@ export const useAppState = () => {
         setBorders([...res.data.data]);
         setIsFetchingBorders(false);
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err.message));
 
     axios
       .get('/api/countries')
@@ -57,7 +57,7 @@ export const useAppState = () => {
         setCountries([...res.data.data]);
         setIsFetchingCountries(false);
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err.message));
 
     // borders.forEach(border => {
     //   axios

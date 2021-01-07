@@ -28,8 +28,10 @@ export const parseDate = (time, date) => {
   return Date.parse(newDate + 'T' + newTime + ':00');
 };
 
-export const sortASC = arr => arr.sort((a, b) => a.timestamp - b.timestamp);
-export const sortDESC = arr => arr.sort((a, b) => b.timestamp - a.timestamp);
+export const sortASC = arr =>
+  arr.sort((a, b) => a.timestamp_ms - b.timestamp_ms);
+export const sortDESC = arr =>
+  arr.sort((a, b) => b.timestamp_ms - a.timestamp_ms);
 
 //Service Worker utils
 
