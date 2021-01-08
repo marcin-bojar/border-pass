@@ -30,13 +30,13 @@ export const useAppState = () => {
     localStorage.setItem('currentCountry', currentCountry);
   }, [currentCountry]);
 
-  // useEffect(() => {
-  //   localStorage.setItem('borders', JSON.stringify(borders));
-  // }, [borders]);
+  useEffect(() => {
+    localStorage.setItem('borders', JSON.stringify(borders));
+  }, [borders]);
 
-  // useEffect(() => {
-  //   localStorage.setItem('countries', JSON.stringify(countries));
-  // }, [countries]);
+  useEffect(() => {
+    localStorage.setItem('countries', JSON.stringify(countries));
+  }, [countries]);
 
   useEffect(() => {
     localStorage.setItem('isSortedDesc', isSortedDesc);

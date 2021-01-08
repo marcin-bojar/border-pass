@@ -12,6 +12,16 @@ router.get('/', (req, res) => {
     .then(borders => res.json({ success: true, data: borders }))
     .catch(err => res.status(400).json({ success: false, error: err.message }));
 });
+// @route GET /api/borders/last
+// @desc Get the most recent border crossing
+// @public
+
+router.get('/last', (req, res) => {
+  Border.findOne()
+    .sort({ _id: -1 })
+    .then(latest => res.json({ success: true, data: latest }))
+    .catch(err => res.status(400).json({ success: false, error: err.message }));
+});
 
 // @route GET /api/borders/:id
 // @desc Get one border crossing
