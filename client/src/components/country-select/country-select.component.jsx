@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import axios from 'axios';
 
 import CountryOption from '../country-option/country-option.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -18,35 +19,23 @@ const CountrySelect = () => {
     setShowAll,
     borders,
     setBorders,
-    isSortedDesc,
     isFetchingCountries,
   } = useContext(AppContext);
 
-  const clearLastEntry = () => {
-    let startCountry;
-
-    const clearLastAsc = () => {
-      borders.pop();
-      setCurrentCountry(borders[borders.length - 1].to);
-      setBorders([...borders]);
-    };
-
-    const clearLastDesc = () => {
-      borders.shift();
-      setCurrentCountry(borders[0].to);
-      setBorders([...borders]);
-    };
-
-    if (borders.length === 1) {
-      // Before removing last item from the list save the country's value where trip began
-      startCountry = borders[0].from;
-
-      borders.pop();
-      setCurrentCountry(startCountry);
-      setBorders([...borders]);
-    } else {
-      isSortedDesc ? clearLastDesc() : clearLastAsc();
-    }
+  const undoLastEntry = () => {
+    axios
+      .delete('/api/borders/undo')
+      .then(res => {
+        const undoBorders = borders.filter(
+          border => border._id !== res.data.data._id
+        );
+        const undoCurrentCountry = res.data.data.from;
+        setBorders(undoBorders);
+        setCurrentCountry(undoCurrentCountry);
+      })
+      .catch(err =>
+        res.status(400).json({ success: false, error: err.message })
+      );
   };
 
   if (isFetchingCountries)
@@ -85,7 +74,7 @@ const CountrySelect = () => {
         <CustomButton
           clear
           disabled={borders.length === 0}
-          handleClick={clearLastEntry}
+          handleClick={undoLastEntry}
         >
           Cofnij
         </CustomButton>

@@ -12,16 +12,6 @@ router.get('/', (req, res) => {
     .then(borders => res.json({ success: true, data: borders }))
     .catch(err => res.status(400).json({ success: false, error: err.message }));
 });
-// @route GET /api/borders/last
-// @desc Get the most recent border crossing
-// @public
-
-router.get('/last', (req, res) => {
-  Border.findOne()
-    .sort({ _id: -1 })
-    .then(latest => res.json({ success: true, data: latest }))
-    .catch(err => res.status(400).json({ success: false, error: err.message }));
-});
 
 // @route GET /api/borders/:id
 // @desc Get one border crossing
@@ -71,6 +61,27 @@ router.put('/:id', (req, res) => {
           success: false,
           error:
             'Przekroczenie granicy z podanym ID nie istnieje w bazie danych',
+        });
+    })
+    .catch(err => res.status(400).json({ success: false, error: err.message }));
+});
+
+// @route DELETE /api/borders/undo
+// @desc Remove the most recent border crossing
+// @public
+
+router.delete('/undo', (req, res) => {
+  Border.findOne()
+    .sort({ _id: -1 })
+    .then(latest => {
+      if (latest) {
+        Border.deleteOne(latest).then(() =>
+          res.json({ success: true, data: latest })
+        );
+      } else
+        return res.json({
+          success: false,
+          error: 'Brak elementu do usunięcia',
         });
     })
     .catch(err => res.status(400).json({ success: false, error: err.message }));
