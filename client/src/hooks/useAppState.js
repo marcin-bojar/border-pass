@@ -1,6 +1,8 @@
 import { useState, useEffect, createContext } from 'react';
 import axios from 'axios';
 
+import { sortHistoryListByTimeAndDate } from '../utils';
+
 export const AppContext = createContext(null);
 
 export const useAppState = () => {
@@ -46,7 +48,9 @@ export const useAppState = () => {
     axios
       .get('/api/borders')
       .then(res => {
-        setBorders([...res.data.data]);
+        if (isSortedDesc)
+          setBorders([...sortHistoryListByTimeAndDate(res.data.data, 'desc')]);
+        else setBorders([...res.data.data]);
         setIsFetchingBorders(false);
       })
       .catch(err => console.log(err.message));

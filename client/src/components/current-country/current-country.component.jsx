@@ -8,6 +8,7 @@ import './current-country.styles.scss';
 
 const CurrentCountry = () => {
   const { currentCountry, setCurrentCountry } = useContext(AppContext);
+
   return (
     <div className="current-country">
       <h2 className="current-country__title">Obecnie znajdujesz się w: </h2>

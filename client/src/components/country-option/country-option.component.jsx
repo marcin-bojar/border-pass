@@ -1,16 +1,20 @@
 import React, { useContext } from 'react';
 import axios from 'axios';
 
-import { parseTimestamp } from '../../utils';
+import { parseTimestamp, sortHistoryListByTimeAndDate } from '../../utils';
 
 import { AppContext } from '../../hooks/useAppState';
 
 import './country-option.styles.scss';
 
 const CountryOption = ({ name }) => {
-  const { currentCountry, setCurrentCountry, borders, setBorders } = useContext(
-    AppContext
-  );
+  const {
+    currentCountry,
+    setCurrentCountry,
+    borders,
+    setBorders,
+    isSortedDesc,
+  } = useContext(AppContext);
 
   const handleClick = () => {
     if (currentCountry) {
@@ -33,9 +37,16 @@ const CountryOption = ({ name }) => {
       axios
         .post('/api/borders', borderPass)
         .then(res => {
-          setBorders([...borders, res.data.data]);
+          let updatedBorders = [...borders, res.data.data];
+
+          if (isSortedDesc)
+            updatedBorders = sortHistoryListByTimeAndDate(
+              updatedBorders,
+              'desc'
+            );
+          setBorders(updatedBorders);
         })
-        .catch(err => alert('Ups... ' + err));
+        .catch(err => alert('Ups... ' + err.message));
     }
     setCurrentCountry(name);
   };
