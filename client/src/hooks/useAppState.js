@@ -28,6 +28,8 @@ export const useAppState = () => {
 
   const [isFetchingCountries, setIsFetchingCountries] = useState(true);
 
+  const [disableUndoButton, setDisableUndoButton] = useState(false);
+
   useEffect(() => {
     localStorage.setItem('currentCountry', currentCountry);
   }, [currentCountry]);
@@ -98,5 +100,7 @@ export const useAppState = () => {
     setIsFetchingBorders,
     isFetchingCountries,
     setIsFetchingCountries,
+    disableUndoButton,
+    setDisableUndoButton,
   };
 };

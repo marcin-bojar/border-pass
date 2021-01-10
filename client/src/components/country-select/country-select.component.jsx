@@ -20,22 +20,22 @@ const CountrySelect = () => {
     borders,
     setBorders,
     isFetchingCountries,
+    disableUndoButton,
+    setDisableUndoButton,
   } = useContext(AppContext);
 
   const undoLastEntry = () => {
+    setDisableUndoButton(true);
     axios
       .delete('/api/borders/undo')
       .then(res => {
-        const undoBorders = borders.filter(
-          border => border._id !== res.data.data._id
-        );
+        const undoBorders = borders.filter(b => b._id !== res.data.data._id);
         const undoCurrentCountry = res.data.data.from;
         setBorders(undoBorders);
         setCurrentCountry(undoCurrentCountry);
+        setDisableUndoButton(false);
       })
-      .catch(err =>
-        res.status(400).json({ success: false, error: err.message })
-      );
+      .catch(err => alert('Ups... ' + err.message));
   };
 
   if (isFetchingCountries)
@@ -73,7 +73,7 @@ const CountrySelect = () => {
 
         <CustomButton
           clear
-          disabled={borders.length === 0}
+          disabled={borders.length === 0 || disableUndoButton}
           handleClick={undoLastEntry}
         >
           Cofnij
