@@ -24,7 +24,7 @@ const History = () => {
 
   const sortBordersByDate = () => {
     let sortedBorders;
-    sortedBorders = sortHistoryListByTimeAndDate(borders, isSortedDesc);
+    sortedBorders = sortHistoryListByTimeAndDate(borders, !isSortedDesc);
     setIsSortedDesc(!isSortedDesc);
     setBorders([...sortedBorders]);
   };
