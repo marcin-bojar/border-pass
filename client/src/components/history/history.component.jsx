@@ -23,9 +23,8 @@ const History = () => {
   } = useContext(AppContext);
 
   const sortBordersByDate = () => {
-    const order = isSortedDesc ? 'asc' : 'desc';
     let sortedBorders;
-    sortedBorders = sortHistoryListByTimeAndDate(borders, order);
+    sortedBorders = sortHistoryListByTimeAndDate(borders, isSortedDesc);
     setIsSortedDesc(!isSortedDesc);
     setBorders([...sortedBorders]);
   };

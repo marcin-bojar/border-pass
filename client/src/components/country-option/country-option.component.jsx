@@ -42,7 +42,7 @@ const CountryOption = ({ name }) => {
           if (isSortedDesc)
             updatedBorders = sortHistoryListByTimeAndDate(
               updatedBorders,
-              'desc'
+              isSortedDesc
             );
           setBorders(updatedBorders);
         })

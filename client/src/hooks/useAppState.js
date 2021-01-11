@@ -51,7 +51,9 @@ export const useAppState = () => {
       .get('/api/borders')
       .then(res => {
         if (isSortedDesc)
-          setBorders([...sortHistoryListByTimeAndDate(res.data.data, 'desc')]);
+          setBorders([
+            ...sortHistoryListByTimeAndDate(res.data.data, isSortedDesc),
+          ]);
         else setBorders([...res.data.data]);
         setIsFetchingBorders(false);
       })
