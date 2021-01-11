@@ -29,6 +29,9 @@ export const parseDate = (time, date) => {
 };
 
 export const sortHistoryListByTimeAndDate = (historyArray, isSortedDesc) => {
+  if (typeof isSortedDesc !== 'boolean')
+    throw new Error('isSortedDesc argument must be a Boolean');
+
   if (isSortedDesc)
     return historyArray.sort((a, b) => b.timestamp_ms - a.timestamp_ms);
   else return historyArray.sort((a, b) => a.timestamp_ms - b.timestamp_ms);
