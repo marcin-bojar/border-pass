@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 
-import { parseDate, sortASC, sortDESC } from '../../utils';
+import { parseDate, sortHistoryListByTimeAndDate } from '../../utils';
 
 import CustomInput from '../custom-input/custom-input.component';
 
@@ -14,12 +15,11 @@ const HistoryEditorForm = () => {
     setEditedItem,
     borders,
     setBorders,
-    currentCountry,
-    setCurrentCountry,
     isSortedDesc,
   } = useContext(AppContext);
-  const { from, to, time, date, timestamp, i } = editedItem;
-  const state = { from, to, time, date, timestamp };
+
+  const { from, to, time, date, timestamp, i, _id } = editedItem;
+  const state = { from, to, time, date, timestamp, _id };
 
   const [fields, setFields] = useState(state);
 
@@ -51,21 +51,40 @@ const HistoryEditorForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    borders[i] = fields;
-    let sortedBorders;
-    if (isSortedDesc) sortedBorders = sortDESC(borders);
-    else sortedBorders = sortASC(borders);
+    const updatedBorderPass = fields;
 
-    setBorders([...sortedBorders]);
+    axios
+      .put(`/api/borders/${_id}`, updatedBorderPass)
+      .then(res => {
+        if (res.data.success) {
+          const updatedBorders = [
+            ...borders.filter(b => b._id !== _id),
+            res.data.data,
+          ];
+          setBorders(
+            sortHistoryListByTimeAndDate(updatedBorders, isSortedDesc)
+          );
+        } else {
+          console.log(res.data.error);
+        }
+      })
+      .catch(err => alert('Ups... ' + err.message));
 
-    // If last item in the history is being edited make sure the current's country value is up to date
-    const lastIndex = borders.length - 1;
-    const lastItem = i === lastIndex;
-    const notUpToDate = borders[lastIndex].to !== currentCountry;
+    // borders[i] = fields;
+    // let sortedBorders;
+    // if (isSortedDesc) sortedBorders = sortDESC(borders);
+    // else sortedBorders = sortASC(borders);
 
-    if (lastItem && notUpToDate) {
-      setCurrentCountry(borders[i].to);
-    }
+    // setBorders([...sortedBorders]);
+
+    // // If last item in the history is being edited make sure the current's country value is up to date
+    // const lastIndex = borders.length - 1;
+    // const lastItem = i === lastIndex;
+    // const notUpToDate = borders[lastIndex].to !== currentCountry;
+
+    // if (lastItem && notUpToDate) {
+    //   setCurrentCountry(borders[i].to);
+    // }
 
     setEditedItem(null);
   };

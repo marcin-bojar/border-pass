@@ -28,13 +28,10 @@ export const parseDate = (time, date) => {
   return Date.parse(newDate + 'T' + newTime + ':00');
 };
 
-export const sortHistoryListByTimeAndDate = (historyArray, order) => {
-  if (order !== 'asc' && order !== 'desc')
-    throw new Error("Order argument must have 'asc' or 'desc' value ");
-
-  if (order === 'asc')
-    return historyArray.sort((a, b) => a.timestamp_ms - b.timestamp_ms);
-  else return historyArray.sort((a, b) => b.timestamp_ms - a.timestamp_ms);
+export const sortHistoryListByTimeAndDate = (historyArray, isSortedDesc) => {
+  if (isSortedDesc)
+    return historyArray.sort((a, b) => b.timestamp_ms - a.timestamp_ms);
+  else return historyArray.sort((a, b) => a.timestamp_ms - b.timestamp_ms);
 };
 
 //Service Worker utils
