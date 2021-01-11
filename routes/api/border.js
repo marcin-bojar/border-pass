@@ -69,7 +69,6 @@ router.put('/:id', (req, res) => {
 // @route DELETE /api/borders/undo
 // @desc Remove the most recent border crossing
 // @public
-
 router.delete('/undo', (req, res) => {
   Border.findOne()
     .sort({ _id: -1 })
@@ -84,6 +83,15 @@ router.delete('/undo', (req, res) => {
           error: 'Brak elementu do usunięcia',
         });
     })
+    .catch(err => res.status(400).json({ success: false, error: err.message }));
+});
+
+// @route DELETE /api/borders/clear
+// @desc Delete all border crossings
+// @public
+router.delete('/clear', (req, res) => {
+  Border.deleteMany({})
+    .then(() => res.json({ success: true, data: [] }))
     .catch(err => res.status(400).json({ success: false, error: err.message }));
 });
 

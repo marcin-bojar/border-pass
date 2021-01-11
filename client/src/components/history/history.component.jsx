@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import axios from 'axios';
 
 import HistoryItem from '../history-item/history-item.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -29,6 +30,26 @@ const History = () => {
     setBorders([...sortedBorders]);
   };
 
+  const handleDeleteAll = () => {
+    if (borders.length === 0) {
+      alert('Brak zapisanych danych w historii.');
+      return;
+    }
+
+    const confirm = prompt(
+      "Spowoduje to NIEODWRACALNE usunięcie całej historii!\nWpisz 'TAK', aby usunąć."
+    );
+    if (confirm && confirm.toUpperCase() === 'TAK') {
+      axios
+        .delete('/api/borders/clear')
+        .then(res => {
+          if (res.data.success) setBorders([]);
+          else alert('Ups... ' + res.data.error);
+        })
+        .catch(err => alert('Ups... ' + err.message));
+    }
+  };
+
   if (isFetchingBorders)
     return (
       <div className="history">
@@ -54,15 +75,7 @@ const History = () => {
           </p>
         </div>
 
-        <CustomButton
-          clear
-          handleClick={() => {
-            const confirm = prompt(
-              "Spowoduje to usunięcie całej historii!\nWpisz 'TAK', aby usunąć."
-            );
-            if (confirm && confirm.toUpperCase() === 'TAK') setBorders([]);
-          }}
-        >
+        <CustomButton clear handleClick={handleDeleteAll}>
           Wyczyść
         </CustomButton>
       </div>
