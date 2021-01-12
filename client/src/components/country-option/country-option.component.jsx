@@ -47,8 +47,7 @@ const CountryOption = ({ name }) => {
           setBorders(updatedBorders);
         })
         .catch(err => alert('Ups... ' + err.message));
-    }
-    setCurrentCountry(name);
+    } else setCurrentCountry(name);
   };
 
   return (

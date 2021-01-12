@@ -65,28 +65,11 @@ const HistoryEditorForm = () => {
             sortHistoryListByTimeAndDate(updatedBorders, isSortedDesc)
           );
         } else {
-          console.log(res.data.error);
+          alert(res.data.error);
         }
+        setEditedItem(null);
       })
       .catch(err => alert('Ups... ' + err.message));
-
-    // borders[i] = fields;
-    // let sortedBorders;
-    // if (isSortedDesc) sortedBorders = sortDESC(borders);
-    // else sortedBorders = sortASC(borders);
-
-    // setBorders([...sortedBorders]);
-
-    // // If last item in the history is being edited make sure the current's country value is up to date
-    // const lastIndex = borders.length - 1;
-    // const lastItem = i === lastIndex;
-    // const notUpToDate = borders[lastIndex].to !== currentCountry;
-
-    // if (lastItem && notUpToDate) {
-    //   setCurrentCountry(borders[i].to);
-    // }
-
-    setEditedItem(null);
   };
 
   return (

@@ -14,7 +14,6 @@ const CountrySelect = () => {
   const {
     countries,
     currentCountry,
-    setCurrentCountry,
     showAll,
     setShowAll,
     borders,
@@ -30,9 +29,7 @@ const CountrySelect = () => {
       .delete('/api/borders/undo')
       .then(res => {
         const undoBorders = borders.filter(b => b._id !== res.data.data._id);
-        const undoCurrentCountry = res.data.data.from;
         setBorders(undoBorders);
-        setCurrentCountry(undoCurrentCountry);
         setDisableUndoButton(false);
       })
       .catch(err => alert('Ups... ' + err.message));
