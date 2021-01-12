@@ -1,13 +1,25 @@
 import React, { useContext } from 'react';
 
 import CustomButton from '../custom-button/custom-button.component';
+import Welcome from '../welcome/welcome.component';
+import Loader from '../loader/loader.component';
 
 import { AppContext } from '../../hooks/useAppState';
 
 import './current-country.styles.scss';
 
 const CurrentCountry = () => {
-  const { currentCountry, setCurrentCountry } = useContext(AppContext);
+  const { currentCountry, setCurrentCountry, isFetchingBorders } = useContext(
+    AppContext
+  );
+
+  if (isFetchingBorders)
+    return (
+      <div className="current-country">
+        <Loader />
+      </div>
+    );
+  else if (!currentCountry) return <Welcome />;
 
   return (
     <div className="current-country">

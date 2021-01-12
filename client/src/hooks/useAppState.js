@@ -6,9 +6,7 @@ import { sortHistoryListByTimeAndDate } from '../utils';
 export const AppContext = createContext(null);
 
 export const useAppState = () => {
-  const [currentCountry, setCurrentCountry] = useState(
-    localStorage.getItem('currentCountry') || ''
-  );
+  const [currentCountry, setCurrentCountry] = useState('');
 
   const [countries, setCountries] = useState([]);
 
@@ -31,11 +29,11 @@ export const useAppState = () => {
   const [disableUndoButton, setDisableUndoButton] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('currentCountry', currentCountry);
-  }, [currentCountry]);
-
-  useEffect(() => {
     localStorage.setItem('borders', JSON.stringify(borders));
+    const length = borders.length;
+    if (!length) setCurrentCountry('');
+    else if (length && isSortedDesc) setCurrentCountry(borders[0].to);
+    else if (length && !isSortedDesc) setCurrentCountry(borders[length - 1].to);
   }, [borders]);
 
   useEffect(() => {
