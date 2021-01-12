@@ -41,7 +41,7 @@ export const sortHistoryListByTimeAndDate = (historyArray, isSortedDesc) => {
 
 export const registerSW = () => {
   if ('serviceWorker' in navigator) {
-    const swURL = '/border-pass/sw.js';
+    const swURL = 'sw.js';
 
     window.addEventListener('load', () => {
       navigator.serviceWorker
