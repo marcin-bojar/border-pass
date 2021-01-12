@@ -50,12 +50,7 @@ const History = () => {
     }
   };
 
-  if (isFetchingBorders)
-    return (
-      <div className="history">
-        <Loader />
-      </div>
-    );
+  if (isFetchingBorders) return <Loader />;
 
   return (
     <div className="history">

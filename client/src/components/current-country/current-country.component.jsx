@@ -13,12 +13,7 @@ const CurrentCountry = () => {
     AppContext
   );
 
-  if (isFetchingBorders)
-    return (
-      <div className="current-country">
-        <Loader />
-      </div>
-    );
+  if (isFetchingBorders) return <Loader />;
   else if (!currentCountry) return <Welcome />;
 
   return (

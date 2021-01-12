@@ -38,12 +38,7 @@ const CountrySelect = () => {
       .catch(err => alert('Ups... ' + err.message));
   };
 
-  if (isFetchingCountries)
-    return (
-      <div className="country-select">
-        <Loader />
-      </div>
-    );
+  if (isFetchingCountries) return <Loader />;
 
   return (
     <div className="country-select">
