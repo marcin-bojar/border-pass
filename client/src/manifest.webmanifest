@@ -1,7 +1,7 @@
 {
   "name": "Border Pass",
   "short_name": "Border Pass",
-  "start_url": "/border-pass/",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#540977",
   "theme_color": "#540977",
