@@ -8,4 +8,9 @@ const CountrySchema = new Schema({
   },
 });
 
-module.exports = Country = mongoose.model('country', CountrySchema);
+Country = mongoose.model('country', CountrySchema);
+
+module.exports = {
+  CountrySchema,
+  Country,
+};

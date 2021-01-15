@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const Border = require('../../models/Border');
+const Border = require('../../models/Border').Border;
 
 // @route GET /api/borders
 // @desc Get all border crossings

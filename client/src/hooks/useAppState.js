@@ -64,21 +64,6 @@ export const useAppState = () => {
         setIsFetchingCountries(false);
       })
       .catch(err => console.log(err.message));
-
-    // borders.forEach(border => {
-    //   axios
-    //     .post('http://localhost:5000/api/borders', border)
-    //     .then(res => console.log(res.data))
-    //     .catch(err => console.log(err));
-    // });
-
-    // countries.forEach(c => {
-    //   console.log({ name: c });
-    //   axios
-    //     .post('http://localhost:5000/api/countries', { name: c })
-    //     .then(res => console.log(res.data))
-    //     .catch(err => console.log(err));
-    // });
   }, []);
 
   return {

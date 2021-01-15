@@ -31,4 +31,9 @@ BorderSchema.virtual('timestamp_ms').get(function () {
   return this.timestamp.getTime();
 });
 
-module.exports = Border = mongoose.model('border', BorderSchema);
+Border = mongoose.model('border', BorderSchema);
+
+module.exports = {
+  Border,
+  BorderSchema,
+};

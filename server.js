@@ -3,9 +3,6 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const path = require('path');
 
-const border = require('./routes/api/border');
-const country = require('./routes/api/country');
-
 const app = express();
 
 app.use(express.json());
@@ -21,8 +18,9 @@ mongoose
   .catch(err => console.log(err));
 
 //Use routes
-app.use('/api/borders', border);
-app.use('/api/countries', country);
+app.use('/api/borders', require('./routes/api/borders'));
+app.use('/api/countries', require('./routes/api/countries'));
+app.use('/api/users', require('./routes/api/users'));
 
 //Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

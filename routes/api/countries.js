@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const Country = require('../../models/Country');
+const Country = require('../../models/Country').Country;
 
 // @route GET /api/countries
 // @desc Get all countries
