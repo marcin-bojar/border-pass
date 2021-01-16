@@ -18,6 +18,7 @@ const checkIfAllFieldsAreFilledIn = (req, res, next) => {
 
   if (!name || !email || !password)
     res.status(400).json({ success: false, error: 'Wypełnij wszystkie pola!' });
+  else next();
 };
 
 module.exports = signupValidation = {
