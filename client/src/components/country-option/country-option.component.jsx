@@ -9,6 +9,8 @@ import './country-option.styles.scss';
 
 const CountryOption = ({ name }) => {
   const {
+    currentUser,
+    setCurrentUser,
     currentCountry,
     setCurrentCountry,
     borders,
@@ -25,6 +27,7 @@ const CountryOption = ({ name }) => {
 
       const timestamp = Date.now();
       const { time, date } = parseTimestamp(timestamp);
+      const { id } = currentUser;
 
       const borderPass = {
         from: currentCountry,
@@ -45,6 +48,13 @@ const CountryOption = ({ name }) => {
               isSortedDesc
             );
           setBorders(updatedBorders);
+        })
+        .catch(err => alert('Ups... ' + err.message));
+
+      axios
+        .post(`/api/users/${id}/borders`, borderPass)
+        .then(res => {
+          setCurrentUser(res.data.data);
         })
         .catch(err => alert('Ups... ' + err.message));
     } else setCurrentCountry(name);

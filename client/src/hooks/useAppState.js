@@ -6,27 +6,24 @@ import { sortHistoryListByTimeAndDate } from '../utils';
 export const AppContext = createContext(null);
 
 export const useAppState = () => {
+  const [currentUser, setCurrentUser] = useState(null);
   const [currentCountry, setCurrentCountry] = useState('');
-
   const [countries, setCountries] = useState([]);
-
   const [borders, setBorders] = useState([]);
-
   const [showAll, setShowAll] = useState(false);
-
   const [editMode, setEditMode] = useState(false);
-
   const [editedItem, setEditedItem] = useState(null);
-
   const [isSortedDesc, setIsSortedDesc] = useState(
     Boolean(localStorage.getItem('isSortedDesc') === 'true') || false
   );
-
   const [isFetchingBorders, setIsFetchingBorders] = useState(true);
-
   const [isFetchingCountries, setIsFetchingCountries] = useState(true);
-
   const [disableUndoButton, setDisableUndoButton] = useState(false);
+
+  useEffect(() => {
+    if (currentUser) setBorders(currentUser.borders);
+    console.log(currentUser);
+  }, [currentUser]);
 
   useEffect(() => {
     localStorage.setItem('borders', JSON.stringify(borders));
@@ -67,6 +64,8 @@ export const useAppState = () => {
   }, []);
 
   return {
+    currentUser,
+    setCurrentUser,
     currentCountry,
     setCurrentCountry,
     borders,

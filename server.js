@@ -21,6 +21,7 @@ mongoose
 app.use('/api/borders', require('./routes/api/borders'));
 app.use('/api/countries', require('./routes/api/countries'));
 app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/users', require('./routes/api/users'));
 
 //Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

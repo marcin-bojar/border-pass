@@ -44,6 +44,8 @@ router.post(
                 id: user.id,
                 name: user.name,
                 email: user.email,
+                borders: user.borders,
+                countries: user.countries,
               },
             });
           }
@@ -91,6 +93,8 @@ router.post('/login', (req, res) => {
                   id: user.id,
                   name: user.name,
                   email: user.email,
+                  borders: user.borders,
+                  countries: user.countries,
                 },
               });
             }
