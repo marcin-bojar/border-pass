@@ -31,15 +31,26 @@ const SignIn = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <CustomInput name="email" label="Email" handleChange={handleChange} />
-      <CustomInput
-        name="password"
-        label="Password"
-        handleChange={handleChange}
-      />
-      <CustomButton>Zaloguj</CustomButton>
-    </form>
+    <div className="sign-in">
+      <h3 className="sign-in__title">Zaloguj się</h3>
+      <form className="sign-in__form" onSubmit={handleSubmit}>
+        <div className="sign-in__inputs-wrapper">
+          <CustomInput
+            name="email"
+            label="Email"
+            value={userCredentials.email}
+            handleChange={handleChange}
+          />
+          <CustomInput
+            name="password"
+            label="Password"
+            value={userCredentials.password}
+            handleChange={handleChange}
+          />
+        </div>
+        <CustomButton>Zaloguj</CustomButton>
+      </form>
+    </div>
   );
 };
 

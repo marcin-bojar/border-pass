@@ -1,0 +1,16 @@
+@import '../../sass/mixins';
+
+.sign-in {
+  @include sections-common-styles;
+
+  &__title {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  &__inputs-wrapper {
+    .custom-input {
+      margin-bottom: 2rem;
+    }
+  }
+}
