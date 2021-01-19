@@ -12,6 +12,8 @@ import './country-select.styles.scss';
 
 const CountrySelect = () => {
   const {
+    currentUser,
+    setCurrentUser,
     countries,
     currentCountry,
     showAll,
@@ -19,20 +21,28 @@ const CountrySelect = () => {
     borders,
     setBorders,
     isFetchingCountries,
+    isSortedDesc,
     disableUndoButton,
     setDisableUndoButton,
   } = useContext(AppContext);
 
   const undoLastEntry = () => {
     setDisableUndoButton(true);
-    axios
-      .delete('/api/borders/undo')
-      .then(res => {
-        const undoBorders = borders.filter(b => b._id !== res.data.data._id);
-        setBorders(undoBorders);
-        setDisableUndoButton(false);
-      })
-      .catch(err => alert('Ups... ' + err.message));
+    if (currentUser) {
+      const { _id } = currentUser;
+
+      axios
+        .delete(`/api/users/${_id}/borders`)
+        .then(res => {
+          setCurrentUser(res.data.data);
+          setDisableUndoButton(false);
+        })
+        .catch(err => alert('Ups... ' + err.message));
+    } else {
+      isSortedDesc ? borders.shift() : borders.pop();
+      setBorders([...borders]);
+      setDisableUndoButton(false);
+    }
   };
 
   if (isFetchingCountries) return <Loader />;

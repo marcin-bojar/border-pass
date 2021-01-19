@@ -16,17 +16,19 @@ export const useAppState = () => {
   const [isSortedDesc, setIsSortedDesc] = useState(
     Boolean(localStorage.getItem('isSortedDesc') === 'true') || false
   );
-  const [isFetchingBorders, setIsFetchingBorders] = useState(true);
+  const [isFetchingBorders, setIsFetchingBorders] = useState(false);
   const [isFetchingCountries, setIsFetchingCountries] = useState(true);
   const [disableUndoButton, setDisableUndoButton] = useState(false);
 
   useEffect(() => {
     if (currentUser) setBorders(currentUser.borders);
+    else setBorders(JSON.parse(localStorage.getItem('borders')));
     console.log(currentUser);
   }, [currentUser]);
 
   useEffect(() => {
-    localStorage.setItem('borders', JSON.stringify(borders));
+    if (!currentUser) localStorage.setItem('borders', JSON.stringify(borders));
+
     const length = borders.length;
     if (!length) setCurrentCountry('');
     else if (length && isSortedDesc) setCurrentCountry(borders[0].to);
@@ -42,18 +44,6 @@ export const useAppState = () => {
   }, [isSortedDesc]);
 
   useEffect(() => {
-    axios
-      .get('/api/borders')
-      .then(res => {
-        if (isSortedDesc)
-          setBorders([
-            ...sortHistoryListByTimeAndDate(res.data.data, isSortedDesc),
-          ]);
-        else setBorders([...res.data.data]);
-        setIsFetchingBorders(false);
-      })
-      .catch(err => console.log(err.message));
-
     axios
       .get('/api/countries')
       .then(res => {
