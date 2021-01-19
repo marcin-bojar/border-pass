@@ -37,6 +37,11 @@ export const sortHistoryListByTimeAndDate = (historyArray, isSortedDesc) => {
   else return historyArray.sort((a, b) => a.timestamp_ms - b.timestamp_ms);
 };
 
+export const sortUsersBorders = (user, isSortedDesc) => {
+  user.borders = sortHistoryListByTimeAndDate(user.borders, isSortedDesc);
+  return user;
+};
+
 //Service Worker utils
 
 export const registerSW = () => {

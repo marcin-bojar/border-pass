@@ -21,8 +21,17 @@ export const useAppState = () => {
   const [disableUndoButton, setDisableUndoButton] = useState(false);
 
   useEffect(() => {
-    if (currentUser) setBorders(currentUser.borders);
-    else setBorders(JSON.parse(localStorage.getItem('borders')));
+    if (currentUser)
+      setBorders(
+        sortHistoryListByTimeAndDate(currentUser.borders, isSortedDesc)
+      );
+    else
+      setBorders(
+        sortHistoryListByTimeAndDate(
+          JSON.parse(localStorage.getItem('borders')),
+          isSortedDesc
+        )
+      );
     console.log(currentUser);
   }, [currentUser]);
 

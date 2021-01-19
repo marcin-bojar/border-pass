@@ -1,7 +1,11 @@
 import React, { useContext } from 'react';
 import axios from 'axios';
 
-import { parseTimestamp, sortHistoryListByTimeAndDate } from '../../utils';
+import {
+  parseTimestamp,
+  sortUsersBorders,
+  sortHistoryListByTimeAndDate,
+} from '../../utils';
 
 import { AppContext } from '../../hooks/useAppState';
 
@@ -41,25 +45,21 @@ const CountryOption = ({ name }) => {
 
         axios
           .post('/api/borders', borderPass)
-          .then(res => {
-            let updatedBorders = [...borders, res.data.data];
-
-            if (isSortedDesc)
-              updatedBorders = sortHistoryListByTimeAndDate(
-                updatedBorders,
-                isSortedDesc
-              );
-          })
           .catch(err => alert('Ups... ' + err.message));
 
         axios
           .post(`/api/users/${_id}/borders`, borderPass)
           .then(res => {
-            setCurrentUser(res.data.data);
+            const user = sortUsersBorders(res.data.data, isSortedDesc);
+            setCurrentUser(user);
           })
           .catch(err => alert('Ups... ' + err.message));
       } else {
-        setBorders([...borders, borderPass]);
+        const updatedBorders = sortHistoryListByTimeAndDate(
+          [...borders, { ...borderPass, timestamp_ms: timestamp }],
+          isSortedDesc
+        );
+        setBorders(updatedBorders);
       }
     } else setCurrentCountry(name);
   };

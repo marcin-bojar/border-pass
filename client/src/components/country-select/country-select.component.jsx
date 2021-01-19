@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import axios from 'axios';
 
+import { sortUsersBorders } from '../../utils';
+
 import CountryOption from '../country-option/country-option.component';
 import CustomButton from '../custom-button/custom-button.component';
 import AddCountry from '../add-country/add-country.component';
@@ -34,7 +36,8 @@ const CountrySelect = () => {
       axios
         .delete(`/api/users/${_id}/borders`)
         .then(res => {
-          setCurrentUser(res.data.data);
+          const user = sortUsersBorders(res.data.data, isSortedDesc);
+          setCurrentUser(user);
           setDisableUndoButton(false);
         })
         .catch(err => alert('Ups... ' + err.message));
