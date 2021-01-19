@@ -41,7 +41,7 @@ router.post(
               success: true,
               data: {
                 token,
-                id: user.id,
+                _id: user.id,
                 name: user.name,
                 email: user.email,
                 borders: user.borders,
@@ -86,11 +86,11 @@ router.post('/login', (req, res) => {
             (err, token) => {
               if (err) throw err;
 
-              res.json({
+              return res.json({
                 success: true,
                 data: {
                   token,
-                  id: user.id,
+                  _id: user.id,
                   name: user.name,
                   email: user.email,
                   borders: user.borders,

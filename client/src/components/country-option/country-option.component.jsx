@@ -27,7 +27,6 @@ const CountryOption = ({ name }) => {
 
       const timestamp = Date.now();
       const { time, date } = parseTimestamp(timestamp);
-      const { id } = currentUser;
 
       const borderPass = {
         from: currentCountry,
@@ -37,26 +36,31 @@ const CountryOption = ({ name }) => {
         timestamp,
       };
 
-      axios
-        .post('/api/borders', borderPass)
-        .then(res => {
-          let updatedBorders = [...borders, res.data.data];
+      if (currentUser) {
+        const { _id } = currentUser;
 
-          if (isSortedDesc)
-            updatedBorders = sortHistoryListByTimeAndDate(
-              updatedBorders,
-              isSortedDesc
-            );
-          setBorders(updatedBorders);
-        })
-        .catch(err => alert('Ups... ' + err.message));
+        axios
+          .post('/api/borders', borderPass)
+          .then(res => {
+            let updatedBorders = [...borders, res.data.data];
 
-      axios
-        .post(`/api/users/${id}/borders`, borderPass)
-        .then(res => {
-          setCurrentUser(res.data.data);
-        })
-        .catch(err => alert('Ups... ' + err.message));
+            if (isSortedDesc)
+              updatedBorders = sortHistoryListByTimeAndDate(
+                updatedBorders,
+                isSortedDesc
+              );
+          })
+          .catch(err => alert('Ups... ' + err.message));
+
+        axios
+          .post(`/api/users/${_id}/borders`, borderPass)
+          .then(res => {
+            setCurrentUser(res.data.data);
+          })
+          .catch(err => alert('Ups... ' + err.message));
+      } else {
+        setBorders([...borders, borderPass]);
+      }
     } else setCurrentCountry(name);
   };
 
