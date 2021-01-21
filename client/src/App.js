@@ -5,6 +5,7 @@ import CountrySelect from './components/country-select/country-select.component'
 import CurrentCountry from './components/current-country/current-country.component';
 import History from './components/history/history.component';
 import SignIn from './components/sign-in/sign-in.component';
+import SignUp from './components/sign-up/sign-up.component';
 
 import { AppContext, useAppState } from './hooks/useAppState';
 
@@ -18,6 +19,7 @@ const App = () => {
       <AppContext.Provider value={appState}>
         <Heading />
         <SignIn />
+        <SignUp />
         <CurrentCountry />
         <CountrySelect />
         <History />

@@ -1,15 +1,19 @@
 import { useState, useEffect, createContext } from 'react';
-import axios from 'axios';
 
 import { sortHistoryListByTimeAndDate } from '../utils';
+import defaultCountries from '../../../helpers/defaultCountries';
 
 export const AppContext = createContext(null);
 
 export const useAppState = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [currentCountry, setCurrentCountry] = useState('');
-  const [countries, setCountries] = useState([]);
-  const [borders, setBorders] = useState([]);
+  const [countries, setCountries] = useState(
+    JSON.parse(localStorage.getItem('countries')) || defaultCountries
+  );
+  const [borders, setBorders] = useState(
+    JSON.parse(localStorage.getItem('borders')) || []
+  );
   const [showAll, setShowAll] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editedItem, setEditedItem] = useState(null);
@@ -17,23 +21,8 @@ export const useAppState = () => {
     Boolean(localStorage.getItem('isSortedDesc') === 'true') || false
   );
   const [isFetchingBorders, setIsFetchingBorders] = useState(false);
-  const [isFetchingCountries, setIsFetchingCountries] = useState(true);
+  const [isFetchingCountries, setIsFetchingCountries] = useState(false);
   const [disableUndoButton, setDisableUndoButton] = useState(false);
-
-  useEffect(() => {
-    if (currentUser)
-      setBorders(
-        sortHistoryListByTimeAndDate(currentUser.borders, isSortedDesc)
-      );
-    else
-      setBorders(
-        sortHistoryListByTimeAndDate(
-          JSON.parse(localStorage.getItem('borders')),
-          isSortedDesc
-        )
-      );
-    console.log(currentUser);
-  }, [currentUser]);
 
   useEffect(() => {
     if (!currentUser) localStorage.setItem('borders', JSON.stringify(borders));
@@ -45,7 +34,8 @@ export const useAppState = () => {
   }, [borders]);
 
   useEffect(() => {
-    localStorage.setItem('countries', JSON.stringify(countries));
+    if (!currentUser)
+      localStorage.setItem('countries', JSON.stringify(countries));
   }, [countries]);
 
   useEffect(() => {
@@ -53,14 +43,22 @@ export const useAppState = () => {
   }, [isSortedDesc]);
 
   useEffect(() => {
-    axios
-      .get('/api/countries')
-      .then(res => {
-        setCountries([...res.data.data]);
-        setIsFetchingCountries(false);
-      })
-      .catch(err => console.log(err.message));
-  }, []);
+    if (currentUser) {
+      setBorders(
+        sortHistoryListByTimeAndDate(currentUser.borders, isSortedDesc)
+      );
+      setCountries(currentUser.countries);
+    } else {
+      setBorders(
+        sortHistoryListByTimeAndDate(
+          JSON.parse(localStorage.getItem('borders')),
+          isSortedDesc
+        )
+      );
+      setCountries(JSON.parse(localStorage.getItem('countries')));
+    }
+    console.log(currentUser);
+  }, [currentUser]);
 
   return {
     currentUser,

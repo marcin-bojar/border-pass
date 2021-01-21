@@ -25,6 +25,24 @@
   }
 }
 
+@mixin sign-in-sign-up-styles {
+  @include sections-common-styles;
+
+  &__title {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  &__inputs-wrapper {
+    width: 50%;
+    margin: 0 auto;
+
+    .custom-input {
+      margin-bottom: 2rem;
+    }
+  }
+}
+
 @mixin shrink {
   top: -0.85rem;
   left: 30%;

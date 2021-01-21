@@ -29,4 +29,17 @@ router.delete('/:id/borders', (req, res) => {
     .catch(err => res.status(400).json({ success: false, error: err.message }));
 });
 
+// @route POST /api/users/:id/countries
+// @desc Add new country to user's countries array
+// @private
+router.post('/:id/countries', (req, res) => {
+  User.findById(req.params.id)
+    .then(user => {
+      user.countries.push(req.body);
+      user.save();
+      return res.json({ success: true, data: user });
+    })
+    .catch(err => res.status(400).json({ success: false, error: err.message }));
+});
+
 module.exports = router;
