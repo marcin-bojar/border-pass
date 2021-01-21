@@ -28,13 +28,16 @@ export const parseDate = (time, date) => {
   return Date.parse(newDate + 'T' + newTime + ':00');
 };
 
-export const sortHistoryListByTimeAndDate = (historyArray, isSortedDesc) => {
+export const sortHistoryListByTimeAndDate = (
+  historyArray,
+  isSortedDesc,
+  sortBy = 'timestamp_ms'
+) => {
   if (typeof isSortedDesc !== 'boolean')
     throw new Error('isSortedDesc argument must be a Boolean');
 
-  if (isSortedDesc)
-    return historyArray.sort((a, b) => b.timestamp_ms - a.timestamp_ms);
-  else return historyArray.sort((a, b) => a.timestamp_ms - b.timestamp_ms);
+  if (isSortedDesc) return historyArray.sort((a, b) => b[sortBy] - a[sortBy]);
+  else return historyArray.sort((a, b) => a[sortBy] - b[sortBy]);
 };
 
 export const sortUsersBorders = (user, isSortedDesc) => {

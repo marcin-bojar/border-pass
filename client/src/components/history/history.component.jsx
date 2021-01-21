@@ -14,6 +14,7 @@ import './history.styles.scss';
 
 const History = () => {
   const {
+    currentUser,
     borders,
     setBorders,
     editMode,
@@ -25,7 +26,14 @@ const History = () => {
 
   const sortBordersByDate = () => {
     let sortedBorders;
-    sortedBorders = sortHistoryListByTimeAndDate(borders, !isSortedDesc);
+    if (currentUser)
+      sortedBorders = sortHistoryListByTimeAndDate(borders, !isSortedDesc);
+    else
+      sortedBorders = sortHistoryListByTimeAndDate(
+        borders,
+        !isSortedDesc,
+        'timestamp'
+      );
     setIsSortedDesc(!isSortedDesc);
     setBorders([...sortedBorders]);
   };

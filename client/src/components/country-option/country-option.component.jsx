@@ -56,8 +56,9 @@ const CountryOption = ({ name }) => {
           .catch(err => alert('Ups... ' + err.message));
       } else {
         const updatedBorders = sortHistoryListByTimeAndDate(
-          [...borders, { ...borderPass, timestamp_ms: timestamp }],
-          isSortedDesc
+          [...borders, borderPass],
+          isSortedDesc,
+          'timestamp'
         );
         setBorders(updatedBorders);
       }
