@@ -35,6 +35,15 @@ router.delete('/:id/borders', (req, res) => {
 router.post('/:id/countries', (req, res) => {
   User.findById(req.params.id)
     .then(user => {
+      const countryExists = user.countries.find(
+        el => el.name === req.body.name
+      );
+      if (countryExists) {
+        return res.json({
+          success: false,
+          error: 'Ten kraj jest już na liście.',
+        });
+      }
       user.countries.push(req.body);
       user.save();
       return res.json({ success: true, data: user });

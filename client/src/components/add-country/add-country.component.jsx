@@ -10,7 +10,7 @@ import './add-country.styles.scss';
 
 const AddCountry = () => {
   const { inputValue, setInputValue, handleChange } = useSingleInput();
-  const { countries, setCountries } = useContext(AppContext);
+  const { countries, setCountries, currentUser } = useContext(AppContext);
   const [isAdding, setIsAdding] = useState(false);
 
   const handleSubmit = e => {
@@ -22,19 +22,33 @@ const AddCountry = () => {
     setIsAdding(true);
     const newCountry = { name };
 
-    axios
-      .post('/api/countries', newCountry)
-      .then(res => {
-        if (res.data.success) {
-          setCountries([...countries, res.data.data]);
-          setInputValue('');
-          setIsAdding(false);
-        } else {
-          alert(res.data.error);
-          setIsAdding(false);
-        }
-      })
-      .catch(err => alert('Ups... ' + err));
+    if (currentUser) {
+      const { _id } = currentUser;
+
+      axios
+        .post(`/api/users/${_id}/countries`, newCountry)
+        .then(res => {
+          if (res.data.success) {
+            setCountries([...res.data.data.countries]);
+            setInputValue('');
+            setIsAdding(false);
+          } else {
+            alert(res.data.error);
+            setIsAdding(false);
+          }
+        })
+        .catch(err => alert('Ups... ' + err));
+    } else {
+      const countryExists = countries.find(el => el.name === name);
+      if (countryExists) {
+        alert('Ten kraj jest już na liście.');
+        setIsAdding(false);
+      } else {
+        setCountries([...countries, { name }]);
+        setInputValue('');
+        setIsAdding(false);
+      }
+    }
   };
 
   return (
