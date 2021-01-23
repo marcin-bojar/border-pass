@@ -107,4 +107,27 @@ router.post('/login', (req, res) => {
     .catch(err => res.status(400).json({ success: false, error: err.message }));
 });
 
+// @route GET /api/auth/user
+// @desc Authenticate user with token
+// @public
+router.get('/user', (req, res) => {
+  const token = req.header('x-access-token');
+
+  if (!token)
+    return res
+      .status(401)
+      .json({ success: false, error: 'Użytkownik nieznany' });
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err)
+      return res.status(401).json({ success: false, error: err.message });
+
+    User.findById(decoded.id)
+      .then(user => res.json({ success: true, data: user }))
+      .catch(err =>
+        res.status(400).json({ success: false, error: err.message })
+      );
+  });
+});
+
 module.exports = router;

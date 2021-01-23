@@ -26,8 +26,14 @@ const SignIn = () => {
 
     axios
       .post('/api/auth/login', userCredentials)
-      .then(res => setCurrentUser(res.data.data))
-      .catch(err => console.log(err));
+      .then(res => {
+        localStorage.setItem('token', JSON.stringify(res.data.data.token));
+        setCurrentUser(res.data.data);
+      })
+      .catch(err => {
+        localStorage.removeItem('token');
+        console.log(err);
+      });
   };
 
   return (

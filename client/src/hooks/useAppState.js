@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from 'react';
+import axios from 'axios';
 
 import { sortHistoryListByTimeAndDate } from '../utils';
 import defaultCountries from '../../../helpers/defaultCountries';
@@ -7,6 +8,9 @@ export const AppContext = createContext(null);
 
 export const useAppState = () => {
   const [currentUser, setCurrentUser] = useState(null);
+  const [token, setToken] = useState(
+    JSON.parse(localStorage.getItem('token')) || null
+  );
   const [currentCountry, setCurrentCountry] = useState('');
   const [countries, setCountries] = useState(
     JSON.parse(localStorage.getItem('countries')) || defaultCountries
@@ -57,6 +61,19 @@ export const useAppState = () => {
     }
     console.log(currentUser);
   }, [currentUser]);
+
+  useEffect(() => {
+    const config = {
+      headers: {},
+    };
+
+    if (token) config.headers['x-access-token'] = token;
+
+    axios
+      .get('/api/auth/user', config)
+      .then(res => setCurrentUser(res.data.data))
+      .catch(err => console.log(err.message));
+  }, []);
 
   return {
     currentUser,
