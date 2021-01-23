@@ -40,6 +40,7 @@ const AddCountry = () => {
         .catch(err => alert('Ups... ' + err));
     } else {
       const countryExists = countries.find(el => el.name === name);
+
       if (countryExists) {
         alert('Ten kraj jest już na liście.');
         setIsAdding(false);

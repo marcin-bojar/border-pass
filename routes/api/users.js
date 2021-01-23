@@ -29,6 +29,20 @@ router.delete('/:id/borders', (req, res) => {
     .catch(err => res.status(400).json({ success: false, error: err.message }));
 });
 
+// @route PUT /api/users/:userId/borders/:borderId
+// @desc Post new border crossing to user's borders array
+// @private
+router.put('/:userId/borders/:borderId', (req, res) => {
+  User.findById(req.params.userId)
+    .then(user => {
+      const borderToUpdate = user.borders.id(req.params.borderId);
+      borderToUpdate.set(req.body);
+      user.save();
+      return res.json({ success: true, data: user });
+    })
+    .catch(err => res.status(400).json({ success: false, error: err.message }));
+});
+
 // @route POST /api/users/:id/countries
 // @desc Add new country to user's countries array
 // @private

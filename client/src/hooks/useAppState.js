@@ -25,7 +25,12 @@ export const useAppState = () => {
   const [disableUndoButton, setDisableUndoButton] = useState(false);
 
   useEffect(() => {
-    if (!currentUser) localStorage.setItem('borders', JSON.stringify(borders));
+    if (!currentUser) {
+      localStorage.setItem('borders', JSON.stringify(borders));
+      sortHistoryListByTimeAndDate(borders, isSortedDesc, 'timestamp');
+    } else {
+      sortHistoryListByTimeAndDate(borders, isSortedDesc);
+    }
 
     const length = borders.length;
     if (!length) setCurrentCountry('');
@@ -44,17 +49,10 @@ export const useAppState = () => {
 
   useEffect(() => {
     if (currentUser) {
-      setBorders(
-        sortHistoryListByTimeAndDate(currentUser.borders, isSortedDesc)
-      );
+      setBorders(currentUser.borders);
       setCountries(currentUser.countries);
     } else {
-      setBorders(
-        sortHistoryListByTimeAndDate(
-          JSON.parse(localStorage.getItem('borders')),
-          isSortedDesc
-        )
-      );
+      setBorders(JSON.parse(localStorage.getItem('borders')));
       setCountries(JSON.parse(localStorage.getItem('countries')));
     }
     console.log(currentUser);

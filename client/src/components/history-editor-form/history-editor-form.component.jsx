@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-import { parseDate, sortHistoryListByTimeAndDate } from '../../utils';
+import { parseDate } from '../../utils';
 
 import CustomInput from '../custom-input/custom-input.component';
 
@@ -11,21 +11,22 @@ import './history-editor-form.styles.scss';
 
 const HistoryEditorForm = () => {
   const {
+    currentUser,
+    setCurrentUser,
     editedItem,
     setEditedItem,
     borders,
     setBorders,
-    isSortedDesc,
   } = useContext(AppContext);
 
   const { from, to, time, date, timestamp, i, _id } = editedItem;
-  const state = { from, to, time, date, timestamp, _id };
+  const borderFields = { from, to, time, date, timestamp, _id };
 
-  const [fields, setFields] = useState(state);
+  const [fields, setFields] = useState(borderFields);
 
   //TODO Double render !!!
   useEffect(() => {
-    setFields({ ...state });
+    setFields({ ...borderFields });
   }, [editedItem]);
 
   useEffect(() => {
@@ -53,23 +54,25 @@ const HistoryEditorForm = () => {
 
     const updatedBorderPass = fields;
 
-    axios
-      .put(`/api/borders/${_id}`, updatedBorderPass)
-      .then(res => {
-        if (res.data.success) {
-          const updatedBorders = [
-            ...borders.filter(b => b._id !== _id),
-            res.data.data,
-          ];
-          setBorders(
-            sortHistoryListByTimeAndDate(updatedBorders, isSortedDesc)
-          );
-        } else {
-          alert(res.data.error);
-        }
-        setEditedItem(null);
-      })
-      .catch(err => alert('Ups... ' + err.message));
+    if (currentUser) {
+      const userId = currentUser._id;
+      const borderId = editedItem._id;
+
+      axios
+        .put(`/api/users/${userId}/borders/${borderId}`, updatedBorderPass)
+        .then(res => {
+          if (res.data.success) {
+            setCurrentUser(res.data.data);
+          } else {
+            alert(res.data.error);
+          }
+          setEditedItem(null);
+        })
+        .catch(err => alert('Ups... ' + err.message));
+    } else {
+      borders[i] = updatedBorderPass;
+      setBorders([...borders]);
+    }
   };
 
   return (
