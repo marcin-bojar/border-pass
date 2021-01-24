@@ -9,16 +9,6 @@
   background-color: $color-primary;
   cursor: pointer;
 
-  &:focus {
-    outline: none;
-  }
-
-  &:disabled {
-    background-color: inherit;
-    color: $color-grey-light;
-    border: 1px solid $color-grey-light;
-  }
-
   &.clear {
     background-color: $color-red-clear;
   }
@@ -38,5 +28,15 @@
     font-size: 1.7rem;
     background-color: transparent;
     padding: 0;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    background-color: inherit;
+    color: $color-grey-light;
+    border: 1px solid $color-grey-light;
   }
 }

@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import CustomButton from '../custom-button/custom-button.component';
@@ -13,7 +14,7 @@ const SignIn = () => {
     email: '',
     password: '',
   });
-  const { setCurrentUser, setToken } = useContext(AppContext);
+  const { currentUser, setCurrentUser, setToken } = useContext(AppContext);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -39,6 +40,8 @@ const SignIn = () => {
         else console.log(err.response.status + ' ' + err.response.statusText);
       });
   };
+
+  if (currentUser) return <Redirect to="/" />;
 
   return (
     <div className="sign-in">

@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import CustomButton from '../custom-button/custom-button.component';
@@ -10,7 +11,7 @@ import './sign-up.styles.scss';
 
 const SignUp = () => {
   const [user, setUser] = useState({ name: '', email: '', password: '' });
-  const { setCurrentUser, setToken } = useContext(AppContext);
+  const { currentUser, setCurrentUser, setToken } = useContext(AppContext);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -34,6 +35,8 @@ const SignUp = () => {
         console.log(err.response.data.error);
       });
   };
+
+  if (currentUser) return <Redirect to="/" />;
 
   return (
     <div className="sign-up">

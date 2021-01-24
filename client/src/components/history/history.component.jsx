@@ -61,6 +61,8 @@ const History = () => {
     }
   };
 
+  if (borders.length === 0) return null;
+
   if (isFetchingBorders) return <Loader />;
 
   return (
