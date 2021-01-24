@@ -34,7 +34,7 @@ const CountrySelect = () => {
       const { _id } = currentUser;
 
       axios
-        .delete(`/api/users/${_id}/borders`)
+        .delete(`/api/users/${_id}/borders/undo`)
         .then(res => {
           const user = sortUsersBorders(res.data.data, isSortedDesc);
           setCurrentUser(user);

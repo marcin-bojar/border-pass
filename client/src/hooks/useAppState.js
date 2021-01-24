@@ -32,14 +32,12 @@ export const useAppState = () => {
     if (!currentUser) {
       localStorage.setItem('borders', JSON.stringify(borders));
       sortHistoryListByTimeAndDate(borders, isSortedDesc, 'timestamp');
-    } else {
-      sortHistoryListByTimeAndDate(borders, isSortedDesc);
-    }
+    } else sortHistoryListByTimeAndDate(borders, isSortedDesc);
 
     const length = borders.length;
     if (!length) setCurrentCountry('');
     else if (length && isSortedDesc) setCurrentCountry(borders[0].to);
-    else if (length && !isSortedDesc) setCurrentCountry(borders[length - 1].to);
+    else setCurrentCountry(borders[length - 1].to);
   }, [borders]);
 
   useEffect(() => {
@@ -83,6 +81,8 @@ export const useAppState = () => {
   return {
     currentUser,
     setCurrentUser,
+    token,
+    setToken,
     currentCountry,
     setCurrentCountry,
     borders,

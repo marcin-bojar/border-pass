@@ -15,6 +15,7 @@ import './history.styles.scss';
 const History = () => {
   const {
     currentUser,
+    setCurrentUser,
     borders,
     setBorders,
     editMode,
@@ -48,13 +49,15 @@ const History = () => {
       "Spowoduje to NIEODWRACALNE usunięcie całej historii!\nWpisz 'TAK', aby usunąć."
     );
     if (confirm && confirm.toUpperCase() === 'TAK') {
-      axios
-        .delete('/api/borders/clear')
-        .then(res => {
-          if (res.data.success) setBorders([]);
-          else alert('Ups... ' + res.data.error);
-        })
-        .catch(err => alert('Ups... ' + err.message));
+      if (currentUser) {
+        const { _id } = currentUser;
+        axios
+          .delete(`/api/users/${_id}/borders`)
+          .then(res => setCurrentUser(res.data.data))
+          .catch(err => alert('Ups... ' + err.message));
+      } else {
+        setBorders([]);
+      }
     }
   };
 

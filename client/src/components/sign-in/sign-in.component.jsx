@@ -13,7 +13,7 @@ const SignIn = () => {
     email: '',
     password: '',
   });
-  const { setCurrentUser } = useContext(AppContext);
+  const { setCurrentUser, setToken } = useContext(AppContext);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -28,10 +28,12 @@ const SignIn = () => {
       .post('/api/auth/login', userCredentials)
       .then(res => {
         localStorage.setItem('token', JSON.stringify(res.data.data.token));
+        setToken(res.data.data.token);
         setCurrentUser(res.data.data.user);
       })
       .catch(err => {
         localStorage.removeItem('token');
+        setToken(null);
         if (err.response.status === 401 || err.response.status === 404)
           console.log('Podane dane są nieprawidłowe.');
         else console.log(err.response.status + ' ' + err.response.statusText);

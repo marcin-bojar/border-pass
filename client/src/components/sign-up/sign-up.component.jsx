@@ -10,7 +10,7 @@ import './sign-up.styles.scss';
 
 const SignUp = () => {
   const [user, setUser] = useState({ name: '', email: '', password: '' });
-  const { setCurrentUser } = useContext(AppContext);
+  const { setCurrentUser, setToken } = useContext(AppContext);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -25,10 +25,12 @@ const SignUp = () => {
       .post('/api/auth/signup', user)
       .then(res => {
         localStorage.setItem('token', JSON.stringify(res.data.data.token));
+        setToken(res.data.data.token);
         setCurrentUser(res.data.data.user);
       })
       .catch(err => {
         localStorage.removeItem('token');
+        setToken(null);
         console.log(err.response.data.error);
       });
   };
