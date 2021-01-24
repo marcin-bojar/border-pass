@@ -5,6 +5,7 @@ import Heading from './components/heading/heading.component';
 import SignIn from './components/sign-in/sign-in.component';
 import SignUp from './components/sign-up/sign-up.component';
 import AppView from './components/app-view/app-view.component';
+import NavBar from './components/nav-bar/nav-bar.component';
 
 import { AppContext, useAppState } from './hooks/useAppState';
 
@@ -17,6 +18,7 @@ const App = () => {
     <div className="App">
       <AppContext.Provider value={appState}>
         <BrowserRouter>
+          <NavBar />
           <Heading />
           <Switch>
             <Route exact path="/" component={AppView} />
