@@ -67,12 +67,17 @@ export const useAppState = () => {
       headers: {},
     };
 
-    if (token) config.headers['x-access-token'] = token;
+    if (token) {
+      config.headers['x-access-token'] = token;
 
-    axios
-      .get('/api/auth/user', config)
-      .then(res => setCurrentUser(res.data.data))
-      .catch(err => console.log(err.message));
+      axios
+        .get('/api/auth/user', config)
+        .then(res => setCurrentUser(res.data.data))
+        .catch(err => {
+          localStorage.removeItem('token');
+          console.log(err.response.status + ' ' + err.response.statusText);
+        });
+    }
   }, []);
 
   return {

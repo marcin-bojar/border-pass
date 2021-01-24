@@ -41,11 +41,14 @@ router.post(
               success: true,
               data: {
                 token,
-                _id: user.id,
-                name: user.name,
-                email: user.email,
-                borders: user.borders,
-                countries: user.countries,
+                user: {
+                  _id: user.id,
+                  name: user.name,
+                  email: user.email,
+                  borders: user.borders,
+                  countries: user.countries,
+                  registeredAt: user.registeredAt,
+                },
               },
             });
           }
@@ -90,11 +93,14 @@ router.post('/login', (req, res) => {
                 success: true,
                 data: {
                   token,
-                  _id: user.id,
-                  name: user.name,
-                  email: user.email,
-                  borders: user.borders,
-                  countries: user.countries,
+                  user: {
+                    _id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    borders: user.borders,
+                    countries: user.countries,
+                    registeredAt: user.registeredAt,
+                  },
                 },
               });
             }
@@ -123,6 +129,7 @@ router.get('/user', (req, res) => {
       return res.status(401).json({ success: false, error: err.message });
 
     User.findById(decoded.id)
+      .select('-password -__v')
       .then(user => res.json({ success: true, data: user }))
       .catch(err =>
         res.status(400).json({ success: false, error: err.message })

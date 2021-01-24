@@ -23,8 +23,14 @@ const SignUp = () => {
 
     axios
       .post('/api/auth/signup', user)
-      .then(res => setCurrentUser(res.data.data))
-      .catch(err => console.log(err));
+      .then(res => {
+        localStorage.setItem('token', JSON.stringify(res.data.data.token));
+        setCurrentUser(res.data.data.user);
+      })
+      .catch(err => {
+        localStorage.removeItem('token');
+        console.log(err.response.data.error);
+      });
   };
 
   return (
