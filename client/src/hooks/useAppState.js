@@ -57,7 +57,6 @@ export const useAppState = () => {
       setBorders([...JSON.parse(localStorage.getItem('borders'))]);
       setCountries([...JSON.parse(localStorage.getItem('countries'))]);
     }
-    console.log(currentUser);
   }, [currentUser]);
 
   useEffect(() => {
