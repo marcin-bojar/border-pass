@@ -56,7 +56,7 @@ const SignIn = () => {
           />
           <CustomInput
             name="password"
-            label="Password"
+            label="Hasło"
             type="password"
             value={userCredentials.password}
             handleChange={handleChange}

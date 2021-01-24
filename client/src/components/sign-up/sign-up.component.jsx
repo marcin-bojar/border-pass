@@ -45,7 +45,7 @@ const SignUp = () => {
         <div className="sign-up__inputs-wrapper">
           <CustomInput
             name="name"
-            label="Name"
+            label="Nazwa użytkownika"
             value={user.name}
             handleChange={handleChange}
           />
@@ -57,7 +57,7 @@ const SignUp = () => {
           />
           <CustomInput
             name="password"
-            label="Password"
+            label="Hasło"
             type="password"
             value={user.password}
             handleChange={handleChange}
