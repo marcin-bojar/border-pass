@@ -39,11 +39,10 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 100%;
-    text-align: center;
+    width: fit-content;
     transform: translate(-50%, -50%);
     pointer-events: none;
-    transition: top 0.2s, left 0.2s, font-size 0.2s;
+    transition: top 0.3s, left 0.3s, transform 0.3s, font-size 0.3s;
     color: $color-primary;
     font-weight: 700;
 

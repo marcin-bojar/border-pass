@@ -1,11 +1,10 @@
 import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Heading from './components/heading/heading.component';
-import CountrySelect from './components/country-select/country-select.component';
-import CurrentCountry from './components/current-country/current-country.component';
-import History from './components/history/history.component';
 import SignIn from './components/sign-in/sign-in.component';
 import SignUp from './components/sign-up/sign-up.component';
+import AppView from './components/app-view/app-view.component';
 
 import { AppContext, useAppState } from './hooks/useAppState';
 
@@ -17,12 +16,14 @@ const App = () => {
   return (
     <div className="App">
       <AppContext.Provider value={appState}>
-        <Heading />
-        <SignIn />
-        <SignUp />
-        <CurrentCountry />
-        <CountrySelect />
-        <History />
+        <BrowserRouter>
+          <Heading />
+          <Switch>
+            <Route exact path="/" component={AppView} />
+            <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/signin" component={SignIn} />
+          </Switch>
+        </BrowserRouter>
       </AppContext.Provider>
     </div>
   );

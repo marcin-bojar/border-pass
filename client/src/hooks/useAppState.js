@@ -51,11 +51,11 @@ export const useAppState = () => {
 
   useEffect(() => {
     if (currentUser) {
-      setBorders(currentUser.borders);
-      setCountries(currentUser.countries);
+      setBorders([...currentUser.borders]);
+      setCountries([...currentUser.countries]);
     } else {
-      setBorders(JSON.parse(localStorage.getItem('borders')));
-      setCountries(JSON.parse(localStorage.getItem('countries')));
+      setBorders([...JSON.parse(localStorage.getItem('borders'))]);
+      setCountries([...JSON.parse(localStorage.getItem('countries'))]);
     }
     console.log(currentUser);
   }, [currentUser]);

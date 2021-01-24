@@ -34,17 +34,22 @@
   }
 
   &__inputs-wrapper {
-    width: 50%;
+    width: 80%;
     margin: 0 auto;
 
     .custom-input {
       margin-bottom: 2rem;
+    }
+
+    @media only screen and (min-width: 43.75em) {
+      width: 65%;
     }
   }
 }
 
 @mixin shrink {
   top: -0.85rem;
-  left: 30%;
+  left: 0.5rem;
   font-size: 1.3rem;
+  transform: translate(0, -50%);
 }

@@ -8,6 +8,7 @@ const User = require('../../models/User');
 // @private
 router.post('/:id/borders', (req, res) => {
   User.findById(req.params.id)
+    .select('-password -__v')
     .then(user => {
       user.borders.push(req.body);
       user.save();
@@ -21,6 +22,7 @@ router.post('/:id/borders', (req, res) => {
 // @private
 router.delete('/:id/borders/undo', (req, res) => {
   User.findById(req.params.id)
+    .select('-password -__v')
     .then(user => {
       user.borders.$pop();
       user.save();
@@ -29,11 +31,12 @@ router.delete('/:id/borders/undo', (req, res) => {
     .catch(err => res.status(400).json({ success: false, error: err.message }));
 });
 
-// @route DELETE /api/users/:id/borders/
+// @route DELETE /api/users/:id/borders
 // @desc Delete all border crossings from user's borders array
 // @private
 router.delete('/:id/borders', (req, res) => {
   User.findById(req.params.id)
+    .select('-password -__v')
     .then(user => {
       user.borders = [];
       user.save();
@@ -47,6 +50,7 @@ router.delete('/:id/borders', (req, res) => {
 // @private
 router.put('/:userId/borders/:borderId', (req, res) => {
   User.findById(req.params.userId)
+    .select('-password -__v')
     .then(user => {
       const borderToUpdate = user.borders.id(req.params.borderId);
       borderToUpdate.set(req.body);
@@ -61,6 +65,7 @@ router.put('/:userId/borders/:borderId', (req, res) => {
 // @private
 router.post('/:id/countries', (req, res) => {
   User.findById(req.params.id)
+    .select('-password -__v')
     .then(user => {
       const countryExists = user.countries.find(
         el => el.name === req.body.name
