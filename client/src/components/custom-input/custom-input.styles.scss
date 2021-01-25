@@ -27,7 +27,7 @@
 
     &:disabled {
       color: $color-grey-light;
-      border: 1px solid $color-grey-light;
+      border-color: $color-grey-light;
 
       & + label {
         color: $color-grey-light;

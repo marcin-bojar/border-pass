@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import CustomButton from '../custom-button/custom-button.component';
 import CustomInput from '../custom-input/custom-input.component';
+import Spinner from '../spinner/spinner.component';
 
 import { AppContext } from '../../hooks/useAppState';
 
@@ -14,7 +15,13 @@ const SignIn = () => {
     email: '',
     password: '',
   });
-  const { currentUser, setCurrentUser, setToken } = useContext(AppContext);
+  const {
+    currentUser,
+    setCurrentUser,
+    setToken,
+    userLoading,
+    setUserLoading,
+  } = useContext(AppContext);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -24,6 +31,7 @@ const SignIn = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    setUserLoading(true);
 
     axios
       .post('/api/auth/login', userCredentials)
@@ -31,10 +39,12 @@ const SignIn = () => {
         localStorage.setItem('token', JSON.stringify(res.data.data.token));
         setToken(res.data.data.token);
         setCurrentUser(res.data.data.user);
+        setUserLoading(false);
       })
       .catch(err => {
         localStorage.removeItem('token');
         setToken(null);
+        setUserLoading(false);
         if (err.response.status === 401 || err.response.status === 404)
           console.log('Podane dane są nieprawidłowe.');
         else console.log(err.response.status + ' ' + err.response.statusText);
@@ -62,7 +72,12 @@ const SignIn = () => {
             handleChange={handleChange}
           />
         </div>
-        <CustomButton>Zaloguj</CustomButton>
+        <div className="sign-in__button-wrapper">
+          <CustomButton>Zaloguj</CustomButton>
+        </div>
+        <div className="sign-in__spinner-wrapper">
+          <Spinner isLoading={userLoading} />
+        </div>
       </form>
     </div>
   );

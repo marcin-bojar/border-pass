@@ -1,6 +1,15 @@
 .add-country {
+  position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin: 1.5rem auto;
   width: 10rem;
+
+  &__spinner-wrapper {
+    position: absolute;
+    top: 50%;
+    right: -4rem;
+    transform: translateY(-50%);
+  }
 }

@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import CustomButton from '../custom-button/custom-button.component';
 import CustomInput from '../custom-input/custom-input.component';
+import Spinner from '../spinner/spinner.component';
 
 import { AppContext } from '../../hooks/useAppState';
 
@@ -11,7 +12,13 @@ import './sign-up.styles.scss';
 
 const SignUp = () => {
   const [user, setUser] = useState({ name: '', email: '', password: '' });
-  const { currentUser, setCurrentUser, setToken } = useContext(AppContext);
+  const {
+    currentUser,
+    setCurrentUser,
+    setToken,
+    userLoading,
+    setUserLoading,
+  } = useContext(AppContext);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -21,6 +28,7 @@ const SignUp = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    setUserLoading(true);
 
     axios
       .post('/api/auth/signup', user)
@@ -28,10 +36,12 @@ const SignUp = () => {
         localStorage.setItem('token', JSON.stringify(res.data.data.token));
         setToken(res.data.data.token);
         setCurrentUser(res.data.data.user);
+        setUserLoading(false);
       })
       .catch(err => {
         localStorage.removeItem('token');
         setToken(null);
+        setUserLoading(false);
         console.log(err.response.data.error);
       });
   };
@@ -63,7 +73,12 @@ const SignUp = () => {
             handleChange={handleChange}
           />
         </div>
-        <CustomButton>Zarejestruj</CustomButton>
+        <div className="sign-up__button-wrapper">
+          <CustomButton>Zarejestruj</CustomButton>
+        </div>
+        <div className="sign-up__spinner-wrapper">
+          <Spinner isLoading={userLoading} />
+        </div>
       </form>
     </div>
   );

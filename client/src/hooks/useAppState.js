@@ -7,10 +7,14 @@ import defaultCountries from '../../../helpers/defaultCountries';
 export const AppContext = createContext(null);
 
 export const useAppState = () => {
+  //User state
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useState(
     JSON.parse(localStorage.getItem('token')) || null
   );
+  const [userLoading, setUserLoading] = useState(false);
+
+  //Data state
   const [currentCountry, setCurrentCountry] = useState('');
   const [countries, setCountries] = useState(
     JSON.parse(localStorage.getItem('countries')) || defaultCountries
@@ -24,6 +28,8 @@ export const useAppState = () => {
   const [isSortedDesc, setIsSortedDesc] = useState(
     Boolean(localStorage.getItem('isSortedDesc') === 'true') || false
   );
+
+  //Fetching state
   const [isFetchingBorders, setIsFetchingBorders] = useState(false);
   const [isFetchingCountries, setIsFetchingCountries] = useState(false);
   const [disableUndoButton, setDisableUndoButton] = useState(false);
@@ -65,13 +71,18 @@ export const useAppState = () => {
     };
 
     if (token) {
+      setUserLoading(true);
       config.headers['x-access-token'] = token;
 
       axios
         .get('/api/auth/user', config)
-        .then(res => setCurrentUser(res.data.data))
+        .then(res => {
+          setCurrentUser(res.data.data);
+          setUserLoading(false);
+        })
         .catch(err => {
           localStorage.removeItem('token');
+          setUserLoading(false);
           console.log(err.response.status + ' ' + err.response.statusText);
         });
     }
@@ -82,6 +93,8 @@ export const useAppState = () => {
     setCurrentUser,
     token,
     setToken,
+    userLoading,
+    setUserLoading,
     currentCountry,
     setCurrentCountry,
     borders,

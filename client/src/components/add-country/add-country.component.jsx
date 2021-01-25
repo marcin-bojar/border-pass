@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 
 import CustomInput from '../custom-input/custom-input.component';
+import Spinner from '../spinner/spinner.component';
 
 import useSingleInput from '../../hooks/useSingleInput';
 import { AppContext } from '../../hooks/useAppState';
@@ -37,7 +38,10 @@ const AddCountry = () => {
             setIsAdding(false);
           }
         })
-        .catch(err => alert('Ups... ' + err));
+        .catch(err => {
+          alert('Ups... ' + err);
+          setIsAdding(false);
+        });
     } else {
       const countryExists = countries.find(el => el.name === name);
 
@@ -54,7 +58,7 @@ const AddCountry = () => {
 
   return (
     <div className="add-country">
-      <form onSubmit={handleSubmit}>
+      <form className="add-country__form" onSubmit={handleSubmit}>
         <CustomInput
           type="text"
           value={inputValue}
@@ -64,6 +68,9 @@ const AddCountry = () => {
           label="Dodaj kraj"
         />
       </form>
+      <div className="add-country__spinner-wrapper">
+        <Spinner isLoading={isAdding} />
+      </div>
     </div>
   );
 };

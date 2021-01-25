@@ -2,17 +2,22 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import CustomButton from '../custom-button/custom-button.component';
+import Spinner from '../spinner/spinner.component';
 
 import { AppContext } from '../../hooks/useAppState';
 
 import './nav-bar.styles.scss';
 
 const NavBar = () => {
-  const { currentUser, setCurrentUser, setToken } = useContext(AppContext);
+  const { currentUser, setCurrentUser, setToken, userLoading } = useContext(
+    AppContext
+  );
 
   return (
     <div className="nav-bar">
-      {currentUser ? (
+      {userLoading ? (
+        <Spinner isLoading={userLoading} />
+      ) : currentUser ? (
         <div className="nav-bar__user">
           <p className="nav-bar__user-name">{currentUser.name}</p>
           <CustomButton
