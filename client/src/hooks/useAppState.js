@@ -13,6 +13,7 @@ export const useAppState = () => {
     JSON.parse(localStorage.getItem('token')) || null
   );
   const [userLoading, setUserLoading] = useState(false);
+  const [authError, setAuthError] = useState(null);
 
   //Data state
   const [currentCountry, setCurrentCountry] = useState('');
@@ -79,11 +80,12 @@ export const useAppState = () => {
         .then(res => {
           setCurrentUser(res.data.data);
           setUserLoading(false);
+          setAuthError(null);
         })
         .catch(err => {
           localStorage.removeItem('token');
           setUserLoading(false);
-          console.log(err.response.status + ' ' + err.response.statusText);
+          setAuthError('Sesja wygasła. Zaloguj się ponownie.');
         });
     }
   }, []);
@@ -95,6 +97,8 @@ export const useAppState = () => {
     setToken,
     userLoading,
     setUserLoading,
+    authError,
+    setAuthError,
     currentCountry,
     setCurrentCountry,
     borders,

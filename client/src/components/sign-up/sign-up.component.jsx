@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import CustomButton from '../custom-button/custom-button.component';
 import CustomInput from '../custom-input/custom-input.component';
 import Spinner from '../spinner/spinner.component';
+import ErrorMessage from '../error-message/error-message.component';
 
 import { AppContext } from '../../hooks/useAppState';
 
@@ -18,6 +19,8 @@ const SignUp = () => {
     setToken,
     userLoading,
     setUserLoading,
+    authError,
+    setAuthError,
   } = useContext(AppContext);
 
   const handleChange = e => {
@@ -37,14 +40,17 @@ const SignUp = () => {
         setToken(res.data.data.token);
         setCurrentUser(res.data.data.user);
         setUserLoading(false);
+        setAuthError(null);
       })
       .catch(err => {
         localStorage.removeItem('token');
         setToken(null);
         setUserLoading(false);
-        console.log(err.response.data.error);
+        setAuthError(err.response.data.error);
       });
   };
+
+  useEffect(() => () => setAuthError(null), []);
 
   if (currentUser) return <Redirect to="/" />;
 
@@ -53,6 +59,7 @@ const SignUp = () => {
       <h3 className="sign-up__title">Zarejestruj się</h3>
       <form className="sign-up__form" onSubmit={handleSubmit}>
         <div className="sign-up__inputs-wrapper">
+          {authError && <ErrorMessage error={authError} />}
           <CustomInput
             name="name"
             label="Nazwa użytkownika"
