@@ -1,0 +1,25 @@
+@import '../../sass//variables';
+
+.spinner {
+  &__overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+  }
+
+  &__circle {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 3px solid $color-primary;
+    border-top-color: $color-white;
+    animation: spin 1s infinite cubic-bezier(0.4, 0.7, 0.52, 0.32);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(720deg);
+  }
+}
