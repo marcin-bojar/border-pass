@@ -51,7 +51,7 @@ const SignIn = () => {
         setUserLoading(false);
         if (err.response.status === 401 || err.response.status === 404)
           setAuthError('Podane dane są nieprawidłowe.');
-        else setAuthError('Coś poszło nie tak... spróbuj ponownie');
+        else setAuthError('Coś poszło nie tak... spróbuj ponownie.');
       });
   };
 

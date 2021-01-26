@@ -38,9 +38,14 @@ const CountrySelect = () => {
         .then(res => {
           const user = sortUsersBorders(res.data.data, isSortedDesc);
           setCurrentUser(user);
-          setDisableUndoButton(false);
+          axios
+            .delete('/api/borders/undo')
+            .catch(err => alert('Ups... ' + err.message));
         })
-        .catch(err => alert('Ups... ' + err.message));
+        .catch(err => {
+          alert('Ups... ' + err.message);
+        })
+        .finally(() => setDisableUndoButton(false));
     } else {
       isSortedDesc ? borders.shift() : borders.pop();
       setBorders([...borders]);

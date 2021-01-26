@@ -44,7 +44,7 @@ const CountryOption = ({ name }) => {
         const { _id } = currentUser;
 
         axios
-          .post('/api/borders', borderPass)
+          .post('/api/borders', { ...borderPass, user: _id })
           .catch(err => alert('Ups... ' + err.message));
 
         axios

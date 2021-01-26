@@ -6,7 +6,7 @@ const checkIfUserAlreadyExists = (req, res, next) => {
       if (user)
         res.status(400).json({
           success: false,
-          error: 'Podany adres email jest już w użyciu!',
+          error: 'Podany adres email jest już w użyciu.',
         });
       else next();
     })
@@ -17,7 +17,7 @@ const checkIfAllFieldsAreFilledIn = (req, res, next) => {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password)
-    res.status(400).json({ success: false, error: 'Wypełnij wszystkie pola!' });
+    res.status(400).json({ success: false, error: 'Wypełnij wszystkie pola.' });
   else next();
 };
 

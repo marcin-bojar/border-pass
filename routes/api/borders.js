@@ -40,6 +40,7 @@ router.post('/', (req, res) => {
     time: req.body.time,
     date: req.body.date,
     timestamp: req.body.timestamp,
+    user: req.body.user,
   });
 
   newBorder
