@@ -27,11 +27,14 @@
 
 @mixin sign-in-sign-up-styles {
   @include sections-common-styles;
-  position: relative;
 
   &__title {
     margin-bottom: 2rem;
     text-align: center;
+  }
+
+  &__form {
+    position: relative;
   }
 
   &__inputs-wrapper {
@@ -54,8 +57,8 @@
 
   &__spinner-wrapper {
     position: absolute;
-    bottom: 1.65rem;
-    left: 70%;
+    bottom: 0.7rem;
+    left: calc(50% + 6rem);
     // transform: translateY(-50%);
   }
 }

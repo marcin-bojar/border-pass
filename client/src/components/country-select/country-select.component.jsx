@@ -16,13 +16,13 @@ const CountrySelect = () => {
   const {
     currentUser,
     setCurrentUser,
+    userLoading,
     countries,
     currentCountry,
     showAll,
     setShowAll,
     borders,
     setBorders,
-    isFetchingCountries,
     isSortedDesc,
     disableUndoButton,
     setDisableUndoButton,
@@ -48,7 +48,7 @@ const CountrySelect = () => {
     }
   };
 
-  if (isFetchingCountries) return <Loader />;
+  if (userLoading) return <Loader />;
 
   return (
     <div className="country-select">

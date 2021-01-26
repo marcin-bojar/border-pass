@@ -16,13 +16,13 @@ const History = () => {
   const {
     currentUser,
     setCurrentUser,
+    userLoading,
     borders,
     setBorders,
     editMode,
     setEditMode,
     isSortedDesc,
     setIsSortedDesc,
-    isFetchingBorders,
   } = useContext(AppContext);
 
   const sortBordersByDate = () => {
@@ -63,7 +63,7 @@ const History = () => {
 
   if (borders.length === 0) return null;
 
-  if (isFetchingBorders) return <Loader />;
+  if (userLoading) return <Loader />;
 
   return (
     <div className="history">

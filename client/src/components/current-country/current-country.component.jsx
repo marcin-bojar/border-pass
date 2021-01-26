@@ -9,11 +9,11 @@ import { AppContext } from '../../hooks/useAppState';
 import './current-country.styles.scss';
 
 const CurrentCountry = () => {
-  const { currentCountry, setCurrentCountry, isFetchingBorders } = useContext(
+  const { currentCountry, setCurrentCountry, userLoading } = useContext(
     AppContext
   );
 
-  if (isFetchingBorders) return <Loader />;
+  if (userLoading) return <Loader />;
   else if (!currentCountry) return <Welcome />;
 
   return (

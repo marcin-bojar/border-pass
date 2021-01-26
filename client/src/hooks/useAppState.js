@@ -30,9 +30,7 @@ export const useAppState = () => {
     Boolean(localStorage.getItem('isSortedDesc') === 'true') || false
   );
 
-  //Fetching state
-  const [isFetchingBorders, setIsFetchingBorders] = useState(false);
-  const [isFetchingCountries, setIsFetchingCountries] = useState(false);
+  //UI state
   const [disableUndoButton, setDisableUndoButton] = useState(false);
 
   useEffect(() => {
@@ -113,10 +111,6 @@ export const useAppState = () => {
     setEditedItem,
     isSortedDesc,
     setIsSortedDesc,
-    isFetchingBorders,
-    setIsFetchingBorders,
-    isFetchingCountries,
-    setIsFetchingCountries,
     disableUndoButton,
     setDisableUndoButton,
   };
