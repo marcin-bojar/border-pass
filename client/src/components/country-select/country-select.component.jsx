@@ -38,9 +38,7 @@ const CountrySelect = () => {
         .then(res => {
           const user = sortUsersBorders(res.data.data, isSortedDesc);
           setCurrentUser(user);
-          axios
-            .delete('/api/borders/undo')
-            .catch(err => alert('Ups... ' + err.message));
+          return axios.delete('/api/borders/undo');
         })
         .catch(err => {
           alert('Ups... ' + err.message);

@@ -32,16 +32,14 @@ const AddCountry = () => {
           if (res.data.success) {
             setCountries([...res.data.data.countries]);
             setInputValue('');
-            setIsAdding(false);
           } else {
             alert(res.data.error);
-            setIsAdding(false);
           }
         })
         .catch(err => {
           alert('Ups... ' + err);
-          setIsAdding(false);
-        });
+        })
+        .finally(() => setIsAdding(false));
     } else {
       const countryExists = countries.find(el => el.name === name);
 

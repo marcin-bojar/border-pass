@@ -44,14 +44,11 @@ const CountryOption = ({ name }) => {
         const { _id } = currentUser;
 
         axios
-          .post('/api/borders', { ...borderPass, user: _id })
-          .catch(err => alert('Ups... ' + err.message));
-
-        axios
           .post(`/api/users/${_id}/borders`, borderPass)
           .then(res => {
             const user = sortUsersBorders(res.data.data, isSortedDesc);
             setCurrentUser(user);
+            return axios.post('/api/borders', { ...borderPass, user: _id });
           })
           .catch(err => alert('Ups... ' + err.message));
       } else {
