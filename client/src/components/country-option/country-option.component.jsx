@@ -5,6 +5,7 @@ import {
   parseTimestamp,
   sortUsersBorders,
   sortHistoryListByTimeAndDate,
+  getConfig,
 } from '../../utils';
 
 import { AppContext } from '../../hooks/useAppState';
@@ -44,7 +45,7 @@ const CountryOption = ({ name }) => {
         const { _id } = currentUser;
 
         axios
-          .post(`/api/users/${_id}/borders`, borderPass)
+          .post(`/api/users/${_id}/borders`, borderPass, getConfig())
           .then(res => {
             const user = sortUsersBorders(res.data.data, isSortedDesc);
             setCurrentUser(user);

@@ -7,6 +7,7 @@ const User = require('../../models/User');
 
 const signupValidation = require('../../middlewares/signupValidation');
 const hashPassword = require('../../middlewares/hashPassword');
+const auth = require('../../middlewares/auth');
 
 // @route POST /api/auth/signup
 // @desc Register new user
@@ -115,26 +116,12 @@ router.post('/login', (req, res) => {
 
 // @route GET /api/auth/user
 // @desc Authenticate user with token
-// @public
-router.get('/user', (req, res) => {
-  const token = req.header('x-access-token');
-
-  if (!token)
-    return res
-      .status(401)
-      .json({ success: false, error: 'Użytkownik nieznany' });
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err)
-      return res.status(401).json({ success: false, error: err.message });
-
-    User.findById(decoded.id)
-      .select('-password -__v')
-      .then(user => res.json({ success: true, data: user }))
-      .catch(err =>
-        res.status(400).json({ success: false, error: err.message })
-      );
-  });
+// @privat
+router.get('/user', auth, (req, res) => {
+  User.findById(req.user.id)
+    .select('-password -__v')
+    .then(user => res.json({ success: true, data: user }))
+    .catch(err => res.status(400).json({ success: false, error: err.message }));
 });
 
 module.exports = router;

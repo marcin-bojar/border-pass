@@ -4,6 +4,7 @@ import axios from 'axios';
 import CustomInput from '../custom-input/custom-input.component';
 import Spinner from '../spinner/spinner.component';
 
+import { getConfig } from '../../utils';
 import useSingleInput from '../../hooks/useSingleInput';
 import { AppContext } from '../../hooks/useAppState';
 
@@ -27,7 +28,7 @@ const AddCountry = () => {
       const { _id } = currentUser;
 
       axios
-        .post(`/api/users/${_id}/countries`, newCountry)
+        .post(`/api/users/${_id}/countries`, newCountry, getConfig())
         .then(res => {
           if (res.data.success) {
             setCountries([...res.data.data.countries]);

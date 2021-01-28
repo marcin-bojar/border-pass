@@ -2,12 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const User = require('../../models/User');
+const auth = require('../../middlewares/auth');
 
 // @route POST /api/users/:id/borders
 // @desc Post new border crossing to user's borders array
 // @private
-router.post('/:id/borders', (req, res) => {
-  User.findById(req.params.id)
+router.post('/:userId/borders', auth, (req, res) => {
+  User.findById(req.user.id)
     .select('-password -__v')
     .then(user => {
       user.borders.push(req.body);
@@ -20,8 +21,8 @@ router.post('/:id/borders', (req, res) => {
 // @route DELETE /api/users/:id/borders/undo
 // @desc Delete last border crossing from user's borders array
 // @private
-router.delete('/:id/borders/undo', (req, res) => {
-  User.findById(req.params.id)
+router.delete('/:userId/borders/undo', auth, (req, res) => {
+  User.findById(req.user.id)
     .select('-password -__v')
     .then(user => {
       user.borders.$pop();
@@ -34,8 +35,8 @@ router.delete('/:id/borders/undo', (req, res) => {
 // @route DELETE /api/users/:id/borders
 // @desc Delete all border crossings from user's borders array
 // @private
-router.delete('/:id/borders', (req, res) => {
-  User.findById(req.params.id)
+router.delete('/:userId/borders', auth, (req, res) => {
+  User.findById(req.user.id)
     .select('-password -__v')
     .then(user => {
       user.borders = [];
@@ -48,8 +49,8 @@ router.delete('/:id/borders', (req, res) => {
 // @route PUT /api/users/:userId/borders/:borderId
 // @desc Post new border crossing to user's borders array
 // @private
-router.put('/:userId/borders/:borderId', (req, res) => {
-  User.findById(req.params.userId)
+router.put('/:userId/borders/:borderId', auth, (req, res) => {
+  User.findById(req.user.id)
     .select('-password -__v')
     .then(user => {
       const borderToUpdate = user.borders.id(req.params.borderId);
@@ -63,8 +64,8 @@ router.put('/:userId/borders/:borderId', (req, res) => {
 // @route POST /api/users/:id/countries
 // @desc Add new country to user's countries array
 // @private
-router.post('/:id/countries', (req, res) => {
-  User.findById(req.params.id)
+router.post('/:userId/countries', auth, (req, res) => {
+  User.findById(req.user.id)
     .select('-password -__v')
     .then(user => {
       const countryExists = user.countries.find(

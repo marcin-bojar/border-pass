@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-import { parseDate } from '../../utils';
+import { parseDate, getConfig } from '../../utils';
 
 import CustomInput from '../custom-input/custom-input.component';
 
@@ -59,7 +59,11 @@ const HistoryEditorForm = () => {
       const borderId = editedItem._id;
 
       axios
-        .put(`/api/users/${userId}/borders/${borderId}`, updatedBorderPass)
+        .put(
+          `/api/users/${userId}/borders/${borderId}`,
+          updatedBorderPass,
+          getConfig()
+        )
         .then(res => {
           if (res.data.success) {
             setCurrentUser(res.data.data);

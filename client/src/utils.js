@@ -45,6 +45,19 @@ export const sortUsersBorders = (user, isSortedDesc) => {
   return user;
 };
 
+export const getConfig = () => {
+  const config = {
+    headers: {},
+  };
+  const token = JSON.parse(localStorage.getItem('token'));
+
+  if (token) {
+    config.headers['x-access-token'] = token;
+  }
+
+  return config;
+};
+
 //Service Worker utils
 
 export const registerSW = () => {

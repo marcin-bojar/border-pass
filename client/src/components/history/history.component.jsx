@@ -6,7 +6,7 @@ import CustomButton from '../custom-button/custom-button.component';
 import HistoryEditor from '../history-editor/history-editor.component';
 import Loader from '../loader/loader.component';
 
-import { sortHistoryListByTimeAndDate } from '../../utils';
+import { sortHistoryListByTimeAndDate, getConfig } from '../../utils';
 
 import { AppContext } from '../../hooks/useAppState';
 
@@ -52,7 +52,7 @@ const History = () => {
       if (currentUser) {
         const { _id } = currentUser;
         axios
-          .delete(`/api/users/${_id}/borders`)
+          .delete(`/api/users/${_id}/borders`, getConfig())
           .then(res => setCurrentUser(res.data.data))
           .catch(err => alert('Ups... ' + err.message));
       } else {

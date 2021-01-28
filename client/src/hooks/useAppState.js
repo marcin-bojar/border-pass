@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext } from 'react';
 import axios from 'axios';
 
-import { sortHistoryListByTimeAndDate } from '../utils';
+import { sortHistoryListByTimeAndDate, getConfig } from '../utils';
 import defaultCountries from '../../../helpers/defaultCountries';
 
 export const AppContext = createContext(null);
@@ -65,26 +65,20 @@ export const useAppState = () => {
   }, [currentUser]);
 
   useEffect(() => {
-    const config = {
-      headers: {},
-    };
-
     if (token) {
       setUserLoading(true);
-      config.headers['x-access-token'] = token;
 
       axios
-        .get('/api/auth/user', config)
+        .get('/api/auth/user', getConfig())
         .then(res => {
           setCurrentUser(res.data.data);
-          setUserLoading(false);
           setAuthError(null);
         })
-        .catch(err => {
+        .catch(() => {
           localStorage.removeItem('token');
-          setUserLoading(false);
           setAuthError('Sesja wygasła. Zaloguj się ponownie.');
-        });
+        })
+        .finally(() => setUserLoading(false));
     }
   }, []);
 
