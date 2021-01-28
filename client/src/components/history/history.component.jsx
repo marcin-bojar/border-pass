@@ -54,7 +54,7 @@ const History = () => {
         axios
           .delete(`/api/users/${_id}/borders`, getConfig())
           .then(res => setCurrentUser(res.data.data))
-          .catch(err => alert('Ups... ' + err.message));
+          .catch(err => alert('Ups... ' + err.response.data.error));
       } else {
         setBorders([]);
       }

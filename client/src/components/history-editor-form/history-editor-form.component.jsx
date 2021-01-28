@@ -72,7 +72,7 @@ const HistoryEditorForm = () => {
           }
           setEditedItem(null);
         })
-        .catch(err => alert('Ups... ' + err.message));
+        .catch(err => alert('Ups... ' + err.response.data.error));
     } else {
       borders[i] = updatedBorderPass;
       setBorders([...borders]);

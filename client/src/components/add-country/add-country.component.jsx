@@ -38,7 +38,7 @@ const AddCountry = () => {
           }
         })
         .catch(err => {
-          alert('Ups... ' + err);
+          alert('Ups... ' + err.response.data.error);
         })
         .finally(() => setIsAdding(false));
     } else {

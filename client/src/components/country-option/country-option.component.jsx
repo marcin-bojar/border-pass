@@ -51,7 +51,7 @@ const CountryOption = ({ name }) => {
             setCurrentUser(user);
             return axios.post('/api/borders', { ...borderPass, user: _id });
           })
-          .catch(err => alert('Ups... ' + err.message));
+          .catch(err => alert('Ups... ' + err.response.data.error));
       } else {
         const updatedBorders = sortHistoryListByTimeAndDate(
           [...borders, borderPass],
