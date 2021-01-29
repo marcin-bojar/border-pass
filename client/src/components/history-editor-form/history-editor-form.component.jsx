@@ -42,9 +42,7 @@ const HistoryEditorForm = () => {
   const timestampUpdater = () => {
     const timestamp = parseDate(fields.time, fields.date);
 
-    if (isNaN(timestamp)) {
-      return fields.timestamp;
-    }
+    if (isNaN(timestamp)) return fields.timestamp;
 
     return timestamp;
   };
@@ -65,11 +63,9 @@ const HistoryEditorForm = () => {
           getConfig()
         )
         .then(res => {
-          if (res.data.success) {
-            setCurrentUser(res.data.data);
-          } else {
-            alert(res.data.error);
-          }
+          if (res.data.success) setCurrentUser(res.data.data);
+          else alert(res.data.error);
+
           setEditedItem(null);
         })
         .catch(err => alert('Ups... ' + err.response.data.error));

@@ -3,8 +3,9 @@ export const parseTimestamp = timestamp => {
   const h = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
   const min =
     date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
-  const day = date.getDate();
-  const month = date.getMonth() + 1;
+  const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+  let month = date.getMonth() + 1;
+  month = month < 10 ? '0' + month : month;
   const year = date.getFullYear();
 
   return {
@@ -16,11 +17,6 @@ export const parseTimestamp = timestamp => {
 export const parseDate = (time, date) => {
   const dateArr = date.split('.'); // [d, m, y]
   const timeArr = time.split(':'); // [h, m]
-
-  for (let i = 0; i < 2; i++) {
-    if (parseInt(dateArr[i]) < 10) dateArr[i] = '0' + dateArr[i];
-    if (parseInt(timeArr[i]) < 10) timeArr[i] = '0' + timeArr[i];
-  }
 
   const newDate = dateArr.reverse().join('-');
   const newTime = timeArr.join(':');

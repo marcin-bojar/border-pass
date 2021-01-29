@@ -18,6 +18,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  company: {
+    type: String,
+    default: '',
+  },
   registeredAt: {
     type: Date,
     default: Date.now,

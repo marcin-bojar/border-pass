@@ -3,6 +3,7 @@ const router = express.Router();
 
 const User = require('../../models/User');
 const auth = require('../../middlewares/auth');
+const validateTimeAndDate = require('../../middlewares/validateTimeAndDate');
 
 // @route POST /api/users/:id/borders
 // @desc Post new border crossing to user's borders array
@@ -49,17 +50,23 @@ router.delete('/:userId/borders', auth, (req, res) => {
 // @route PUT /api/users/:userId/borders/:borderId
 // @desc Post new border crossing to user's borders array
 // @private
-router.put('/:userId/borders/:borderId', auth, (req, res) => {
-  User.findById(req.user.id)
-    .select('-password -__v')
-    .then(user => {
-      const borderToUpdate = user.borders.id(req.params.borderId);
-      borderToUpdate.set(req.body);
-      user.save();
-      return res.json({ success: true, data: user });
-    })
-    .catch(err => res.status(400).json({ success: false, error: err.message }));
-});
+router.put(
+  '/:userId/borders/:borderId',
+  [auth, validateTimeAndDate],
+  (req, res) => {
+    User.findById(req.user.id)
+      .select('-password -__v')
+      .then(user => {
+        const borderToUpdate = user.borders.id(req.params.borderId);
+        borderToUpdate.set(req.body);
+        user.save();
+        return res.json({ success: true, data: user });
+      })
+      .catch(err =>
+        res.status(400).json({ success: false, error: err.message })
+      );
+  }
+);
 
 // @route POST /api/users/:id/countries
 // @desc Add new country to user's countries array
