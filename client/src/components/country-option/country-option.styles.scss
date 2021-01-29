@@ -17,4 +17,8 @@
   &:focus {
     outline: none;
   }
+
+  &:disabled {
+    color: $color-grey-light;
+  }
 }

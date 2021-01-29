@@ -30,8 +30,8 @@ export const useAppState = () => {
     Boolean(localStorage.getItem('isSortedDesc') === 'true') || false
   );
 
-  //UI state
-  const [disableUndoButton, setDisableUndoButton] = useState(false);
+  //API calls state
+  const [isMakingApiCall, setIsMakingApiCall] = useState(false);
 
   useEffect(() => {
     if (!currentUser) {
@@ -105,7 +105,7 @@ export const useAppState = () => {
     setEditedItem,
     isSortedDesc,
     setIsSortedDesc,
-    disableUndoButton,
-    setDisableUndoButton,
+    isMakingApiCall,
+    setIsMakingApiCall,
   };
 };

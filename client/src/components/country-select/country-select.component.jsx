@@ -24,13 +24,13 @@ const CountrySelect = () => {
     borders,
     setBorders,
     isSortedDesc,
-    disableUndoButton,
-    setDisableUndoButton,
+    isMakingApiCall,
+    setIsMakingApiCall,
   } = useContext(AppContext);
 
   const undoLastEntry = () => {
-    setDisableUndoButton(true);
     if (currentUser) {
+      setIsMakingApiCall(true);
       const { _id } = currentUser;
 
       axios
@@ -42,11 +42,10 @@ const CountrySelect = () => {
         .catch(err => {
           alert(err.response.data.error);
         })
-        .finally(() => setDisableUndoButton(false));
+        .finally(() => setIsMakingApiCall(false));
     } else {
       isSortedDesc ? borders.shift() : borders.pop();
       setBorders([...borders]);
-      setDisableUndoButton(false);
     }
   };
 
@@ -80,7 +79,7 @@ const CountrySelect = () => {
 
         <CustomButton
           clear
-          disabled={borders.length === 0 || disableUndoButton}
+          disabled={borders.length === 0 || isMakingApiCall}
           handleClick={undoLastEntry}
         >
           Cofnij

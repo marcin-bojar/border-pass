@@ -21,6 +21,8 @@ const CountryOption = ({ name }) => {
     borders,
     setBorders,
     isSortedDesc,
+    isMakingApiCall,
+    setIsMakingApiCall,
   } = useContext(AppContext);
 
   const handleClick = () => {
@@ -42,6 +44,7 @@ const CountryOption = ({ name }) => {
       };
 
       if (currentUser) {
+        setIsMakingApiCall(true);
         const { _id } = currentUser;
 
         axios
@@ -51,7 +54,8 @@ const CountryOption = ({ name }) => {
             setCurrentUser(user);
             return axios.post('/api/borders', { ...borderPass, user: _id });
           })
-          .catch(err => alert('Ups... ' + err.response.data.error));
+          .catch(err => alert('Ups... ' + err.response.data.error))
+          .finally(() => setIsMakingApiCall(false));
       } else {
         const updatedBorders = sortHistoryListByTimeAndDate(
           [...borders, borderPass],
@@ -64,7 +68,12 @@ const CountryOption = ({ name }) => {
   };
 
   return (
-    <button type="button" className="country-option" onClick={handleClick}>
+    <button
+      type="button"
+      className="country-option"
+      onClick={handleClick}
+      disabled={isMakingApiCall}
+    >
       {name}
     </button>
   );
