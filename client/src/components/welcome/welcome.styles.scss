@@ -1,4 +1,5 @@
 @import '../../sass/mixins.scss';
+@import '../../sass//variables';
 
 .welcome {
   @include sections-common-styles;
@@ -11,9 +12,17 @@
 
   &__text {
     font-size: 1.8rem;
+    margin-bottom: 1.75rem;
 
     @media only screen and (min-width: 25em) {
       font-size: 1.9rem;
     }
+  }
+
+  &__link {
+    color: $color-primary;
+    font-size: 1.9rem;
+    font-weight: 700;
+    text-decoration: none;
   }
 }
