@@ -9,6 +9,7 @@ import {
 } from '../../utils';
 
 import CustomInput from '../custom-input/custom-input.component';
+import ErrorMessage from '../error-message/error-message.component';
 
 import { AppContext } from '../../hooks/useAppState';
 
@@ -29,28 +30,20 @@ const HistoryEditorForm = () => {
   const borderFields = { from, to, time, date, timestamp, _id };
 
   const [fields, setFields] = useState(borderFields);
+  const [error, setError] = useState(null);
 
-  //TODO Double render !!!
   useEffect(() => {
     setFields({ ...borderFields });
   }, [editedItem]);
 
   useEffect(() => {
-    setFields({ ...fields, timestamp: timestampUpdater() });
+    setFields({ ...fields, timestamp: parseDate(fields.time, fields.date) });
   }, [fields.time, fields.date]);
 
   const handleChange = e => {
     const { name, value } = e.target;
 
     setFields({ ...fields, [name]: value.toUpperCase() });
-  };
-
-  const timestampUpdater = () => {
-    const timestamp = parseDate(fields.time, fields.date);
-
-    if (isNaN(timestamp)) return fields.timestamp;
-
-    return timestamp;
   };
 
   const handleSubmit = e => {
@@ -73,10 +66,10 @@ const HistoryEditorForm = () => {
           setCurrentUser(user);
           setEditedItem(null);
         })
-        .catch(err => alert('Ups... ' + err.response.data.error));
+        .catch(err => setError(err.response.data.error));
     } else {
       const { time, date } = updatedBorderPass;
-      if (!validateTimeAndDateSync(time, date)) return;
+      if (!validateTimeAndDateSync(time, date, setError)) return;
 
       borders[i] = updatedBorderPass;
       setBorders([...borders]);
@@ -85,53 +78,60 @@ const HistoryEditorForm = () => {
   };
 
   return (
-    <form id="form" onSubmit={handleSubmit} className="history-editor-form">
-      <div className="history-editor-form__block">
-        <span className="history-editor-form__nr">{i + 1}. </span>
-        <div className="history-editor-form__country">
-          <fieldset className="history-editor-form__input-wrapper country">
+    <div className="history-editor-form">
+      {error && <ErrorMessage error={error} />}
+      <form
+        id="editor-form"
+        onSubmit={handleSubmit}
+        className="history-editor-form__form"
+      >
+        <div className="history-editor-form__block">
+          <span className="history-editor-form__nr">{i + 1}. </span>
+          <div className="history-editor-form__country">
+            <fieldset className="history-editor-form__input-wrapper country">
+              <CustomInput
+                type="text"
+                handleChange={handleChange}
+                name="from"
+                maxLength="3"
+                autoComplete="off"
+                value={fields.from}
+              />
+              &#8594;
+              <CustomInput
+                type="text"
+                handleChange={handleChange}
+                name="to"
+                maxLength="3"
+                autoComplete="off"
+                value={fields.to}
+              />
+            </fieldset>
+          </div>
+        </div>
+        <div className="history-editor-form__block">
+          <fieldset className="history-editor-form__input-wrapper time">
             <CustomInput
               type="text"
               handleChange={handleChange}
-              name="from"
-              maxLength="3"
+              name="time"
+              maxLength="5"
               autoComplete="off"
-              value={fields.from}
+              value={fields.time}
             />
-            &#8594;
+            &nbsp;
             <CustomInput
               type="text"
               handleChange={handleChange}
-              name="to"
-              maxLength="3"
+              name="date"
+              maxLength="10"
               autoComplete="off"
-              value={fields.to}
+              value={fields.date}
             />
           </fieldset>
         </div>
-      </div>
-      <div className="history-editor-form__block">
-        <fieldset className="history-editor-form__input-wrapper time">
-          <CustomInput
-            type="text"
-            handleChange={handleChange}
-            name="time"
-            maxLength="5"
-            autoComplete="off"
-            value={fields.time}
-          />
-          &nbsp;
-          <CustomInput
-            type="text"
-            handleChange={handleChange}
-            name="date"
-            maxLength="10"
-            autoComplete="off"
-            value={fields.date}
-          />
-        </fieldset>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 

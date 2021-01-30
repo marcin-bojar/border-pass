@@ -1,18 +1,19 @@
 @import '../../sass/variables';
 
 .history-editor-form {
-  display: flex;
-  justify-content: space-between;
-  background-color: $color-white;
-  padding: 1rem;
-  border-radius: $border-radius-primary;
-  color: $color-black;
-  align-items: center;
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-top: 2rem;
-  margin-bottom: 4rem;
-
+  &__form {
+    display: flex;
+    justify-content: space-between;
+    background-color: $color-white;
+    padding: 1rem;
+    border-radius: $border-radius-primary;
+    color: $color-black;
+    align-items: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+  }
   &__nr {
     color: $color-orange;
     font-size: 1.8rem;

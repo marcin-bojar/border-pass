@@ -28,7 +28,7 @@ const HistoryEditor = () => {
 
           <HistoryEditorForm />
 
-          <CustomButton type="submit" form="form">
+          <CustomButton type="submit" form="editor-form">
             Zatwierdź
           </CustomButton>
         </div>

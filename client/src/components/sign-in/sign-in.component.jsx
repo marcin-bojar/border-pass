@@ -37,7 +37,7 @@ const SignIn = () => {
     setUserLoading(true);
 
     axios
-      .post('/api/auth/login', userCredentials)
+      .post('/api/auth/signin', userCredentials)
       .then(res => {
         localStorage.setItem('token', JSON.stringify(res.data.data.token));
         setToken(res.data.data.token);
@@ -51,7 +51,7 @@ const SignIn = () => {
         setUserLoading(false);
         if (err.response.status === 401 || err.response.status === 404)
           setAuthError('Podane dane są nieprawidłowe.');
-        else setAuthError('Coś poszło nie tak... spróbuj ponownie.');
+        else setAuthError(err.response.data.error);
       });
   };
 

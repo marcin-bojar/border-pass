@@ -2,8 +2,10 @@
 
 .error-message {
   margin-bottom: 2.5rem;
+  padding: 1rem 0;
   text-align: center;
-  color: $color-red-error;
+  background-color: $color-red-error;
+  color: $color-white;
 
   &__text {
     font-size: 1.7rem;
