@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-import { parseDate, getConfig } from '../../utils';
+import { parseDate, getConfig, sortUsersBorders } from '../../utils';
 
 import CustomInput from '../custom-input/custom-input.component';
 
@@ -17,6 +17,7 @@ const HistoryEditorForm = () => {
     setEditedItem,
     borders,
     setBorders,
+    isSortedDesc,
   } = useContext(AppContext);
 
   const { from, to, time, date, timestamp, i, _id } = editedItem;
@@ -63,9 +64,8 @@ const HistoryEditorForm = () => {
           getConfig()
         )
         .then(res => {
-          if (res.data.success) setCurrentUser(res.data.data);
-          else alert(res.data.error);
-
+          const user = sortUsersBorders(res.data.data, isSortedDesc);
+          setCurrentUser(user);
           setEditedItem(null);
         })
         .catch(err => alert('Ups... ' + err.response.data.error));
@@ -107,6 +107,7 @@ const HistoryEditorForm = () => {
             type="text"
             handleChange={handleChange}
             name="time"
+            maxLength="5"
             autoComplete="off"
             value={fields.time}
           />
@@ -115,6 +116,7 @@ const HistoryEditorForm = () => {
             type="text"
             handleChange={handleChange}
             name="date"
+            maxLength="10"
             autoComplete="off"
             value={fields.date}
           />
