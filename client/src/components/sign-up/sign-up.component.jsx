@@ -16,6 +16,7 @@ const SignUp = () => {
   const {
     currentUser,
     setCurrentUser,
+    setGuestUser,
     setToken,
     userLoading,
     setUserLoading,
@@ -37,15 +38,18 @@ const SignUp = () => {
       .post('/api/auth/signup', user)
       .then(res => {
         localStorage.setItem('token', JSON.stringify(res.data.data.token));
-        setToken(res.data.data.token);
         setCurrentUser(res.data.data.user);
+        setToken(res.data.data.token);
+        setGuestUser(false);
         setUserLoading(false);
         setAuthError(null);
       })
       .catch(err => {
         localStorage.removeItem('token');
+        setCurrentUser(null);
         setToken(null);
         setUserLoading(false);
+        setGuestUser(false);
         setAuthError(err.response.data.error);
       });
   };

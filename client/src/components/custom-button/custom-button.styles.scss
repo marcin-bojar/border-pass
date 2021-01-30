@@ -30,6 +30,17 @@
     padding: 0;
   }
 
+  &.link {
+    padding: 0;
+    border: none;
+    color: $color-primary;
+    background-color: transparent;
+    font-size: 1.9rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-align: left;
+  }
+
   &:focus {
     outline: none;
   }

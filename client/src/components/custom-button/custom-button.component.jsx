@@ -8,12 +8,13 @@ const CustomButton = ({
   clear,
   inline,
   navbar,
+  link,
   ...props
 }) => (
   <button
     className={`${clear ? 'clear' : ''} ${inline ? 'inline' : ''} ${
       navbar ? 'navbar' : ''
-    } custom-button`}
+    } ${link ? 'link' : ''} custom-button`}
     onClick={handleClick}
     {...props}
   >

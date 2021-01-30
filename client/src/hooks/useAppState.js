@@ -9,6 +9,7 @@ export const AppContext = createContext(null);
 export const useAppState = () => {
   //User state
   const [currentUser, setCurrentUser] = useState(null);
+  const [guestUser, setGuestUser] = useState(false);
   const [token, setToken] = useState(
     JSON.parse(localStorage.getItem('token')) || null
   );
@@ -85,6 +86,8 @@ export const useAppState = () => {
   return {
     currentUser,
     setCurrentUser,
+    guestUser,
+    setGuestUser,
     token,
     setToken,
     userLoading,

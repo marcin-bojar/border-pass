@@ -19,6 +19,7 @@ const SignIn = () => {
   const {
     currentUser,
     setCurrentUser,
+    setGuestUser,
     setToken,
     userLoading,
     setUserLoading,
@@ -42,13 +43,16 @@ const SignIn = () => {
         localStorage.setItem('token', JSON.stringify(res.data.data.token));
         setToken(res.data.data.token);
         setCurrentUser(res.data.data.user);
+        setGuestUser(false);
         setUserLoading(false);
         setAuthError(null);
       })
       .catch(err => {
         localStorage.removeItem('token');
+        setCurrentUser(null);
         setToken(null);
         setUserLoading(false);
+        setGuestUser(false);
         if (err.response.status === 401 || err.response.status === 404)
           setAuthError('Podane dane są nieprawidłowe.');
         else setAuthError(err.response.data.error);

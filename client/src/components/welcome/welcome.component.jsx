@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+import CustomButton from '../custom-button/custom-button.component';
+
 import { AppContext } from '../../hooks/useAppState';
 
 import './welcome.styles.scss';
 
 const Welcome = () => {
-  const { currentUser } = useContext(AppContext);
+  const { currentUser, guestUser, setGuestUser } = useContext(AppContext);
 
   const noUserContent = (
     <>
@@ -23,13 +25,12 @@ const Welcome = () => {
         , aby utworzyć nowe konto.
       </p>
       <p className="welcome__text">
-        Możesz również kontynuować jako niezalogowany użytkownik. Pamietaj
-        jednak, że Twoja historia przekroczeń granic będzie w tym przypadku
-        zapisywana w pamięci Twojego urządzenia, co grozi utratą danych.{' '}
-      </p>
-      <p className="welcome__text">
-        Jeśli nie chcesz się logować, określ w jakim obecnie znajdujesz się
-        kraju.
+        <CustomButton link handleClick={() => setGuestUser(true)}>
+          Kontynuuj jako gość.
+        </CustomButton>
+        &nbsp;Pamietaj jednak, że Twoja historia przekroczeń granic będzie w tym
+        przypadku zapisywana w pamięci Twojego urządzenia, co grozi utratą
+        danych.{' '}
       </p>
     </>
   );
@@ -37,7 +38,7 @@ const Welcome = () => {
   return (
     <div className="welcome">
       <h3 className="welcome__title">Witaj w Border Pass!</h3>
-      {currentUser ? (
+      {currentUser || guestUser ? (
         <p className="welcome__text">W jakim obecnie znajdujesz się kraju?</p>
       ) : (
         noUserContent
