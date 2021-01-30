@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-import { parseDate, getConfig, sortUsersBorders } from '../../utils';
+import {
+  parseDate,
+  getConfig,
+  sortUsersBorders,
+  validateTimeAndDateSync,
+} from '../../utils';
 
 import CustomInput from '../custom-input/custom-input.component';
 
@@ -70,8 +75,12 @@ const HistoryEditorForm = () => {
         })
         .catch(err => alert('Ups... ' + err.response.data.error));
     } else {
+      const { time, date } = updatedBorderPass;
+      if (!validateTimeAndDateSync(time, date)) return;
+
       borders[i] = updatedBorderPass;
       setBorders([...borders]);
+      setEditedItem(null);
     }
   };
 

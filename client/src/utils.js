@@ -54,6 +54,23 @@ export const getConfig = () => {
   return config;
 };
 
+export const validateTimeAndDateSync = (time, date) => {
+  const dateRegex = /^(0[0-9]|1[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[1-2])\.\d{4}$/;
+  const timeRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+
+  if (!timeRegex.test(time)) {
+    alert('Niepoprawny format czasu.');
+    return false;
+  }
+
+  if (!dateRegex.test(date)) {
+    alert('Niepoprawny format daty.');
+    return false;
+  }
+
+  return true;
+};
+
 //Service Worker utils
 
 export const registerSW = () => {
