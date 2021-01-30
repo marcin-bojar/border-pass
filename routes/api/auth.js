@@ -19,6 +19,7 @@ router.post(
     signupValidation.checkIfAllFieldsAreFilledIn,
     signupValidation.checkIfUserAlreadyExists,
     validateEmail,
+    signupValidation.validatePassword,
     hashPassword,
   ],
   (req, res) => {
