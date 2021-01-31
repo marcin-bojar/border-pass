@@ -13,7 +13,7 @@ export const useAppState = () => {
   const [token, setToken] = useState(
     JSON.parse(localStorage.getItem('token')) || null
   );
-  const [userLoading, setUserLoading] = useState(false);
+  const [userLoading, setUserLoading] = useState(true);
   const [authError, setAuthError] = useState(null);
 
   //Data state
@@ -67,8 +67,6 @@ export const useAppState = () => {
 
   useEffect(() => {
     if (token) {
-      setUserLoading(true);
-
       axios
         .get('/api/auth/user', getConfig())
         .then(res => {
@@ -80,7 +78,7 @@ export const useAppState = () => {
           setAuthError('Sesja wygasła. Zaloguj się ponownie.');
         })
         .finally(() => setUserLoading(false));
-    }
+    } else setUserLoading(false);
   }, []);
 
   return {

@@ -4,7 +4,6 @@ import axios from 'axios';
 import HistoryItem from '../history-item/history-item.component';
 import CustomButton from '../custom-button/custom-button.component';
 import HistoryEditor from '../history-editor/history-editor.component';
-import Loader from '../loader/loader.component';
 
 import { sortHistoryListByTimeAndDate, getConfig } from '../../utils';
 
@@ -62,8 +61,6 @@ const History = () => {
   };
 
   if (borders.length === 0) return null;
-
-  if (userLoading) return <Loader />;
 
   return (
     <div className="history">

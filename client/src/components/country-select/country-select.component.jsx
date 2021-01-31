@@ -6,7 +6,6 @@ import { sortUsersBorders, getConfig } from '../../utils';
 import CountryOption from '../country-option/country-option.component';
 import CustomButton from '../custom-button/custom-button.component';
 import AddCountry from '../add-country/add-country.component';
-import Loader from '../loader/loader.component/';
 
 import { AppContext } from '../../hooks/useAppState';
 
@@ -16,7 +15,6 @@ const CountrySelect = () => {
   const {
     currentUser,
     setCurrentUser,
-    userLoading,
     countries,
     currentCountry,
     showAll,
@@ -48,8 +46,6 @@ const CountrySelect = () => {
       setBorders([...borders]);
     }
   };
-
-  if (userLoading) return <Loader />;
 
   return (
     <div className="country-select">

@@ -2,19 +2,15 @@ import React, { useContext } from 'react';
 
 import CustomButton from '../custom-button/custom-button.component';
 import Welcome from '../welcome/welcome.component';
-import Loader from '../loader/loader.component';
 
 import { AppContext } from '../../hooks/useAppState';
 
 import './current-country.styles.scss';
 
 const CurrentCountry = () => {
-  const { currentCountry, setCurrentCountry, userLoading } = useContext(
-    AppContext
-  );
+  const { currentCountry, setCurrentCountry } = useContext(AppContext);
 
-  if (userLoading) return <Loader />;
-  else if (!currentCountry) return <Welcome />;
+  if (!currentCountry) return <Welcome />;
 
   return (
     <div className="current-country">
