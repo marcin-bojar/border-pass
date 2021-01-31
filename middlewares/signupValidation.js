@@ -1,7 +1,9 @@
 const User = require('../models/User');
 
 const checkIfUserAlreadyExists = (req, res, next) => {
-  User.findOne({ email: req.body.email })
+  const email = req.body.email.toLowerCase().trim();
+
+  User.findOne({ email })
     .then(user => {
       if (user)
         return res.status(400).json({

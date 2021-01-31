@@ -27,7 +27,7 @@ router.post(
 
     const newUser = new User({
       name,
-      email,
+      email: email.toLowerCase().trim(),
       password,
     });
 
@@ -68,7 +68,8 @@ router.post(
 // @desc Sign in user
 // @public
 router.post('/signin', validateEmail, (req, res) => {
-  const { email, password } = req.body;
+  const { password } = req.body;
+  const email = req.body.email.toLowerCase().trim();
 
   User.findOne({ email })
     .then(user => {
