@@ -1,5 +1,16 @@
 .heading {
-  margin-bottom: 4rem;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  margin: 0 auto 4rem auto;
+
+  @media only screen and (min-width: 31.25rem) {
+    max-width: 85%;
+  }
+
+  @media only screen and (min-width: 68.75em) {
+    max-width: 50%;
+  }
 
   &__subtitle {
     font-size: 1.9rem;
