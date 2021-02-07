@@ -15,7 +15,6 @@ const History = () => {
   const {
     currentUser,
     setCurrentUser,
-    userLoading,
     borders,
     setBorders,
     editMode,

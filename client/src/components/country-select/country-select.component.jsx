@@ -27,23 +27,29 @@ const CountrySelect = () => {
   } = useContext(AppContext);
 
   const undoLastEntry = () => {
-    if (currentUser) {
-      setIsMakingApiCall(true);
-      const { _id } = currentUser;
+    const deletionConfirmed = window.confirm(
+      'Usuwasz ostatnie przekroczenie granicy. Czy chcesz kontynuować?'
+    );
 
-      axios
-        .delete(`/api/users/${_id}/borders/undo`, getConfig())
-        .then(res => {
-          const user = sortUsersBorders(res.data.data, isSortedDesc);
-          setCurrentUser(user);
-        })
-        .catch(err => {
-          alert(err.response.data.error);
-        })
-        .finally(() => setIsMakingApiCall(false));
-    } else {
-      isSortedDesc ? borders.shift() : borders.pop();
-      setBorders([...borders]);
+    if (deletionConfirmed) {
+      if (currentUser) {
+        setIsMakingApiCall(true);
+        const { _id } = currentUser;
+
+        axios
+          .delete(`/api/users/${_id}/borders/undo`, getConfig())
+          .then(res => {
+            const user = sortUsersBorders(res.data.data, isSortedDesc);
+            setCurrentUser(user);
+          })
+          .catch(err => {
+            alert(err.response.data.error);
+          })
+          .finally(() => setIsMakingApiCall(false));
+      } else {
+        isSortedDesc ? borders.shift() : borders.pop();
+        setBorders([...borders]);
+      }
     }
   };
 
