@@ -6,6 +6,7 @@ import SignIn from './components/sign-in/sign-in.component';
 import SignUp from './components/sign-up/sign-up.component';
 import AppView from './components/app-view/app-view.component';
 import NavBar from './components/nav-bar/nav-bar.component';
+import Modal from './components/modal/modal.component';
 
 import { AppContext, useAppState } from './hooks/useAppState';
 
@@ -20,6 +21,7 @@ const App = () => {
         <BrowserRouter>
           <NavBar />
           <Heading />
+          <Modal />
           <Switch>
             <Route exact path="/" component={AppView} />
             <Route exact path="/signup" component={SignUp} />

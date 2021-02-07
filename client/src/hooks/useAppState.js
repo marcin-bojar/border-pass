@@ -34,6 +34,10 @@ export const useAppState = () => {
   //API calls state
   const [isMakingApiCall, setIsMakingApiCall] = useState(false);
 
+  //UI state
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState(null);
+
   useEffect(() => {
     if (!currentUser) {
       localStorage.setItem('borders', JSON.stringify(borders));
@@ -66,6 +70,10 @@ export const useAppState = () => {
   }, [currentUser]);
 
   useEffect(() => {
+    if (modalData) setShowModal(true);
+  }, [modalData]);
+
+  useEffect(() => {
     if (token) {
       axios
         .get('/api/auth/user', getConfig())
@@ -76,6 +84,10 @@ export const useAppState = () => {
         .catch(() => {
           localStorage.removeItem('token');
           setAuthError('Sesja wygasła. Zaloguj się ponownie.');
+          setModalData({
+            type: 'authError',
+            text: 'Sesja wygasła. Zaloguj się ponownie.',
+          });
         })
         .finally(() => setUserLoading(false));
     } else setUserLoading(false);
@@ -108,5 +120,9 @@ export const useAppState = () => {
     setIsSortedDesc,
     isMakingApiCall,
     setIsMakingApiCall,
+    showModal,
+    setShowModal,
+    modalData,
+    setModalData,
   };
 };
