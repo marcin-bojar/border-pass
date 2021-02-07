@@ -37,7 +37,7 @@ router.post(
         jwt.sign(
           { id: user.id },
           process.env.JWT_SECRET,
-          { expiresIn: 86400 },
+          { expiresIn: '6d' },
           (err, token) => {
             if (err) throw err;
 
@@ -90,7 +90,7 @@ router.post('/signin', validateEmail, (req, res) => {
           jwt.sign(
             { id: user.id },
             process.env.JWT_SECRET,
-            { expiresIn: 86400 },
+            { expiresIn: '6d' },
             (err, token) => {
               if (err) throw err;
 
