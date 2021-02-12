@@ -35,8 +35,11 @@ export const useAppState = () => {
   const [isMakingApiCall, setIsMakingApiCall] = useState(false);
 
   //UI state
-  const [showModal, setShowModal] = useState(false);
-  const [modalData, setModalData] = useState(null);
+  const [showModal, setShowModal] = useState(true);
+  const [modalData, setModalData] = useState({
+    type: 'authError',
+    text: 'Sesja wygasła. Zaloguj sie ponownie',
+  });
 
   useEffect(() => {
     if (!currentUser) {
