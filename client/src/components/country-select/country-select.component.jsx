@@ -24,32 +24,27 @@ const CountrySelect = () => {
     isSortedDesc,
     isMakingApiCall,
     setIsMakingApiCall,
+    setModalData,
   } = useContext(AppContext);
 
   const undoLastEntry = () => {
-    const deletionConfirmed = window.confirm(
-      'Usuwasz ostatnie przekroczenie granicy. Czy chcesz kontynuować?'
-    );
+    if (currentUser) {
+      setIsMakingApiCall(true);
+      const { _id } = currentUser;
 
-    if (deletionConfirmed) {
-      if (currentUser) {
-        setIsMakingApiCall(true);
-        const { _id } = currentUser;
-
-        axios
-          .delete(`/api/users/${_id}/borders/undo`, getConfig())
-          .then(res => {
-            const user = sortUsersBorders(res.data.data, isSortedDesc);
-            setCurrentUser(user);
-          })
-          .catch(err => {
-            alert(err.response.data.error);
-          })
-          .finally(() => setIsMakingApiCall(false));
-      } else {
-        isSortedDesc ? borders.shift() : borders.pop();
-        setBorders([...borders]);
-      }
+      axios
+        .delete(`/api/users/${_id}/borders/undo`, getConfig())
+        .then(res => {
+          const user = sortUsersBorders(res.data.data, isSortedDesc);
+          setCurrentUser(user);
+        })
+        .catch(err => {
+          alert(err.response.data.error);
+        })
+        .finally(() => setIsMakingApiCall(false));
+    } else {
+      isSortedDesc ? borders.shift() : borders.pop();
+      setBorders([...borders]);
     }
   };
 
@@ -82,7 +77,14 @@ const CountrySelect = () => {
         <CustomButton
           clear
           disabled={borders.length === 0 || isMakingApiCall}
-          handleClick={undoLastEntry}
+          handleClick={() =>
+            setModalData({
+              type: 'confirm',
+              text:
+                'Usuwasz ostatnie przekroczenie granicy. Czy chcesz kontynuować?',
+              onConfirm: undoLastEntry,
+            })
+          }
         >
           Cofnij
         </CustomButton>

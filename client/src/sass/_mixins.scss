@@ -85,12 +85,16 @@
     backdrop-filter: blur(4px);
     z-index: 99;
     &__main {
-      @include sections-common-styles;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      padding: 1rem;
+      border-radius: $border-radius-primary;
+      color: $color-black;
+      background-color: $color-white;
       width: 85%;
+      max-width: 60rem;
       min-height: 15rem;
       padding: 2rem;
     }
@@ -104,6 +108,15 @@
     &__text {
       margin-bottom: 2rem;
       font-size: 1.8rem;
+    }
+
+    &__button-wrapper {
+      display: flex;
+      justify-content: space-between;
+
+      .custom-button:not(:last-child) {
+        margin-right: 3.5rem;
+      }
     }
   }
 }

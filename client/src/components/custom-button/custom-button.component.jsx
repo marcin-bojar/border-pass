@@ -12,6 +12,7 @@ const CustomButton = ({
   ...props
 }) => (
   <button
+    tabIndex="1"
     className={`${clear ? 'clear' : ''} ${inline ? 'inline' : ''} ${
       navbar ? 'navbar' : ''
     } ${link ? 'link' : ''} custom-button`}
