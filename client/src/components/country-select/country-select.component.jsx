@@ -39,7 +39,7 @@ const CountrySelect = () => {
           setCurrentUser(user);
         })
         .catch(err => {
-          alert(err.response.data.error);
+          setModalData({ type: 'error', text: err.response.data.error });
         })
         .finally(() => setIsMakingApiCall(false));
     } else {

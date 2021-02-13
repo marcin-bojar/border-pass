@@ -12,7 +12,9 @@ import './add-country.styles.scss';
 
 const AddCountry = () => {
   const { inputValue, setInputValue, handleChange } = useSingleInput();
-  const { countries, setCountries, currentUser } = useContext(AppContext);
+  const { countries, setCountries, currentUser, setModalData } = useContext(
+    AppContext
+  );
   const [isAdding, setIsAdding] = useState(false);
 
   const handleSubmit = e => {
@@ -34,18 +36,18 @@ const AddCountry = () => {
             setCountries([...res.data.data.countries]);
             setInputValue('');
           } else {
-            alert(res.data.error);
+            setModalData({ type: 'error', text: res.data.error });
           }
         })
         .catch(err => {
-          alert('Ups... ' + err.response.data.error);
+          setModalData({ type: 'error', text: err.response.data.error });
         })
         .finally(() => setIsAdding(false));
     } else {
       const countryExists = countries.find(el => el.name === name);
 
       if (countryExists) {
-        alert('Ten kraj jest już na liście.');
+        setModalData({ type: 'error', text: 'Ten kraj jest już na liście.' });
         setIsAdding(false);
       } else {
         setCountries([...countries, { name }]);

@@ -23,12 +23,13 @@ const CountryOption = ({ name }) => {
     isSortedDesc,
     isMakingApiCall,
     setIsMakingApiCall,
+    setModalData,
   } = useContext(AppContext);
 
   const handleClick = () => {
     if (currentCountry) {
       if (currentCountry === name) {
-        alert('Jesteś już w tym kraju.');
+        setModalData({ type: 'error', text: 'Jesteś już w tym kraju.' });
         return;
       }
 
@@ -54,7 +55,9 @@ const CountryOption = ({ name }) => {
             setCurrentUser(user);
             return axios.post('/api/borders', { ...borderPass, user: _id });
           })
-          .catch(err => alert('Ups... ' + err.response.data.error))
+          .catch(err =>
+            setModalData({ type: 'error', text: err.response.data.error })
+          )
           .finally(() => setIsMakingApiCall(false));
       } else {
         const updatedBorders = sortHistoryListByTimeAndDate(
