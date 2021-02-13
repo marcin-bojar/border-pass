@@ -108,6 +108,11 @@
     &__text {
       margin-bottom: 2rem;
       font-size: 1.8rem;
+      white-space: pre-line;
+    }
+
+    &__form {
+      margin-bottom: 2rem;
     }
 
     &__button-wrapper {

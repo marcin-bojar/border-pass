@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 
 import AlertModal from '../alert-modal/alert-modal.component';
 import ConfirmModal from '../confirm-modal/confirm-modal.component';
+import PromptModal from '../prompt-modal/prompt-modal.component';
 
 import { AppContext } from '../../hooks/useAppState';
 
@@ -13,6 +14,7 @@ const Modal = () => {
 
   if (type === 'error' || type === 'authError') return <AlertModal />;
   if (type === 'confirm') return <ConfirmModal />;
+  if (type === 'prompt') return <PromptModal />;
 };
 
 export default Modal;

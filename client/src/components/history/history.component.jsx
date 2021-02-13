@@ -21,6 +21,7 @@ const History = () => {
     setEditMode,
     isSortedDesc,
     setIsSortedDesc,
+    setModalData,
   } = useContext(AppContext);
 
   const sortBordersByDate = () => {
@@ -38,24 +39,14 @@ const History = () => {
   };
 
   const handleDeleteAll = () => {
-    if (borders.length === 0) {
-      alert('Brak zapisanych danych w historii.');
-      return;
-    }
-
-    const confirm = prompt(
-      "Spowoduje to NIEODWRACALNE usunięcie całej historii!\nWpisz 'TAK', aby usunąć."
-    );
-    if (confirm && confirm.toUpperCase() === 'TAK') {
-      if (currentUser) {
-        const { _id } = currentUser;
-        axios
-          .delete(`/api/users/${_id}/borders`, getConfig())
-          .then(res => setCurrentUser(res.data.data))
-          .catch(err => alert('Ups... ' + err.response.data.error));
-      } else {
-        setBorders([]);
-      }
+    if (currentUser) {
+      const { _id } = currentUser;
+      axios
+        .delete(`/api/users/${_id}/borders`, getConfig())
+        .then(res => setCurrentUser(res.data.data))
+        .catch(err => alert('Ups... ' + err.response.data.error));
+    } else {
+      setBorders([]);
     }
   };
 
@@ -79,7 +70,18 @@ const History = () => {
           </p>
         </div>
 
-        <CustomButton clear handleClick={handleDeleteAll}>
+        <CustomButton
+          clear
+          handleClick={() =>
+            setModalData({
+              type: 'prompt',
+              text:
+                "Spowoduje to NIEODWRACALNE usunięcie całej historii.\nWpisz 'TAK', aby usunąć.",
+              expectedValue: 'TAK',
+              onConfirm: handleDeleteAll,
+            })
+          }
+        >
           Wyczyść
         </CustomButton>
       </div>
