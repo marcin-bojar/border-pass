@@ -1,0 +1,37 @@
+@import '../../sass/variables';
+
+.borders-table {
+  display: flex;
+  justify-content: center;
+
+  & table,
+  & th,
+  & td {
+    border: 1px solid $color-white;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  & table {
+    width: 60rem;
+    border-collapse: collapse;
+  }
+
+  & th {
+    background-color: $color-white;
+    color: $color-primary;
+
+    &:not(:last-child) {
+      border-right: 1px solid $color-primary;
+    }
+  }
+
+  @media print {
+    & table,
+    & th,
+    & td {
+      border: 1px solid $color-black;
+      color: $color-black;
+    }
+  }
+}

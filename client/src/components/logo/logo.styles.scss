@@ -4,9 +4,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: inherit;
+  color: $color-white;
   text-decoration: none;
-  width: fit-content;
   margin: 0 auto;
 
   &__title {
@@ -31,10 +30,10 @@
 
   &__icon {
     fill: $color-white;
-    width: 5rem;
-    height: 5rem;
+    width: 40px;
+    height: 40px;
     padding: 0 0.5rem 0 1rem;
-    flex-shrink: 0;
+    // flex-shrink: 0; TODO this line causes problems on iPhones - title is overflowing the viewport as SVG is not being resized correctly in Safari. Without this line no icon is visible in Logo component in Safari
 
     @media only screen and (min-width: 31.25rem) {
       width: 6rem;
