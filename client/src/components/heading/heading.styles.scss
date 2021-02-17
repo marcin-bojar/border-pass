@@ -1,3 +1,5 @@
+@import '../../sass/variables';
+
 .heading {
   display: block;
   color: inherit;
@@ -28,6 +30,10 @@
 
     @media only screen and (min-width: 68.75rem) {
       font-size: 3rem;
+    }
+
+    @media only print {
+      color: $color-black;
     }
   }
 }

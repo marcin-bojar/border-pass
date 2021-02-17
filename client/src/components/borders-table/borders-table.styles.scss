@@ -13,7 +13,7 @@
   }
 
   & table {
-    width: 60rem;
+    width: 60%;
     border-collapse: collapse;
   }
 
@@ -26,12 +26,17 @@
     }
   }
 
-  @media print {
+  @media only print {
     & table,
     & th,
     & td {
       border: 1px solid $color-black;
       color: $color-black;
+      orientation: landscape;
+    }
+
+    & table {
+      width: 80%;
     }
   }
 }

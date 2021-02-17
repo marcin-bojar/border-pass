@@ -26,6 +26,10 @@
     @media only screen and (min-width: 68.75em) {
       font-size: 6.8rem;
     }
+
+    @media only print {
+      color: $color-black;
+    }
   }
 
   &__icon {
@@ -45,6 +49,10 @@
       width: 7rem;
       height: 7rem;
       padding: 0 0 0 1.5rem;
+    }
+
+    @media only print {
+      fill: $color-black;
     }
   }
 }
