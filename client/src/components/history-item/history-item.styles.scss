@@ -10,11 +10,14 @@
     margin-bottom: 1rem;
   }
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.8rem;
-  font-weight: 700;
+  &__border,
+  &__event {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
 
   &__nr {
     color: $color-orange;

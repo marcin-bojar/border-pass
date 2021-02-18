@@ -26,8 +26,8 @@ const HistoryEditorForm = () => {
     isSortedDesc,
   } = useContext(AppContext);
 
-  const { from, to, time, date, timestamp, i, _id } = editedItem;
-  const borderFields = { from, to, time, date, timestamp, _id };
+  const { type, from, to, time, date, timestamp, i, _id } = editedItem;
+  const borderFields = { type, from, to, time, date, timestamp, _id };
 
   const [fields, setFields] = useState(borderFields);
   const [error, setError] = useState(null);

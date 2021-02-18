@@ -35,6 +35,7 @@ router.get('/:id', (req, res) => {
 // @public
 router.post('/', (req, res) => {
   const newBorder = new Border({
+    type: 'borderPass',
     from: req.body.from,
     to: req.body.to,
     time: req.body.time,

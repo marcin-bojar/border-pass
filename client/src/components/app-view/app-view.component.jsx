@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import CountrySelect from '../country-select/country-select.component';
+import TripEvents from '../trip-events/trip-events.component';
 import CurrentCountry from '../current-country/current-country.component';
 import History from '../history/history.component';
 import Welcome from '../welcome/welcome.component';
@@ -19,6 +20,7 @@ const AppView = () => {
   return (
     <div className="app-view">
       <CurrentCountry />
+      <TripEvents />
       <CountrySelect />
       <History />
     </div>

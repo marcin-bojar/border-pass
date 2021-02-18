@@ -3,13 +3,18 @@ const Schema = mongoose.Schema;
 
 const BorderSchema = new Schema(
   {
-    from: {
+    type: {
       type: String,
       required: true,
+      enum: ['delegationStart', 'delegationEnd', 'borderPass'],
+    },
+    from: {
+      type: String,
+      required: () => this.type === 'borderPass',
     },
     to: {
       type: String,
-      required: true,
+      required: () => this.type === 'borderPass',
     },
     time: {
       type: String,

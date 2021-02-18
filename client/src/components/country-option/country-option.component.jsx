@@ -37,6 +37,7 @@ const CountryOption = ({ name }) => {
       const { time, date } = parseTimestamp(timestamp);
 
       const borderPass = {
+        type: 'borderPass',
         from: currentCountry,
         to: name,
         time,

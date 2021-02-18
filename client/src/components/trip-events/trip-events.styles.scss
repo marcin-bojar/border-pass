@@ -1,0 +1,11 @@
+@import '../../sass//mixins';
+
+.trip-events {
+  @include sections-common-styles;
+
+  &__button-wrapper {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
+}
