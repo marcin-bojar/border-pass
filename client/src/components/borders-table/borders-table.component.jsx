@@ -9,7 +9,7 @@ const BordersTable = () => {
 
   return (
     <div className="borders-table">
-      <table>
+      <table id="table">
         <thead>
           <tr>
             <th>Wyjazd z bazy</th>
@@ -21,18 +21,42 @@ const BordersTable = () => {
         </thead>
         <tbody>
           {borders.map((border, i) => {
-            const row = (
-              <tr key={i}>
-                <td></td>
-                <td>
-                  {border.from} &nbsp; {'->'} &nbsp; {border.to}
-                </td>
-                <td>{border.date}</td>
-                <td>{border.time}</td>
-                <td></td>
-              </tr>
-            );
-            return row;
+            if (
+              border.type === 'delegationStart' ||
+              border.type === 'delegationEnd'
+            ) {
+              const row = (
+                <tr key={i}>
+                  <td>
+                    {border.type === 'delegationStart'
+                      ? `${border.date} ${border.time}`
+                      : null}
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    {border.type === 'delegationEnd'
+                      ? `${border.date} ${border.time}`
+                      : null}
+                  </td>
+                </tr>
+              );
+              return row;
+            } else {
+              const row = (
+                <tr key={i}>
+                  <td></td>
+                  <td>
+                    {border.from} &nbsp; {'->'} &nbsp; {border.to}
+                  </td>
+                  <td>{border.date}</td>
+                  <td>{border.time}</td>
+                  <td></td>
+                </tr>
+              );
+              return row;
+            }
           })}
         </tbody>
       </table>
