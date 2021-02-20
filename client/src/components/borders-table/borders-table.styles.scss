@@ -2,7 +2,13 @@
 
 .borders-table {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+
+  &__name {
+    margin-bottom: 2.5rem;
+  }
 
   & table,
   & th,

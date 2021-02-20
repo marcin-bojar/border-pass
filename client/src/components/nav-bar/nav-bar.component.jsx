@@ -19,7 +19,9 @@ const NavBar = () => {
         <Spinner isLoading={userLoading} />
       ) : currentUser ? (
         <div className="nav-bar__user">
-          <p className="nav-bar__user-name">{currentUser.name}</p>
+          <Link className="nav-bar__link nav-bar__link--username" to="/preview">
+            {currentUser.name}
+          </Link>
           <CustomButton
             navbar
             handleClick={() => {

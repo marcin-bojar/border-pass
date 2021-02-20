@@ -3,6 +3,11 @@
 .trip-events {
   @include sections-common-styles;
 
+  &__title {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
   &__button-wrapper {
     display: flex;
     justify-content: space-around;

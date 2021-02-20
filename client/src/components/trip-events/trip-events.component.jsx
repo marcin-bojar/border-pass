@@ -61,6 +61,7 @@ const TripEvents = () => {
 
   return (
     <div className="trip-events">
+      <h3 className="trip-events__title">Zdarzenia</h3>
       <div className="trip-events__button-wrapper">
         <CustomButton
           type="button"

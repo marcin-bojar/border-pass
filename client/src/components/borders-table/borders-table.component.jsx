@@ -1,4 +1,7 @@
 import React, { useContext, useEffect, useRef } from 'react';
+import { Redirect } from 'react-router-dom';
+
+import Loader from '../loader/loader.component';
 
 import { AppContext } from '../../hooks/useAppState';
 import { displayTripEventsInSameRow } from '../../utils';
@@ -6,16 +9,24 @@ import { displayTripEventsInSameRow } from '../../utils';
 import './borders-table.styles.scss';
 
 const BordersTable = () => {
-  const { borders } = useContext(AppContext);
+  const { borders, currentUser, userLoading } = useContext(AppContext);
   const tableRef = useRef(null);
-  useEffect(() => {
-    const table = tableRef.current;
 
-    displayTripEventsInSameRow(table);
-  }, []);
+  useEffect(() => {
+    if (currentUser) {
+      const table = tableRef.current;
+
+      displayTripEventsInSameRow(table);
+    }
+  }, [userLoading]);
+
+  if (userLoading) return <Loader />;
+
+  if (!currentUser) return <Redirect to="/" />;
 
   return (
     <div className="borders-table">
+      <h2 className="borders-table__name">{currentUser.name}</h2>
       <table ref={tableRef}>
         <thead>
           <tr>
