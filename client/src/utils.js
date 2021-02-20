@@ -71,6 +71,28 @@ export const validateTimeAndDateSync = (time, date, setError) => {
   return true;
 };
 
+export const displayTripEventsInSameRow = table => {
+  for (let i = 1; i < table.rows.length; i++) {
+    const tripStartEventFound = table.rows[i].cells[0].innerText;
+    const tripEndEventFound = table.rows[i].cells[4].innerText;
+
+    if (tripStartEventFound) {
+      //Copy border crossing's data (columns 2-4) from next row to the current row and delete next row
+      for (let j = 1; j < 5; j++) {
+        table.rows[i].cells[j].innerText = table.rows[i + 1].cells[j].innerText;
+      }
+      table.deleteRow(i + 1);
+    }
+
+    if (tripEndEventFound) {
+      //Copy the tripEnd event's data (column 5) one row up, delete current row and update 'i' counter to new table's size (decrement by one)
+      table.rows[i - 1].cells[4].innerText = table.rows[i].cells[4].innerText;
+      table.deleteRow(i);
+      i--;
+    }
+  }
+};
+
 //Service Worker utils
 
 export const registerSW = () => {

@@ -1,15 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 
 import { AppContext } from '../../hooks/useAppState';
+import { displayTripEventsInSameRow } from '../../utils';
 
 import './borders-table.styles.scss';
 
 const BordersTable = () => {
   const { borders } = useContext(AppContext);
+  const tableRef = useRef(null);
+  useEffect(() => {
+    const table = tableRef.current;
+
+    displayTripEventsInSameRow(table);
+  }, []);
 
   return (
     <div className="borders-table">
-      <table id="table">
+      <table ref={tableRef}>
         <thead>
           <tr>
             <th>Wyjazd z bazy</th>
@@ -21,14 +28,11 @@ const BordersTable = () => {
         </thead>
         <tbody>
           {borders.map((border, i) => {
-            if (
-              border.type === 'delegationStart' ||
-              border.type === 'delegationEnd'
-            ) {
+            if (border.type === 'tripStart' || border.type === 'tripEnd') {
               const row = (
                 <tr key={i}>
                   <td>
-                    {border.type === 'delegationStart'
+                    {border.type === 'tripStart'
                       ? `${border.date} ${border.time}`
                       : null}
                   </td>
@@ -36,7 +40,7 @@ const BordersTable = () => {
                   <td></td>
                   <td></td>
                   <td>
-                    {border.type === 'delegationEnd'
+                    {border.type === 'tripEnd'
                       ? `${border.date} ${border.time}`
                       : null}
                   </td>

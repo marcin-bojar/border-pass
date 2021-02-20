@@ -37,7 +37,7 @@ const HistoryItem = ({ data }) => {
       {type !== 'borderPass' && (
         <div className="history-item__event">
           <div className="history-item__block">
-            {type === 'delegationStart' ? 'Wyjazd z bazy' : 'Powrót na bazę'}
+            {type === 'tripStart' ? 'Wyjazd z bazy' : 'Powrót na bazę'}
           </div>
           <div className="history-item__block">
             <span className="history-item__time">{time}</span>{' '}

@@ -6,7 +6,7 @@ const BorderSchema = new Schema(
     type: {
       type: String,
       required: true,
-      enum: ['delegationStart', 'delegationEnd', 'borderPass'],
+      enum: ['tripStart', 'tripEnd', 'borderPass'],
     },
     from: {
       type: String,

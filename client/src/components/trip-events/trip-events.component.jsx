@@ -13,7 +13,7 @@ import { AppContext } from '../../hooks/useAppState';
 
 import './trip-events.styles.scss';
 
-const DelegationEvents = () => {
+const TripEvents = () => {
   const {
     borders,
     setBorders,
@@ -28,7 +28,7 @@ const DelegationEvents = () => {
     const timestamp = Date.now();
     const { time, date } = parseTimestamp(timestamp);
 
-    const delegationEvent = {
+    const tripEvent = {
       type: eventType,
       time,
       date,
@@ -39,11 +39,11 @@ const DelegationEvents = () => {
       const { _id } = currentUser;
 
       axios
-        .post(`/api/users/${_id}/borders`, delegationEvent, getConfig())
+        .post(`/api/users/${_id}/borders`, tripEvent, getConfig())
         .then(res => {
           const user = sortUsersBorders(res.data.data, isSortedDesc);
           setCurrentUser(user);
-          return axios.post('/api/borders', { ...delegationEvent, user: _id });
+          return axios.post('/api/borders', { ...tripEvent, user: _id });
         })
         .catch(err =>
           setModalData({ type: 'error', text: err.response.data.error })
@@ -51,7 +51,7 @@ const DelegationEvents = () => {
         .finally(() => setIsMakingApiCall(false));
     } else {
       const updatedBorders = sortHistoryListByTimeAndDate(
-        [...borders, delegationEvent],
+        [...borders, tripEvent],
         isSortedDesc,
         'timestamp'
       );
@@ -64,14 +64,11 @@ const DelegationEvents = () => {
       <div className="trip-events__button-wrapper">
         <CustomButton
           type="button"
-          handleClick={() => onTripEvent('delegationStart')}
+          handleClick={() => onTripEvent('tripStart')}
         >
           Wyjazd z bazy
         </CustomButton>
-        <CustomButton
-          type="button"
-          handleClick={() => onTripEvent('delegationEnd')}
-        >
+        <CustomButton type="button" handleClick={() => onTripEvent('tripEnd')}>
           Powrót na bazę
         </CustomButton>
       </div>
@@ -79,4 +76,4 @@ const DelegationEvents = () => {
   );
 };
 
-export default DelegationEvents;
+export default TripEvents;
