@@ -33,6 +33,7 @@ const TripEvents = () => {
       type: eventType,
       time,
       date,
+      timestamp,
     };
 
     if (currentUser) {

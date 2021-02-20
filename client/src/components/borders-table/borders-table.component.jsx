@@ -4,13 +4,22 @@ import { Redirect } from 'react-router-dom';
 import Loader from '../loader/loader.component';
 
 import { AppContext } from '../../hooks/useAppState';
-import { displayTripEventsInSameRow } from '../../utils';
+import {
+  displayTripEventsInSameRow,
+  sortHistoryListByTimeAndDate,
+} from '../../utils';
 
 import './borders-table.styles.scss';
 
 const BordersTable = () => {
-  const { borders, currentUser, userLoading } = useContext(AppContext);
+  const { borders, currentUser, userLoading, isSortedDesc } = useContext(
+    AppContext
+  );
   const tableRef = useRef(null);
+  let sortedBorders = borders;
+
+  if (isSortedDesc)
+    sortedBorders = sortHistoryListByTimeAndDate(borders, !isSortedDesc);
 
   useEffect(() => {
     if (currentUser) {
@@ -26,8 +35,9 @@ const BordersTable = () => {
 
   return (
     <div className="borders-table">
-      <h2 className="borders-table__name">{currentUser.name}</h2>
+      {/* <h2 className="borders-table__name">{currentUser.name}</h2> */}
       <table ref={tableRef}>
+        <caption className="borders-table__name">{currentUser.name}</caption>
         <thead>
           <tr>
             <th>Wyjazd z bazy</th>
@@ -38,7 +48,7 @@ const BordersTable = () => {
           </tr>
         </thead>
         <tbody>
-          {borders.map((border, i) => {
+          {sortedBorders.map((border, i) => {
             if (border.type === 'tripStart' || border.type === 'tripEnd') {
               const row = (
                 <tr key={i}>
