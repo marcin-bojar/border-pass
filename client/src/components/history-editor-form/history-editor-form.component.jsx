@@ -24,6 +24,7 @@ const HistoryEditorForm = () => {
     borders,
     setBorders,
     isSortedDesc,
+    setIsMakingApiCall,
   } = useContext(AppContext);
 
   const { type, from, to, time, date, timestamp, i, _id } = editedItem;
@@ -56,6 +57,7 @@ const HistoryEditorForm = () => {
     const updatedBorderPass = fields;
 
     if (currentUser) {
+      setIsMakingApiCall(true);
       const userId = currentUser._id;
       const borderId = editedItem._id;
 
@@ -70,7 +72,8 @@ const HistoryEditorForm = () => {
           setCurrentUser(user);
           setEditedItem(null);
         })
-        .catch(err => setError(err.response.data.error));
+        .catch(err => setError(err.response.data.error))
+        .finally(() => setIsMakingApiCall(false));
     } else {
       const { time, date } = updatedBorderPass;
       if (!validateTimeAndDateSync(time, date, setError)) return;

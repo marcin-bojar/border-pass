@@ -8,7 +8,7 @@ import { AppContext } from '../../hooks/useAppState';
 import './history-editor.styles.scss';
 
 const HistoryEditor = () => {
-  const { editedItem, setEditedItem } = useContext(AppContext);
+  const { editedItem, setEditedItem, isMakingApiCall } = useContext(AppContext);
 
   useEffect(() => {
     return () => setEditedItem(null);
@@ -28,7 +28,11 @@ const HistoryEditor = () => {
 
           <HistoryEditorForm />
 
-          <CustomButton type="submit" form="editor-form">
+          <CustomButton
+            type="submit"
+            form="editor-form"
+            disabled={isMakingApiCall}
+          >
             Zatwierdź
           </CustomButton>
         </div>

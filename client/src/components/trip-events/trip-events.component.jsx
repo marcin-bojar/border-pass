@@ -22,6 +22,7 @@ const TripEvents = () => {
     setIsMakingApiCall,
     setModalData,
     isSortedDesc,
+    isMakingApiCall,
   } = useContext(AppContext);
 
   const onTripEvent = eventType => {
@@ -65,11 +66,16 @@ const TripEvents = () => {
       <div className="trip-events__button-wrapper">
         <CustomButton
           type="button"
+          disabled={isMakingApiCall}
           handleClick={() => onTripEvent('tripStart')}
         >
           Wyjazd z bazy
         </CustomButton>
-        <CustomButton type="button" handleClick={() => onTripEvent('tripEnd')}>
+        <CustomButton
+          type="button"
+          disabled={isMakingApiCall}
+          handleClick={() => onTripEvent('tripEnd')}
+        >
           Powrót na bazę
         </CustomButton>
       </div>
