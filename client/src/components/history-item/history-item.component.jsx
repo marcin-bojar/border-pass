@@ -37,6 +37,9 @@ const HistoryItem = ({ data }) => {
       {type !== 'borderPass' && (
         <div className="history-item__event">
           <div className="history-item__block">
+            <span className="history-item__nr">
+              {isSortedDesc ? borders.length - i : i + 1}.{' '}
+            </span>
             {type === 'tripStart' ? 'Wyjazd z bazy' : 'Powrót na bazę'}
           </div>
           <div className="history-item__block">

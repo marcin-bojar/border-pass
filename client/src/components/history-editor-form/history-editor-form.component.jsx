@@ -42,8 +42,12 @@ const HistoryEditorForm = () => {
 
   const handleChange = e => {
     const { name, value } = e.target;
-
     setFields({ ...fields, [name]: value.toUpperCase() });
+  };
+
+  const handleSelectChange = e => {
+    const { name, value } = e.target;
+    setFields({ ...fields, [name]: value });
   };
 
   const handleSubmit = e => {
@@ -87,27 +91,42 @@ const HistoryEditorForm = () => {
       >
         <div className="history-editor-form__block">
           <span className="history-editor-form__nr">{i + 1}. </span>
-          <div className="history-editor-form__country">
-            <fieldset className="history-editor-form__input-wrapper country">
-              <CustomInput
-                type="text"
-                handleChange={handleChange}
-                name="from"
-                maxLength="3"
-                autoComplete="off"
-                value={fields.from}
-              />
-              &#8594;
-              <CustomInput
-                type="text"
-                handleChange={handleChange}
-                name="to"
-                maxLength="3"
-                autoComplete="off"
-                value={fields.to}
-              />
-            </fieldset>
-          </div>
+          {fields.type !== 'borderPass' && (
+            <div className="history-editor-form__trip-event">
+              <select
+                className="history-editor-form__select"
+                name="type"
+                value={fields.type}
+                onChange={handleSelectChange}
+              >
+                <option value="tripStart">Wyjazd z bazy</option>
+                <option value="tripEnd">Powrót na bazę</option>
+              </select>
+            </div>
+          )}
+          {fields.type === 'borderPass' && (
+            <div className="history-editor-form__country">
+              <fieldset className="history-editor-form__input-wrapper country">
+                <CustomInput
+                  type="text"
+                  handleChange={handleChange}
+                  name="from"
+                  maxLength="3"
+                  autoComplete="off"
+                  value={fields.from}
+                />
+                &#8594;
+                <CustomInput
+                  type="text"
+                  handleChange={handleChange}
+                  name="to"
+                  maxLength="3"
+                  autoComplete="off"
+                  value={fields.to}
+                />
+              </fieldset>
+            </div>
+          )}
         </div>
         <div className="history-editor-form__block">
           <fieldset className="history-editor-form__input-wrapper time">

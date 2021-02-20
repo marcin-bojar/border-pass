@@ -23,7 +23,25 @@
   &__block {
     display: flex;
     align-items: center;
-    // max-width: 35%;
+  }
+
+  &__select {
+    font-family: inherit;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: $color-primary;
+    padding-left: 2px;
+    border-radius: $border-radius-primary;
+    border: 2px solid $color-primary;
+    background-color: inherit;
+
+    &:focus {
+      outline: none;
+    }
+
+    @media only screen and (min-width: 22.5em) {
+      font-size: inherit;
+    }
   }
 
   &__input-wrapper {
