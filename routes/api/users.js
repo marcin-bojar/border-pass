@@ -4,6 +4,7 @@ const router = express.Router();
 const User = require('../../models/User');
 const auth = require('../../middlewares/auth');
 const validateTimeAndDate = require('../../middlewares/validateTimeAndDate');
+const createBordersFile = require('../../middlewares/createBordersFile');
 
 // @route POST /api/users/:id/borders
 // @desc Post new border crossing to user's borders array
@@ -89,6 +90,10 @@ router.post('/:userId/countries', auth, (req, res) => {
       return res.json({ success: true, data: user });
     })
     .catch(err => res.status(400).json({ success: false, error: err.message }));
+});
+
+router.get('/:userId/send', [auth, createBordersFile], (req, res) => {
+  return res.json({ success: true, data: 'File created' });
 });
 
 module.exports = router;
