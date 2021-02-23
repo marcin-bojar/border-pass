@@ -1,5 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
+const path = require('path');
+
+const nodemailerConfig = require('../../helpers/nodemailer.js');
 
 const User = require('../../models/User');
 const auth = require('../../middlewares/auth');
@@ -93,7 +97,42 @@ router.post('/:userId/countries', auth, (req, res) => {
 });
 
 router.get('/:userId/send', [auth, createBordersFile], (req, res) => {
-  return res.json({ success: true, data: 'File created' });
+  const pathToFile = path.join(
+    path.dirname(require.main.filename),
+    'archive',
+    req.filename
+  );
+
+  fs.access(
+    pathToFile,
+
+    err => {
+      if (err)
+        return res.status(500).json({
+          success: false,
+          error: 'Coś poszło nie tak, spróbuj ponownie',
+        });
+
+      User.findById(req.user.id)
+        .select('name')
+        .then(user => {
+          const { transporter, createMailData } = nodemailerConfig;
+
+          const mailData = createMailData(
+            user.company.email,
+            user.name,
+            pathToFile
+          );
+
+          transporter.sendMail(mailData, (err, info) => {
+            if (err)
+              return res.status(500).json({ success: false, error: err });
+
+            return res.json({ success: true, data: info });
+          });
+        });
+    }
+  );
 });
 
 module.exports = router;

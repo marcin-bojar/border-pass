@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const minifier = require('html-minifier').minify;
+const minify = require('html-minifier').minify;
 
 const createBordersFile = (req, res, next) => {
   const userId = req.user.id;
@@ -195,28 +195,32 @@ const createBordersFile = (req, res, next) => {
         </html>   
       `;
 
-      const minifiedMarkup = minifier(markup, {
+      const minifiedMarkup = minify(markup, {
         minifyCSS: true,
         minifyJS: true,
         collapseInlineTagWhitespace: true,
         collapseWhitespace: true,
       });
 
+      const filename = `${userId}.${Date.now()}.html`;
+
       fs.writeFile(
-        path.join(
-          path.dirname(require.main.filename),
-          'archive',
-          `${userId}.${Date.now()}.html`
-        ),
+        path.join(path.dirname(require.main.filename), 'archive', filename),
         minifiedMarkup,
         err => {
-          if (err) return res.status(500).json({ success: false, error: err });
+          if (err)
+            return res
+              .status(500)
+              .json({
+                success: false,
+                error: 'Coś poszło nie tak, spróbuj ponownie',
+              });
 
+          req.filename = filename;
           next();
         }
       );
-    })
-    .catch(err => res.status(500).json({ success: false, error: err }));
+    });
 };
 
 module.exports = createBordersFile;
