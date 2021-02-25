@@ -19,6 +19,7 @@ const TripEvents = () => {
     setBorders,
     currentUser,
     setCurrentUser,
+    currentCountry,
     setIsMakingApiCall,
     setModalData,
     isSortedDesc,
@@ -26,11 +27,20 @@ const TripEvents = () => {
   } = useContext(AppContext);
 
   const onTripEvent = eventType => {
+    if (!currentCountry) {
+      setModalData({
+        type: 'error',
+        text: 'Określ najpierw kraj, w którym się znajdujesz',
+      });
+      return;
+    }
+
     const timestamp = Date.now();
     const { time, date } = parseTimestamp(timestamp);
 
     const tripEvent = {
       type: eventType,
+      to: currentCountry,
       time,
       date,
       timestamp,

@@ -14,7 +14,7 @@ const BorderSchema = new Schema(
     },
     to: {
       type: String,
-      required: () => this.type === 'borderPass',
+      required: true,
     },
     time: {
       type: String,
