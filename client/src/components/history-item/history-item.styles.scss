@@ -10,6 +10,24 @@
     margin-bottom: 1rem;
   }
 
+  &.trip-start {
+    background-image: linear-gradient(
+      to left,
+      $color-white,
+      $color-white 30%,
+      $color-red-transparent
+    );
+  }
+
+  &.trip-end {
+    background-image: linear-gradient(
+      to left,
+      $color-white,
+      $color-white 30%,
+      $color-green-transparent
+    );
+  }
+
   &__border,
   &__event {
     display: flex;

@@ -9,10 +9,14 @@ const HistoryItem = ({ data }) => {
   const { editMode, setEditedItem, isSortedDesc, borders } = useContext(
     AppContext
   );
+  const isTripStart = type === 'tripStart';
+  const isTripEnd = type === 'tripEnd';
 
   return (
     <li
-      className="history-item"
+      className={`${isTripStart ? 'trip-start' : ''} ${
+        isTripEnd ? 'trip-end' : ''
+      } history-item`}
       onClick={() => {
         if (editMode) setEditedItem(data);
       }}
