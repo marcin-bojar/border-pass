@@ -6,7 +6,25 @@
   justify-content: center;
   align-items: center;
 
+  &::after {
+    position: absolute;
+    display: block;
+    content: 'Obróć urządzenie, aby wyświetlić tabelę';
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 80%;
+    text-align: center;
+    color: $color-white;
+    font-size: 3rem;
+
+    @media only screen and (orientation: landscape), (min-width: 43.75em) {
+      display: none;
+    }
+  }
+
   &__name {
+    font-size: 2.5rem;
     margin-bottom: 2.5rem;
   }
 
@@ -19,8 +37,13 @@
   }
 
   & table {
-    width: 60%;
+    width: 90%;
     border-collapse: collapse;
+    display: none;
+
+    @media only screen and (orientation: landscape), (min-width: 43.75em) {
+      display: table;
+    }
   }
 
   & th {

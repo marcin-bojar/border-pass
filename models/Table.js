@@ -17,7 +17,7 @@ const TableSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    expires: 240,
+    expires: '180d',
     default: Date.now,
   },
 });

@@ -12,7 +12,13 @@ import { AppContext } from '../../hooks/useAppState';
 import './sign-up.styles.scss';
 
 const SignUp = () => {
-  const [user, setUser] = useState({ name: '', email: '', password: '' });
+  const [user, setUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
   const {
     currentUser,
     setCurrentUser,
@@ -32,6 +38,12 @@ const SignUp = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+
+    if (user.password !== user.confirmPassword) {
+      setAuthError('Hasła nie są takie same.');
+      return;
+    }
+
     setUserLoading(true);
 
     axios
@@ -81,6 +93,13 @@ const SignUp = () => {
             label="Hasło"
             type="password"
             value={user.password}
+            handleChange={handleChange}
+          />
+          <CustomInput
+            name="confirmPassword"
+            label=" Powtórz hasło"
+            type="password"
+            value={user.confirmPassword}
             handleChange={handleChange}
           />
         </div>
