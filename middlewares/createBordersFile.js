@@ -209,14 +209,13 @@ const createBordersFile = (req, res, next) => {
         minifiedMarkup,
         err => {
           if (err)
-            return res
-              .status(500)
-              .json({
-                success: false,
-                error: 'Coś poszło nie tak, spróbuj ponownie',
-              });
+            return res.status(500).json({
+              success: false,
+              error: 'Coś poszło nie tak, spróbuj ponownie',
+            });
 
           req.filename = filename;
+          req.markup = minifiedMarkup;
           next();
         }
       );

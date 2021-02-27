@@ -6,6 +6,8 @@ const path = require('path');
 const nodemailerConfig = require('../../helpers/nodemailer.js');
 
 const User = require('../../models/User');
+const Table = require('../../models/Table');
+
 const auth = require('../../middlewares/auth');
 const validateTimeAndDate = require('../../middlewares/validateTimeAndDate');
 const createBordersFile = require('../../middlewares/createBordersFile');
@@ -96,43 +98,48 @@ router.post('/:userId/countries', auth, (req, res) => {
     .catch(err => res.status(400).json({ success: false, error: err.message }));
 });
 
-router.get('/:userId/send', [auth, createBordersFile], (req, res) => {
+// @route POST /api/users/:id/send
+// @desc Send an email with user's borders' table
+// @private
+router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
   const pathToFile = path.join(
     path.dirname(require.main.filename),
     'archive',
     req.filename
   );
 
-  fs.access(
-    pathToFile,
+  fs.access(pathToFile, err => {
+    if (err)
+      return res.status(500).json({
+        success: false,
+        error: 'Coś poszło nie tak, spróbuj ponownie',
+      });
 
-    err => {
-      if (err)
-        return res.status(500).json({
-          success: false,
-          error: 'Coś poszło nie tak, spróbuj ponownie',
-        });
+    User.findById(req.user.id)
+      .select('name')
+      .then(user => {
+        const { transporter, createMailData } = nodemailerConfig;
 
-      User.findById(req.user.id)
-        .select('name')
-        .then(user => {
-          const { transporter, createMailData } = nodemailerConfig;
+        const mailData = createMailData(req.body.email, user.name, pathToFile);
 
-          const mailData = createMailData(
-            user.company.email,
-            user.name,
-            pathToFile
-          );
+        transporter.sendMail(mailData, (err, info) => {
+          if (err)
+            return res.status(500).json({
+              success: false,
+              error: 'Nie udało wysłać się zestawienia, spróbuj ponownie',
+            });
 
-          transporter.sendMail(mailData, (err, info) => {
-            if (err)
-              return res.status(500).json({ success: false, error: err });
-
-            return res.json({ success: true, data: info });
+          const table = new Table({
+            user: req.user.id,
+            status: 'sent',
+            html: req.markup,
           });
+          table.save();
+
+          return res.json({ success: true, data: info });
         });
-    }
-  );
+      });
+  });
 });
 
 module.exports = router;
