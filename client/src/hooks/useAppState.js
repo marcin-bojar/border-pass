@@ -37,6 +37,7 @@ export const useAppState = () => {
   //UI state
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   useEffect(() => {
     if (!currentUser) {
@@ -124,5 +125,7 @@ export const useAppState = () => {
     setShowModal,
     modalData,
     setModalData,
+    showUserMenu,
+    setShowUserMenu,
   };
 };

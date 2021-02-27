@@ -29,6 +29,11 @@
     font-size: 1.7rem;
     background-color: transparent;
     padding: 0;
+
+    &--user {
+      font-size: 1.7rem;
+      font-weight: 700;
+    }
   }
 
   &.link {

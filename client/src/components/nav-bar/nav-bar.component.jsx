@@ -3,15 +3,21 @@ import { Link } from 'react-router-dom';
 
 import CustomButton from '../custom-button/custom-button.component';
 import Spinner from '../spinner/spinner.component';
+import UserMenu from '../user-menu/user-menu.component';
 
 import { AppContext } from '../../hooks/useAppState';
 
 import './nav-bar.styles.scss';
 
 const NavBar = () => {
-  const { currentUser, setCurrentUser, setToken, userLoading } = useContext(
-    AppContext
-  );
+  const {
+    currentUser,
+    setCurrentUser,
+    setToken,
+    userLoading,
+    showUserMenu,
+    setShowUserMenu,
+  } = useContext(AppContext);
 
   return (
     <div className="nav-bar">
@@ -19,9 +25,13 @@ const NavBar = () => {
         <Spinner isLoading={userLoading} />
       ) : currentUser ? (
         <div className="nav-bar__user">
-          <Link className="nav-bar__link nav-bar__link--username" to="/preview">
+          <CustomButton
+            navbar
+            navbarUser
+            handleClick={() => setShowUserMenu(!showUserMenu)}
+          >
             {currentUser.name}
-          </Link>
+          </CustomButton>
           <CustomButton
             navbar
             handleClick={() => {
@@ -43,6 +53,7 @@ const NavBar = () => {
           </Link>
         </div>
       )}
+      {showUserMenu && <UserMenu />}
     </div>
   );
 };

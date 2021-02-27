@@ -1,0 +1,24 @@
+@import '../../sass/variables';
+
+.user-menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 4rem;
+  left: 0;
+  border-radius: $border-radius-primary;
+  background-color: $color-white;
+  padding: 2rem;
+  min-width: 20rem;
+
+  &__link {
+    text-decoration: none;
+    color: $color-primary;
+    font-size: 2.1rem;
+    font-weight: 500;
+
+    &:not(:last-child) {
+      margin-bottom: 1.5rem;
+    }
+  }
+}
