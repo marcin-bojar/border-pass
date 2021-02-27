@@ -112,7 +112,7 @@ router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
     if (err)
       return res.status(500).json({
         success: false,
-        error: 'Coś poszło nie tak, spróbuj ponownie',
+        error: err,
       });
 
     User.findById(req.user.id)
