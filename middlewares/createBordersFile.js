@@ -203,11 +203,15 @@ const createBordersFile = (req, res, next) => {
       });
 
       const filename = `${userId}.${Date.now()}.html`;
+      const tempDir = path.join(path.dirname(require.main.filename), 'temp');
 
-      fs.writeFile(
-        path.join(path.dirname(require.main.filename), 'archive', filename),
-        minifiedMarkup,
-        err => {
+      fs.access(tempDir, err => {
+        if (err)
+          fs.mkdir(tempDir, err => {
+            if (err) return res.status(500).json({ success: false, err });
+          });
+
+        fs.writeFile(path.join(tempDir, filename), minifiedMarkup, err => {
           if (err)
             return res.status(500).json({
               success: false,
@@ -217,8 +221,8 @@ const createBordersFile = (req, res, next) => {
           req.filename = filename;
           req.markup = minifiedMarkup;
           next();
-        }
-      );
+        });
+      });
     });
 };
 

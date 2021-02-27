@@ -104,7 +104,7 @@ router.post('/:userId/countries', auth, (req, res) => {
 router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
   const pathToFile = path.join(
     path.dirname(require.main.filename),
-    'archive',
+    'temp',
     req.filename
   );
 
