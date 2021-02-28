@@ -30,7 +30,8 @@ const Welcome = () => {
         </CustomButton>
         &nbsp;Pamietaj jednak, że Twoja historia przekroczeń granic będzie w tym
         przypadku zapisywana w pamięci Twojego urządzenia, co grozi utratą
-        danych.{' '}
+        danych. Nie będziesz miał również możliwości wysyłania zestawienia do
+        firmy.
       </p>
     </>
   );
