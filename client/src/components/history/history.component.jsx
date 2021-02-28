@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import axios from 'axios';
 
-import HistoryItem from '../history-item/history-item.component';
+import HistoryList from '../history-list/history-list.component';
 import CustomButton from '../custom-button/custom-button.component';
 import HistoryEditor from '../history-editor/history-editor.component';
 
@@ -90,12 +90,7 @@ const History = () => {
 
       {editMode && <HistoryEditor />}
 
-      <ul className="history__list">
-        {borders.map((el, i) => {
-          const data = { ...el, i };
-          return <HistoryItem key={i} data={data} />;
-        })}
-      </ul>
+      <HistoryList />
     </div>
   );
 };

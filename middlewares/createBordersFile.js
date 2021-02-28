@@ -6,11 +6,12 @@ const createTableMarkup = require('../helpers/createTableMarkup');
 
 const createBordersFile = (req, res, next) => {
   const userId = req.user.id;
+  const borders = req.body.borders;
 
   User.findById(userId)
-    .select('borders name')
+    .select('name')
     .then(user => {
-      const markup = createTableMarkup(user);
+      const markup = createTableMarkup(user, borders);
 
       const minifiedMarkup = minify(markup, {
         minifyCSS: true,

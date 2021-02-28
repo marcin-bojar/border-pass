@@ -1,5 +1,4 @@
-const createTableMarkup = user => {
-  const borders = user.borders;
+const createTableMarkup = (user, borders) => {
   const markup = `
         <!DOCTYPE html>
         <html lang="en">

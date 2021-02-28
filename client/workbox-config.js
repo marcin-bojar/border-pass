@@ -4,4 +4,6 @@ module.exports = {
   swDest: 'dist/sw.js',
   mode: 'production',
   cleanupOutdatedCaches: true,
+  skipWaiting: true,
+  clientsClaim: true,
 };

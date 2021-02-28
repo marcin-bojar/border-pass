@@ -44,7 +44,9 @@ const HistoryItem = ({ data }) => {
             <span className="history-item__nr">
               {isSortedDesc ? borders.length - i : i + 1}.{' '}
             </span>
-            {type === 'tripStart' ? 'Wyjazd z bazy' : 'Powrót na bazę'}
+            <span className="history-item__event-type">
+              {type === 'tripStart' ? 'Wyjazd z bazy' : 'Powrót na bazę'}
+            </span>
           </div>
           <div className="history-item__block">
             <span className="history-item__time">{time}</span>{' '}
