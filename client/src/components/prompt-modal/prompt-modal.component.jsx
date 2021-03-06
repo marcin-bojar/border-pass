@@ -11,9 +11,9 @@ import './prompt-modal.styles.scss';
 const PromptModal = () => {
   const { modalData, setShowModal } = useContext(AppContext);
   const { inputValue, handleChange } = useSingleInput();
-  const text = modalData ? modalData.text : null;
-  const expectedValue = modalData ? modalData.expectedValue : null;
-  const onConfirm = modalData ? modalData.onConfirm : null;
+  const text = modalData?.text;
+  const expectedValue = modalData?.expectedValue;
+  const onConfirm = modalData?.onConfirm;
   const inputRef = useRef(null);
 
   const handleSubmit = e => {

@@ -1,0 +1,32 @@
+@import '../../sass/mixins';
+@import '../../sass/variables';
+
+.set-config {
+  @include sections-common-styles;
+
+  &__title {
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid $color-primary;
+  }
+
+  &__section {
+    padding: 2rem;
+  }
+
+  &__section-title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 2.5rem;
+  }
+
+  &__block {
+    display: flex;
+    justify-content: space-between;
+
+    &:not(:last-child) {
+      margin-bottom: 2.5rem;
+    }
+  }
+}

@@ -8,7 +8,7 @@ import { AppContext } from '../../hooks/useAppState';
 
 const Modal = () => {
   const { showModal, modalData } = useContext(AppContext);
-  const type = modalData ? modalData.type : null;
+  const type = modalData?.type;
 
   if (!showModal) return null;
 

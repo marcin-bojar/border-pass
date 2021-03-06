@@ -8,8 +8,8 @@ import './confirm-modal.styles.scss';
 
 const ConfirmModal = () => {
   const { modalData, setShowModal } = useContext(AppContext);
-  const text = modalData ? modalData.text : null;
-  const onConfirm = modalData ? modalData.onConfirm : null;
+  const text = modalData?.text;
+  const onConfirm = modalData?.onConfirm;
 
   return (
     <div className="modal">

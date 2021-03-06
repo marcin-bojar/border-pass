@@ -8,8 +8,8 @@ import './alert-modal.styles.scss';
 
 const AlertModal = () => {
   const { modalData, setShowModal } = useContext(AppContext);
-  const type = modalData ? modalData.type : null;
-  const text = modalData ? modalData.text : null;
+  const type = modalData?.type;
+  const text = modalData?.text;
 
   const titleMap = {
     error: 'Błąd',
