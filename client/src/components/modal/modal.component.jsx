@@ -12,9 +12,9 @@ const Modal = () => {
 
   if (!showModal) return null;
 
-  if (type === 'error' || type === 'authError') return <AlertModal />;
   if (type === 'confirm') return <ConfirmModal />;
-  if (type === 'prompt') return <PromptModal />;
+  else if (type === 'prompt') return <PromptModal />;
+  else return <AlertModal />;
 };
 
 export default Modal;

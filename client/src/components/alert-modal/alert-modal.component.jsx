@@ -14,6 +14,7 @@ const AlertModal = () => {
   const titleMap = {
     error: 'Błąd',
     authError: 'Błąd logowania',
+    info: 'Informacja',
   };
 
   const handleClick = e => {

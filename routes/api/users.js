@@ -55,7 +55,7 @@ router.delete('/:userId/borders', auth, (req, res) => {
 });
 
 // @route PUT /api/users/:userId/borders/:borderId
-// @desc Post new border crossing to user's borders array
+// @desc Update border crossing in user's borders array
 // @private
 router.put(
   '/:userId/borders/:borderId',
@@ -98,7 +98,7 @@ router.post('/:userId/countries', auth, (req, res) => {
     .catch(err => res.status(400).json({ success: false, error: err.message }));
 });
 
-// @route POST /api/users/:id/send
+// @route POST /api/users/:userId/send
 // @desc Send an email with user's borders' table
 // @private
 router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
@@ -140,6 +140,24 @@ router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
         });
       });
   });
+});
+
+// @route POST /api/users/:userId/company
+// @desc Set user's compnay details
+// @private
+router.post('/:userId/company', auth, (req, res) => {
+  User.findById(req.user.id)
+    .then(user => {
+      user.company = req.body;
+      user.save();
+      return res.json({ success: true, data: user });
+    })
+    .catch(() =>
+      res.status(500).json({
+        success: false,
+        error: 'Nie udało się zapisać ustawień, spróbuj ponownie.',
+      })
+    );
 });
 
 module.exports = router;
