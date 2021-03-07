@@ -63,7 +63,7 @@ const CountryOption = ({ name }) => {
       } else {
         const updatedBorders = sortHistoryListByTimeAndDate(
           [...borders, borderPass],
-          isSortedDesc,
+          !isSortedDesc,
           'timestamp'
         );
         setBorders(updatedBorders);

@@ -27,11 +27,11 @@ const History = () => {
   const sortBordersByDate = () => {
     let sortedBorders;
     if (currentUser)
-      sortedBorders = sortHistoryListByTimeAndDate(borders, !isSortedDesc);
+      sortedBorders = sortHistoryListByTimeAndDate(borders, isSortedDesc);
     else
       sortedBorders = sortHistoryListByTimeAndDate(
         borders,
-        !isSortedDesc,
+        isSortedDesc,
         'timestamp'
       );
     setIsSortedDesc(!isSortedDesc);

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import HistoryList from '../history-list/history-list.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -8,7 +8,12 @@ import { AppContext } from '../../hooks/useAppState';
 import './send-borders.styles.scss';
 
 const SendBorders = () => {
-  const { borders } = useContext(AppContext);
+  const { setSendMode } = useContext(AppContext);
+
+  useEffect(() => {
+    setSendMode(true);
+    return () => setSendMode(false);
+  }, []);
 
   return (
     <div className="send-borders">

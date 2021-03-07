@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import HistoryItem from '../history-item/history-item.component';
 
@@ -7,7 +7,21 @@ import { AppContext } from '../../hooks/useAppState';
 import './history-list.styles.scss';
 
 const HistoryList = () => {
-  const { borders } = useContext(AppContext);
+  const {
+    borders,
+    setBorders,
+    currentUser,
+    sendMode,
+    isSortedDesc,
+    setIsSortedDesc,
+  } = useContext(AppContext);
+
+  useEffect(() => {
+    if (sendMode && isSortedDesc) {
+      setIsSortedDesc(false);
+      setBorders([...currentUser.borders]);
+    }
+  }, [sendMode]);
 
   return (
     <ul className="history-list">

@@ -32,8 +32,8 @@ export const sortHistoryListByTimeAndDate = (
   if (typeof isSortedDesc !== 'boolean')
     throw new Error('isSortedDesc argument must be a Boolean');
 
-  if (isSortedDesc) return historyArray.sort((a, b) => b[sortBy] - a[sortBy]);
-  else return historyArray.sort((a, b) => a[sortBy] - b[sortBy]);
+  if (isSortedDesc) return historyArray.sort((a, b) => a[sortBy] - b[sortBy]);
+  else return historyArray.sort((a, b) => b[sortBy] - a[sortBy]);
 };
 
 export const sortUsersBorders = (user, isSortedDesc) => {

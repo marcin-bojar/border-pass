@@ -19,7 +19,7 @@ const BordersTable = () => {
   let sortedBorders = borders;
 
   if (isSortedDesc)
-    sortedBorders = sortHistoryListByTimeAndDate(borders, !isSortedDesc);
+    sortedBorders = sortHistoryListByTimeAndDate(borders, isSortedDesc);
 
   useEffect(() => {
     if (currentUser) {

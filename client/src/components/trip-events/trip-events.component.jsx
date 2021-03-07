@@ -64,7 +64,7 @@ const TripEvents = () => {
     } else {
       const updatedBorders = sortHistoryListByTimeAndDate(
         [...borders, tripEvent],
-        isSortedDesc,
+        !isSortedDesc,
         'timestamp'
       );
       setBorders(updatedBorders);

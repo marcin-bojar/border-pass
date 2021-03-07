@@ -87,7 +87,7 @@ const SetConfig = () => {
             handleChange={handleChange}
           />
           <CustomButton disabled={isMakingApiCall || !isUpdated} type="submit">
-            Zmień
+            Zapisz
           </CustomButton>
         </form>
       </div>

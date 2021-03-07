@@ -26,6 +26,7 @@ export const useAppState = () => {
   );
   const [showAll, setShowAll] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [sendMode, setSendMode] = useState(false);
   const [editedItem, setEditedItem] = useState(null);
   const [isSortedDesc, setIsSortedDesc] = useState(
     Boolean(localStorage.getItem('isSortedDesc') === 'true') || false
@@ -42,8 +43,8 @@ export const useAppState = () => {
   useEffect(() => {
     if (!currentUser) {
       localStorage.setItem('borders', JSON.stringify(borders));
-      sortHistoryListByTimeAndDate(borders, isSortedDesc, 'timestamp');
-    } else sortHistoryListByTimeAndDate(borders, isSortedDesc);
+      sortHistoryListByTimeAndDate(borders, !isSortedDesc, 'timestamp');
+    } else sortHistoryListByTimeAndDate(borders, !isSortedDesc);
 
     const length = borders.length;
     if (!length) setCurrentCountry('');
@@ -115,6 +116,8 @@ export const useAppState = () => {
     setShowAll,
     editMode,
     setEditMode,
+    sendMode,
+    setSendMode,
     editedItem,
     setEditedItem,
     isSortedDesc,
