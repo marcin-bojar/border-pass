@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, forwardRef } from 'react';
 
 import { AppContext } from '../../hooks/useAppState';
 
 import './history-item.styles.scss';
 
-const HistoryItem = ({ data }) => {
+const HistoryItem = forwardRef(({ data }, ref) => {
   const { type, from, to, time, date, i } = data;
   const {
     editMode,
@@ -12,10 +12,21 @@ const HistoryItem = ({ data }) => {
     setEditedItem,
     isSortedDesc,
     borders,
+    selection,
+    setSelection,
   } = useContext(AppContext);
   const [selected, setSelected] = useState(false);
   const isTripStart = type === 'tripStart';
   const isTripEnd = type === 'tripEnd';
+
+  const handleSelection = () => {
+    const { startIndex, endIndex } = selection;
+
+    if (startIndex === null) setSelection({ ...selection, startIndex: i });
+    else if (startIndex !== null && endIndex === null && i > startIndex)
+      setSelection({ ...selection, endIndex: i });
+    else setSelection({ startIndex: i, endIndex: null });
+  };
 
   return (
     <li
@@ -24,8 +35,12 @@ const HistoryItem = ({ data }) => {
       } ${selected ? 'selected' : ''} history-item`}
       onClick={() => {
         if (editMode) setEditedItem(data);
-        if (sendMode) setSelected(!selected);
+        if (sendMode) {
+          setSelected(!selected);
+          handleSelection();
+        }
       }}
+      ref={ref}
     >
       <div className="history-item__event">
         <div className="history-item__block">
@@ -50,6 +65,6 @@ const HistoryItem = ({ data }) => {
       </div>
     </li>
   );
-};
+});
 
 export default HistoryItem;

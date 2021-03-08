@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 
 import HistoryItem from '../history-item/history-item.component';
 
@@ -14,7 +14,10 @@ const HistoryList = () => {
     sendMode,
     isSortedDesc,
     setIsSortedDesc,
+    selection,
   } = useContext(AppContext);
+
+  const itemRefsArray = [];
 
   useEffect(() => {
     if (sendMode && isSortedDesc) {
@@ -23,11 +26,27 @@ const HistoryList = () => {
     }
   }, [sendMode]);
 
+  useEffect(() => {
+    const { startIndex, endIndex } = selection;
+    if (startIndex !== null && endIndex !== null) {
+      for (let i = startIndex; i <= endIndex; i++) {
+        itemRefsArray[i].current.classList.add('selected');
+      }
+    } else if (startIndex !== null && endIndex === null) {
+      for (let i = 0; i <= itemRefsArray.length - 1; i++) {
+        itemRefsArray[i].current.classList.remove('selected');
+        itemRefsArray[startIndex].current.classList.add('selected');
+      }
+    }
+  }, [selection]);
+
   return (
     <ul className="history-list">
       {borders.map((el, i) => {
+        const itemRef = useRef(null);
+        itemRefsArray.push(itemRef);
         const data = { ...el, i };
-        return <HistoryItem key={i} data={data} />;
+        return <HistoryItem ref={itemRef} key={i} data={data} />;
       })}
     </ul>
   );

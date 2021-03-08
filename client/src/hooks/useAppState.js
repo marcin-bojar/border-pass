@@ -31,6 +31,10 @@ export const useAppState = () => {
   const [isSortedDesc, setIsSortedDesc] = useState(
     Boolean(localStorage.getItem('isSortedDesc') === 'true') || false
   );
+  const [selection, setSelection] = useState({
+    startIndex: null,
+    endIndex: null,
+  });
 
   //API calls state
   const [isMakingApiCall, setIsMakingApiCall] = useState(false);
@@ -130,5 +134,7 @@ export const useAppState = () => {
     setModalData,
     showUserMenu,
     setShowUserMenu,
+    selection,
+    setSelection,
   };
 };
