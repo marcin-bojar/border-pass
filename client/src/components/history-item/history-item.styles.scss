@@ -1,6 +1,11 @@
 @import '../../sass/variables';
 
 .history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.8rem;
+  font-weight: 700;
   background-color: $color-white;
   padding: 1rem;
   border-radius: $border-radius-primary;
@@ -28,13 +33,9 @@
     );
   }
 
-  &__border,
-  &__event {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.8rem;
-    font-weight: 700;
+  &.selected {
+    background-color: $color-grey-light;
+    background-image: none;
   }
 
   &__nr {
