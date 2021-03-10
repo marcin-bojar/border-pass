@@ -8,12 +8,25 @@ import { AppContext } from '../../hooks/useAppState';
 import './send-borders.styles.scss';
 
 const SendBorders = () => {
-  const { setSendMode } = useContext(AppContext);
+  const { borders, setSendMode, selection, setSelection } = useContext(
+    AppContext
+  );
+  let bordersToSend;
 
   useEffect(() => {
     setSendMode(true);
-    return () => setSendMode(false);
+    return () => {
+      setSendMode(false);
+      setSelection({ startIndex: null, endIndex: null });
+    };
   }, []);
+
+  useEffect(() => {
+    const { startIndex, endIndex } = selection;
+    if (startIndex !== null && endIndex !== null) {
+      bordersToSend = borders.slice(startIndex, endIndex + 1);
+    } else bordersToSend = undefined;
+  }, [selection]);
 
   return (
     <div className="send-borders">

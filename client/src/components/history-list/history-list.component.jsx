@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, createRef } from 'react';
 
 import HistoryItem from '../history-item/history-item.component';
 
@@ -35,15 +35,18 @@ const HistoryList = () => {
     } else if (startIndex !== null && endIndex === null) {
       for (let i = 0; i <= itemRefsArray.length - 1; i++) {
         itemRefsArray[i].current.classList.remove('selected');
-        itemRefsArray[startIndex].current.classList.add('selected');
       }
-    }
+      itemRefsArray[startIndex].current.classList.add('selected');
+    } else if (startIndex === null && endIndex === null)
+      for (let i = 0; i <= itemRefsArray.length - 1; i++) {
+        itemRefsArray[i].current.classList.remove('selected');
+      }
   }, [selection]);
 
   return (
     <ul className="history-list">
       {borders.map((el, i) => {
-        const itemRef = useRef(null);
+        const itemRef = createRef();
         itemRefsArray.push(itemRef);
         const data = { ...el, i };
         return <HistoryItem ref={itemRef} key={i} data={data} />;

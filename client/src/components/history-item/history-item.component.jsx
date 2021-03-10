@@ -23,6 +23,8 @@ const HistoryItem = forwardRef(({ data }, ref) => {
     const { startIndex, endIndex } = selection;
 
     if (startIndex === null) setSelection({ ...selection, startIndex: i });
+    else if (startIndex !== null && i === startIndex)
+      setSelection({ startIndex: null, endIndex: null });
     else if (startIndex !== null && endIndex === null && i > startIndex)
       setSelection({ ...selection, endIndex: i });
     else setSelection({ startIndex: i, endIndex: null });
@@ -35,7 +37,7 @@ const HistoryItem = forwardRef(({ data }, ref) => {
       } ${selected ? 'selected' : ''} history-item`}
       onClick={() => {
         if (editMode) setEditedItem(data);
-        if (sendMode) {
+        else if (sendMode) {
           setSelected(!selected);
           handleSelection();
         }
