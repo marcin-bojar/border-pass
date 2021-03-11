@@ -34,8 +34,14 @@
   }
 
   &.selected {
-    background-color: $color-grey-light;
+    background-color: $color-selection;
     background-image: none;
+    color: white;
+
+    .history-item__time,
+    .history-item__nr {
+      color: $color-white;
+    }
   }
 
   &__nr {

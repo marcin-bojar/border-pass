@@ -126,7 +126,7 @@ router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
           if (err)
             return res.status(500).json({
               success: false,
-              error: 'Nie udało wysłać się zestawienia, spróbuj ponownie',
+              error: 'Nie udało wysłać się zestawienia, spróbuj ponownie.',
             });
 
           const table = new Table({

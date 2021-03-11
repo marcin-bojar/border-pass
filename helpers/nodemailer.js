@@ -25,9 +25,9 @@ const transporter = nodemailer.createTransport({
     accessToken: '',
     expires: 3600,
   },
-  // tls: {
-  //   rejectUnauthorized: false,
-  // },
+  tls: {
+    rejectUnauthorized: false,
+  },
 });
 
 const createMailData = (to, driverName, path) => {
