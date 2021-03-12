@@ -1,4 +1,5 @@
 @import '../../sass/mixins.scss';
+@import '../../sass/variables.scss';
 
 .send-borders {
   @include sections-common-styles;
@@ -8,9 +9,21 @@
     margin-bottom: 2.5rem;
   }
 
+  &__block {
+    font-size: 1.9rem;
+    font-weight: 500;
+    padding: 1.5rem 0;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid $color-primary;
+  }
+
+  &__paragraph {
+    margin-bottom: 1rem;
+  }
+
   &__button-wrapper {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     margin-bottom: 2.5rem;
   }
 }

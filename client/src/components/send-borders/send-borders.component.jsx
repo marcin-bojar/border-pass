@@ -24,6 +24,7 @@ const SendBorders = () => {
 
   useEffect(() => {
     setSendMode(true);
+
     return () => {
       setSendMode(false);
       setSelection({ startIndex: null, endIndex: null });
@@ -32,6 +33,7 @@ const SendBorders = () => {
 
   useEffect(() => {
     const { startIndex, endIndex } = selection;
+
     if (startIndex !== null && endIndex !== null) {
       bordersToSend = borders.slice(startIndex, endIndex + 1);
     } else bordersToSend = undefined;
@@ -77,6 +79,34 @@ const SendBorders = () => {
   return (
     <div className="send-borders">
       <h2 className="send-borders__title">Wysyłanie zestawienia</h2>
+      <div className="send-borders__block">
+        <p className="send-borders__paragraph">
+          1. Wybierz dane z listy. Możesz wybrać zakres danych klikając na
+          pierwszy i ostatni element interesującego Cię zakresu lub zaznaczyć
+          wszystkie elementy.
+        </p>
+        <p className="send-borders__paragraph">
+          2. Wyślij i/lub archiwizuj wybrane dane.
+        </p>
+        <p className="send-borders__paragraph">
+          Dane w archiwum dostępne są przez 6 miesięcy.
+        </p>
+      </div>
+      <div className="send-borders__button-wrapper">
+        <CustomButton
+          handleClick={() =>
+            setSelection({ startIndex: 0, endIndex: borders.length - 1 })
+          }
+        >
+          Zaznacz wszystko
+        </CustomButton>
+        <CustomButton
+          clear
+          handleClick={() => setSelection({ startIndex: null, endIndex: null })}
+        >
+          Usuń zaznaczenie
+        </CustomButton>
+      </div>
       <div className="send-borders__button-wrapper">
         <CustomButton handleClick={sendAndArchive}>
           Wyślij i archiwizuj
