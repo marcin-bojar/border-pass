@@ -18,6 +18,7 @@ const SendBorders = () => {
     setSelection,
     setIsMakingApiCall,
     currentUser,
+    setCurrentUser,
     setModalData,
   } = useContext(AppContext);
   let bordersToSend;
@@ -38,6 +39,19 @@ const SendBorders = () => {
       bordersToSend = borders.slice(startIndex, endIndex + 1);
     } else bordersToSend = undefined;
   }, [selection]);
+
+  const updateUserBorders = borders => {
+    const { _id } = currentUser;
+
+    axios
+      .put(`/api/users/${_id}/borders`, borders, getConfig())
+      .then(res => {
+        setCurrentUser(res.data.data);
+      })
+      .catch(err =>
+        setModalData({ type: 'error', text: err.response.data.error })
+      );
+  };
 
   const sendAndArchive = () => {
     if (!bordersToSend) {
@@ -67,7 +81,7 @@ const SendBorders = () => {
           text: `Zestawienie wysłane na adres ${res.data.data.accepted[0]}`,
         });
         borders.splice(startIndex, bordersToSend.length);
-        setBorders([...borders]);
+        updateUserBorders(borders);
         setSelection({ startIndex: null, endIndex: null });
       })
       .catch(err => {
@@ -101,7 +115,6 @@ const SendBorders = () => {
           Zaznacz wszystko
         </CustomButton>
         <CustomButton
-          clear
           handleClick={() => setSelection({ startIndex: null, endIndex: null })}
         >
           Usuń zaznaczenie

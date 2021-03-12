@@ -12,7 +12,7 @@ const auth = require('../../middlewares/auth');
 const validateTimeAndDate = require('../../middlewares/validateTimeAndDate');
 const createBordersFile = require('../../middlewares/createBordersFile');
 
-// @route POST /api/users/:id/borders
+// @route POST /api/users/:userId/borders
 // @desc Post new border crossing to user's borders array
 // @private
 router.post('/:userId/borders', auth, (req, res) => {
@@ -23,10 +23,15 @@ router.post('/:userId/borders', auth, (req, res) => {
       user.save();
       return res.json({ success: true, data: user });
     })
-    .catch(err => res.status(400).json({ success: false, error: err.message }));
+    .catch(() =>
+      res.status(400).json({
+        success: false,
+        error: 'Nie udało się dodać wpisu, spróbuj ponownie.',
+      })
+    );
 });
 
-// @route DELETE /api/users/:id/borders/undo
+// @route DELETE /api/users/:userId/borders/undo
 // @desc Delete last border crossing from user's borders array
 // @private
 router.delete('/:userId/borders/undo', auth, (req, res) => {
@@ -37,10 +42,34 @@ router.delete('/:userId/borders/undo', auth, (req, res) => {
       user.save();
       return res.json({ success: true, data: user });
     })
-    .catch(err => res.status(400).json({ success: false, error: err.message }));
+    .catch(() =>
+      res.status(400).json({
+        success: false,
+        error: 'Nie udało sie usunąć ostatniego wpisu, spróbuj ponownie.',
+      })
+    );
 });
 
-// @route DELETE /api/users/:id/borders
+// @route PUT /api/users/:userId/borders
+// @desc Update user's borders array
+// @private
+router.put('/:userId/borders', auth, (req, res) => {
+  User.findById(req.user.id)
+    .select('-password -__v')
+    .then(user => {
+      user.borders = req.body;
+      user.save();
+      return res.json({ success: true, data: user });
+    })
+    .catch(() =>
+      res.status(400).json({
+        success: false,
+        error: 'Aktualizacja nie powiodła się, spróbuj ponownie.',
+      })
+    );
+});
+
+// @route DELETE /api/users/:userId/borders
 // @desc Delete all border crossings from user's borders array
 // @private
 router.delete('/:userId/borders', auth, (req, res) => {
@@ -51,7 +80,12 @@ router.delete('/:userId/borders', auth, (req, res) => {
       user.save();
       return res.json({ success: true, data: user });
     })
-    .catch(err => res.status(400).json({ success: false, error: err.message }));
+    .catch(() =>
+      res.status(400).json({
+        success: false,
+        error: 'Nie udało się usunąć danych, spróbuj ponownie.',
+      })
+    );
 });
 
 // @route PUT /api/users/:userId/borders/:borderId
@@ -69,13 +103,16 @@ router.put(
         user.save();
         return res.json({ success: true, data: user });
       })
-      .catch(err =>
-        res.status(400).json({ success: false, error: err.message })
+      .catch(() =>
+        res.status(400).json({
+          success: false,
+          error: 'Aktualizacja nie powiodła się, spróbuj ponownie.',
+        })
       );
   }
 );
 
-// @route POST /api/users/:id/countries
+// @route POST /api/users/:userId/countries
 // @desc Add new country to user's countries array
 // @private
 router.post('/:userId/countries', auth, (req, res) => {
@@ -95,7 +132,12 @@ router.post('/:userId/countries', auth, (req, res) => {
       user.save();
       return res.json({ success: true, data: user });
     })
-    .catch(err => res.status(400).json({ success: false, error: err.message }));
+    .catch(() =>
+      res.status(400).json({
+        success: false,
+        error: 'Nie udało dodać się kraju, spróbuj ponownie.',
+      })
+    );
 });
 
 // @route POST /api/users/:userId/send
@@ -110,9 +152,9 @@ router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
 
   fs.access(pathToFile, err => {
     if (err)
-      return res.status(500).json({
+      return res.status(404).json({
         success: false,
-        error: err,
+        error: 'Brak danych do wysłania, spróbuj ponownie',
       });
 
     User.findById(req.user.id)
@@ -153,7 +195,7 @@ router.post('/:userId/company', auth, (req, res) => {
       return res.json({ success: true, data: user });
     })
     .catch(() =>
-      res.status(500).json({
+      res.status(400).json({
         success: false,
         error: 'Nie udało się zapisać ustawień, spróbuj ponownie.',
       })
