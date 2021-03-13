@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
 import HistoryList from '../history-list/history-list.component';
@@ -12,16 +12,17 @@ import './send-borders.styles.scss';
 const SendBorders = () => {
   const {
     borders,
-    setBorders,
     setSendMode,
     selection,
     setSelection,
+    isMakingApiCall,
     setIsMakingApiCall,
     currentUser,
     setCurrentUser,
+    modalData,
     setModalData,
   } = useContext(AppContext);
-  let bordersToSend;
+  const [bordersToSend, setBordersToSend] = useState([]);
 
   useEffect(() => {
     setSendMode(true);
@@ -36,25 +37,12 @@ const SendBorders = () => {
     const { startIndex, endIndex } = selection;
 
     if (startIndex !== null && endIndex !== null) {
-      bordersToSend = borders.slice(startIndex, endIndex + 1);
-    } else bordersToSend = undefined;
+      setBordersToSend(borders.slice(startIndex, endIndex + 1));
+    } else setBordersToSend([]);
   }, [selection]);
 
-  const updateUserBorders = borders => {
-    const { _id } = currentUser;
-
-    axios
-      .put(`/api/users/${_id}/borders`, borders, getConfig())
-      .then(res => {
-        setCurrentUser(res.data.data);
-      })
-      .catch(err =>
-        setModalData({ type: 'error', text: err.response.data.error })
-      );
-  };
-
   const sendAndArchive = () => {
-    if (!bordersToSend) {
+    if (!bordersToSend.length) {
       setModalData({
         type: 'error',
         text: 'Musisz określić zakres danych do wysłania.',
@@ -80,14 +68,30 @@ const SendBorders = () => {
           type: 'info',
           text: `Zestawienie wysłane na adres ${res.data.data.accepted[0]}`,
         });
-        borders.splice(startIndex, bordersToSend.length);
-        updateUserBorders(borders);
+        const updatedBorders = [...borders];
+        updatedBorders.splice(startIndex, bordersToSend.length);
+
+        return axios.put(
+          `/api/users/${_id}/borders`,
+          updatedBorders,
+          getConfig()
+        );
+      })
+      .then(res => {
+        setCurrentUser(res.data.data);
+        setModalData({
+          type: 'info',
+          text: `Dane z wybranego zakresu zostały zarchiwizowane`,
+        });
         setSelection({ startIndex: null, endIndex: null });
       })
       .catch(err => {
-        setModalData({ type: 'error', text: err.response.data.error });
+        setModalData({
+          type: 'error',
+          text: err.response?.data?.error || err.message,
+        });
       })
-      .finally(setIsMakingApiCall(false));
+      .finally(() => setIsMakingApiCall(false));
   };
 
   return (
@@ -121,10 +125,15 @@ const SendBorders = () => {
         </CustomButton>
       </div>
       <div className="send-borders__button-wrapper">
-        <CustomButton handleClick={sendAndArchive}>
+        <CustomButton
+          disabled={isMakingApiCall || !bordersToSend.length}
+          handleClick={sendAndArchive}
+        >
           Wyślij i archiwizuj
         </CustomButton>
-        <CustomButton>Archiwizuj</CustomButton>
+        <CustomButton disabled={isMakingApiCall || !bordersToSend.length}>
+          Archiwizuj
+        </CustomButton>
       </div>
       <HistoryList />
     </div>
