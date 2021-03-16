@@ -19,7 +19,6 @@ const SendBorders = () => {
     setIsMakingApiCall,
     currentUser,
     setCurrentUser,
-    modalData,
     setModalData,
   } = useContext(AppContext);
   const [bordersToSend, setBordersToSend] = useState([]);
