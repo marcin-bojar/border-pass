@@ -46,7 +46,7 @@ router.post('/', (req, res) => {
 
   newBorder
     .save()
-    .then(border => res.status(201).json({ success: true, data: border }))
+    .then(border => res.status(200).json({ success: true, data: border }))
     .catch(err => res.status(400).json({ success: false, error: err.message }));
 });
 

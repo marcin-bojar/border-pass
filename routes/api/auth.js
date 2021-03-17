@@ -41,7 +41,7 @@ router.post(
           (err, token) => {
             if (err) throw err;
 
-            res.json({
+            return res.json({
               success: true,
               data: {
                 token,
@@ -59,9 +59,7 @@ router.post(
           }
         );
       })
-      .catch(err =>
-        res.status(400).json({ success: false, error: err.message })
-      );
+      .catch(err => res.json({ success: false, error: err.message }));
   }
 );
 

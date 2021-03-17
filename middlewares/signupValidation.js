@@ -10,10 +10,9 @@ const checkIfUserAlreadyExists = (req, res, next) => {
           success: false,
           error: 'Podany adres email jest już w użyciu.',
         });
+      next();
     })
     .catch(err => res.status(400).json({ success: false, error: err.message }));
-
-  next();
 };
 
 const checkIfAllFieldsAreFilledIn = (req, res, next) => {

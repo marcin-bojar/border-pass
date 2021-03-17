@@ -9,20 +9,22 @@ const Table = require('../../models/Table');
 // @desc Post new table
 // @private
 router.post('/', auth, (req, res) => {
-  try {
-    const table = new Table({
-      user: req.user.id,
-      status: 'archived',
-      html: req.markup,
-    });
-    table.save();
-  } catch {
-    return res.status(400).json({
-      success: false,
-      error: 'Nie udało się zarchiwizować danych, spróbuj ponownie',
-    });
-  }
-  return res.json({ success: true, data: null });
+  const table = new Table({
+    user: req.user.id,
+    status: 'archived',
+    html: 'test',
+  });
+  table
+    .save()
+    .then(savedTable => {
+      return res.json({ success: true, data: savedTable });
+    })
+    .catch(err =>
+      res.status(500).json({
+        success: false,
+        error: err,
+      })
+    );
 });
 
 module.exports = router;
