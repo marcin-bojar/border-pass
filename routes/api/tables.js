@@ -2,17 +2,18 @@ const express = require('express');
 const router = express.Router();
 
 const auth = require('../../middlewares/auth');
+const createBordersFile = require('../../middlewares/createBordersFile');
 
 const Table = require('../../models/Table');
 
 // @route POST /api/tables/
 // @desc Post new table
 // @private
-router.post('/', auth, (req, res) => {
+router.post('/', [auth, createBordersFile], (req, res) => {
   const table = new Table({
     user: req.user.id,
     status: 'archived',
-    html: 'test',
+    html: req.markup,
   });
   table
     .save()

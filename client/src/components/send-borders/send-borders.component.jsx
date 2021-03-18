@@ -62,11 +62,7 @@ const SendBorders = () => {
         { borders: bordersToSend, email: companyEmail },
         getConfig()
       )
-      .then(res => {
-        setModalData({
-          type: 'info',
-          text: `Zestawienie wysłane na adres ${res.data.data.accepted[0]}`,
-        });
+      .then(() => {
         const updatedBorders = [...borders];
         updatedBorders.splice(startIndex, bordersToSend.length);
 
@@ -80,8 +76,50 @@ const SendBorders = () => {
         setCurrentUser(res.data.data);
         setModalData({
           type: 'info',
-          text: `Dane z wybranego zakresu zostały zarchiwizowane`,
+          text: `Zestawienie wysłane. Dane z wybranego zakresu zostały zarchiwizowane`,
         });
+        setSelection({ startIndex: null, endIndex: null });
+      })
+      .catch(err => {
+        setModalData({
+          type: 'error',
+          text: err.response?.data?.error || err.message,
+        });
+      })
+      .finally(() => setIsMakingApiCall(false));
+  };
+
+  const onlyArchive = () => {
+    if (!bordersToSend.length) {
+      setModalData({
+        type: 'error',
+        text: 'Musisz określić zakres danych do archiwizacji.',
+      });
+      return;
+    }
+
+    setIsMakingApiCall(true);
+    const { _id } = currentUser;
+    const { startIndex } = selection;
+
+    axios
+      .post('/api/tables', { borders: bordersToSend }, getConfig())
+      .then(() => {
+        const updatedBorders = [...borders];
+        updatedBorders.splice(startIndex, bordersToSend.length);
+
+        return axios.put(
+          `/api/users/${_id}/borders`,
+          updatedBorders,
+          getConfig()
+        );
+      })
+      .then(res => {
+        setModalData({
+          type: 'info',
+          text: 'Dane zostały zarchiwizowane.',
+        });
+        setCurrentUser(res.data.data);
         setSelection({ startIndex: null, endIndex: null });
       })
       .catch(err => {
@@ -130,7 +168,10 @@ const SendBorders = () => {
         >
           Wyślij i archiwizuj
         </CustomButton>
-        <CustomButton disabled={isMakingApiCall || !bordersToSend.length}>
+        <CustomButton
+          disabled={isMakingApiCall || !bordersToSend.length}
+          handleClick={onlyArchive}
+        >
           Archiwizuj
         </CustomButton>
       </div>

@@ -8,6 +8,13 @@ const createBordersFile = (req, res, next) => {
   const userId = req.user.id;
   const borders = req.body.borders;
 
+  if (!borders) {
+    return res.status(400).json({
+      success: false,
+      error: 'Brak danych. Wybierz zakres danych i spróbuj ponownie.',
+    });
+  }
+
   User.findById(userId)
     .select('name')
     .then(user => {
@@ -45,7 +52,13 @@ const createBordersFile = (req, res, next) => {
           next();
         });
       });
-    });
+    })
+    .catch(() =>
+      res.status(500).json({
+        success: false,
+        error: 'Coś poszło nie tak, spróbuj ponownie.',
+      })
+    );
 };
 
 module.exports = createBordersFile;
