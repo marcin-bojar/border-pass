@@ -1,14 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+import { getConfig } from '../../utils';
 
 import './archive.styles.scss';
 
-const Archive = () => (
-  <div className="archive">
-    <p>
-      Tu niedługo pojawią się wszystkie Twoje zarchiwizowane dane. Cierpliwości
-      :)
-    </p>
-  </div>
-);
+const Archive = () => {
+  const [archives, setArchives] = useState([]);
+
+  useEffect(() => {
+    axios.get('/api/tables', getConfig()).then(res => {
+      setArchives([...res.data.data]);
+    });
+  }, []);
+
+  return (
+    <div className="archive">
+      <p>
+        Tu niedługo pojawią się wszystkie Twoje zarchiwizowane dane. <br />{' '}
+        Pracujemy nad tym :D
+      </p>
+      {archives.map(table => (
+        <p>{table.createdAt}</p>
+      ))}
+    </div>
+  );
+};
 
 export default Archive;
