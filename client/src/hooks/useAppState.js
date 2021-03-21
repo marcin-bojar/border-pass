@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import { sortHistoryListByTimeAndDate, getConfig } from '../utils';
 import defaultCountries from '../../../helpers/defaultCountries';
+import { registerSW } from '../service-worker';
 
 export const AppContext = createContext(null);
 
@@ -97,6 +98,8 @@ export const useAppState = () => {
         })
         .finally(() => setUserLoading(false));
     } else setUserLoading(false);
+
+    registerSW(setModalData);
   }, []);
 
   return {

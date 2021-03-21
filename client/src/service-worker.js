@@ -1,15 +1,18 @@
 import { Workbox, messageSW } from 'workbox-window';
 
-export const registerSW = () => {
+export const registerSW = setModalData => {
   if ('serviceWorker' in navigator) {
     const swURL = 'sw.js';
     const wb = new Workbox(swURL);
     let registration;
 
     const showRefreshPrompt = () => {
-      if (window.confirm('Nowa wersja aplikacji dostępna, odświeżyć teraz?')) {
-        wb.addEventListener('controlling', () => window.location.reload());
-      }
+      setModalData({
+        type: 'confirm',
+        text: 'Nowa wersja aplikacji dostępna, odświeżyć teraz?',
+        onConfirm: () =>
+          wb.addEventListener('controlling', () => window.location.reload()),
+      });
 
       if (registration && registration.waiting) {
         messageSW(registration.waiting, { type: 'SKIP_WAITING' });
@@ -29,18 +32,5 @@ export const registerSW = () => {
       .catch(err =>
         console.log('Error occured while registering service worker: ' + err)
       );
-
-    // window.addEventListener('load', () => {
-    //   navigator.serviceWorker
-    //     .register(swURL)
-    //     .then(reg => {
-    //       console.log(
-    //         'Service worker registered successfully. Scope: ' + reg.scope
-    //       );
-    //     })
-    //     .catch(err => {
-    //       console.log('Error occured while registering service worker: ' + err);
-    //     });
-    // });
   }
 };
