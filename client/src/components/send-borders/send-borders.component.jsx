@@ -172,7 +172,7 @@ const SendBorders = () => {
           disabled={isMakingApiCall || !bordersToSend.length}
           handleClick={onlyArchive}
         >
-          Archiwizuj
+          Archiwizuj dane
         </CustomButton>
       </div>
       <HistoryList />

@@ -29,6 +29,9 @@ const UserMenu = () => {
       <Link className="user-menu__link" to="/send">
         Wyślij zestawienie
       </Link>
+      <Link className="user-menu__link" to="/archive">
+        Archiwum
+      </Link>
       <Link className="user-menu__link" to="/config">
         Ustawienia
       </Link>

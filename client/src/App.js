@@ -9,7 +9,8 @@ import NavBar from './components/nav-bar/nav-bar.component';
 import Modal from './components/modal/modal.component';
 import BordersTable from './components/borders-table/borders-table.component';
 import SendBorders from './components/send-borders/send-borders.component';
-import SetConfig from './components/set-config/set-config.compnent';
+import SetConfig from './components/set-config/set-config.component';
+import Archive from './components/archive/archive.component';
 
 import { AppContext, useAppState } from './hooks/useAppState';
 
@@ -31,6 +32,7 @@ const App = () => {
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/preview" component={BordersTable} />
             <Route exact path="/send" component={SendBorders} />
+            <Route exact path="/archive" component={Archive} />
             <Route exact path="/config" component={SetConfig} />
           </Switch>
         </BrowserRouter>

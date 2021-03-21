@@ -6,4 +6,5 @@ module.exports = {
   cleanupOutdatedCaches: true,
   skipWaiting: true,
   clientsClaim: true,
+  cleanupOutdatedCaches: true,
 };
