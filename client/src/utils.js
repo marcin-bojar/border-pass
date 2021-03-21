@@ -94,24 +94,3 @@ export const displayTripEventsInSameRow = table => {
     }
   }
 };
-
-//Service Worker utils
-
-export const registerSW = () => {
-  if ('serviceWorker' in navigator) {
-    const swURL = 'sw.js';
-
-    window.addEventListener('load', () => {
-      navigator.serviceWorker
-        .register(swURL)
-        .then(reg => {
-          console.log(
-            'Service worker registered successfully. Scope: ' + reg.scope
-          );
-        })
-        .catch(err => {
-          console.log('Error occured while registering service worker: ' + err);
-        });
-    });
-  }
-};

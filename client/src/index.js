@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { registerSW } from './utils';
+import { registerSW } from './service-worker';
 
 import App from './App';
 
