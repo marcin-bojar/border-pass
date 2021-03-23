@@ -5,9 +5,9 @@
   bottom: 0;
   left: 0;
   width: 100vw;
-  background-color: hsl(50%, 50%, 7%);
+  background-color: hsl(100%, 15%, 12%);
   padding: 1rem 0;
-  font-size: 1.7rem;
+  font-size: 1.8rem;
   text-align: center;
 
   &__button-wrapper {
@@ -16,9 +16,10 @@
     .custom-button {
       color: $color-white;
       border-bottom: 1px solid $color-white;
+      text-transform: uppercase;
 
       &:not(:last-child) {
-        margin-right: 1.75rem;
+        margin-right: 2.75rem;
       }
     }
   }

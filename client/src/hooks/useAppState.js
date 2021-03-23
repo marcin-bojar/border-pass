@@ -45,6 +45,12 @@ export const useAppState = () => {
   const [modalData, setModalData] = useState(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
+  //App state
+  const [newVersion, setNewVersion] = useState({
+    status: false,
+    onConfirm: () => {},
+  });
+
   useEffect(() => {
     if (!currentUser) {
       localStorage.setItem('borders', JSON.stringify(borders));
@@ -99,7 +105,7 @@ export const useAppState = () => {
         .finally(() => setUserLoading(false));
     } else setUserLoading(false);
 
-    registerSW(setModalData);
+    registerSW(setNewVersion);
   }, []);
 
   return {
@@ -139,5 +145,7 @@ export const useAppState = () => {
     setShowUserMenu,
     selection,
     setSelection,
+    newVersion,
+    setNewVersion,
   };
 };

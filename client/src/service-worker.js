@@ -1,16 +1,17 @@
+import { set } from 'mongoose';
 import { Workbox, messageSW } from 'workbox-window';
 
-export const registerSW = setModalData => {
+export const registerSW = setNewVersion => {
   if ('serviceWorker' in navigator) {
     const swURL = 'sw.js';
     const wb = new Workbox(swURL);
     let registration;
 
     const showRefreshPrompt = () => {
-      setModalData({
-        type: 'confirm',
-        text: 'Nowa wersja aplikacji dostępna, odświeżyć teraz?',
+      setNewVersion({
+        status: true,
         onConfirm: () => {
+          setNewVersion({ status: false, onConfirm: () => {} });
           wb.addEventListener('controlling', () => window.location.reload());
 
           if (registration && registration.waiting) {
@@ -26,9 +27,7 @@ export const registerSW = setModalData => {
     wb.register()
       .then(r => {
         registration = r;
-        console.log(
-          'Service worker registered successfully. Scope: ' + r.scope
-        );
+        console.log('Service worker registered successfully.');
       })
       .catch(err =>
         console.log('Error occured while registering service worker: ' + err)
