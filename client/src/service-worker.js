@@ -10,13 +10,14 @@ export const registerSW = setModalData => {
       setModalData({
         type: 'confirm',
         text: 'Nowa wersja aplikacji dostępna, odświeżyć teraz?',
-        onConfirm: () =>
-          wb.addEventListener('controlling', () => window.location.reload()),
-      });
+        onConfirm: () => {
+          wb.addEventListener('controlling', () => window.location.reload());
 
-      if (registration && registration.waiting) {
-        messageSW(registration.waiting, { type: 'SKIP_WAITING' });
-      }
+          if (registration && registration.waiting) {
+            messageSW(registration.waiting, { type: 'SKIP_WAITING' });
+          }
+        },
+      });
     };
 
     wb.addEventListener('waiting', showRefreshPrompt);

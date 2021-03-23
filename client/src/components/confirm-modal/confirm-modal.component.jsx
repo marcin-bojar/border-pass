@@ -17,12 +17,11 @@ const ConfirmModal = () => {
         <h3 className="modal__title">Potwierdź</h3>
         <div className="modal__text">{text}</div>
         <div className="modal__button-wrapper">
-          <CustomButton handleClick={() => setShowModal(false)}>
+          <CustomButton clear handleClick={() => setShowModal(false)}>
             Anuluj
           </CustomButton>
 
           <CustomButton
-            clear
             handleClick={() => {
               onConfirm();
               setShowModal(false);

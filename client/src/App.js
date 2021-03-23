@@ -11,6 +11,7 @@ import BordersTable from './components/borders-table/borders-table.component';
 import SendBorders from './components/send-borders/send-borders.component';
 import SetConfig from './components/set-config/set-config.component';
 import Archive from './components/archive/archive.component';
+import NewVersionBar from './components/new-version-bar/new-version-bar.component';
 
 import { AppContext, useAppState } from './hooks/useAppState';
 
@@ -35,6 +36,7 @@ const App = () => {
             <Route exact path="/archive" component={Archive} />
             <Route exact path="/config" component={SetConfig} />
           </Switch>
+          <NewVersionBar />
         </BrowserRouter>
       </AppContext.Provider>
     </div>

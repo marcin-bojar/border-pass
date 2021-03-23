@@ -1,0 +1,25 @@
+@import '../../sass/variables';
+
+.new-version-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  background-color: hsl(50%, 50%, 7%);
+  padding: 1rem 0;
+  font-size: 1.7rem;
+  text-align: center;
+
+  &__button-wrapper {
+    margin-top: 0.75rem;
+
+    .custom-button {
+      color: $color-white;
+      border-bottom: 1px solid $color-white;
+
+      &:not(:last-child) {
+        margin-right: 1.75rem;
+      }
+    }
+  }
+}
