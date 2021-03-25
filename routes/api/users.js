@@ -11,6 +11,7 @@ const Table = require('../../models/Table');
 const auth = require('../../middlewares/auth');
 const validateTimeAndDate = require('../../middlewares/validateTimeAndDate');
 const createBordersFile = require('../../middlewares/createBordersFile');
+const validateEmail = require('../../middlewares/validateEmail.js');
 
 // @route POST /api/users/:userId/borders
 // @desc Post new border crossing to user's borders array
@@ -185,9 +186,9 @@ router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
 });
 
 // @route POST /api/users/:userId/company
-// @desc Set user's compnay details
+// @desc Set user's company details
 // @private
-router.post('/:userId/company', auth, (req, res) => {
+router.post('/:userId/company', [auth, validateEmail], (req, res) => {
   User.findById(req.user.id)
     .then(user => {
       user.company = req.body;
