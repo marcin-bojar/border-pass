@@ -25,13 +25,18 @@ const NavBar = () => {
         <Spinner isLoading={userLoading} />
       ) : currentUser ? (
         <div className="nav-bar__user">
-          <CustomButton
-            navbar
-            navbarUser
-            handleClick={() => setShowUserMenu(!showUserMenu)}
-          >
-            {currentUser.name}
-          </CustomButton>
+          <div className="nav-bar__block">
+            <CustomButton
+              navbar
+              navbarUser
+              handleClick={() => setShowUserMenu(!showUserMenu)}
+            >
+              {currentUser.name}
+            </CustomButton>
+            <div className={`${showUserMenu ? 'open' : ''} nav-bar__arrow`}>
+              &#x25BC;
+            </div>
+          </div>
           <CustomButton
             navbar
             handleClick={() => {

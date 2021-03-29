@@ -21,10 +21,20 @@
   }
 
   &__guest,
-  &__user {
+  &__user,
+  &__block {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  &__arrow {
+    margin-left: 4px;
+    transition: transform 0.3s ease-out;
+
+    &.open {
+      transform: rotate(-180deg);
+    }
   }
 
   &__link {
