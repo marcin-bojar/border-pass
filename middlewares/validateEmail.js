@@ -1,10 +1,13 @@
 const validateEmail = (req, res, next) => {
   const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-  const email = req.body.email
-    ? req.body.email.toLowerCase().trim()
-    : req.body.companyEmail.toLowerCase().trim();
+  let email = '';
+  let isCompanyEmail;
 
-  const isCompanyEmail = req.body.companyEmail !== null;
+  if (req.body.email) email = req.body.email.toLowerCase().trim();
+  else if (req.body.companyEmail) {
+    email = req.body.companyEmail.toLowerCase().trim();
+    isCompanyEmail = true;
+  }
 
   if (isCompanyEmail && email.length === 0) return next();
 
