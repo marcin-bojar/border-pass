@@ -4,7 +4,6 @@ import axios from 'axios';
 import {
   parseDate,
   getConfig,
-  sortUsersBorders,
   validateTimeAndDateSync,
 } from '../../utils';
 
@@ -23,7 +22,6 @@ const HistoryEditorForm = () => {
     setEditedItem,
     borders,
     setBorders,
-    isSortedDesc,
     setIsMakingApiCall,
   } = useContext(AppContext);
 
@@ -68,8 +66,7 @@ const HistoryEditorForm = () => {
           getConfig()
         )
         .then(res => {
-          const user = sortUsersBorders(res.data.data, isSortedDesc);
-          setCurrentUser(user);
+          setCurrentUser(res.data.data);
           setEditedItem(null);
         })
         .catch(err => setError(err.response.data.error))

@@ -5,7 +5,6 @@ import CustomButton from '../custom-button/custom-button.component';
 
 import {
   parseTimestamp,
-  sortUsersBorders,
   sortHistoryListByTimeAndDate,
   getConfig,
 } from '../../utils';
@@ -53,8 +52,7 @@ const TripEvents = () => {
       axios
         .post(`/api/users/${_id}/borders`, tripEvent, getConfig())
         .then(res => {
-          const user = sortUsersBorders(res.data.data, isSortedDesc);
-          setCurrentUser(user);
+          setCurrentUser(res.data.data);
           return axios.post('/api/borders', { ...tripEvent, user: _id });
         })
         .catch(err =>
@@ -70,6 +68,8 @@ const TripEvents = () => {
       setBorders(updatedBorders);
     }
   };
+
+  if (!currentCountry) return null;
 
   return (
     <div className="trip-events">

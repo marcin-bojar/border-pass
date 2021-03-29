@@ -176,6 +176,7 @@ router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
             user: req.user.id,
             status: 'sent',
             html: req.markup,
+            borders: req.body.borders,
           });
           table.save();
 

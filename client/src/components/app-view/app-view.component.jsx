@@ -20,8 +20,8 @@ const AppView = () => {
   return (
     <div className="app-view">
       <CurrentCountry />
-      <CountrySelect />
       <TripEvents />
+      <CountrySelect />
       <History />
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import axios from 'axios';
 
-import { sortUsersBorders, getConfig } from '../../utils';
+import { getConfig } from '../../utils';
 
 import CountryOption from '../country-option/country-option.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -35,11 +35,13 @@ const CountrySelect = () => {
       axios
         .delete(`/api/users/${_id}/borders/undo`, getConfig())
         .then(res => {
-          const user = sortUsersBorders(res.data.data, isSortedDesc);
-          setCurrentUser(user);
+          setCurrentUser(res.data.data);
         })
         .catch(err => {
-          setModalData({ type: 'error', text: err.response.data.error });
+          setModalData({
+            type: 'error',
+            text: err?.response?.data.error || err.message,
+          });
         })
         .finally(() => setIsMakingApiCall(false));
     } else {

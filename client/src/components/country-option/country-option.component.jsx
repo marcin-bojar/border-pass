@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import {
   parseTimestamp,
-  sortUsersBorders,
   sortHistoryListByTimeAndDate,
   getConfig,
 } from '../../utils';
@@ -52,8 +51,7 @@ const CountryOption = ({ name }) => {
         axios
           .post(`/api/users/${_id}/borders`, borderPass, getConfig())
           .then(res => {
-            const user = sortUsersBorders(res.data.data, isSortedDesc);
-            setCurrentUser(user);
+            setCurrentUser(res.data.data);
             return axios.post('/api/borders', { ...borderPass, user: _id });
           })
           .catch(err =>

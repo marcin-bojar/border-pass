@@ -35,7 +35,6 @@ const BordersTable = () => {
 
   return (
     <div className="borders-table">
-      {/* <h2 className="borders-table__name">{currentUser.name}</h2> */}
       <table ref={tableRef}>
         <caption className="borders-table__name">{currentUser.name}</caption>
         <thead>
