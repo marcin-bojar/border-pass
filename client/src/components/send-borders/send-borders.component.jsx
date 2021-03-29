@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import HistoryList from '../history-list/history-list.component';
@@ -49,13 +50,22 @@ const SendBorders = () => {
       return;
     }
 
-    setIsMakingApiCall(true);
     const {
       _id,
       company: { companyEmail },
     } = currentUser;
     const { startIndex } = selection;
 
+    if (!companyEmail) {
+      setModalData({
+        type: 'error',
+        text:
+          'Aby wysłać zestawienie, zapisz adres email Twojej firmy w ustawieniach.',
+      });
+      return;
+    }
+
+    setIsMakingApiCall(true);
     axios
       .post(
         `/api/users/${_id}/send`,
@@ -130,6 +140,8 @@ const SendBorders = () => {
       })
       .finally(() => setIsMakingApiCall(false));
   };
+
+  if (!currentUser) return <Redirect to="/" />;
 
   return (
     <div className="send-borders">

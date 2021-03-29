@@ -20,10 +20,10 @@ const Archive = () => {
         Tu niedługo pojawią się wszystkie Twoje zarchiwizowane dane. <br />{' '}
         Pracujemy nad tym :D
       </p>
-      {/* <h2>Wersja robocza danych</h2>
+      <h2>Wersja robocza danych</h2>
       {archives.map(table => (
         <p>{table.createdAt}</p>
-      ))} */}
+      ))}
     </div>
   );
 };
