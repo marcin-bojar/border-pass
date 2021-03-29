@@ -15,6 +15,10 @@ const TableSchema = new Schema({
     type: String,
     required: true,
   },
+  borders: {
+    type: Array,
+    required: true,
+  },
   createdAt: {
     type: Date,
     expires: '180d',
