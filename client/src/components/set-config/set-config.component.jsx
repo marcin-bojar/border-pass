@@ -58,6 +58,13 @@ const SetConfig = () => {
 
   const submitUserName = e => {
     e.preventDefault();
+
+    if (!userName) {
+      setModalData({ type: 'error', text: 'Nie podałeś imienia i nazwiska.' });
+      setUserName(currentUser?.name);
+      return;
+    }
+
     const { _id } = currentUser;
 
     setIsMakingApiCall(true);
