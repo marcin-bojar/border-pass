@@ -78,7 +78,7 @@ const SignUp = () => {
           {authError && <ErrorMessage error={authError} />}
           <CustomInput
             name="name"
-            label="Nazwa użytkownika"
+            label="Imię i nazwisko"
             value={user.name}
             handleChange={handleChange}
           />

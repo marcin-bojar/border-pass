@@ -199,9 +199,27 @@ router.post('/:userId/company', [auth, validateEmail], (req, res) => {
     .catch(() =>
       res.status(400).json({
         success: false,
-        error: 'Nie udało się zapisać ustawień, spróbuj ponownie.',
+        error: 'Nie udało się zapisać danych firmy, spróbuj ponownie.',
       })
     );
+});
+
+// @route POST /api/users/:userId/name
+// @desc Set user's name
+// @private
+router.post('/:userId/name', auth, (req, res) => {
+  User.findById(req.user.id)
+    .then(user => {
+      user.name = req.body.userName;
+      user.save();
+      return res.json({ success: true, data: user });
+    })
+    .catch(() => {
+      res.status(400).json({
+        success: false,
+        error: 'Nie udało się zapisać Twoich danych, spróbuj ponownie.',
+      });
+    });
 });
 
 module.exports = router;

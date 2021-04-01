@@ -24,14 +24,21 @@ const SetConfig = () => {
     companyEmail: '',
     companyName: '',
   });
-  const [isUpdated, setIsUpdated] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [isCompanyUpdated, setIsCompanyUpdated] = useState(false);
+  const [isUserNameUpdated, setIsUserNameUpdated] = useState(false);
 
-  const handleChange = e => {
+  const handleUserNameChange = e => {
+    const value = e.target.value;
+    setUserName(value);
+  };
+
+  const handleCompanyDataChange = e => {
     const { name, value } = e.target;
     setCompanyDetails({ ...companyDetails, [name]: value });
   };
 
-  const handleSubmit = e => {
+  const submitCompanyData = e => {
     e.preventDefault();
     const { _id } = currentUser;
 
@@ -46,24 +53,51 @@ const SetConfig = () => {
       .catch(err =>
         setModalData({ type: 'error', text: err.response.data.error })
       )
+      .finally(() => setIsMakingApiCall(false));
+  };
 
+  const submitUserName = e => {
+    e.preventDefault();
+    const { _id } = currentUser;
+
+    setIsMakingApiCall(true);
+
+    axios
+      .post(`/api/users/${_id}/name`, { userName }, getConfig())
+      .then(res => {
+        setCurrentUser(res.data.data);
+        setModalData({
+          type: 'info',
+          text: 'Twoje imię i nazwisko zostały zmienione.',
+        });
+      })
+      .catch(err =>
+        setModalData({ type: 'error', text: err.response.data.error })
+      )
       .finally(() => setIsMakingApiCall(false));
   };
 
   useEffect(() => {
-    if (currentUser)
+    if (currentUser) {
       setCompanyDetails({
         companyEmail: currentUser.company.companyEmail,
         companyName: currentUser.company.companyName,
       });
+      setUserName(currentUser.name);
+      setIsUserNameUpdated(userName !== currentUser.name);
+    }
   }, [currentUser]);
 
   useEffect(() => {
-    setIsUpdated(
+    setIsCompanyUpdated(
       companyDetails.companyEmail !== currentUser?.company.companyEmail ||
         companyDetails.companyName !== currentUser?.company.companyName
     );
   }, [companyDetails]);
+
+  useEffect(() => {
+    setIsUserNameUpdated(userName !== currentUser?.name);
+  }, [userName]);
 
   if (userLoading) return <Loader />;
   else if (!currentUser) return <Redirect to="/" />;
@@ -71,26 +105,46 @@ const SetConfig = () => {
   return (
     <div className="set-config">
       <h2 className="set-config__title">Ustawienia</h2>
-      <div className="set-config__section">
+      <section className="set-config__section">
+        <h3 className="set-config__section-title">Twoje dane</h3>
+        <form onSubmit={submitUserName} className="set-config__form">
+          <CustomInput
+            value={userName}
+            name="userName"
+            label="Imię i nazwisko"
+            handleChange={handleUserNameChange}
+          />
+          <CustomButton
+            disabled={isMakingApiCall || !isUserNameUpdated}
+            type="submit"
+          >
+            Zapisz
+          </CustomButton>
+        </form>
+      </section>
+      <section className="set-config__section">
         <h3 className="set-config__section-title">Dane Twojej Firmy</h3>
-        <form onSubmit={handleSubmit} className="set-config__form">
+        <form onSubmit={submitCompanyData} className="set-config__form">
           <CustomInput
             value={companyDetails.companyName}
             name="companyName"
             label="Nazwa Firmy"
-            handleChange={handleChange}
+            handleChange={handleCompanyDataChange}
           />
           <CustomInput
             value={companyDetails.companyEmail}
             name="companyEmail"
             label="Adres Email"
-            handleChange={handleChange}
+            handleChange={handleCompanyDataChange}
           />
-          <CustomButton disabled={isMakingApiCall || !isUpdated} type="submit">
+          <CustomButton
+            disabled={isMakingApiCall || !isCompanyUpdated}
+            type="submit"
+          >
             Zapisz
           </CustomButton>
         </form>
-      </div>
+      </section>
     </div>
   );
 };

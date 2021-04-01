@@ -11,14 +11,27 @@
   }
 
   &__section {
-    padding: 2rem;
+    position: relative;
+    padding: 3.5rem 0;
+
+    &:not(:last-child):after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 3px;
+      width: 25%;
+      background-color: $color-primary;
+      border-radius: $border-radius-primary;
+    }
   }
 
   &__section-title {
     text-align: center;
     font-weight: 700;
     font-size: 1.8rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
   }
 
   &__form {
