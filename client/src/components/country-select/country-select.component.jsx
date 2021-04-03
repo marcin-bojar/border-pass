@@ -31,9 +31,13 @@ const CountrySelect = () => {
     if (currentUser) {
       setIsMakingApiCall(true);
       const { _id } = currentUser;
+      const lastItemId = borders[borders.length - 1]._id;
 
       axios
-        .delete(`/api/users/${_id}/borders/undo`, getConfig())
+        .delete(`/api/users/${_id}/borders/undo`, {
+          ...getConfig(),
+          data: { lastItemId },
+        })
         .then(res => {
           setCurrentUser(res.data.data);
         })
@@ -84,8 +88,7 @@ const CountrySelect = () => {
           handleClick={() =>
             setModalData({
               type: 'confirm',
-              text:
-                'Usuwasz ostatnie przekroczenie granicy. Czy chcesz kontynuować?',
+              text: 'Usuwasz ostatni wpis z listy. Czy chcesz kontynuować?',
               onConfirm: undoLastEntry,
             })
           }

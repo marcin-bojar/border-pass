@@ -39,7 +39,7 @@ router.delete('/:userId/borders/undo', auth, (req, res) => {
   User.findById(req.user.id)
     .select('-password -__v')
     .then(user => {
-      user.borders.$pop(); // BUG - if borders edited by user last displayed on frontend doesn't have to be the last added to database
+      user.borders.id(req.body.lastItemId).remove();
       user.save();
       return res.json({ success: true, data: user });
     })
