@@ -40,7 +40,9 @@ const CountrySelect = () => {
         .catch(err => {
           setModalData({
             type: 'error',
-            text: err?.response?.data.error || err.message,
+            text:
+              err?.response?.data.error ||
+              'Coś poszło nie tak, spróbuj ponownie.',
           });
         })
         .finally(() => setIsMakingApiCall(false));

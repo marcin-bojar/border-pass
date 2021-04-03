@@ -5,6 +5,7 @@ import {
   parseDate,
   getConfig,
   validateTimeAndDateSync,
+  sortHistoryListByTimeAndDate,
 } from '../../utils';
 
 import CustomInput from '../custom-input/custom-input.component';
@@ -23,6 +24,7 @@ const HistoryEditorForm = () => {
     borders,
     setBorders,
     setIsMakingApiCall,
+    isSortedDesc,
   } = useContext(AppContext);
 
   const { type, from, to, time, date, timestamp, i, _id } = editedItem;
@@ -76,7 +78,12 @@ const HistoryEditorForm = () => {
       if (!validateTimeAndDateSync(time, date, setError)) return;
 
       borders[i] = updatedBorderPass;
-      setBorders([...borders]);
+      const sortedBorders = sortHistoryListByTimeAndDate(
+        borders,
+        !isSortedDesc,
+        'timestamp'
+      );
+      setBorders([...sortedBorders]);
       setEditedItem(null);
     }
   };

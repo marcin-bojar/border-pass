@@ -1,7 +1,11 @@
 import { useState, useEffect, createContext } from 'react';
 import axios from 'axios';
 
-import { sortHistoryListByTimeAndDate, getConfig } from '../utils';
+import {
+  sortHistoryListByTimeAndDate,
+  getConfig,
+  sortUsersBorders,
+} from '../utils';
 import defaultCountries from '../../../helpers/defaultCountries';
 import { registerSW } from '../service-worker';
 
@@ -52,10 +56,7 @@ export const useAppState = () => {
   });
 
   useEffect(() => {
-    if (!currentUser) {
-      localStorage.setItem('borders', JSON.stringify(borders));
-      sortHistoryListByTimeAndDate(borders, !isSortedDesc, 'timestamp');
-    } else sortHistoryListByTimeAndDate(borders, !isSortedDesc);
+    if (!currentUser) localStorage.setItem('borders', JSON.stringify(borders));
 
     const length = borders.length;
     if (!length) setCurrentCountry('');
@@ -74,10 +75,16 @@ export const useAppState = () => {
 
   useEffect(() => {
     if (currentUser) {
-      setBorders([...currentUser.borders]);
-      setCountries([...currentUser.countries]);
+      const user = sortUsersBorders(currentUser, !isSortedDesc);
+      setBorders([...user.borders]);
+      setCountries([...user.countries]);
     } else {
-      setBorders([...JSON.parse(localStorage.getItem('borders'))]);
+      const borders = sortHistoryListByTimeAndDate(
+        [...JSON.parse(localStorage.getItem('borders'))],
+        !isSortedDesc,
+        'timestamp'
+      );
+      setBorders(borders);
       setCountries([...JSON.parse(localStorage.getItem('countries'))]);
     }
   }, [currentUser]);
