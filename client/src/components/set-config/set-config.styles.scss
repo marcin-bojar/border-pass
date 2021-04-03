@@ -7,24 +7,12 @@
   &__title {
     text-align: center;
     padding-bottom: 1rem;
+    margin-bottom: 4rem;
     border-bottom: 3px solid $color-primary;
   }
 
   &__section {
-    position: relative;
-    padding: 3.5rem 0;
-
-    &:not(:last-child):after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      height: 3px;
-      width: 25%;
-      background-color: $color-primary;
-      border-radius: $border-radius-primary;
-    }
+    @include sections-common-styles;
   }
 
   &__section-title {

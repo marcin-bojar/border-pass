@@ -53,7 +53,7 @@ const SignIn = () => {
         setToken(null);
         setUserLoading(false);
         setGuestUser(false);
-        if (err.response.status === 401 || err.response.status === 404)
+        if (err?.response?.status === 401 || err?.response?.status === 404)
           setAuthError('Podane dane są nieprawidłowe.');
         else setAuthError(err.response.data.error);
       });

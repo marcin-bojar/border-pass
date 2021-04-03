@@ -9,8 +9,6 @@ import Loader from '../loader/loader.component';
 
 import { AppContext } from '../../hooks/useAppState';
 
-import './app-view.styles.scss';
-
 const AppView = () => {
   const { currentUser, userLoading, guestUser } = useContext(AppContext);
 
