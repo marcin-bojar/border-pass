@@ -31,7 +31,9 @@ const CountrySelect = () => {
     if (currentUser) {
       setIsMakingApiCall(true);
       const { _id } = currentUser;
-      const lastItemId = borders[borders.length - 1]._id;
+      const lastItemId = isSortedDesc
+        ? borders[0]._id
+        : borders[borders.length - 1]._id;
 
       axios
         .delete(`/api/users/${_id}/borders/undo`, {

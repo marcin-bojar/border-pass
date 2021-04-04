@@ -13,6 +13,10 @@
 
   &__section {
     @include sections-common-styles;
+
+    @media only screen and (min-width: 68.75em) {
+      max-width: 75%;
+    }
   }
 
   &__section-title {
