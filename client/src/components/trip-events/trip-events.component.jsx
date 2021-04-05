@@ -3,11 +3,7 @@ import axios from 'axios';
 
 import CustomButton from '../custom-button/custom-button.component';
 
-import {
-  parseTimestamp,
-  sortHistoryListByTimeAndDate,
-  getConfig,
-} from '../../utils';
+import { parseTimestamp, sortHistoryListByTimeAndDate, getConfig } from '../../utils';
 import { AppContext } from '../../hooks/useAppState';
 
 import './trip-events.styles.scss';
@@ -55,9 +51,7 @@ const TripEvents = () => {
           setCurrentUser(res.data.data);
           return axios.post('/api/borders', { ...tripEvent, user: _id });
         })
-        .catch(err =>
-          setModalData({ type: 'error', text: err.response.data.error })
-        )
+        .catch(err => setModalData({ type: 'error', text: err.response.data.error }))
         .finally(() => setIsMakingApiCall(false));
     } else {
       const updatedBorders = sortHistoryListByTimeAndDate(

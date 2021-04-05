@@ -93,9 +93,7 @@ const createTableMarkup = (user, borders) => {
             </head>
             <body>
                <table id='table'>
-                     <caption className="borders-table__name">${
-                       user.name
-                     }</caption>
+                     <caption className="borders-table__name">${user.name}</caption>
                     <thead>
                     <tr>
                         <th>Wyjazd z bazy</th>
@@ -108,28 +106,19 @@ const createTableMarkup = (user, borders) => {
                     <tbody>
                     ${borders
                       .map(border => {
-                        if (
-                          border.type === 'tripStart' ||
-                          border.type === 'tripEnd'
-                        ) {
+                        if (border.type === 'tripStart' || border.type === 'tripEnd') {
                           const row = `
                             <tr>
                             <td>
                                 ${
-                                  border.type === 'tripStart'
-                                    ? `${border.date} ${border.time}`
-                                    : ''
+                                  border.type === 'tripStart' ? `${border.date} ${border.time}` : ''
                                 }
                             </td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td>
-                                ${
-                                  border.type === 'tripEnd'
-                                    ? `${border.date} ${border.time}`
-                                    : ''
-                                }
+                                ${border.type === 'tripEnd' ? `${border.date} ${border.time}` : ''}
                             </td>
                             </tr>
                         `;

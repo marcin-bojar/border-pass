@@ -28,10 +28,9 @@ const Welcome = () => {
         <CustomButton link handleClick={() => setGuestUser(true)}>
           Kontynuuj jako gość.
         </CustomButton>
-        &nbsp;Pamietaj jednak, że Twoja historia przekroczeń granic będzie w tym
-        przypadku zapisywana w pamięci Twojego urządzenia, co grozi utratą
-        danych. Nie będziesz miał również możliwości wysyłania zestawienia do
-        firmy.
+        &nbsp;Pamietaj jednak, że Twoja historia przekroczeń granic będzie w tym przypadku
+        zapisywana w pamięci Twojego urządzenia, co grozi utratą danych. Nie będziesz miał również
+        możliwości wysyłania zestawienia do firmy.
       </p>
     </>
   );

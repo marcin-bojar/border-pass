@@ -1,8 +1,7 @@
 export const parseTimestamp = timestamp => {
   const date = new Date(timestamp);
   const h = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
-  const min =
-    date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+  const min = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
   const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
   let month = date.getMonth() + 1;
   month = month < 10 ? '0' + month : month;
@@ -29,8 +28,7 @@ export const sortHistoryListByTimeAndDate = (
   isSortedDesc,
   sortBy = 'timestamp_ms'
 ) => {
-  if (typeof isSortedDesc !== 'boolean')
-    throw new Error('isSortedDesc argument must be a Boolean');
+  if (typeof isSortedDesc !== 'boolean') throw new Error('isSortedDesc argument must be a Boolean');
 
   if (isSortedDesc) return historyArray.sort((a, b) => a[sortBy] - b[sortBy]);
   else return historyArray.sort((a, b) => b[sortBy] - a[sortBy]);

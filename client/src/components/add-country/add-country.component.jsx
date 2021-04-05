@@ -12,9 +12,7 @@ import './add-country.styles.scss';
 
 const AddCountry = () => {
   const { inputValue, setInputValue, handleChange } = useSingleInput();
-  const { countries, setCountries, currentUser, setModalData } = useContext(
-    AppContext
-  );
+  const { countries, setCountries, currentUser, setModalData } = useContext(AppContext);
   const [isAdding, setIsAdding] = useState(false);
 
   const handleSubmit = e => {

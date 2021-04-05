@@ -28,11 +28,7 @@ const HistoryEditor = () => {
 
           <HistoryEditorForm />
 
-          <CustomButton
-            type="submit"
-            form="editor-form"
-            disabled={isMakingApiCall}
-          >
+          <CustomButton type="submit" form="editor-form" disabled={isMakingApiCall}>
             Zatwierdź
           </CustomButton>
         </div>

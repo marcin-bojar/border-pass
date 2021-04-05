@@ -1,11 +1,7 @@
 import { useState, useEffect, createContext } from 'react';
 import axios from 'axios';
 
-import {
-  sortHistoryListByTimeAndDate,
-  getConfig,
-  sortUsersBorders,
-} from '../utils';
+import { sortHistoryListByTimeAndDate, getConfig, sortUsersBorders } from '../utils';
 import defaultCountries from '../../../helpers/defaultCountries';
 import { registerSW } from '../service-worker';
 
@@ -15,9 +11,7 @@ export const useAppState = () => {
   //User state
   const [currentUser, setCurrentUser] = useState(null);
   const [guestUser, setGuestUser] = useState(false);
-  const [token, setToken] = useState(
-    JSON.parse(localStorage.getItem('token')) || null
-  );
+  const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')) || null);
   const [userLoading, setUserLoading] = useState(true);
   const [authError, setAuthError] = useState(null);
 
@@ -26,9 +20,7 @@ export const useAppState = () => {
   const [countries, setCountries] = useState(
     JSON.parse(localStorage.getItem('countries')) || defaultCountries
   );
-  const [borders, setBorders] = useState(
-    JSON.parse(localStorage.getItem('borders')) || []
-  );
+  const [borders, setBorders] = useState(JSON.parse(localStorage.getItem('borders')) || []);
   const [showAll, setShowAll] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [sendMode, setSendMode] = useState(false);
@@ -65,8 +57,7 @@ export const useAppState = () => {
   }, [borders]);
 
   useEffect(() => {
-    if (!currentUser)
-      localStorage.setItem('countries', JSON.stringify(countries));
+    if (!currentUser) localStorage.setItem('countries', JSON.stringify(countries));
   }, [countries]);
 
   useEffect(() => {

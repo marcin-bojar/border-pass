@@ -50,9 +50,7 @@ const SetConfig = () => {
         setCurrentUser(res.data.data);
         setModalData({ type: 'info', text: 'Dane firmy zostały zmienione.' });
       })
-      .catch(err =>
-        setModalData({ type: 'error', text: err.response.data.error })
-      )
+      .catch(err => setModalData({ type: 'error', text: err.response.data.error }))
       .finally(() => setIsMakingApiCall(false));
   };
 
@@ -78,9 +76,7 @@ const SetConfig = () => {
           text: 'Twoje imię i nazwisko zostały zmienione.',
         });
       })
-      .catch(err =>
-        setModalData({ type: 'error', text: err.response.data.error })
-      )
+      .catch(err => setModalData({ type: 'error', text: err.response.data.error }))
       .finally(() => setIsMakingApiCall(false));
   };
 
@@ -121,10 +117,7 @@ const SetConfig = () => {
             label="Imię i nazwisko"
             handleChange={handleUserNameChange}
           />
-          <CustomButton
-            disabled={isMakingApiCall || !isUserNameUpdated}
-            type="submit"
-          >
+          <CustomButton disabled={isMakingApiCall || !isUserNameUpdated} type="submit">
             Zapisz
           </CustomButton>
         </form>
@@ -144,10 +137,7 @@ const SetConfig = () => {
             label="Adres Email"
             handleChange={handleCompanyDataChange}
           />
-          <CustomButton
-            disabled={isMakingApiCall || !isCompanyUpdated}
-            type="submit"
-          >
+          <CustomButton disabled={isMakingApiCall || !isCompanyUpdated} type="submit">
             Zapisz
           </CustomButton>
         </form>

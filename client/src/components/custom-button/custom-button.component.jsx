@@ -14,9 +14,9 @@ const CustomButton = ({
 }) => (
   <button
     tabIndex="1"
-    className={`${clear ? 'clear' : ''} ${inline ? 'inline' : ''} ${
-      navbar ? 'navbar' : ''
-    } ${navbarUser ? 'navbar--user' : ''} ${link ? 'link' : ''} custom-button`}
+    className={`${clear ? 'clear' : ''} ${inline ? 'inline' : ''} ${navbar ? 'navbar' : ''} ${
+      navbarUser ? 'navbar--user' : ''
+    } ${link ? 'link' : ''} custom-button`}
     onClick={handleClick}
     {...props}
   >

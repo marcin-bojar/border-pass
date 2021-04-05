@@ -4,14 +4,10 @@ const validateTimeAndDate = (req, res, next) => {
   const { time, date } = req.body;
 
   if (!dateRegex.test(date))
-    return res
-      .status(400)
-      .json({ success: false, error: 'Niepoprawny format daty.' });
+    return res.status(400).json({ success: false, error: 'Niepoprawny format daty.' });
 
   if (!timeRegex.test(time))
-    return res
-      .status(400)
-      .json({ success: false, error: 'Niepoprawny format godziny.' });
+    return res.status(400).json({ success: false, error: 'Niepoprawny format godziny.' });
 
   next();
 };

@@ -31,9 +31,7 @@ const CountrySelect = () => {
     if (currentUser) {
       setIsMakingApiCall(true);
       const { _id } = currentUser;
-      const lastItemId = isSortedDesc
-        ? borders[0]._id
-        : borders[borders.length - 1]._id;
+      const lastItemId = isSortedDesc ? borders[0]._id : borders[borders.length - 1]._id;
 
       axios
         .delete(`/api/users/${_id}/borders/undo`, {
@@ -46,9 +44,7 @@ const CountrySelect = () => {
         .catch(err => {
           setModalData({
             type: 'error',
-            text:
-              err?.response?.data.error ||
-              'Coś poszło nie tak, spróbuj ponownie.',
+            text: err?.response?.data.error || 'Coś poszło nie tak, spróbuj ponownie.',
           });
         })
         .finally(() => setIsMakingApiCall(false));
@@ -60,27 +56,18 @@ const CountrySelect = () => {
 
   return (
     <div className="country-select">
-      {currentCountry && (
-        <h3 className="country-select__title">Do jakiego kraju wjeżdżasz?</h3>
-      )}
+      {currentCountry && <h3 className="country-select__title">Do jakiego kraju wjeżdżasz?</h3>}
 
       <div className="country-select__options">
         {showAll
-          ? countries.map(country => (
-              <CountryOption key={country.name} name={country.name} />
-            ))
+          ? countries.map(country => <CountryOption key={country.name} name={country.name} />)
           : countries
               .filter((_, i) => i < 10)
-              .map(country => (
-                <CountryOption key={country.name} name={country.name} />
-              ))}
+              .map(country => <CountryOption key={country.name} name={country.name} />)}
       </div>
 
       <div className="country-select__button-wrapper">
-        <CustomButton
-          disabled={countries.length <= 10}
-          handleClick={() => setShowAll(!showAll)}
-        >
+        <CustomButton disabled={countries.length <= 10} handleClick={() => setShowAll(!showAll)}>
           {!showAll ? 'Więcej' : 'Ukryj'}
         </CustomButton>
 

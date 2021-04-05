@@ -28,9 +28,7 @@ const AlertModal = () => {
       <div ref={mainRef} className="modal__main">
         <h3 className="modal__title">{titleMap[type]}</h3>
         <div className="modal__text">{text}</div>
-        <CustomButton handleClick={() => setShowModal(false)}>
-          Zamknij
-        </CustomButton>
+        <CustomButton handleClick={() => setShowModal(false)}>Zamknij</CustomButton>
       </div>
     </div>
   );

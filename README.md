@@ -1,5 +1,5 @@
+# Border Pass v0.2.1
 
-# Border Pass v0.2.1    
 Register your business trip's border crossings with ease.
 
 This web app allows to register cross-border business trips' details like time and date the trip started and ended as well as border crossings to anyone who needs to calculate his subsistence allowance. Designed with truck drivers in mind, but can be used by anyone who travels abroad and needs to document the trip.  
@@ -12,7 +12,8 @@ This app is PWA compliant which makes it installable on mobile devices. Using th
 
 ### Tech stack:
 
-#### Backend 
+#### Backend
+
 built with **Node/Express**  
 **jsonwebtoken** used for user auth  
 all data stored in **MongoDB**  
@@ -23,22 +24,24 @@ all data stored in **MongoDB**
 **googleapis** used to connect to the Google API using **OAuth2**  
 **html-minifier** used to minify the sent file
 
-#### Frontend 
+#### Frontend
+
 built with **React**  
 **Context API** used to manage app state  
 **React Hooks**  
 **Parcel** used to bundle all the assets  
 **Workbox** used to generate service worker  
 **RWD** and **mobile-first** approach  
-**SASS** preprocessor  
+**SASS** preprocessor
 
 Deployed live with **Heroku**.
 
 Visit https://border-pass.herokuapp.com to start using this app and to install it on your smartphone/tablet.
 
-## EARLIER VERSIONS 
+## EARLIER VERSIONS
 
 ### Border Pass v0.2
+
 Register your business trip's border crossings with ease.
 
 This web app allows to register border crossings to anyone who needs to calculate his subsistence allowance for cross-border business trips.
@@ -49,7 +52,8 @@ This app is PWA compliant which makes it installable on mobile devices. Using th
 
 ### Tech stack:
 
-#### Backend 
+#### Backend
+
 built with **Node/Express**  
 **jsonwebtoken** used for user auth  
 all data stored in **MongoDB**  
@@ -57,20 +61,22 @@ all data stored in **MongoDB**
 **bcrypt** used to encrypt sensitive data  
 **dotenv** used to manage environment variables
 
-#### Frontend 
+#### Frontend
+
 built with **React**  
 **Context API** used to manage app state  
 **React Hooks**  
 **Parcel** used to bundle all the assets  
 **Workbox** used to generate service worker  
 **RWD** and **mobile-first** approach  
-**SASS** preprocessor  
+**SASS** preprocessor
 
 Deployed live with **Heroku**.
 
 Visit https://border-pass.herokuapp.com to start using this app and to install it on your smartphone/tablet.
 
-### Border Pass v0.1  
+### Border Pass v0.1
+
 Register your business trip's border crossings with ease.
 
 This web app allows to register border crossings to anyone who needs to calculate his subsistence allowance for cross-border business trips.
@@ -85,6 +91,6 @@ React Hooks
 Parcel used to bundle all the assets  
 Workbox used to generate service worker  
 RWD and mobile-first approach  
-SASS preprocessor  
+SASS preprocessor
 
 Visit https://marcin-bojar.github.io/border-pass to start using this app and to install it on your smartphone/tablet.

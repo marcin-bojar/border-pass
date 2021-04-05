@@ -18,16 +18,13 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   Country.find({ name: req.body.name }).then(result => {
     const countryExists = result.length > 0;
-    if (countryExists)
-      return res.json({ success: false, error: 'Ten kraj jest już na liście' });
+    if (countryExists) return res.json({ success: false, error: 'Ten kraj jest już na liście' });
 
     const newCountry = new Country({ name: req.body.name });
     newCountry
       .save()
       .then(country => res.status(201).json({ success: true, data: country }))
-      .catch(err =>
-        res.status(400).json({ success: false, error: err.message })
-      );
+      .catch(err => res.status(400).json({ success: false, error: err.message }));
   });
 });
 

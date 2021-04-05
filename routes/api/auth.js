@@ -34,11 +34,51 @@ router.post(
     newUser
       .save()
       .then(user => {
-        jwt.sign(
-          { id: user.id },
-          process.env.JWT_SECRET,
-          { expiresIn: '6d' },
-          (err, token) => {
+        jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '6d' }, (err, token) => {
+          if (err) throw err;
+
+          return res.json({
+            success: true,
+            data: {
+              token,
+              user: {
+                _id: user.id,
+                name: user.name,
+                email: user.email,
+                borders: user.borders,
+                countries: user.countries,
+                company: user.company,
+                registeredAt: user.registeredAt,
+              },
+            },
+          });
+        });
+      })
+      .catch(err => res.json({ success: false, error: err.message }));
+  }
+);
+
+// @route POST /api/auth/signin
+// @desc Sign in user
+// @public
+router.post('/signin', validateEmail, (req, res) => {
+  const { password } = req.body;
+  const email = req.body.email.toLowerCase().trim();
+
+  User.findOne({ email })
+    .then(user => {
+      if (!user) return res.status(404).json({ success: false, error: 'Brak użytkownika' });
+
+      bcrypt
+        .compare(password, user.password)
+        .then(isValidPassword => {
+          if (!isValidPassword)
+            return res.status(401).json({
+              success: false,
+              error: 'Podane dane logowania są błędne.',
+            });
+
+          jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '6d' }, (err, token) => {
             if (err) throw err;
 
             return res.json({
@@ -56,64 +96,9 @@ router.post(
                 },
               },
             });
-          }
-        );
-      })
-      .catch(err => res.json({ success: false, error: err.message }));
-  }
-);
-
-// @route POST /api/auth/signin
-// @desc Sign in user
-// @public
-router.post('/signin', validateEmail, (req, res) => {
-  const { password } = req.body;
-  const email = req.body.email.toLowerCase().trim();
-
-  User.findOne({ email })
-    .then(user => {
-      if (!user)
-        return res
-          .status(404)
-          .json({ success: false, error: 'Brak użytkownika' });
-
-      bcrypt
-        .compare(password, user.password)
-        .then(isValidPassword => {
-          if (!isValidPassword)
-            return res.status(401).json({
-              success: false,
-              error: 'Podane dane logowania są błędne.',
-            });
-
-          jwt.sign(
-            { id: user.id },
-            process.env.JWT_SECRET,
-            { expiresIn: '6d' },
-            (err, token) => {
-              if (err) throw err;
-
-              return res.json({
-                success: true,
-                data: {
-                  token,
-                  user: {
-                    _id: user.id,
-                    name: user.name,
-                    email: user.email,
-                    borders: user.borders,
-                    countries: user.countries,
-                    company: user.company,
-                    registeredAt: user.registeredAt,
-                  },
-                },
-              });
-            }
-          );
+          });
         })
-        .catch(err =>
-          res.status(400).json({ success: false, error: err.message })
-        );
+        .catch(err => res.status(400).json({ success: false, error: err.message }));
     })
     .catch(err => res.status(400).json({ success: false, error: err.message }));
 });

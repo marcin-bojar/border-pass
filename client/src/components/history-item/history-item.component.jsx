@@ -32,9 +32,9 @@ const HistoryItem = forwardRef(({ data }, ref) => {
 
   return (
     <li
-      className={`${isTripStart ? 'trip-start' : ''} ${
-        isTripEnd ? 'trip-end' : ''
-      } ${selected ? 'selected' : ''} history-item`}
+      className={`${isTripStart ? 'trip-start' : ''} ${isTripEnd ? 'trip-end' : ''} ${
+        selected ? 'selected' : ''
+      } history-item`}
       onClick={() => {
         if (editMode) setEditedItem(data);
         else if (sendMode) {
@@ -46,9 +46,7 @@ const HistoryItem = forwardRef(({ data }, ref) => {
     >
       <div className="history-item__event">
         <div className="history-item__block">
-          <span className="history-item__nr">
-            {isSortedDesc ? borders.length - i : i + 1}.{' '}
-          </span>
+          <span className="history-item__nr">{isSortedDesc ? borders.length - i : i + 1}. </span>
           {type === 'borderPass' ? (
             <span className="history-item__country">
               {from} &#8594; {to}

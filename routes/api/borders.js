@@ -23,8 +23,7 @@ router.get('/:id', (req, res) => {
       else
         return res.json({
           success: false,
-          error:
-            'Przekroczenie granicy z podanym ID nie istnieje w bazie danych',
+          error: 'Przekroczenie granicy z podanym ID nie istnieje w bazie danych',
         });
     })
     .catch(err => res.status(400).json({ success: false, error: err.message }));
@@ -56,13 +55,11 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   Border.findByIdAndUpdate(req.params.id, { ...req.body }, { new: true })
     .then(updatedBorder => {
-      if (updatedBorder)
-        return res.json({ success: true, data: updatedBorder });
+      if (updatedBorder) return res.json({ success: true, data: updatedBorder });
       else
         return res.json({
           success: false,
-          error:
-            'Przekroczenie granicy z podanym ID nie istnieje w bazie danych',
+          error: 'Przekroczenie granicy z podanym ID nie istnieje w bazie danych',
         });
     })
     .catch(err => res.status(400).json({ success: false, error: err.message }));
@@ -76,9 +73,7 @@ router.delete('/undo', (req, res) => {
     .sort({ _id: -1 })
     .then(latest => {
       if (latest) {
-        Border.deleteOne(latest).then(() =>
-          res.json({ success: true, data: latest })
-        );
+        Border.deleteOne(latest).then(() => res.json({ success: true, data: latest }));
       } else
         return res.json({
           success: false,
@@ -107,8 +102,7 @@ router.delete('/:id', (req, res) => {
       else
         return res.json({
           success: false,
-          error:
-            'Przekroczenie granicy z podanym ID nie istnieje w bazie danych',
+          error: 'Przekroczenie granicy z podanym ID nie istnieje w bazie danych',
         });
     })
     .catch(err => res.status(400).json({ success: false, error: err.message }));

@@ -62,11 +62,7 @@ const HistoryEditorForm = () => {
       const borderId = editedItem._id;
 
       axios
-        .put(
-          `/api/users/${userId}/borders/${borderId}`,
-          updatedBorderPass,
-          getConfig()
-        )
+        .put(`/api/users/${userId}/borders/${borderId}`, updatedBorderPass, getConfig())
         .then(res => {
           setCurrentUser(res.data.data);
           setEditedItem(null);
@@ -78,11 +74,7 @@ const HistoryEditorForm = () => {
       if (!validateTimeAndDateSync(time, date, setError)) return;
 
       borders[i] = updatedBorderPass;
-      const sortedBorders = sortHistoryListByTimeAndDate(
-        borders,
-        !isSortedDesc,
-        'timestamp'
-      );
+      const sortedBorders = sortHistoryListByTimeAndDate(borders, !isSortedDesc, 'timestamp');
       setBorders([...sortedBorders]);
       setEditedItem(null);
     }
@@ -91,11 +83,7 @@ const HistoryEditorForm = () => {
   return (
     <div className="history-editor-form">
       {error && <ErrorMessage error={error} />}
-      <form
-        id="editor-form"
-        onSubmit={handleSubmit}
-        className="history-editor-form__form"
-      >
+      <form id="editor-form" onSubmit={handleSubmit} className="history-editor-form__form">
         <div className="history-editor-form__block">
           <span className="history-editor-form__nr">{i + 1}. </span>
           {fields.type !== 'borderPass' && (

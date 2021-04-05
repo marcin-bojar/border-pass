@@ -92,26 +92,22 @@ router.delete('/:userId/borders', auth, (req, res) => {
 // @route PUT /api/users/:userId/borders/:borderId
 // @desc Update border crossing in user's borders array
 // @private
-router.put(
-  '/:userId/borders/:borderId',
-  [auth, validateTimeAndDate],
-  (req, res) => {
-    User.findById(req.user.id)
-      .select('-password -__v')
-      .then(user => {
-        const borderToUpdate = user.borders.id(req.params.borderId);
-        borderToUpdate.set(req.body);
-        user.save();
-        return res.json({ success: true, data: user });
+router.put('/:userId/borders/:borderId', [auth, validateTimeAndDate], (req, res) => {
+  User.findById(req.user.id)
+    .select('-password -__v')
+    .then(user => {
+      const borderToUpdate = user.borders.id(req.params.borderId);
+      borderToUpdate.set(req.body);
+      user.save();
+      return res.json({ success: true, data: user });
+    })
+    .catch(() =>
+      res.status(400).json({
+        success: false,
+        error: 'Aktualizacja nie powiodła się, spróbuj ponownie.',
       })
-      .catch(() =>
-        res.status(400).json({
-          success: false,
-          error: 'Aktualizacja nie powiodła się, spróbuj ponownie.',
-        })
-      );
-  }
-);
+    );
+});
 
 // @route POST /api/users/:userId/countries
 // @desc Add new country to user's countries array
@@ -120,9 +116,7 @@ router.post('/:userId/countries', auth, (req, res) => {
   User.findById(req.user.id)
     .select('-password -__v')
     .then(user => {
-      const countryExists = user.countries.find(
-        el => el.name === req.body.name
-      );
+      const countryExists = user.countries.find(el => el.name === req.body.name);
       if (countryExists) {
         return res.json({
           success: false,
@@ -145,11 +139,7 @@ router.post('/:userId/countries', auth, (req, res) => {
 // @desc Send an email with user's borders' table
 // @private
 router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
-  const pathToFile = path.join(
-    path.dirname(require.main.filename),
-    'temp',
-    req.filename
-  );
+  const pathToFile = path.join(path.dirname(require.main.filename), 'temp', req.filename);
 
   fs.access(pathToFile, err => {
     if (err)

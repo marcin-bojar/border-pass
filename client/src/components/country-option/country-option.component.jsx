@@ -1,11 +1,7 @@
 import React, { useContext } from 'react';
 import axios from 'axios';
 
-import {
-  parseTimestamp,
-  sortHistoryListByTimeAndDate,
-  getConfig,
-} from '../../utils';
+import { parseTimestamp, sortHistoryListByTimeAndDate, getConfig } from '../../utils';
 
 import { AppContext } from '../../hooks/useAppState';
 
@@ -54,9 +50,7 @@ const CountryOption = ({ name }) => {
             setCurrentUser(res.data.data);
             return axios.post('/api/borders', { ...borderPass, user: _id });
           })
-          .catch(err =>
-            setModalData({ type: 'error', text: err.response.data.error })
-          )
+          .catch(err => setModalData({ type: 'error', text: err.response.data.error }))
           .finally(() => setIsMakingApiCall(false));
       } else {
         const updatedBorders = sortHistoryListByTimeAndDate(

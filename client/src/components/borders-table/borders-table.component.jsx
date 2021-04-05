@@ -2,10 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { AppContext } from '../../hooks/useAppState';
-import {
-  displayTripEventsInSameRow,
-  sortHistoryListByTimeAndDate,
-} from '../../utils';
+import { displayTripEventsInSameRow, sortHistoryListByTimeAndDate } from '../../utils';
 
 import './borders-table.styles.scss';
 
@@ -41,19 +38,11 @@ const BordersTable = () => {
             if (border.type === 'tripStart' || border.type === 'tripEnd') {
               const row = (
                 <tr key={i}>
-                  <td>
-                    {border.type === 'tripStart'
-                      ? `${border.date} ${border.time}`
-                      : null}
-                  </td>
+                  <td>{border.type === 'tripStart' ? `${border.date} ${border.time}` : null}</td>
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td>
-                    {border.type === 'tripEnd'
-                      ? `${border.date} ${border.time}`
-                      : null}
-                  </td>
+                  <td>{border.type === 'tripEnd' ? `${border.date} ${border.time}` : null}</td>
                 </tr>
               );
               return row;

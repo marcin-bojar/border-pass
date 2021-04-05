@@ -82,12 +82,7 @@ const SignUp = () => {
             value={user.name}
             handleChange={handleChange}
           />
-          <CustomInput
-            name="email"
-            label="Email"
-            value={user.email}
-            handleChange={handleChange}
-          />
+          <CustomInput name="email" label="Email" value={user.email} handleChange={handleChange} />
           <CustomInput
             name="password"
             label="Hasło"

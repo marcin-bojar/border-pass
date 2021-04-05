@@ -10,12 +10,7 @@ import { AppContext } from '../../hooks/useAppState';
 import './archive.styles.scss';
 
 const Archive = () => {
-  const {
-    setModalData,
-    isMakingApiCall,
-    setIsMakingApiCall,
-    currentUser,
-  } = useContext(AppContext);
+  const { setModalData, isMakingApiCall, setIsMakingApiCall, currentUser } = useContext(AppContext);
   const [archives, setArchives] = useState([]);
 
   useEffect(() => {
@@ -27,9 +22,7 @@ const Archive = () => {
         .then(res => {
           setArchives([...res.data.data]);
         })
-        .catch(err =>
-          setModalData({ type: 'error', text: err?.response?.data.error })
-        )
+        .catch(err => setModalData({ type: 'error', text: err?.response?.data.error }))
         .finally(() => setIsMakingApiCall(false));
     }
   }, []);
@@ -40,8 +33,7 @@ const Archive = () => {
   return (
     <div className="archive">
       <p>
-        Tu niedługo pojawią się wszystkie Twoje zarchiwizowane dane. <br />{' '}
-        Pracujemy nad tym :D
+        Tu niedługo pojawią się wszystkie Twoje zarchiwizowane dane. <br /> Pracujemy nad tym :D
       </p>
       {/* <h2>Wersja robocza danych</h2>
       {archives.map(table => (

@@ -35,12 +35,7 @@ const PromptModal = () => {
         <h3 className="modal__title">Potwierdź</h3>
         <div className="modal__text">{text}</div>
         <form className="modal__form" id="prompt-form" onSubmit={handleSubmit}>
-          <CustomInput
-            ref={inputRef}
-            type="text"
-            value={inputValue}
-            handleChange={handleChange}
-          />
+          <CustomInput ref={inputRef} type="text" value={inputValue} handleChange={handleChange} />
         </form>
 
         <div className="modal__button-wrapper">

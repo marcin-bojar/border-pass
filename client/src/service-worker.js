@@ -29,8 +29,6 @@ export const registerSW = setNewVersion => {
         registration = r;
         console.log('Service worker registered successfully.');
       })
-      .catch(err =>
-        console.log('Error occured while registering service worker: ' + err)
-      );
+      .catch(err => console.log('Error occured while registering service worker: ' + err));
   }
 };

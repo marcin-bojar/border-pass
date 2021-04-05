@@ -26,14 +26,8 @@ const History = () => {
 
   const sortBordersByDate = () => {
     let sortedBorders;
-    if (currentUser)
-      sortedBorders = sortHistoryListByTimeAndDate(borders, isSortedDesc);
-    else
-      sortedBorders = sortHistoryListByTimeAndDate(
-        borders,
-        isSortedDesc,
-        'timestamp'
-      );
+    if (currentUser) sortedBorders = sortHistoryListByTimeAndDate(borders, isSortedDesc);
+    else sortedBorders = sortHistoryListByTimeAndDate(borders, isSortedDesc, 'timestamp');
     setIsSortedDesc(!isSortedDesc);
     setBorders([...sortedBorders]);
   };
@@ -44,9 +38,7 @@ const History = () => {
       axios
         .delete(`/api/users/${_id}/borders`, getConfig())
         .then(res => setCurrentUser(res.data.data))
-        .catch(err =>
-          setModalData({ type: 'error', text: err.response.data.error })
-        );
+        .catch(err => setModalData({ type: 'error', text: err.response.data.error }));
     } else {
       setBorders([]);
     }
