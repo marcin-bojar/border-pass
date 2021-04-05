@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { Redirect } from 'react-router-dom';
-
-import Loader from '../loader/loader.component';
 
 import { AppContext } from '../../hooks/useAppState';
 import {
@@ -12,26 +10,16 @@ import {
 import './borders-table.styles.scss';
 
 const BordersTable = () => {
-  const { borders, currentUser, userLoading, isSortedDesc } = useContext(
-    AppContext
-  );
-  const [tableData, setTableData] = useState([...borders]);
+  const { borders, currentUser } = useContext(AppContext);
+  const tableData = [...sortHistoryListByTimeAndDate([...borders], true)];
   const tableRef = useRef(null);
 
   useEffect(() => {
     if (currentUser) {
       const table = tableRef.current;
       displayTripEventsInSameRow(table);
-
-      if (isSortedDesc) {
-        setTableData([
-          ...sortHistoryListByTimeAndDate([...tableData], isSortedDesc),
-        ]);
-      }
     }
   }, []);
-
-  if (userLoading) return <Loader />;
 
   if (!currentUser) return <Redirect to="/" />;
 

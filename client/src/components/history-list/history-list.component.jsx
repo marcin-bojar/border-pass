@@ -3,6 +3,7 @@ import React, { useContext, useEffect, createRef } from 'react';
 import HistoryItem from '../history-item/history-item.component';
 
 import { AppContext } from '../../hooks/useAppState';
+import { sortHistoryListByTimeAndDate } from '../../utils';
 
 import './history-list.styles.scss';
 
@@ -20,9 +21,13 @@ const HistoryList = () => {
   const itemRefsArray = [];
 
   useEffect(() => {
-    if (sendMode && isSortedDesc) {
+    if (currentUser && sendMode && isSortedDesc) {
+      setBorders([...sortHistoryListByTimeAndDate([...borders], true)]);
       setIsSortedDesc(false);
-      setBorders([...currentUser.borders]);
+      return () => {
+        setBorders([...sortHistoryListByTimeAndDate([...borders], false)]);
+        setIsSortedDesc(true);
+      };
     }
   }, [sendMode]);
 
