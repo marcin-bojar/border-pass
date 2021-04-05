@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import Loader from '../loader/loader.component';
@@ -15,19 +15,21 @@ const BordersTable = () => {
   const { borders, currentUser, userLoading, isSortedDesc } = useContext(
     AppContext
   );
+  const [tableData, setTableData] = useState([...borders]);
   const tableRef = useRef(null);
-  let sortedBorders = borders;
-
-  if (isSortedDesc)
-    sortedBorders = sortHistoryListByTimeAndDate(borders, isSortedDesc);
 
   useEffect(() => {
     if (currentUser) {
       const table = tableRef.current;
-
       displayTripEventsInSameRow(table);
+
+      if (isSortedDesc) {
+        setTableData([
+          ...sortHistoryListByTimeAndDate([...tableData], isSortedDesc),
+        ]);
+      }
     }
-  }, [userLoading]);
+  }, []);
 
   if (userLoading) return <Loader />;
 
@@ -47,7 +49,7 @@ const BordersTable = () => {
           </tr>
         </thead>
         <tbody>
-          {sortedBorders.map((border, i) => {
+          {tableData.map((border, i) => {
             if (border.type === 'tripStart' || border.type === 'tripEnd') {
               const row = (
                 <tr key={i}>
