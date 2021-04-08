@@ -17,14 +17,8 @@ const SignIn = () => {
     password: '',
   });
   const {
-    currentUser,
-    setCurrentUser,
-    setGuestUser,
-    setToken,
-    userLoading,
-    setUserLoading,
-    authError,
-    setAuthError,
+    userData: { currentUser, userLoading, authError },
+    setUserData,
   } = useContext(AppContext);
 
   const handleChange = e => {
@@ -35,31 +29,26 @@ const SignIn = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    setUserLoading(true);
+    setUserData({ type: 'SET_USER_LOADING', payload: true });
 
     axios
       .post('/api/auth/signin', userCredentials)
       .then(res => {
-        localStorage.setItem('token', JSON.stringify(res.data.data.token));
-        setToken(res.data.data.token);
-        setCurrentUser(res.data.data.user);
-        setGuestUser(false);
-        setUserLoading(false);
-        setAuthError(null);
+        setUserData({
+          type: 'USER_LOGIN',
+          payload: { user: res.data.data.user, token: res.data.data.token },
+        });
       })
       .catch(err => {
-        localStorage.removeItem('token');
-        setCurrentUser(null);
-        setToken(null);
-        setUserLoading(false);
-        setGuestUser(false);
+        let error;
         if (err?.response?.status === 401 || err?.response?.status === 404)
-          setAuthError('Podane dane są nieprawidłowe.');
-        else setAuthError(err.response.data.error);
+          error = 'Podane dane są nieprawidłowe.';
+        else error = err.response.data.error;
+        setUserData({ type: 'USER_AUTH_ERROR', payload: error });
       });
   };
 
-  useEffect(() => () => setAuthError(null), []);
+  useEffect(() => () => setUserData({ type: 'CLEAR_AUTH_ERROR' }), []);
 
   if (currentUser) return <Redirect to="/" />;
 

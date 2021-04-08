@@ -10,7 +10,7 @@ import './country-option.styles.scss';
 const CountryOption = ({ name }) => {
   const {
     currentUser,
-    setCurrentUser,
+    setUserData,
     currentCountry,
     setCurrentCountry,
     borders,
@@ -47,7 +47,7 @@ const CountryOption = ({ name }) => {
         axios
           .post(`/api/users/${_id}/borders`, borderPass, getConfig())
           .then(res => {
-            setCurrentUser(res.data.data);
+            setUserData({ type: 'SET_USER', payload: res.data.data });
             return axios.post('/api/borders', { ...borderPass, user: _id });
           })
           .catch(err => setModalData({ type: 'error', text: err.response.data.error }))

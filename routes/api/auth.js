@@ -98,9 +98,13 @@ router.post('/signin', validateEmail, (req, res) => {
             });
           });
         })
-        .catch(err => res.status(400).json({ success: false, error: err.message }));
+        .catch(() =>
+          res.status(400).json({ success: false, error: 'Coś poszło nie tak, spróbuj ponownie.' })
+        );
     })
-    .catch(err => res.status(400).json({ success: false, error: err.message }));
+    .catch(() =>
+      res.status(400).json({ success: false, error: 'Coś poszło nie tak, spróbuj ponownie.' })
+    );
 });
 
 // @route GET /api/auth/user

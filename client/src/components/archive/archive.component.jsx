@@ -10,7 +10,12 @@ import { AppContext } from '../../hooks/useAppState';
 import './archive.styles.scss';
 
 const Archive = () => {
-  const { setModalData, isMakingApiCall, setIsMakingApiCall, currentUser } = useContext(AppContext);
+  const {
+    setModalData,
+    isMakingApiCall,
+    setIsMakingApiCall,
+    userData: { currentUser },
+  } = useContext(AppContext);
   const [archives, setArchives] = useState([]);
 
   useEffect(() => {

@@ -12,8 +12,8 @@ const TripEvents = () => {
   const {
     borders,
     setBorders,
-    currentUser,
-    setCurrentUser,
+    userData: { currentUser },
+    setUserData,
     currentCountry,
     setIsMakingApiCall,
     setModalData,
@@ -48,7 +48,7 @@ const TripEvents = () => {
       axios
         .post(`/api/users/${_id}/borders`, tripEvent, getConfig())
         .then(res => {
-          setCurrentUser(res.data.data);
+          setUserData({ type: 'SET_USER', payload: res.data.data });
           return axios.post('/api/borders', { ...tripEvent, user: _id });
         })
         .catch(err => setModalData({ type: 'error', text: err.response.data.error }))

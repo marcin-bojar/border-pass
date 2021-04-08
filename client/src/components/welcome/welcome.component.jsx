@@ -8,7 +8,10 @@ import { AppContext } from '../../hooks/useAppState';
 import './welcome.styles.scss';
 
 const Welcome = () => {
-  const { currentUser, guestUser, setGuestUser } = useContext(AppContext);
+  const {
+    userData: { currentUser, guestUser },
+    setUserData,
+  } = useContext(AppContext);
 
   const noUserContent = (
     <>
@@ -25,7 +28,10 @@ const Welcome = () => {
         , aby utworzyć nowe konto.
       </p>
       <p className="welcome__text">
-        <CustomButton link handleClick={() => setGuestUser(true)}>
+        <CustomButton
+          link
+          handleClick={() => setUserData({ type: 'SET_GUEST_USER', payload: true })}
+        >
           Kontynuuj jako gość.
         </CustomButton>
         &nbsp;Pamietaj jednak, że Twoja historia przekroczeń granic będzie w tym przypadku

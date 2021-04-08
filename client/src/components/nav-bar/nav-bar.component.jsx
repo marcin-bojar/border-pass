@@ -11,10 +11,8 @@ import './nav-bar.styles.scss';
 
 const NavBar = () => {
   const {
-    currentUser,
-    setCurrentUser,
-    setToken,
-    userLoading,
+    userData: { currentUser, userLoading },
+    setUserData,
     showUserMenu,
     setShowUserMenu,
   } = useContext(AppContext);
@@ -31,14 +29,7 @@ const NavBar = () => {
             </CustomButton>
             <div className={`${showUserMenu ? 'open' : ''} nav-bar__arrow`}>&#x25BC;</div>
           </div>
-          <CustomButton
-            navbar
-            handleClick={() => {
-              localStorage.removeItem('token');
-              setToken(null);
-              setCurrentUser(null);
-            }}
-          >
+          <CustomButton navbar handleClick={() => setUserData({ type: 'USER_LOGOUT' })}>
             Wyloguj
           </CustomButton>
         </div>

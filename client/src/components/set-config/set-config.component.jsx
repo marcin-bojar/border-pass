@@ -13,9 +13,8 @@ import './set-config.styles.scss';
 
 const SetConfig = () => {
   const {
-    currentUser,
-    setCurrentUser,
-    userLoading,
+    userData: { currentUser, userLoading },
+    setUserData,
     isMakingApiCall,
     setIsMakingApiCall,
     setModalData,
@@ -47,7 +46,7 @@ const SetConfig = () => {
     axios
       .post(`/api/users/${_id}/company`, companyDetails, getConfig())
       .then(res => {
-        setCurrentUser(res.data.data);
+        setUserData({ type: 'SET_USER', payload: res.data.data });
         setModalData({ type: 'info', text: 'Dane firmy zostały zmienione.' });
       })
       .catch(err => setModalData({ type: 'error', text: err.response.data.error }))
@@ -70,7 +69,7 @@ const SetConfig = () => {
     axios
       .post(`/api/users/${_id}/name`, { userName }, getConfig())
       .then(res => {
-        setCurrentUser(res.data.data);
+        setUserData({ type: 'SET_USER', payload: res.data.data });
         setModalData({
           type: 'info',
           text: 'Twoje imię i nazwisko zostały zmienione.',

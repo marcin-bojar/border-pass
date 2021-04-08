@@ -20,14 +20,8 @@ const SignUp = () => {
   });
 
   const {
-    currentUser,
-    setCurrentUser,
-    setGuestUser,
-    setToken,
-    userLoading,
-    setUserLoading,
-    authError,
-    setAuthError,
+    userData: { currentUser, userLoading, authError },
+    setUserData,
   } = useContext(AppContext);
 
   const handleChange = e => {
@@ -40,33 +34,26 @@ const SignUp = () => {
     e.preventDefault();
 
     if (user.password !== user.confirmPassword) {
-      setAuthError('Hasła nie są takie same.');
+      setUserData({ type: 'USER_AUTH_ERROR', payload: 'Hasła nie są takie same' });
       return;
     }
 
-    setUserLoading(true);
+    setUserData({ type: 'SET_USER_LOADING', payload: true });
 
     axios
       .post('/api/auth/signup', user)
       .then(res => {
-        localStorage.setItem('token', JSON.stringify(res.data.data.token));
-        setCurrentUser(res.data.data.user);
-        setToken(res.data.data.token);
-        setGuestUser(false);
-        setUserLoading(false);
-        setAuthError(null);
+        setUserData({
+          type: 'USER_LOGIN',
+          payload: { user: res.data.data.user, token: res.data.data.token },
+        });
       })
       .catch(err => {
-        localStorage.removeItem('token');
-        setCurrentUser(null);
-        setToken(null);
-        setUserLoading(false);
-        setGuestUser(false);
-        setAuthError(err.response.data.error);
+        setUserData({ type: 'USER_AUTH_ERROR', payload: err.response.data.error });
       });
   };
 
-  useEffect(() => () => setAuthError(null), []);
+  useEffect(() => () => setUserData({ type: 'CLEAR_AUTH_ERROR' }), []);
 
   if (currentUser) return <Redirect to="/" />;
 

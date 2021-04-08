@@ -1,5 +1,7 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext, useReducer } from 'react';
 import axios from 'axios';
+
+import { userReducer, USER_INITIAL_STATE } from '../reducers/userReducer';
 
 import { sortHistoryListByTimeAndDate, getConfig, sortUsersBorders } from '../utils';
 import defaultCountries from '../../../helpers/defaultCountries';
@@ -8,12 +10,8 @@ import { registerSW } from '../service-worker';
 export const AppContext = createContext(null);
 
 export const useAppState = () => {
-  //User state
-  const [currentUser, setCurrentUser] = useState(null);
-  const [guestUser, setGuestUser] = useState(false);
-  const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')) || null);
-  const [userLoading, setUserLoading] = useState(true);
-  const [authError, setAuthError] = useState(null);
+  const [userData, setUserData] = useReducer(userReducer, USER_INITIAL_STATE);
+  const { currentUser, token } = userData;
 
   //Data state
   const [currentCountry, setCurrentCountry] = useState('');
@@ -89,34 +87,23 @@ export const useAppState = () => {
       axios
         .get('/api/auth/user', getConfig())
         .then(res => {
-          setCurrentUser(res.data.data);
-          setAuthError(null);
+          setUserData({ type: 'SET_USER', payload: res.data.data });
         })
         .catch(() => {
-          localStorage.removeItem('token');
-          setAuthError('Sesja wygasła. Zaloguj się ponownie.');
+          setUserData({ type: 'USER_AUTH_ERROR', payload: 'Sesja wygasła. Zaloguj się ponownie.' });
           setModalData({
             type: 'authError',
             text: 'Sesja wygasła. Zaloguj się ponownie.',
           });
-        })
-        .finally(() => setUserLoading(false));
-    } else setUserLoading(false);
+        });
+    } else setUserData({ type: 'SET_USER_LOADING', payload: false });
 
     registerSW(setNewVersion);
   }, []);
 
   return {
-    currentUser,
-    setCurrentUser,
-    guestUser,
-    setGuestUser,
-    token,
-    setToken,
-    userLoading,
-    setUserLoading,
-    authError,
-    setAuthError,
+    userData,
+    setUserData,
     currentCountry,
     setCurrentCountry,
     borders,

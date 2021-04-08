@@ -18,8 +18,8 @@ const SendBorders = () => {
     setSelection,
     isMakingApiCall,
     setIsMakingApiCall,
-    currentUser,
-    setCurrentUser,
+    userData: { currentUser },
+    setUserData,
     setModalData,
   } = useContext(AppContext);
   const [bordersToSend, setBordersToSend] = useState([]);
@@ -74,7 +74,7 @@ const SendBorders = () => {
         return axios.put(`/api/users/${_id}/borders`, updatedBorders, getConfig());
       })
       .then(res => {
-        setCurrentUser(res.data.data);
+        setUserData({ type: 'SET_USER', payload: res.data.data });
         setModalData({
           type: 'info',
           text: `Zestawienie wysłane. Dane z wybranego zakresu zostały zarchiwizowane.`,
@@ -116,7 +116,7 @@ const SendBorders = () => {
           type: 'info',
           text: 'Dane zostały zarchiwizowane.',
         });
-        setCurrentUser(res.data.data);
+        setUserData({ type: 'SET_USER', payload: res.data.data });
         setSelection({ startIndex: null, endIndex: null });
       })
       .catch(err => {

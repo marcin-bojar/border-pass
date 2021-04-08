@@ -10,7 +10,9 @@ import Loader from '../loader/loader.component';
 import { AppContext } from '../../hooks/useAppState';
 
 const AppView = () => {
-  const { currentUser, userLoading, guestUser } = useContext(AppContext);
+  const {
+    userData: { currentUser, userLoading, guestUser },
+  } = useContext(AppContext);
 
   if (userLoading) return <Loader />;
   else if (!currentUser && !guestUser) return <Welcome />;

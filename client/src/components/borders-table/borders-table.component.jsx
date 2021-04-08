@@ -7,7 +7,10 @@ import { displayTripEventsInSameRow, sortHistoryListByTimeAndDate } from '../../
 import './borders-table.styles.scss';
 
 const BordersTable = () => {
-  const { borders, currentUser } = useContext(AppContext);
+  const {
+    borders,
+    userData: { currentUser },
+  } = useContext(AppContext);
   const tableData = [...sortHistoryListByTimeAndDate([...borders], true)];
   const tableRef = useRef(null);
 

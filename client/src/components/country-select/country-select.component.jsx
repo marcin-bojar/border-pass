@@ -13,8 +13,8 @@ import './country-select.styles.scss';
 
 const CountrySelect = () => {
   const {
-    currentUser,
-    setCurrentUser,
+    userData: { currentUser },
+    setUserData,
     countries,
     currentCountry,
     showAll,
@@ -39,7 +39,7 @@ const CountrySelect = () => {
           data: { lastItemId },
         })
         .then(res => {
-          setCurrentUser(res.data.data);
+          setUserData({ type: 'SET_USER', payload: res.data.data });
         })
         .catch(err => {
           setModalData({

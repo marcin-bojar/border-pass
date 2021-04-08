@@ -17,8 +17,8 @@ import './history-editor-form.styles.scss';
 
 const HistoryEditorForm = () => {
   const {
-    currentUser,
-    setCurrentUser,
+    userData: { currentUser },
+    setUserData,
     editedItem,
     setEditedItem,
     borders,
@@ -64,7 +64,7 @@ const HistoryEditorForm = () => {
       axios
         .put(`/api/users/${userId}/borders/${borderId}`, updatedBorderPass, getConfig())
         .then(res => {
-          setCurrentUser(res.data.data);
+          setUserData({ type: 'SET_USER', payload: res.data.data });
           setEditedItem(null);
         })
         .catch(err => setError(err.response.data.error))

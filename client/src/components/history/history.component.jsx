@@ -13,8 +13,8 @@ import './history.styles.scss';
 
 const History = () => {
   const {
-    currentUser,
-    setCurrentUser,
+    userData: { currentUser },
+    setUserData,
     borders,
     setBorders,
     editMode,
@@ -37,7 +37,7 @@ const History = () => {
       const { _id } = currentUser;
       axios
         .delete(`/api/users/${_id}/borders`, getConfig())
-        .then(res => setCurrentUser(res.data.data))
+        .then(res => setUserData({ type: 'SET_USER', payload: res.data.data }))
         .catch(err => setModalData({ type: 'error', text: err.response.data.error }));
     } else {
       setBorders([]);
