@@ -14,7 +14,7 @@ const Archive = () => {
     setModalData,
     isMakingApiCall,
     setIsMakingApiCall,
-    userData: { currentUser },
+    userState: { currentUser },
   } = useContext(AppContext);
   const [archives, setArchives] = useState([]);
 

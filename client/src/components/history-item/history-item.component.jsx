@@ -7,14 +7,12 @@ import './history-item.styles.scss';
 const HistoryItem = forwardRef(({ data }, ref) => {
   const { type, from, to, time, date, i } = data;
   const {
+    dataState: { historyList, isSortedDesc, selection },
+    setDataState,
     editMode,
     sendMode,
-    setEditedItem,
-    isSortedDesc,
-    borders,
-    selection,
-    setSelection,
   } = useContext(AppContext);
+
   const [selected, setSelected] = useState(false);
   const isTripStart = type === 'tripStart';
   const isTripEnd = type === 'tripEnd';
@@ -22,12 +20,12 @@ const HistoryItem = forwardRef(({ data }, ref) => {
   const handleSelection = () => {
     const { startIndex, endIndex } = selection;
 
-    if (startIndex === null) setSelection({ ...selection, startIndex: i });
-    else if (startIndex !== null && i === startIndex)
-      setSelection({ startIndex: null, endIndex: null });
+    if (startIndex === null)
+      setDataState({ type: 'SET_SELECTION', payload: { ...selection, startIndex: i } });
+    else if (startIndex !== null && i === startIndex) setDataState({ type: 'CLEAR_SELECTION' });
     else if (startIndex !== null && endIndex === null && i > startIndex)
-      setSelection({ ...selection, endIndex: i });
-    else setSelection({ startIndex: i, endIndex: null });
+      setDataState({ type: 'SET_SELECTION', payload: { ...selection, endIndex: i } });
+    else setDataState({ type: 'SET_SELECTION', payload: { startIndex: i, endIndex: null } });
   };
 
   return (
@@ -46,7 +44,9 @@ const HistoryItem = forwardRef(({ data }, ref) => {
     >
       <div className="history-item__event">
         <div className="history-item__block">
-          <span className="history-item__nr">{isSortedDesc ? borders.length - i : i + 1}. </span>
+          <span className="history-item__nr">
+            {isSortedDesc ? historyList.length - i : i + 1}.{' '}
+          </span>
           {type === 'borderPass' ? (
             <span className="history-item__country">
               {from} &#8594; {to}

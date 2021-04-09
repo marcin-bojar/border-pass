@@ -9,8 +9,8 @@ import './welcome.styles.scss';
 
 const Welcome = () => {
   const {
-    userData: { currentUser, guestUser },
-    setUserData,
+    userState: { currentUser, guestUser },
+    setUserState,
   } = useContext(AppContext);
 
   const noUserContent = (
@@ -30,7 +30,7 @@ const Welcome = () => {
       <p className="welcome__text">
         <CustomButton
           link
-          handleClick={() => setUserData({ type: 'SET_GUEST_USER', payload: true })}
+          handleClick={() => setUserState({ type: 'SET_GUEST_USER', payload: true })}
         >
           Kontynuuj jako gość.
         </CustomButton>

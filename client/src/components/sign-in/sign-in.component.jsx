@@ -17,8 +17,8 @@ const SignIn = () => {
     password: '',
   });
   const {
-    userData: { currentUser, userLoading, authError },
-    setUserData,
+    userState: { currentUser, userLoading, authError },
+    setUserState,
   } = useContext(AppContext);
 
   const handleChange = e => {
@@ -29,12 +29,12 @@ const SignIn = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    setUserData({ type: 'SET_USER_LOADING', payload: true });
+    setUserState({ type: 'SET_USER_LOADING', payload: true });
 
     axios
       .post('/api/auth/signin', userCredentials)
       .then(res => {
-        setUserData({
+        setUserState({
           type: 'USER_LOGIN',
           payload: { user: res.data.data.user, token: res.data.data.token },
         });
@@ -44,11 +44,11 @@ const SignIn = () => {
         if (err?.response?.status === 401 || err?.response?.status === 404)
           error = 'Podane dane są nieprawidłowe.';
         else error = err.response.data.error;
-        setUserData({ type: 'USER_AUTH_ERROR', payload: error });
+        setUserState({ type: 'USER_AUTH_ERROR', payload: error });
       });
   };
 
-  useEffect(() => () => setUserData({ type: 'CLEAR_AUTH_ERROR' }), []);
+  useEffect(() => () => setUserState({ type: 'CLEAR_AUTH_ERROR' }), []);
 
   if (currentUser) return <Redirect to="/" />;
 

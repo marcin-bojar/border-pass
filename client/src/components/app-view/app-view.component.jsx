@@ -11,7 +11,7 @@ import { AppContext } from '../../hooks/useAppState';
 
 const AppView = () => {
   const {
-    userData: { currentUser, userLoading, guestUser },
+    userState: { currentUser, userLoading, guestUser },
   } = useContext(AppContext);
 
   if (userLoading) return <Loader />;

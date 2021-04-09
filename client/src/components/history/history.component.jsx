@@ -13,23 +13,21 @@ import './history.styles.scss';
 
 const History = () => {
   const {
-    userData: { currentUser },
-    setUserData,
-    borders,
-    setBorders,
+    userState: { currentUser },
+    dataState: { historyList, isSortedDesc },
+    setUserState,
+    setDataState,
     editMode,
     setEditMode,
-    isSortedDesc,
-    setIsSortedDesc,
     setModalData,
   } = useContext(AppContext);
 
-  const sortBordersByDate = () => {
-    let sortedBorders;
-    if (currentUser) sortedBorders = sortHistoryListByTimeAndDate(borders, isSortedDesc);
-    else sortedBorders = sortHistoryListByTimeAndDate(borders, isSortedDesc, 'timestamp');
-    setIsSortedDesc(!isSortedDesc);
-    setBorders([...sortedBorders]);
+  const reverseHistoryList = () => {
+    let sortedHistoryList;
+    if (currentUser) sortedHistoryList = sortHistoryListByTimeAndDate(historyList, isSortedDesc);
+    else sortedHistoryList = sortHistoryListByTimeAndDate(historyList, isSortedDesc, 'timestamp');
+
+    setDataState({ type: 'REVERSE_HISTORY_LIST', payload: [...sortedHistoryList] });
   };
 
   const handleDeleteAll = () => {
@@ -37,14 +35,14 @@ const History = () => {
       const { _id } = currentUser;
       axios
         .delete(`/api/users/${_id}/borders`, getConfig())
-        .then(res => setUserData({ type: 'SET_USER', payload: res.data.data }))
+        .then(res => setUserState({ type: 'SET_USER', payload: res.data.data }))
         .catch(err => setModalData({ type: 'error', text: err.response.data.error }));
     } else {
-      setBorders([]);
+      setDataState({ type: 'SET_HISTORY_LIST', payload: [] });
     }
   };
 
-  if (borders.length === 0) return null;
+  if (historyList.length === 0) return null;
 
   return (
     <div className="history">
@@ -56,7 +54,7 @@ const History = () => {
         </CustomButton>
 
         <div className="history__button-wrapper sort">
-          <CustomButton inline handleClick={sortBordersByDate}>
+          <CustomButton inline handleClick={reverseHistoryList}>
             Sortuj wg daty
           </CustomButton>
           <p className="history__sort-status">

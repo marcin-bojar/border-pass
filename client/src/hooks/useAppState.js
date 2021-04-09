@@ -9,30 +9,116 @@ import { registerSW } from '../service-worker';
 
 export const AppContext = createContext(null);
 
+const DATA_INITIAL_STATE = {
+  currentCountry: '',
+  countries: JSON.parse(localStorage.getItem('countries')) || defaultCountries,
+  historyList: JSON.parse(localStorage.getItem('borders')) || [],
+  editedItem: null,
+  isSortedDesc: Boolean(localStorage.getItem('isSortedDesc') === 'true') || false,
+  selection: { startIndex: null, endIndex: null },
+};
+
+const dataReducer = (state, action) => {
+  const { payload } = action;
+
+  switch (payload) {
+    case 'SET_HISTORY_LIST':
+      return {
+        ...state,
+        historyList: payload,
+        currentCountry: !payload.length
+          ? ''
+          : state.isSortedDesc
+          ? payload[0].to
+          : payload[length - 1].to,
+        editedItem: null,
+      };
+
+    case 'REVERSE_HISTORY_LIST':
+      return {
+        ...state,
+        historyList: payload,
+        isSortedDesc: !state.isSortedDesc,
+      };
+
+    case 'SEND_MODE_ON':
+      return {
+        ...state,
+        historyList: [...sortHistoryListByTimeAndDate([...state.historyList], true)],
+        isSortedDesc: false,
+      };
+
+    case 'SEND_MODE_OFF':
+      return {
+        ...state,
+        historyList: [...sortHistoryListByTimeAndDate([...state.historyList], false)],
+        isSortedDesc: true,
+      };
+
+    case 'SET_SELECTION':
+      return {
+        ...state,
+        selection: payload,
+      };
+
+    case 'CLEAR_SELECTION':
+      return {
+        ...state,
+        selection: { startIndex: null, endIndex: null },
+      };
+
+    case 'SET_DATA_WHEN_USER_LOGIN':
+      return {
+        ...state,
+        historyList: payload.historyList,
+        countries: payload.countries,
+      };
+
+    case 'SET_DATA_WHEN_USER_LOGOUT':
+      return {
+        ...state,
+        historyList: sortHistoryListByTimeAndDate(
+          [...JSON.parse(localStorage.getItem('borders'))],
+          !isSortedDesc,
+          'timestamp'
+        ),
+        countries: [...JSON.parse(localStorage.getItem('countries'))],
+      };
+
+    case 'SET_CURRENT_COUNTRY':
+      return {
+        ...state,
+        currentCountry: payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
 export const useAppState = () => {
-  const [userData, setUserData] = useReducer(userReducer, USER_INITIAL_STATE);
-  const { currentUser, token } = userData;
+  const [userState, setUserState] = useReducer(userReducer, USER_INITIAL_STATE);
+  const [dataState, setDataState] = useReducer(dataReducer, DATA_INITIAL_STATE);
+  console.log(userState);
+  console.log(dataState);
+
+  const { currentUser, token } = userState;
+  const { historyList, countries, isSortedDesc } = dataState;
 
   //Data state
-  const [currentCountry, setCurrentCountry] = useState('');
-  const [countries, setCountries] = useState(
-    JSON.parse(localStorage.getItem('countries')) || defaultCountries
-  );
-  const [borders, setBorders] = useState(JSON.parse(localStorage.getItem('borders')) || []);
-  const [showAll, setShowAll] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-  const [sendMode, setSendMode] = useState(false);
-  const [editedItem, setEditedItem] = useState(null);
-  const [isSortedDesc, setIsSortedDesc] = useState(
-    Boolean(localStorage.getItem('isSortedDesc') === 'true') || false
-  );
-  const [selection, setSelection] = useState({
-    startIndex: null,
-    endIndex: null,
-  });
-
-  //API calls state
-  const [isMakingApiCall, setIsMakingApiCall] = useState(false);
+  // const [currentCountry, setCurrentCountry] = useState('');
+  // const [countries, setCountries] = useState(
+  //   JSON.parse(localStorage.getItem('countries')) || defaultCountries
+  // );
+  // const [borders, setBorders] = useState(JSON.parse(localStorage.getItem('borders')) || []);
+  // const [editedItem, setEditedItem] = useState(null);
+  // const [isSortedDesc, setIsSortedDesc] = useState(
+  //   Boolean(localStorage.getItem('isSortedDesc') === 'true') || false
+  // );
+  // const [selection, setSelection] = useState({
+  //   startIndex: null,
+  //   endIndex: null,
+  // });
 
   //UI state
   const [showModal, setShowModal] = useState(false);
@@ -44,15 +130,13 @@ export const useAppState = () => {
     status: false,
     onConfirm: () => {},
   });
+  const [editMode, setEditMode] = useState(false);
+  const [sendMode, setSendMode] = useState(false);
+  const [isMakingApiCall, setIsMakingApiCall] = useState(false);
 
   useEffect(() => {
-    if (!currentUser) localStorage.setItem('borders', JSON.stringify(borders));
-
-    const length = borders.length;
-    if (!length) setCurrentCountry('');
-    else if (length && isSortedDesc) setCurrentCountry(borders[0].to);
-    else setCurrentCountry(borders[length - 1].to);
-  }, [borders]);
+    if (!currentUser) localStorage.setItem('borders', JSON.stringify(historyList));
+  }, [historyList]);
 
   useEffect(() => {
     if (!currentUser) localStorage.setItem('countries', JSON.stringify(countries));
@@ -65,16 +149,12 @@ export const useAppState = () => {
   useEffect(() => {
     if (currentUser) {
       const user = sortUsersBorders(currentUser, !isSortedDesc);
-      setBorders([...user.borders]);
-      setCountries([...user.countries]);
+      setDataState({
+        type: 'SET_DATA_WHEN_USER_LOGIN',
+        payload: { historyList: [...user.borders], countries: [...user.countries] },
+      });
     } else {
-      const borders = sortHistoryListByTimeAndDate(
-        [...JSON.parse(localStorage.getItem('borders'))],
-        !isSortedDesc,
-        'timestamp'
-      );
-      setBorders(borders);
-      setCountries([...JSON.parse(localStorage.getItem('countries'))]);
+      setDataState({ type: 'SET_DATA_WHEN_USER_LOGOUT' });
     }
   }, [currentUser]);
 
@@ -87,39 +167,32 @@ export const useAppState = () => {
       axios
         .get('/api/auth/user', getConfig())
         .then(res => {
-          setUserData({ type: 'SET_USER', payload: res.data.data });
+          setUserState({ type: 'SET_USER', payload: res.data.data });
         })
         .catch(() => {
-          setUserData({ type: 'USER_AUTH_ERROR', payload: 'Sesja wygasła. Zaloguj się ponownie.' });
+          setUserState({
+            type: 'USER_AUTH_ERROR',
+            payload: 'Sesja wygasła. Zaloguj się ponownie.',
+          });
           setModalData({
             type: 'authError',
             text: 'Sesja wygasła. Zaloguj się ponownie.',
           });
         });
-    } else setUserData({ type: 'SET_USER_LOADING', payload: false });
+    } else setUserState({ type: 'SET_USER_LOADING', payload: false });
 
     registerSW(setNewVersion);
   }, []);
 
   return {
-    userData,
-    setUserData,
-    currentCountry,
-    setCurrentCountry,
-    borders,
-    setBorders,
-    countries,
-    setCountries,
-    showAll,
-    setShowAll,
+    userState,
+    setUserState,
+    dataState,
+    setDataState,
     editMode,
     setEditMode,
     sendMode,
     setSendMode,
-    editedItem,
-    setEditedItem,
-    isSortedDesc,
-    setIsSortedDesc,
     isMakingApiCall,
     setIsMakingApiCall,
     showModal,
@@ -128,8 +201,6 @@ export const useAppState = () => {
     setModalData,
     showUserMenu,
     setShowUserMenu,
-    selection,
-    setSelection,
     newVersion,
     setNewVersion,
   };

@@ -17,14 +17,11 @@ import './history-editor-form.styles.scss';
 
 const HistoryEditorForm = () => {
   const {
-    userData: { currentUser },
-    setUserData,
-    editedItem,
-    setEditedItem,
-    borders,
-    setBorders,
+    userState: { currentUser },
+    dataState: { historyList, isSortedDesc, editedItem },
+    setUserState,
+    setDataState,
     setIsMakingApiCall,
-    isSortedDesc,
   } = useContext(AppContext);
 
   const { type, from, to, time, date, timestamp, i, _id } = editedItem;
@@ -64,8 +61,7 @@ const HistoryEditorForm = () => {
       axios
         .put(`/api/users/${userId}/borders/${borderId}`, updatedBorderPass, getConfig())
         .then(res => {
-          setUserData({ type: 'SET_USER', payload: res.data.data });
-          setEditedItem(null);
+          setUserState({ type: 'SET_USER', payload: res.data.data });
         })
         .catch(err => setError(err.response.data.error))
         .finally(() => setIsMakingApiCall(false));
@@ -73,10 +69,13 @@ const HistoryEditorForm = () => {
       const { time, date } = updatedBorderPass;
       if (!validateTimeAndDateSync(time, date, setError)) return;
 
-      borders[i] = updatedBorderPass;
-      const sortedBorders = sortHistoryListByTimeAndDate(borders, !isSortedDesc, 'timestamp');
-      setBorders([...sortedBorders]);
-      setEditedItem(null);
+      historyList[i] = updatedBorderPass;
+      const sortedHistoryList = sortHistoryListByTimeAndDate(
+        historyList,
+        !isSortedDesc,
+        'timestamp'
+      );
+      setDataState({ type: 'SET_HISTORY_LIST', payload: [...sortedHistoryList] });
     }
   };
 

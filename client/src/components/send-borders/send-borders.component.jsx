@@ -12,24 +12,23 @@ import './send-borders.styles.scss';
 
 const SendBorders = () => {
   const {
-    borders,
+    userState: { currentUser },
+    dataState: { historyList, selection },
+    setUserState,
+    setDataState,
     setSendMode,
-    selection,
-    setSelection,
     isMakingApiCall,
     setIsMakingApiCall,
-    userData: { currentUser },
-    setUserData,
     setModalData,
   } = useContext(AppContext);
-  const [bordersToSend, setBordersToSend] = useState([]);
+  const [listToSend, setListToSend] = useState([]);
 
   useEffect(() => {
     setSendMode(true);
 
     return () => {
       setSendMode(false);
-      setSelection({ startIndex: null, endIndex: null });
+      setDataState({ type: 'CLEAR_SELECTION' });
     };
   }, []);
 
@@ -37,12 +36,12 @@ const SendBorders = () => {
     const { startIndex, endIndex } = selection;
 
     if (startIndex !== null && endIndex !== null) {
-      setBordersToSend(borders.slice(startIndex, endIndex + 1));
-    } else setBordersToSend([]);
+      setListToSend(borders.slice(startIndex, endIndex + 1));
+    } else setListToSend([]);
   }, [selection]);
 
   const sendAndArchive = () => {
-    if (!bordersToSend.length) {
+    if (!listToSend.length) {
       setModalData({
         type: 'error',
         text: 'Musisz określić zakres danych do wysłania.',
@@ -66,20 +65,20 @@ const SendBorders = () => {
 
     setIsMakingApiCall(true);
     axios
-      .post(`/api/users/${_id}/send`, { borders: bordersToSend, email: companyEmail }, getConfig())
+      .post(`/api/users/${_id}/send`, { borders: listToSend, email: companyEmail }, getConfig())
       .then(() => {
-        const updatedBorders = [...borders];
-        updatedBorders.splice(startIndex, bordersToSend.length);
+        const updatedHistoryList = [...historyList];
+        updatedHistoryList.splice(startIndex, listToSend.length);
 
-        return axios.put(`/api/users/${_id}/borders`, updatedBorders, getConfig());
+        return axios.put(`/api/users/${_id}/borders`, updatedHistoryList, getConfig());
       })
       .then(res => {
-        setUserData({ type: 'SET_USER', payload: res.data.data });
+        setUserState({ type: 'SET_USER', payload: res.data.data });
         setModalData({
           type: 'info',
           text: `Zestawienie wysłane. Dane z wybranego zakresu zostały zarchiwizowane.`,
         });
-        setSelection({ startIndex: null, endIndex: null });
+        setDataState({ type: 'CLEAR_SELECTION' });
       })
       .catch(err => {
         setModalData({
@@ -91,7 +90,7 @@ const SendBorders = () => {
   };
 
   const onlyArchive = () => {
-    if (!bordersToSend.length) {
+    if (!listToSend.length) {
       setModalData({
         type: 'error',
         text: 'Musisz określić zakres danych do archiwizacji.',
@@ -104,10 +103,10 @@ const SendBorders = () => {
     const { startIndex } = selection;
 
     axios
-      .post('/api/tables', { borders: bordersToSend }, getConfig())
+      .post('/api/tables', { borders: listToSend }, getConfig())
       .then(() => {
         const updatedBorders = [...borders];
-        updatedBorders.splice(startIndex, bordersToSend.length);
+        updatedBorders.splice(startIndex, listToSend.length);
 
         return axios.put(`/api/users/${_id}/borders`, updatedBorders, getConfig());
       })
@@ -116,8 +115,8 @@ const SendBorders = () => {
           type: 'info',
           text: 'Dane zostały zarchiwizowane.',
         });
-        setUserData({ type: 'SET_USER', payload: res.data.data });
-        setSelection({ startIndex: null, endIndex: null });
+        setUserState({ type: 'SET_USER', payload: res.data.data });
+        setDataState({ type: 'CLEAR_SELECTION' });
       })
       .catch(err => {
         setModalData({
@@ -143,22 +142,24 @@ const SendBorders = () => {
       </div>
       <div className="send-borders__button-wrapper">
         <CustomButton
-          handleClick={() => setSelection({ startIndex: 0, endIndex: borders.length - 1 })}
+          handleClick={() =>
+            setDataState({
+              type: 'SET_SELECTION',
+              payload: { startIndex: 0, endIndex: borders.length - 1 },
+            })
+          }
         >
           Zaznacz wszystko
         </CustomButton>
-        <CustomButton handleClick={() => setSelection({ startIndex: null, endIndex: null })}>
+        <CustomButton handleClick={() => setDataState({ type: 'CLEAR_SELECTION' })}>
           Usuń zaznaczenie
         </CustomButton>
       </div>
       <div className="send-borders__button-wrapper">
-        <CustomButton
-          disabled={isMakingApiCall || !bordersToSend.length}
-          handleClick={sendAndArchive}
-        >
+        <CustomButton disabled={isMakingApiCall || !listToSend.length} handleClick={sendAndArchive}>
           Wyślij i archiwizuj
         </CustomButton>
-        <CustomButton disabled={isMakingApiCall || !bordersToSend.length} handleClick={onlyArchive}>
+        <CustomButton disabled={isMakingApiCall || !listToSend.length} handleClick={onlyArchive}>
           Archiwizuj dane
         </CustomButton>
       </div>

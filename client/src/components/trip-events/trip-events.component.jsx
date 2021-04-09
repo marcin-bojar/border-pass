@@ -10,14 +10,12 @@ import './trip-events.styles.scss';
 
 const TripEvents = () => {
   const {
-    borders,
-    setBorders,
-    userData: { currentUser },
-    setUserData,
-    currentCountry,
+    userState: { currentUser },
+    dataState: { historyList, currentCountry, isSortedDesc },
+    setUserState,
+    setDataState,
     setIsMakingApiCall,
     setModalData,
-    isSortedDesc,
     isMakingApiCall,
   } = useContext(AppContext);
 
@@ -48,18 +46,18 @@ const TripEvents = () => {
       axios
         .post(`/api/users/${_id}/borders`, tripEvent, getConfig())
         .then(res => {
-          setUserData({ type: 'SET_USER', payload: res.data.data });
+          setUserState({ type: 'SET_USER', payload: res.data.data });
           return axios.post('/api/borders', { ...tripEvent, user: _id });
         })
         .catch(err => setModalData({ type: 'error', text: err.response.data.error }))
         .finally(() => setIsMakingApiCall(false));
     } else {
-      const updatedBorders = sortHistoryListByTimeAndDate(
+      const updatedHistoryList = sortHistoryListByTimeAndDate(
         [...borders, tripEvent],
         !isSortedDesc,
         'timestamp'
       );
-      setBorders(updatedBorders);
+      setDataState({ type: 'SET_HISTORY_LIST', payload: updatedHistoryList });
     }
   };
 

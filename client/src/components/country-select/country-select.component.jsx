@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 
 import { getConfig } from '../../utils';
@@ -13,25 +13,24 @@ import './country-select.styles.scss';
 
 const CountrySelect = () => {
   const {
-    userData: { currentUser },
-    setUserData,
-    countries,
-    currentCountry,
-    showAll,
-    setShowAll,
-    borders,
-    setBorders,
-    isSortedDesc,
+    userState: { currentUser },
+    dataState: { countries, currentCountry, historyList, isSortedDesc },
+    setUserState,
+    setDataState,
     isMakingApiCall,
     setIsMakingApiCall,
     setModalData,
   } = useContext(AppContext);
 
+  const [showAll, setShowAll] = useState(false);
+
   const undoLastEntry = () => {
     if (currentUser) {
       setIsMakingApiCall(true);
       const { _id } = currentUser;
-      const lastItemId = isSortedDesc ? borders[0]._id : borders[borders.length - 1]._id;
+      const lastItemId = isSortedDesc
+        ? historyList[0]._id
+        : historyList[historyList.length - 1]._id;
 
       axios
         .delete(`/api/users/${_id}/borders/undo`, {
@@ -39,7 +38,7 @@ const CountrySelect = () => {
           data: { lastItemId },
         })
         .then(res => {
-          setUserData({ type: 'SET_USER', payload: res.data.data });
+          setUserState({ type: 'SET_USER', payload: res.data.data });
         })
         .catch(err => {
           setModalData({
@@ -49,8 +48,8 @@ const CountrySelect = () => {
         })
         .finally(() => setIsMakingApiCall(false));
     } else {
-      isSortedDesc ? borders.shift() : borders.pop();
-      setBorders([...borders]);
+      isSortedDesc ? historyList.shift() : historyList.pop();
+      setDataState({ type: 'SET_HISTORY_LIST', payload: [...historyList] });
     }
   };
 
@@ -73,7 +72,7 @@ const CountrySelect = () => {
 
         <CustomButton
           clear
-          disabled={borders.length === 0 || isMakingApiCall}
+          disabled={historyList.length === 0 || isMakingApiCall}
           handleClick={() =>
             setModalData({
               type: 'confirm',

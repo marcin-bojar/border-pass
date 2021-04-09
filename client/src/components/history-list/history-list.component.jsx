@@ -9,12 +9,10 @@ import './history-list.styles.scss';
 
 const HistoryList = () => {
   const {
-    borders,
-    setBorders,
-    currentUser,
+    userState: { currentUser },
+    dataState: { historyList, isSortedDesc },
+    setDataState,
     sendMode,
-    isSortedDesc,
-    setIsSortedDesc,
     selection,
   } = useContext(AppContext);
 
@@ -22,12 +20,9 @@ const HistoryList = () => {
 
   useEffect(() => {
     if (currentUser && sendMode && isSortedDesc) {
-      setBorders([...sortHistoryListByTimeAndDate([...borders], true)]);
-      setIsSortedDesc(false);
-      return () => {
-        setBorders([...sortHistoryListByTimeAndDate([...borders], false)]);
-        setIsSortedDesc(true);
-      };
+      setDataState({ type: 'SEND_MODE_ON' });
+
+      return () => setDataState({ type: 'SEND_MODE_OFF' });
     }
   }, [sendMode]);
 
@@ -50,7 +45,7 @@ const HistoryList = () => {
 
   return (
     <ul className="history-list">
-      {borders.map((el, i) => {
+      {historyList.map((el, i) => {
         const itemRef = createRef();
         itemRefsArray.push(itemRef);
         const data = { ...el, i };

@@ -8,7 +8,9 @@ import { AppContext } from '../../hooks/useAppState';
 import './current-country.styles.scss';
 
 const CurrentCountry = () => {
-  const { currentCountry, setCurrentCountry } = useContext(AppContext);
+  const {
+    dataState: { currentCountry },
+  } = useContext(AppContext);
 
   if (!currentCountry) return <Welcome />;
 

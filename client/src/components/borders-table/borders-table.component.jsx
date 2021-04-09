@@ -9,7 +9,7 @@ import './borders-table.styles.scss';
 const BordersTable = () => {
   const {
     borders,
-    userData: { currentUser },
+    userState: { currentUser },
   } = useContext(AppContext);
   const tableData = [...sortHistoryListByTimeAndDate([...borders], true)];
   const tableRef = useRef(null);

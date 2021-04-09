@@ -9,13 +9,10 @@ import './country-option.styles.scss';
 
 const CountryOption = ({ name }) => {
   const {
-    currentUser,
-    setUserData,
-    currentCountry,
-    setCurrentCountry,
-    borders,
-    setBorders,
-    isSortedDesc,
+    userState: { currentUser },
+    dataState: { historyList, isSortedDesc, currentCountry },
+    setUserState,
+    setDataState,
     isMakingApiCall,
     setIsMakingApiCall,
     setModalData,
@@ -47,20 +44,20 @@ const CountryOption = ({ name }) => {
         axios
           .post(`/api/users/${_id}/borders`, borderPass, getConfig())
           .then(res => {
-            setUserData({ type: 'SET_USER', payload: res.data.data });
+            setUserState({ type: 'SET_USER', payload: res.data.data });
             return axios.post('/api/borders', { ...borderPass, user: _id });
           })
           .catch(err => setModalData({ type: 'error', text: err.response.data.error }))
           .finally(() => setIsMakingApiCall(false));
       } else {
-        const updatedBorders = sortHistoryListByTimeAndDate(
-          [...borders, borderPass],
+        const updatedHistoryList = sortHistoryListByTimeAndDate(
+          [...historyList, borderPass],
           !isSortedDesc,
           'timestamp'
         );
-        setBorders(updatedBorders);
+        setDataState({ type: 'SET_HISTORY_LIST', payload: updatedHistoryList });
       }
-    } else setCurrentCountry(name);
+    } else setDataState({ type: 'SET_CURRENT_COUNTRY', payload: name });
   };
 
   return (
