@@ -1,3 +1,11 @@
+export const USER_INITIAL_STATE = {
+  currentUser: null,
+  guestUser: null,
+  token: JSON.parse(localStorage.getItem('token')) || null,
+  userLoading: true,
+  authError: null,
+};
+
 export const userReducer = (state, action) => {
   switch (action.type) {
     case 'SET_USER':
@@ -67,12 +75,4 @@ export const userReducer = (state, action) => {
     default:
       return state;
   }
-};
-
-export const USER_INITIAL_STATE = {
-  currentUser: null,
-  guestUser: null,
-  token: JSON.parse(localStorage.getItem('token')) || null,
-  userLoading: true,
-  authError: null,
 };
