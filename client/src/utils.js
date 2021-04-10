@@ -92,3 +92,10 @@ export const displayTripEventsInSameRow = table => {
     }
   }
 };
+
+export const setCurrentCountry = (historyList, isSortedDesc) =>
+  !historyList.length
+    ? ''
+    : isSortedDesc
+    ? historyList[0].to
+    : historyList[historyList.length - 1].to;

@@ -3,7 +3,12 @@ import axios from 'axios';
 
 import { userReducer, USER_INITIAL_STATE } from '../reducers/userReducer';
 
-import { sortHistoryListByTimeAndDate, getConfig, sortUsersBorders } from '../utils';
+import {
+  sortHistoryListByTimeAndDate,
+  getConfig,
+  sortUsersBorders,
+  setCurrentCountry,
+} from '../utils';
 import defaultCountries from '../../../helpers/defaultCountries';
 import { registerSW } from '../service-worker';
 
@@ -21,16 +26,12 @@ const DATA_INITIAL_STATE = {
 const dataReducer = (state, action) => {
   const { payload } = action;
 
-  switch (payload) {
+  switch (action.type) {
     case 'SET_HISTORY_LIST':
       return {
         ...state,
         historyList: payload,
-        currentCountry: !payload.length
-          ? ''
-          : state.isSortedDesc
-          ? payload[0].to
-          : payload[length - 1].to,
+        currentCountry: setCurrentCountry(payload, state.isSortedDesc),
         editedItem: null,
       };
 
@@ -67,28 +68,44 @@ const dataReducer = (state, action) => {
         selection: { startIndex: null, endIndex: null },
       };
 
-    case 'SET_DATA_WHEN_USER_LOGIN':
+    case 'SET_USER_DATA':
       return {
         ...state,
         historyList: payload.historyList,
         countries: payload.countries,
+        currentCountry: setCurrentCountry(payload.historyList, state.isSortedDesc),
       };
 
-    case 'SET_DATA_WHEN_USER_LOGOUT':
+    case 'SET_GUEST_DATA':
+      const guestHistoryList = sortHistoryListByTimeAndDate(
+        [...JSON.parse(localStorage.getItem('borders'))],
+        !state.isSortedDesc,
+        'timestamp'
+      );
+
       return {
         ...state,
-        historyList: sortHistoryListByTimeAndDate(
-          [...JSON.parse(localStorage.getItem('borders'))],
-          !isSortedDesc,
-          'timestamp'
-        ),
+        historyList: guestHistoryList,
         countries: [...JSON.parse(localStorage.getItem('countries'))],
+        currentCountry: setCurrentCountry(guestHistoryList, state.isSortedDesc),
       };
 
     case 'SET_CURRENT_COUNTRY':
       return {
         ...state,
         currentCountry: payload,
+      };
+
+    case 'SET_COUNTRIES':
+      return {
+        ...state,
+        countries: payload,
+      };
+
+    case 'SET_EDITED_ITEM':
+      return {
+        ...state,
+        editedItem: payload,
       };
 
     default:
@@ -99,26 +116,9 @@ const dataReducer = (state, action) => {
 export const useAppState = () => {
   const [userState, setUserState] = useReducer(userReducer, USER_INITIAL_STATE);
   const [dataState, setDataState] = useReducer(dataReducer, DATA_INITIAL_STATE);
-  console.log(userState);
-  console.log(dataState);
 
   const { currentUser, token } = userState;
   const { historyList, countries, isSortedDesc } = dataState;
-
-  //Data state
-  // const [currentCountry, setCurrentCountry] = useState('');
-  // const [countries, setCountries] = useState(
-  //   JSON.parse(localStorage.getItem('countries')) || defaultCountries
-  // );
-  // const [borders, setBorders] = useState(JSON.parse(localStorage.getItem('borders')) || []);
-  // const [editedItem, setEditedItem] = useState(null);
-  // const [isSortedDesc, setIsSortedDesc] = useState(
-  //   Boolean(localStorage.getItem('isSortedDesc') === 'true') || false
-  // );
-  // const [selection, setSelection] = useState({
-  //   startIndex: null,
-  //   endIndex: null,
-  // });
 
   //UI state
   const [showModal, setShowModal] = useState(false);
@@ -150,11 +150,11 @@ export const useAppState = () => {
     if (currentUser) {
       const user = sortUsersBorders(currentUser, !isSortedDesc);
       setDataState({
-        type: 'SET_DATA_WHEN_USER_LOGIN',
+        type: 'SET_USER_DATA',
         payload: { historyList: [...user.borders], countries: [...user.countries] },
       });
     } else {
-      setDataState({ type: 'SET_DATA_WHEN_USER_LOGOUT' });
+      setDataState({ type: 'SET_GUEST_DATA' });
     }
   }, [currentUser]);
 

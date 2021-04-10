@@ -36,7 +36,7 @@ const SendBorders = () => {
     const { startIndex, endIndex } = selection;
 
     if (startIndex !== null && endIndex !== null) {
-      setListToSend(borders.slice(startIndex, endIndex + 1));
+      setListToSend(historyList.slice(startIndex, endIndex + 1));
     } else setListToSend([]);
   }, [selection]);
 
@@ -105,7 +105,7 @@ const SendBorders = () => {
     axios
       .post('/api/tables', { borders: listToSend }, getConfig())
       .then(() => {
-        const updatedBorders = [...borders];
+        const updatedBorders = [...historyList];
         updatedBorders.splice(startIndex, listToSend.length);
 
         return axios.put(`/api/users/${_id}/borders`, updatedBorders, getConfig());

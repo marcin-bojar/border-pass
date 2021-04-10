@@ -8,10 +8,14 @@ import { AppContext } from '../../hooks/useAppState';
 import './history-editor.styles.scss';
 
 const HistoryEditor = () => {
-  const { editedItem, setEditedItem, isMakingApiCall } = useContext(AppContext);
+  const {
+    dataState: { editedItem },
+    setDataState,
+    isMakingApiCall,
+  } = useContext(AppContext);
 
   useEffect(() => {
-    return () => setEditedItem(null);
+    return () => setDataState({ type: 'SET_EDITED_ITEM', payload: null });
   }, []);
 
   return (

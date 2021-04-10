@@ -34,7 +34,7 @@ const HistoryItem = forwardRef(({ data }, ref) => {
         selected ? 'selected' : ''
       } history-item`}
       onClick={() => {
-        if (editMode) setEditedItem(data);
+        if (editMode) setDataState({ type: 'SET_EDITED_ITEM', payload: data });
         else if (sendMode) {
           setSelected(!selected);
           handleSelection();

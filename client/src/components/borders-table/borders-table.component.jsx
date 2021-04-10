@@ -8,10 +8,10 @@ import './borders-table.styles.scss';
 
 const BordersTable = () => {
   const {
-    borders,
     userState: { currentUser },
+    dataState: { historyList },
   } = useContext(AppContext);
-  const tableData = [...sortHistoryListByTimeAndDate([...borders], true)];
+  const tableData = [...sortHistoryListByTimeAndDate([...historyList], true)];
   const tableRef = useRef(null);
 
   useEffect(() => {

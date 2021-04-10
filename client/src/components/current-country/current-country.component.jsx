@@ -10,6 +10,7 @@ import './current-country.styles.scss';
 const CurrentCountry = () => {
   const {
     dataState: { currentCountry },
+    setDataState,
   } = useContext(AppContext);
 
   if (!currentCountry) return <Welcome />;
@@ -19,7 +20,10 @@ const CurrentCountry = () => {
       <h2 className="current-country__title">Obecnie znajdujesz się w: </h2>
       <span className="current-country__country">{currentCountry}</span>
       <div className="current-country__button-wrapper">
-        <CustomButton clear handleClick={() => setCurrentCountry('')}>
+        <CustomButton
+          clear
+          handleClick={() => setDataState({ type: 'SET_CURRENT_COUNTRY', payload: '' })}
+        >
           Wyczyść
         </CustomButton>
       </div>

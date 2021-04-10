@@ -53,7 +53,7 @@ const TripEvents = () => {
         .finally(() => setIsMakingApiCall(false));
     } else {
       const updatedHistoryList = sortHistoryListByTimeAndDate(
-        [...borders, tripEvent],
+        [...historyList, tripEvent],
         !isSortedDesc,
         'timestamp'
       );

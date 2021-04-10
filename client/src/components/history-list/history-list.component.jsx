@@ -10,10 +10,9 @@ import './history-list.styles.scss';
 const HistoryList = () => {
   const {
     userState: { currentUser },
-    dataState: { historyList, isSortedDesc },
+    dataState: { historyList, isSortedDesc, selection },
     setDataState,
     sendMode,
-    selection,
   } = useContext(AppContext);
 
   const itemRefsArray = [];

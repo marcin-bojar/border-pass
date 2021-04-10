@@ -13,12 +13,13 @@ import './add-country.styles.scss';
 const AddCountry = () => {
   const { inputValue, setInputValue, handleChange } = useSingleInput();
   const {
-    countries,
-    setCountries,
     userState: { currentUser },
+    dataState: { countries },
+    setDataState,
     setModalData,
+    isMakingApiCall,
+    setIsMakingApiCall,
   } = useContext(AppContext);
-  const [isAdding, setIsAdding] = useState(false);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -26,7 +27,7 @@ const AddCountry = () => {
     const name = inputValue.toUpperCase();
     if (!name) return;
 
-    setIsAdding(true);
+    setIsMakingApiCall(true);
     const newCountry = { name };
 
     if (currentUser) {
@@ -36,7 +37,7 @@ const AddCountry = () => {
         .post(`/api/users/${_id}/countries`, newCountry, getConfig())
         .then(res => {
           if (res.data.success) {
-            setCountries([...res.data.data.countries]);
+            setDataState({ type: 'SET_COUNTRIES', payload: [...res.data.data.countries] });
             setInputValue('');
           } else {
             setModalData({ type: 'error', text: res.data.error });
@@ -45,17 +46,17 @@ const AddCountry = () => {
         .catch(err => {
           setModalData({ type: 'error', text: err.response.data.error });
         })
-        .finally(() => setIsAdding(false));
+        .finally(() => setIsMakingApiCall(false));
     } else {
       const countryExists = countries.find(el => el.name === name);
 
       if (countryExists) {
         setModalData({ type: 'error', text: 'Ten kraj jest już na liście.' });
-        setIsAdding(false);
+        setIsMakingApiCall(false);
       } else {
-        setCountries([...countries, { name }]);
+        setDataState({ type: 'SET_COUNTRIES', payload: [...countries, { name }] });
         setInputValue('');
-        setIsAdding(false);
+        setIsMakingApiCall(false);
       }
     }
   };
@@ -68,12 +69,12 @@ const AddCountry = () => {
           value={inputValue}
           handleChange={handleChange}
           maxLength="3"
-          disabled={isAdding}
+          disabled={isMakingApiCall}
           label="Dodaj kraj"
         />
       </form>
       <div className="add-country__spinner-wrapper">
-        <Spinner isLoading={isAdding} />
+        <Spinner isLoading={isMakingApiCall} />
       </div>
     </div>
   );
