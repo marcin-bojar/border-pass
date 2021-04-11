@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import { userReducer, USER_INITIAL_STATE } from '../reducers/userReducer';
 import { dataReducer, DATA_INITIAL_STATE } from '../reducers/dataReducer';
+import { uiReducer, UI_INITIAL_STATE } from '../reducers/uiReducer';
 
 import { getConfig, sortUsersBorders } from '../utils';
 import { registerSW } from '../service-worker';
@@ -12,14 +13,11 @@ export const AppContext = createContext(null);
 export const useAppState = () => {
   const [userState, setUserState] = useReducer(userReducer, USER_INITIAL_STATE);
   const [dataState, setDataState] = useReducer(dataReducer, DATA_INITIAL_STATE);
+  const [uiState, setUiState] = useReducer(uiReducer, UI_INITIAL_STATE);
 
   const { currentUser, token } = userState;
   const { historyList, countries, isSortedDesc } = dataState;
-
-  //UI state
-  const [showModal, setShowModal] = useState(false);
-  const [modalData, setModalData] = useState(null);
-  const [showUserMenu, setShowUserMenu] = useState(false);
+  const { modalData } = uiState;
 
   //App state
   const [newVersion, setNewVersion] = useState({
@@ -55,7 +53,7 @@ export const useAppState = () => {
   }, [currentUser]);
 
   useEffect(() => {
-    if (modalData) setShowModal(true);
+    if (modalData) setUiState({ type: 'SHOW_MODAL' });
   }, [modalData]);
 
   useEffect(() => {
@@ -70,9 +68,12 @@ export const useAppState = () => {
             type: 'USER_AUTH_ERROR',
             payload: 'Sesja wygasła. Zaloguj się ponownie.',
           });
-          setModalData({
-            type: 'authError',
-            text: 'Sesja wygasła. Zaloguj się ponownie.',
+          setUiState({
+            type: 'SET_MODAL_DATA',
+            payload: {
+              type: 'authError',
+              text: 'Sesja wygasła. Zaloguj się ponownie.',
+            },
           });
         });
     } else setUserState({ type: 'SET_USER_LOADING', payload: false });
@@ -85,18 +86,14 @@ export const useAppState = () => {
     setUserState,
     dataState,
     setDataState,
+    uiState,
+    setUiState,
     editMode,
     setEditMode,
     sendMode,
     setSendMode,
     isMakingApiCall,
     setIsMakingApiCall,
-    showModal,
-    setShowModal,
-    modalData,
-    setModalData,
-    showUserMenu,
-    setShowUserMenu,
     newVersion,
     setNewVersion,
   };

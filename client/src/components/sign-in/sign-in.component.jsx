@@ -39,13 +39,12 @@ const SignIn = () => {
           payload: { user: res.data.data.user, token: res.data.data.token },
         });
       })
-      .catch(err => {
-        let error;
-        if (err?.response?.status === 401 || err?.response?.status === 404)
-          error = 'Podane dane są nieprawidłowe.';
-        else error = err.response.data.error;
-        setUserState({ type: 'USER_AUTH_ERROR', payload: error });
-      });
+      .catch(err =>
+        setUserState({
+          type: 'USER_AUTH_ERROR',
+          payload: err?.response?.data?.error || 'Coś poszło nie tak, spróbuj ponownie.',
+        })
+      );
   };
 
   useEffect(() => () => setUserState({ type: 'CLEAR_AUTH_ERROR' }), []);

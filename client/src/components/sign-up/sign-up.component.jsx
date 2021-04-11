@@ -49,7 +49,10 @@ const SignUp = () => {
         });
       })
       .catch(err => {
-        setUserState({ type: 'USER_AUTH_ERROR', payload: err.response.data.error });
+        setUserState({
+          type: 'USER_AUTH_ERROR',
+          payload: err?.response?.data?.error || 'Coś poszło nie tak, spróbuj ponownie.',
+        });
       });
   };
 

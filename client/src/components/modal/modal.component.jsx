@@ -7,7 +7,9 @@ import PromptModal from '../prompt-modal/prompt-modal.component';
 import { AppContext } from '../../hooks/useAppState';
 
 const Modal = () => {
-  const { showModal, modalData } = useContext(AppContext);
+  const {
+    uiState: { showModal, modalData },
+  } = useContext(AppContext);
   const type = modalData?.type;
 
   if (!showModal) return null;

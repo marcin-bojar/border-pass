@@ -17,9 +17,9 @@ const CountrySelect = () => {
     dataState: { countries, currentCountry, historyList, isSortedDesc },
     setUserState,
     setDataState,
+    setUiState,
     isMakingApiCall,
     setIsMakingApiCall,
-    setModalData,
   } = useContext(AppContext);
 
   const [showAll, setShowAll] = useState(false);
@@ -41,9 +41,12 @@ const CountrySelect = () => {
           setUserState({ type: 'SET_USER', payload: res.data.data });
         })
         .catch(err => {
-          setModalData({
-            type: 'error',
-            text: err?.response?.data.error || 'Coś poszło nie tak, spróbuj ponownie.',
+          setUiState({
+            type: 'SET_MODAL_DATA',
+            payload: {
+              type: 'error',
+              text: err?.response?.data.error || 'Coś poszło nie tak, spróbuj ponownie.',
+            },
           });
         })
         .finally(() => setIsMakingApiCall(false));
@@ -74,10 +77,13 @@ const CountrySelect = () => {
           clear
           disabled={historyList.length === 0 || isMakingApiCall}
           handleClick={() =>
-            setModalData({
-              type: 'confirm',
-              text: 'Usuwasz ostatni wpis z listy. Czy chcesz kontynuować?',
-              onConfirm: undoLastEntry,
+            setUiState({
+              type: 'SET_MODAL_DATA',
+              payload: {
+                type: 'confirm',
+                text: 'Usuwasz ostatni wpis z listy. Czy chcesz kontynuować?',
+                onConfirm: undoLastEntry,
+              },
             })
           }
         >

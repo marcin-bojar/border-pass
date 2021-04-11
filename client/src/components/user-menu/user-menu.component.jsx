@@ -6,11 +6,14 @@ import { AppContext } from '../../hooks/useAppState.js';
 import './user-menu.styles.scss';
 
 const UserMenu = () => {
-  const { showUserMenu, setShowUserMenu } = useContext(AppContext);
+  const {
+    uiState: { showUserMenu },
+    setUiState,
+  } = useContext(AppContext);
   const menuRef = useRef(null);
 
   const handleClick = e => {
-    if (e.target !== menuRef.current) setShowUserMenu(false);
+    if (e.target !== menuRef.current) setUiState({ type: 'HIDE_USER_MENU' });
   };
 
   useEffect(() => {

@@ -7,7 +7,10 @@ import { AppContext } from '../../hooks/useAppState';
 import './confirm-modal.styles.scss';
 
 const ConfirmModal = () => {
-  const { modalData, setShowModal } = useContext(AppContext);
+  const {
+    uiState: { modalData },
+    setUiState,
+  } = useContext(AppContext);
   const text = modalData?.text;
   const onConfirm = modalData?.onConfirm;
 
@@ -17,14 +20,14 @@ const ConfirmModal = () => {
         <h3 className="modal__title">Potwierdź</h3>
         <div className="modal__text">{text}</div>
         <div className="modal__button-wrapper">
-          <CustomButton clear handleClick={() => setShowModal(false)}>
+          <CustomButton clear handleClick={() => setUiState({ type: 'HIDE_MODAL' })}>
             Anuluj
           </CustomButton>
 
           <CustomButton
             handleClick={() => {
               onConfirm();
-              setShowModal(false);
+              setUiState({ type: 'HIDE_MODAL' });
             }}
           >
             Kontynuuj

@@ -12,9 +12,9 @@ import './nav-bar.styles.scss';
 const NavBar = () => {
   const {
     userState: { currentUser, userLoading },
+    uiState: { showUserMenu },
     setUserState,
-    showUserMenu,
-    setShowUserMenu,
+    setUiState,
   } = useContext(AppContext);
 
   return (
@@ -24,7 +24,11 @@ const NavBar = () => {
       ) : currentUser ? (
         <div className="nav-bar__user">
           <div className="nav-bar__block">
-            <CustomButton navbar navbarUser handleClick={() => setShowUserMenu(!showUserMenu)}>
+            <CustomButton
+              navbar
+              navbarUser
+              handleClick={() => setUiState({ type: 'TOOGLE_USER_MENU' })}
+            >
               {currentUser.name}
             </CustomButton>
             <div className={`${showUserMenu ? 'open' : ''} nav-bar__arrow`}>&#x25BC;</div>

@@ -63,7 +63,7 @@ const HistoryEditorForm = () => {
         .then(res => {
           setUserState({ type: 'SET_USER', payload: res.data.data });
         })
-        .catch(err => setError(err.response.data.error))
+        .catch(err => setError(err?.response?.data.error || 'Coś poszło nie tak spróbuj ponownie.'))
         .finally(() => setIsMakingApiCall(false));
     } else {
       const { time, date } = updatedBorderPass;

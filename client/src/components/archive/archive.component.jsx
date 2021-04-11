@@ -11,10 +11,10 @@ import './archive.styles.scss';
 
 const Archive = () => {
   const {
-    setModalData,
+    userState: { currentUser },
+    setUiState,
     isMakingApiCall,
     setIsMakingApiCall,
-    userState: { currentUser },
   } = useContext(AppContext);
   const [archives, setArchives] = useState([]);
 
@@ -27,7 +27,15 @@ const Archive = () => {
         .then(res => {
           setArchives([...res.data.data]);
         })
-        .catch(err => setModalData({ type: 'error', text: err?.response?.data.error }))
+        .catch(err =>
+          setUiState({
+            type: 'SET_MODAL_DATA',
+            payload: {
+              type: 'error',
+              text: err?.response?.data.error || 'Coś poszło nie tak spróbuj ponownie.',
+            },
+          })
+        )
         .finally(() => setIsMakingApiCall(false));
     }
   }, []);

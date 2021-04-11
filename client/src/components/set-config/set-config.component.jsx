@@ -15,9 +15,9 @@ const SetConfig = () => {
   const {
     userState: { currentUser, userLoading },
     setUserState,
+    setUiState,
     isMakingApiCall,
     setIsMakingApiCall,
-    setModalData,
   } = useContext(AppContext);
   const [companyDetails, setCompanyDetails] = useState({
     companyEmail: '',
@@ -47,9 +47,20 @@ const SetConfig = () => {
       .post(`/api/users/${_id}/company`, companyDetails, getConfig())
       .then(res => {
         setUserState({ type: 'SET_USER', payload: res.data.data });
-        setModalData({ type: 'info', text: 'Dane firmy zostały zmienione.' });
+        setUiState({
+          type: 'SET_MODAL_DATA',
+          payload: { type: 'info', text: 'Dane firmy zostały zmienione.' },
+        });
       })
-      .catch(err => setModalData({ type: 'error', text: err.response.data.error }))
+      .catch(err =>
+        setUiState({
+          type: 'SET_MODAL_DATA',
+          payload: {
+            type: 'error',
+            text: err?.response?.data.error || 'Coś poszło nie tak spróbuj ponownie.',
+          },
+        })
+      )
       .finally(() => setIsMakingApiCall(false));
   };
 
@@ -57,7 +68,10 @@ const SetConfig = () => {
     e.preventDefault();
 
     if (!userName) {
-      setModalData({ type: 'error', text: 'Nie podałeś imienia i nazwiska.' });
+      setUiState({
+        type: 'SET_MODAL_DATA',
+        payload: { type: 'error', text: 'Nie podałeś imienia i nazwiska.' },
+      });
       setUserName(currentUser?.name);
       return;
     }
@@ -70,12 +84,23 @@ const SetConfig = () => {
       .post(`/api/users/${_id}/name`, { userName }, getConfig())
       .then(res => {
         setUserState({ type: 'SET_USER', payload: res.data.data });
-        setModalData({
-          type: 'info',
-          text: 'Twoje imię i nazwisko zostały zmienione.',
+        setUiState({
+          type: 'SET_MODAL_DATA',
+          payload: {
+            type: 'info',
+            text: 'Twoje imię i nazwisko zostały zmienione.',
+          },
         });
       })
-      .catch(err => setModalData({ type: 'error', text: err.response.data.error }))
+      .catch(err =>
+        setUiState({
+          type: 'SET_MODAL_DATA',
+          payload: {
+            type: 'error',
+            text: err?.response?.data.error || 'Coś poszło nie tak, spróbuj ponownie.',
+          },
+        })
+      )
       .finally(() => setIsMakingApiCall(false));
   };
 

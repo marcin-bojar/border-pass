@@ -9,7 +9,10 @@ import useSingleInput from '../../hooks/useSingleInput';
 import './prompt-modal.styles.scss';
 
 const PromptModal = () => {
-  const { modalData, setShowModal } = useContext(AppContext);
+  const {
+    uiState: { modalData },
+    setUiState,
+  } = useContext(AppContext);
   const { inputValue, handleChange } = useSingleInput();
   const text = modalData?.text;
   const expectedValue = modalData?.expectedValue;
@@ -21,8 +24,8 @@ const PromptModal = () => {
 
     if (inputValue === expectedValue) {
       onConfirm();
-      setShowModal(false);
-    } else setShowModal(false);
+      setUiState({ type: 'HIDE_MODAL' });
+    } else setUiState({ type: 'HIDE_MODAL' });
   };
 
   useEffect(() => {
@@ -39,7 +42,7 @@ const PromptModal = () => {
         </form>
 
         <div className="modal__button-wrapper">
-          <CustomButton type="button" handleClick={() => setShowModal(false)}>
+          <CustomButton type="button" handleClick={() => setUiState({ type: 'HIDE_MODAL' })}>
             Anuluj
           </CustomButton>
 

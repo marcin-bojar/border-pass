@@ -17,9 +17,9 @@ const History = () => {
     dataState: { historyList, isSortedDesc },
     setUserState,
     setDataState,
+    setUiState,
     editMode,
     setEditMode,
-    setModalData,
   } = useContext(AppContext);
 
   const reverseHistoryList = () => {
@@ -36,7 +36,15 @@ const History = () => {
       axios
         .delete(`/api/users/${_id}/borders`, getConfig())
         .then(res => setUserState({ type: 'SET_USER', payload: res.data.data }))
-        .catch(err => setModalData({ type: 'error', text: err.response.data.error }));
+        .catch(err =>
+          setUiState({
+            type: 'SET_MODAL_DATA',
+            payload: {
+              type: 'error',
+              text: err?.response?.data.error || 'Coś poszło nie tak spróbuj ponownie.',
+            },
+          })
+        );
     } else {
       setDataState({ type: 'SET_HISTORY_LIST', payload: [] });
     }
@@ -65,12 +73,15 @@ const History = () => {
         <CustomButton
           clear
           handleClick={() =>
-            setModalData({
-              type: 'prompt',
-              text:
-                "Spowoduje to NIEODWRACALNE usunięcie całej historii.\nWpisz 'TAK', aby usunąć.",
-              expectedValue: 'TAK',
-              onConfirm: handleDeleteAll,
+            setUiState({
+              type: 'SET_MODAL_DATA',
+              payload: {
+                type: 'prompt',
+                text:
+                  "Spowoduje to NIEODWRACALNE usunięcie całej historii.\nWpisz 'TAK', aby usunąć.",
+                expectedValue: 'TAK',
+                onConfirm: handleDeleteAll,
+              },
             })
           }
         >

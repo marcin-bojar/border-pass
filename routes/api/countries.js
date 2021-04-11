@@ -18,7 +18,9 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   Country.find({ name: req.body.name }).then(result => {
     const countryExists = result.length > 0;
-    if (countryExists) return res.json({ success: false, error: 'Ten kraj jest już na liście' });
+    if (countryExists) return res.json({ success: false, error: 'Ten kraj jest już na liście.' });
+    if (!req.body.name)
+      return res.json({ success: false, error: 'Brak nazwy państwa, spróbuj ponownie.' });
 
     const newCountry = new Country({ name: req.body.name });
     newCountry

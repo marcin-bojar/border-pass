@@ -14,16 +14,19 @@ const TripEvents = () => {
     dataState: { historyList, currentCountry, isSortedDesc },
     setUserState,
     setDataState,
+    setUiState,
     setIsMakingApiCall,
-    setModalData,
     isMakingApiCall,
   } = useContext(AppContext);
 
   const onTripEvent = eventType => {
     if (!currentCountry) {
-      setModalData({
-        type: 'error',
-        text: 'Określ najpierw kraj, w którym się znajdujesz',
+      setUiState({
+        type: 'SET_MODAL_DATA',
+        payload: {
+          type: 'error',
+          text: 'Określ najpierw kraj, w którym się znajdujesz',
+        },
       });
       return;
     }
@@ -49,7 +52,15 @@ const TripEvents = () => {
           setUserState({ type: 'SET_USER', payload: res.data.data });
           return axios.post('/api/borders', { ...tripEvent, user: _id });
         })
-        .catch(err => setModalData({ type: 'error', text: err.response.data.error }))
+        .catch(err =>
+          setUiState({
+            type: 'SET_MODAL_DATA',
+            payload: {
+              type: 'error',
+              text: err?.response?.data.error || 'Coś poszło nie tak, spróbuj ponownie.',
+            },
+          })
+        )
         .finally(() => setIsMakingApiCall(false));
     } else {
       const updatedHistoryList = sortHistoryListByTimeAndDate(

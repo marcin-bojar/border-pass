@@ -16,10 +16,10 @@ const SendBorders = () => {
     dataState: { historyList, selection },
     setUserState,
     setDataState,
+    setUiState,
     setSendMode,
     isMakingApiCall,
     setIsMakingApiCall,
-    setModalData,
   } = useContext(AppContext);
   const [listToSend, setListToSend] = useState([]);
 
@@ -42,9 +42,12 @@ const SendBorders = () => {
 
   const sendAndArchive = () => {
     if (!listToSend.length) {
-      setModalData({
-        type: 'error',
-        text: 'Musisz określić zakres danych do wysłania.',
+      setUiState({
+        type: 'SET_MODAL_DATA',
+        payload: {
+          type: 'error',
+          text: 'Musisz określić zakres danych do wysłania.',
+        },
       });
       return;
     }
@@ -56,9 +59,12 @@ const SendBorders = () => {
     const { startIndex } = selection;
 
     if (!companyEmail) {
-      setModalData({
-        type: 'error',
-        text: 'Aby wysłać zestawienie, zapisz adres email Twojej firmy w ustawieniach.',
+      setUiState({
+        type: 'SET_MODAL_DATA',
+        payload: {
+          type: 'error',
+          text: 'Aby wysłać zestawienie, zapisz adres email Twojej firmy w ustawieniach.',
+        },
       });
       return;
     }
@@ -74,16 +80,22 @@ const SendBorders = () => {
       })
       .then(res => {
         setUserState({ type: 'SET_USER', payload: res.data.data });
-        setModalData({
-          type: 'info',
-          text: `Zestawienie wysłane. Dane z wybranego zakresu zostały zarchiwizowane.`,
+        setUiState({
+          type: 'SET_MODAL_DATA',
+          payload: {
+            type: 'info',
+            text: `Zestawienie wysłane. Dane z wybranego zakresu zostały zarchiwizowane.`,
+          },
         });
         setDataState({ type: 'CLEAR_SELECTION' });
       })
       .catch(err => {
-        setModalData({
-          type: 'error',
-          text: err.response?.data?.error || err.message,
+        setUiState({
+          type: 'SET_MODAL_DATA',
+          payload: {
+            type: 'error',
+            text: err?.response?.data.error || 'Coś poszło nie tak, spróbuj ponownie.',
+          },
         });
       })
       .finally(() => setIsMakingApiCall(false));
@@ -91,9 +103,12 @@ const SendBorders = () => {
 
   const onlyArchive = () => {
     if (!listToSend.length) {
-      setModalData({
-        type: 'error',
-        text: 'Musisz określić zakres danych do archiwizacji.',
+      setUiState({
+        type: 'SET_MODAL_DATA',
+        payload: {
+          type: 'error',
+          text: 'Musisz określić zakres danych do archiwizacji.',
+        },
       });
       return;
     }
@@ -111,17 +126,23 @@ const SendBorders = () => {
         return axios.put(`/api/users/${_id}/borders`, updatedBorders, getConfig());
       })
       .then(res => {
-        setModalData({
-          type: 'info',
-          text: 'Dane zostały zarchiwizowane.',
+        setUiState({
+          type: 'SET_MODAL_DATA',
+          payload: {
+            type: 'info',
+            text: 'Dane zostały zarchiwizowane.',
+          },
         });
         setUserState({ type: 'SET_USER', payload: res.data.data });
         setDataState({ type: 'CLEAR_SELECTION' });
       })
       .catch(err => {
-        setModalData({
-          type: 'error',
-          text: err.response?.data?.error || err.message,
+        setUiState({
+          type: 'SET_MODAL_DATA',
+          payload: {
+            type: 'error',
+            text: err?.response?.data?.error || 'Coś poszło nie tak, spróbuj ponownie.',
+          },
         });
       })
       .finally(() => setIsMakingApiCall(false));
@@ -145,7 +166,7 @@ const SendBorders = () => {
           handleClick={() =>
             setDataState({
               type: 'SET_SELECTION',
-              payload: { startIndex: 0, endIndex: borders.length - 1 },
+              payload: { startIndex: 0, endIndex: historyList.length - 1 },
             })
           }
         >

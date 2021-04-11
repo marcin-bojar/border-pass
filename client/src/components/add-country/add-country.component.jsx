@@ -16,7 +16,7 @@ const AddCountry = () => {
     userState: { currentUser },
     dataState: { countries },
     setDataState,
-    setModalData,
+    setUiState,
     isMakingApiCall,
     setIsMakingApiCall,
   } = useContext(AppContext);
@@ -40,18 +40,30 @@ const AddCountry = () => {
             setDataState({ type: 'SET_COUNTRIES', payload: [...res.data.data.countries] });
             setInputValue('');
           } else {
-            setModalData({ type: 'error', text: res.data.error });
+            setUiState({
+              type: 'SET_MODAL_DATA',
+              payload: { type: 'error', text: res.data.error },
+            });
           }
         })
         .catch(err => {
-          setModalData({ type: 'error', text: err.response.data.error });
+          setUiState({
+            type: 'SET_MODAL_DATA',
+            payload: {
+              type: 'error',
+              text: err?.response?.data.error || 'Coś poszło nie tak, spróbuj ponownie.',
+            },
+          });
         })
         .finally(() => setIsMakingApiCall(false));
     } else {
       const countryExists = countries.find(el => el.name === name);
 
       if (countryExists) {
-        setModalData({ type: 'error', text: 'Ten kraj jest już na liście.' });
+        setUiState({
+          type: 'SET_MODAL_DATA',
+          payload: { type: 'error', text: 'Ten kraj jest już na liście.' },
+        });
         setIsMakingApiCall(false);
       } else {
         setDataState({ type: 'SET_COUNTRIES', payload: [...countries, { name }] });

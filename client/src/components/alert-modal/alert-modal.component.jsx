@@ -7,7 +7,10 @@ import { AppContext } from '../../hooks/useAppState';
 import './alert-modal.styles.scss';
 
 const AlertModal = () => {
-  const { modalData, setShowModal } = useContext(AppContext);
+  const {
+    uiState: { modalData },
+    setUiState,
+  } = useContext(AppContext);
   const type = modalData?.type;
   const text = modalData?.text;
 
@@ -18,7 +21,7 @@ const AlertModal = () => {
   };
 
   const handleClick = e => {
-    if (e.target !== mainRef.current) setShowModal(false);
+    if (e.target !== mainRef.current) setUiState({ type: 'HIDE_MODAL' });
   };
 
   const mainRef = useRef(null);
@@ -28,7 +31,7 @@ const AlertModal = () => {
       <div ref={mainRef} className="modal__main">
         <h3 className="modal__title">{titleMap[type]}</h3>
         <div className="modal__text">{text}</div>
-        <CustomButton handleClick={() => setShowModal(false)}>Zamknij</CustomButton>
+        <CustomButton handleClick={() => setUiState({ type: 'HIDE_MODAL' })}>Zamknij</CustomButton>
       </div>
     </div>
   );
