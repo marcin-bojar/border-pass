@@ -14,20 +14,19 @@ const SendBorders = () => {
   const {
     userState: { currentUser },
     dataState: { historyList, selection },
+    generalState: { isMakingApiCall },
     setUserState,
     setDataState,
     setUiState,
-    setSendMode,
-    isMakingApiCall,
-    setIsMakingApiCall,
+    setGeneralState,
   } = useContext(AppContext);
   const [listToSend, setListToSend] = useState([]);
 
   useEffect(() => {
-    setSendMode(true);
+    setGeneralState({ type: 'TOGGLE_SEND_MODE' });
 
     return () => {
-      setSendMode(false);
+      setGeneralState({ type: 'TOGGLE_SEND_MODE' });
       setDataState({ type: 'CLEAR_SELECTION' });
     };
   }, []);
@@ -69,7 +68,8 @@ const SendBorders = () => {
       return;
     }
 
-    setIsMakingApiCall(true);
+    setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
+
     axios
       .post(`/api/users/${_id}/send`, { borders: listToSend, email: companyEmail }, getConfig())
       .then(() => {
@@ -98,7 +98,7 @@ const SendBorders = () => {
           },
         });
       })
-      .finally(() => setIsMakingApiCall(false));
+      .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
   };
 
   const onlyArchive = () => {
@@ -113,7 +113,7 @@ const SendBorders = () => {
       return;
     }
 
-    setIsMakingApiCall(true);
+    setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
     const { _id } = currentUser;
     const { startIndex } = selection;
 
@@ -145,7 +145,7 @@ const SendBorders = () => {
           },
         });
       })
-      .finally(() => setIsMakingApiCall(false));
+      .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
   };
 
   if (!currentUser) return <Redirect to="/" />;

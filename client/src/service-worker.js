@@ -1,17 +1,16 @@
-import { set } from 'mongoose';
 import { Workbox, messageSW } from 'workbox-window';
 
-export const registerSW = setNewVersion => {
+export const registerSW = setGeneralState => {
   if ('serviceWorker' in navigator) {
     const swURL = 'sw.js';
     const wb = new Workbox(swURL);
     let registration;
 
     const showRefreshPrompt = () => {
-      setNewVersion({
-        status: true,
-        onConfirm: () => {
-          setNewVersion({ status: false, onConfirm: () => {} });
+      setGeneralState({
+        type: 'NEW_VERSION_AVAILABLE',
+        payload: () => {
+          setGeneralState({ type: 'UPDATED_TO_NEW_VERSION' });
           wb.addEventListener('controlling', () => window.location.reload());
 
           if (registration && registration.waiting) {

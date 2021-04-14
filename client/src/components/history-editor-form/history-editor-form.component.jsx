@@ -21,7 +21,7 @@ const HistoryEditorForm = () => {
     dataState: { historyList, isSortedDesc, editedItem },
     setUserState,
     setDataState,
-    setIsMakingApiCall,
+    setGeneralState,
   } = useContext(AppContext);
 
   const { type, from, to, time, date, timestamp, i, _id } = editedItem;
@@ -54,7 +54,7 @@ const HistoryEditorForm = () => {
     const updatedBorderPass = fields;
 
     if (currentUser) {
-      setIsMakingApiCall(true);
+      setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
       const userId = currentUser._id;
       const borderId = editedItem._id;
 
@@ -64,7 +64,7 @@ const HistoryEditorForm = () => {
           setUserState({ type: 'SET_USER', payload: res.data.data });
         })
         .catch(err => setError(err?.response?.data.error || 'Coś poszło nie tak spróbuj ponownie.'))
-        .finally(() => setIsMakingApiCall(false));
+        .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
     } else {
       const { time, date } = updatedBorderPass;
       if (!validateTimeAndDateSync(time, date, setError)) return;

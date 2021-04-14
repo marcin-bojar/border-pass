@@ -8,9 +8,8 @@ const HistoryItem = forwardRef(({ data }, ref) => {
   const { type, from, to, time, date, i } = data;
   const {
     dataState: { historyList, isSortedDesc, selection },
+    generalState: { editMode, sendMode },
     setDataState,
-    editMode,
-    sendMode,
   } = useContext(AppContext);
 
   const [selected, setSelected] = useState(false);

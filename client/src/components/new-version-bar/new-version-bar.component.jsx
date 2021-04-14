@@ -8,9 +8,9 @@ import './new-version-bar.component.styles.scss';
 
 const NewVersionBar = () => {
   const [show, setShow] = useState(true);
-  const { newVersion } = useContext(AppContext);
+  const { generalState: newVersionAvailable } = useContext(AppContext);
 
-  if (!show || !newVersion.status) {
+  if (!show || !newVersionAvailable.status) {
     return null;
   }
 
@@ -18,7 +18,7 @@ const NewVersionBar = () => {
     <div className="new-version-bar">
       <p>Nowa wersja aplikacji dostępna!</p>
       <div className="new-version-bar__button-wrapper">
-        <CustomButton inline handleClick={() => newVersion.onConfirm()}>
+        <CustomButton inline handleClick={() => newVersionAvailable.onConfirm()}>
           Odśwież
         </CustomButton>
         <CustomButton inline handleClick={() => setShow(false)}>

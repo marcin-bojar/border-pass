@@ -15,11 +15,11 @@ const History = () => {
   const {
     userState: { currentUser },
     dataState: { historyList, isSortedDesc },
+    generalState: { editMode },
     setUserState,
     setDataState,
     setUiState,
-    editMode,
-    setEditMode,
+    setGeneralState,
   } = useContext(AppContext);
 
   const reverseHistoryList = () => {
@@ -57,7 +57,7 @@ const History = () => {
       <h3 className="history__title">Historia przekroczeń granic:</h3>
 
       <div className="history__button-wrapper">
-        <CustomButton handleClick={() => setEditMode(!editMode)}>
+        <CustomButton handleClick={() => setGeneralState({ type: 'TOGGLE_EDIT_MODE' })}>
           {editMode ? 'Zamknij' : 'Edytuj'}
         </CustomButton>
 

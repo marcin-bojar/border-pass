@@ -14,10 +14,10 @@ import './set-config.styles.scss';
 const SetConfig = () => {
   const {
     userState: { currentUser, userLoading },
+    generalState: { isMakingApiCall },
     setUserState,
     setUiState,
-    isMakingApiCall,
-    setIsMakingApiCall,
+    setGeneralState,
   } = useContext(AppContext);
   const [companyDetails, setCompanyDetails] = useState({
     companyEmail: '',
@@ -41,7 +41,7 @@ const SetConfig = () => {
     e.preventDefault();
     const { _id } = currentUser;
 
-    setIsMakingApiCall(true);
+    setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
 
     axios
       .post(`/api/users/${_id}/company`, companyDetails, getConfig())
@@ -61,7 +61,7 @@ const SetConfig = () => {
           },
         })
       )
-      .finally(() => setIsMakingApiCall(false));
+      .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
   };
 
   const submitUserName = e => {
@@ -78,7 +78,7 @@ const SetConfig = () => {
 
     const { _id } = currentUser;
 
-    setIsMakingApiCall(true);
+    setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
 
     axios
       .post(`/api/users/${_id}/name`, { userName }, getConfig())
@@ -101,7 +101,7 @@ const SetConfig = () => {
           },
         })
       )
-      .finally(() => setIsMakingApiCall(false));
+      .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
   };
 
   useEffect(() => {

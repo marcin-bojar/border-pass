@@ -12,11 +12,11 @@ const TripEvents = () => {
   const {
     userState: { currentUser },
     dataState: { historyList, currentCountry, isSortedDesc },
+    generalState: { isMakingApiCall },
     setUserState,
     setDataState,
     setUiState,
-    setIsMakingApiCall,
-    isMakingApiCall,
+    setGeneralState,
   } = useContext(AppContext);
 
   const onTripEvent = eventType => {
@@ -43,7 +43,7 @@ const TripEvents = () => {
     };
 
     if (currentUser) {
-      setIsMakingApiCall(true);
+      setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
       const { _id } = currentUser;
 
       axios
@@ -61,7 +61,7 @@ const TripEvents = () => {
             },
           })
         )
-        .finally(() => setIsMakingApiCall(false));
+        .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
     } else {
       const updatedHistoryList = sortHistoryListByTimeAndDate(
         [...historyList, tripEvent],

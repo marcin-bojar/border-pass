@@ -11,11 +11,11 @@ const CountryOption = ({ name }) => {
   const {
     userState: { currentUser },
     dataState: { historyList, isSortedDesc, currentCountry },
+    generalState: { isMakingApiCall },
     setUserState,
     setDataState,
     setUiState,
-    isMakingApiCall,
-    setIsMakingApiCall,
+    setGeneralState,
   } = useContext(AppContext);
 
   const handleClick = () => {
@@ -41,7 +41,7 @@ const CountryOption = ({ name }) => {
       };
 
       if (currentUser) {
-        setIsMakingApiCall(true);
+        setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
         const { _id } = currentUser;
 
         axios
@@ -59,7 +59,7 @@ const CountryOption = ({ name }) => {
               },
             })
           )
-          .finally(() => setIsMakingApiCall(false));
+          .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
       } else {
         const updatedHistoryList = sortHistoryListByTimeAndDate(
           [...historyList, borderPass],

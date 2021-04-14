@@ -12,15 +12,15 @@ import './archive.styles.scss';
 const Archive = () => {
   const {
     userState: { currentUser },
+    generalState: { isMakingApiCall },
     setUiState,
-    isMakingApiCall,
-    setIsMakingApiCall,
+    setGeneralState,
   } = useContext(AppContext);
   const [archives, setArchives] = useState([]);
 
   useEffect(() => {
     if (currentUser) {
-      setIsMakingApiCall(true);
+      setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
 
       axios
         .get('/api/tables', getConfig())
@@ -36,7 +36,7 @@ const Archive = () => {
             },
           })
         )
-        .finally(() => setIsMakingApiCall(false));
+        .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
     }
   }, []);
 

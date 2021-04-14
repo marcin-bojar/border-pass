@@ -15,18 +15,19 @@ const CountrySelect = () => {
   const {
     userState: { currentUser },
     dataState: { countries, currentCountry, historyList, isSortedDesc },
+    generalState: { isMakingApiCall },
     setUserState,
     setDataState,
     setUiState,
-    isMakingApiCall,
-    setIsMakingApiCall,
+    setGeneralState,
   } = useContext(AppContext);
 
   const [showAll, setShowAll] = useState(false);
 
   const undoLastEntry = () => {
     if (currentUser) {
-      setIsMakingApiCall(true);
+      setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
+
       const { _id } = currentUser;
       const lastItemId = isSortedDesc
         ? historyList[0]._id
@@ -49,7 +50,7 @@ const CountrySelect = () => {
             },
           });
         })
-        .finally(() => setIsMakingApiCall(false));
+        .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
     } else {
       isSortedDesc ? historyList.shift() : historyList.pop();
       setDataState({ type: 'SET_HISTORY_LIST', payload: [...historyList] });

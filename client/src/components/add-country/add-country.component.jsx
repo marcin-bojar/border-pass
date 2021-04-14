@@ -15,10 +15,10 @@ const AddCountry = () => {
   const {
     userState: { currentUser },
     dataState: { countries },
+    generalState: { isMakingApiCall },
     setDataState,
     setUiState,
-    isMakingApiCall,
-    setIsMakingApiCall,
+    setGeneralState,
   } = useContext(AppContext);
 
   const handleSubmit = e => {
@@ -27,7 +27,7 @@ const AddCountry = () => {
     const name = inputValue.toUpperCase();
     if (!name) return;
 
-    setIsMakingApiCall(true);
+    setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
     const newCountry = { name };
 
     if (currentUser) {
@@ -55,7 +55,7 @@ const AddCountry = () => {
             },
           });
         })
-        .finally(() => setIsMakingApiCall(false));
+        .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
     } else {
       const countryExists = countries.find(el => el.name === name);
 
@@ -64,12 +64,11 @@ const AddCountry = () => {
           type: 'SET_MODAL_DATA',
           payload: { type: 'error', text: 'Ten kraj jest już na liście.' },
         });
-        setIsMakingApiCall(false);
       } else {
         setDataState({ type: 'SET_COUNTRIES', payload: [...countries, { name }] });
         setInputValue('');
-        setIsMakingApiCall(false);
       }
+      setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false });
     }
   };
 

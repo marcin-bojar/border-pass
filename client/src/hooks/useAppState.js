@@ -1,9 +1,10 @@
-import { useState, useEffect, createContext, useReducer } from 'react';
+import { useEffect, createContext, useReducer } from 'react';
 import axios from 'axios';
 
 import { userReducer, USER_INITIAL_STATE } from '../reducers/userReducer';
 import { dataReducer, DATA_INITIAL_STATE } from '../reducers/dataReducer';
 import { uiReducer, UI_INITIAL_STATE } from '../reducers/uiReducer';
+import { generalReducer, GENERAL_INITIAL_STATE } from '../reducers/generalReducer';
 
 import { getConfig, sortUsersBorders } from '../utils';
 import { registerSW } from '../service-worker';
@@ -14,19 +15,11 @@ export const useAppState = () => {
   const [userState, setUserState] = useReducer(userReducer, USER_INITIAL_STATE);
   const [dataState, setDataState] = useReducer(dataReducer, DATA_INITIAL_STATE);
   const [uiState, setUiState] = useReducer(uiReducer, UI_INITIAL_STATE);
+  const [generalState, setGeneralState] = useReducer(generalReducer, GENERAL_INITIAL_STATE);
 
   const { currentUser, token } = userState;
   const { historyList, countries, isSortedDesc } = dataState;
   const { modalData } = uiState;
-
-  //App state
-  const [newVersion, setNewVersion] = useState({
-    status: false,
-    onConfirm: () => {},
-  });
-  const [editMode, setEditMode] = useState(false);
-  const [sendMode, setSendMode] = useState(false);
-  const [isMakingApiCall, setIsMakingApiCall] = useState(false);
 
   useEffect(() => {
     if (!currentUser) localStorage.setItem('borders', JSON.stringify(historyList));
@@ -78,7 +71,7 @@ export const useAppState = () => {
         });
     } else setUserState({ type: 'SET_USER_LOADING', payload: false });
 
-    registerSW(setNewVersion);
+    registerSW(setGeneralState);
   }, []);
 
   return {
@@ -88,13 +81,7 @@ export const useAppState = () => {
     setDataState,
     uiState,
     setUiState,
-    editMode,
-    setEditMode,
-    sendMode,
-    setSendMode,
-    isMakingApiCall,
-    setIsMakingApiCall,
-    newVersion,
-    setNewVersion,
+    generalState,
+    setGeneralState,
   };
 };
