@@ -12,17 +12,17 @@ import { AppContext } from '../../hooks/useAppState';
 import './sign-up.styles.scss';
 
 const SignUp = () => {
+  const {
+    userState: { currentUser, userLoading, authError },
+    setUserState,
+  } = useContext(AppContext);
+
   const [user, setUser] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
-
-  const {
-    userState: { currentUser, userLoading, authError },
-    setUserState,
-  } = useContext(AppContext);
 
   const handleChange = e => {
     const { name, value } = e.target;

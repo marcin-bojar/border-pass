@@ -12,14 +12,15 @@ import { AppContext } from '../../hooks/useAppState';
 import './sign-in.styles.scss';
 
 const SignIn = () => {
-  const [userCredentials, setUserCredentials] = useState({
-    email: '',
-    password: '',
-  });
   const {
     userState: { currentUser, userLoading, authError },
     setUserState,
   } = useContext(AppContext);
+
+  const [userCredentials, setUserCredentials] = useState({
+    email: '',
+    password: '',
+  });
 
   const handleChange = e => {
     const { name, value } = e.target;

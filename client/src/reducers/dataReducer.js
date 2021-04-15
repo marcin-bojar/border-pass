@@ -33,14 +33,14 @@ export const dataReducer = (state, action) => {
     case 'SEND_MODE_ON':
       return {
         ...state,
-        historyList: [...sortHistoryListByTimeAndDate([...state.historyList], true)],
+        historyList: sortHistoryListByTimeAndDate([...state.historyList], true),
         isSortedDesc: false,
       };
 
     case 'SEND_MODE_OFF':
       return {
         ...state,
-        historyList: [...sortHistoryListByTimeAndDate([...state.historyList], false)],
+        historyList: sortHistoryListByTimeAndDate([...state.historyList], false),
         isSortedDesc: true,
       };
 

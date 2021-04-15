@@ -11,7 +11,7 @@ const BordersTable = () => {
     userState: { currentUser },
     dataState: { historyList },
   } = useContext(AppContext);
-  const tableData = [...sortHistoryListByTimeAndDate([...historyList], true)];
+  const tableData = sortHistoryListByTimeAndDate([...historyList], true);
   const tableRef = useRef(null);
 
   useEffect(() => {

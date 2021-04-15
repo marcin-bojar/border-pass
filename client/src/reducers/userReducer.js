@@ -7,11 +7,13 @@ export const USER_INITIAL_STATE = {
 };
 
 export const userReducer = (state, action) => {
+  const { payload } = action;
+
   switch (action.type) {
     case 'SET_USER':
       return {
         ...state,
-        currentUser: action.payload,
+        currentUser: payload,
         guestUser: false,
         authError: null,
         userLoading: false,
@@ -22,17 +24,17 @@ export const userReducer = (state, action) => {
         ...state,
         currentUser: null,
         token: null,
-        guestUser: action.payload,
+        guestUser: payload,
         authError: null,
         userLoading: false,
       };
 
     case 'USER_LOGIN':
-      localStorage.setItem('token', JSON.stringify(action.payload.token));
+      localStorage.setItem('token', JSON.stringify(payload.token));
       return {
         ...state,
-        currentUser: action.payload.user,
-        token: action.payload.token,
+        currentUser: payload.user,
+        token: payload.token,
         userLoading: false,
         guestUser: false,
         authError: false,
@@ -57,13 +59,13 @@ export const userReducer = (state, action) => {
         token: null,
         userLoading: false,
         guestUser: false,
-        authError: action.payload,
+        authError: payload,
       };
 
     case 'SET_USER_LOADING':
       return {
         ...state,
-        userLoading: action.payload,
+        userLoading: payload,
       };
 
     case 'CLEAR_AUTH_ERROR':

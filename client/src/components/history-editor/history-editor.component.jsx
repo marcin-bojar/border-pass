@@ -10,8 +10,8 @@ import './history-editor.styles.scss';
 const HistoryEditor = () => {
   const {
     dataState: { editedItem },
+    generalState: { isMakingApiCall },
     setDataState,
-    isMakingApiCall,
   } = useContext(AppContext);
 
   useEffect(() => {

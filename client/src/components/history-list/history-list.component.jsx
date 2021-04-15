@@ -3,7 +3,6 @@ import React, { useContext, useEffect, createRef } from 'react';
 import HistoryItem from '../history-item/history-item.component';
 
 import { AppContext } from '../../hooks/useAppState';
-import { sortHistoryListByTimeAndDate } from '../../utils';
 
 import './history-list.styles.scss';
 
@@ -11,8 +10,8 @@ const HistoryList = () => {
   const {
     userState: { currentUser },
     dataState: { historyList, isSortedDesc, selection },
+    generalState: { sendMode },
     setDataState,
-    sendMode,
   } = useContext(AppContext);
 
   const itemRefsArray = [];

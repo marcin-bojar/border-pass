@@ -7,8 +7,8 @@ import { AppContext } from '../../hooks/useAppState';
 import './new-version-bar.component.styles.scss';
 
 const NewVersionBar = () => {
-  const [show, setShow] = useState(true);
   const { generalState: newVersionAvailable } = useContext(AppContext);
+  const [show, setShow] = useState(true);
 
   if (!show || !newVersionAvailable.status) {
     return null;
