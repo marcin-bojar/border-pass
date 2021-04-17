@@ -1,7 +1,7 @@
 export const FILTER_INITIAL_STATE = {
-  all: true,
-  archived: false,
-  sent: false,
+  showAll: true,
+  showArchived: false,
+  showSent: false,
 };
 
 export const filterReducer = (state, action) => {
@@ -11,15 +11,15 @@ export const filterReducer = (state, action) => {
 
     case 'SHOW_ARCHIVED':
       return {
-        all: false,
-        archived: true,
-        sent: false,
+        showAll: false,
+        showArchived: true,
+        showSent: false,
       };
     case 'SHOW_SENT':
       return {
-        all: false,
-        archived: false,
-        sent: true,
+        showAll: false,
+        showArchived: false,
+        showSent: true,
       };
     default:
       return state;

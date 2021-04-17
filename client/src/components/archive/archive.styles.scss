@@ -20,4 +20,10 @@
       border-bottom: 1px solid $color-text;
     }
   }
+
+  &__info {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 500;
+  }
 }

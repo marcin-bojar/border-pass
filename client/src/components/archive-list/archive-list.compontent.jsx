@@ -9,7 +9,6 @@ const ArchiveList = ({ list }) => {
     <ul className="archive-list">
       {list.map((el, i) => {
         const data = { ...el, i };
-        console.log(data);
         return <ArchiveItem key={i} data={data} />;
       })}
     </ul>
