@@ -1,0 +1,30 @@
+@import '../../sass/variables';
+
+.archive-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background-color: $color-white;
+  padding: 1rem;
+  border-radius: $border-radius-primary;
+  color: inherit;
+
+  &:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+
+  &__nr {
+    color: $color-orange;
+    margin-right: 0.5rem;
+  }
+
+  &__status {
+    color: $color-red-error;
+
+    &.sent {
+      color: $color-green-success;
+    }
+  }
+}

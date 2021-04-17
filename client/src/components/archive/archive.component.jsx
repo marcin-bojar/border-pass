@@ -2,7 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
-// import Loader from '../loader/loader.component';
+import Loader from '../loader/loader.component';
+import ArchiveList from '../archive-list/archive-list.compontent';
+import CustomButton from '../custom-button/custom-button.component';
 
 import { getConfig } from '../../utils';
 import { AppContext } from '../../hooks/useAppState';
@@ -40,18 +42,20 @@ const Archive = () => {
     }
   }, []);
 
-  // if (isMakingApiCall) return <Loader />;
+  useEffect(() => console.log(archives), [archives]);
+
+  if (isMakingApiCall) return <Loader />;
   if (!currentUser) return <Redirect to="/" />;
 
   return (
     <div className="archive">
-      <p>
-        Tu niedługo pojawią się wszystkie Twoje zarchiwizowane dane. <br /> Pracujemy nad tym :D
-      </p>
-      {/* <h2>Wersja robocza danych</h2>
-      {archives.map(table => (
-        <p>{table.createdAt}</p>
-      ))} */}
+      <h2 className="archive__title">Twoje archiwum</h2>
+      <div className="archive__filters">
+        <CustomButton inline>Wszystkie</CustomButton>
+        <CustomButton inline>Nie wysłane</CustomButton>
+        <CustomButton inline>Wysłane</CustomButton>
+      </div>
+      <ArchiveList list={archives} />
     </div>
   );
 };
