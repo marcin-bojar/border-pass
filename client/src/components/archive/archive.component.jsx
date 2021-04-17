@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useReducer } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
@@ -8,6 +8,7 @@ import CustomButton from '../custom-button/custom-button.component';
 
 import { getConfig } from '../../utils';
 import { AppContext } from '../../hooks/useAppState';
+import { filterReducer, FILTER_INITIAL_STATE } from '../../reducers/filterReducer';
 
 import './archive.styles.scss';
 
@@ -19,6 +20,7 @@ const Archive = () => {
     setGeneralState,
   } = useContext(AppContext);
   const [archives, setArchives] = useState([]);
+  const [filterState, setFilterState] = useReducer(filterReducer, FILTER_INITIAL_STATE);
 
   useEffect(() => {
     if (currentUser) {
@@ -51,9 +53,27 @@ const Archive = () => {
     <div className="archive">
       <h2 className="archive__title">Twoje archiwum</h2>
       <div className="archive__filters">
-        <CustomButton inline>Wszystkie</CustomButton>
-        <CustomButton inline>Nie wysłane</CustomButton>
-        <CustomButton inline>Wysłane</CustomButton>
+        <CustomButton
+          active={filterState.all}
+          inline
+          handleClick={() => setFilterState({ type: 'SHOW_ALL' })}
+        >
+          Wszystkie
+        </CustomButton>
+        <CustomButton
+          active={filterState.archived}
+          inline
+          handleClick={() => setFilterState({ type: 'SHOW_ARCHIVED' })}
+        >
+          Nie wysłane
+        </CustomButton>
+        <CustomButton
+          active={filterState.sent}
+          inline
+          handleClick={() => setFilterState({ type: 'SHOW_SENT' })}
+        >
+          Wysłane
+        </CustomButton>
       </div>
       <ArchiveList list={archives} />
     </div>

@@ -125,3 +125,24 @@
     }
   }
 }
+
+@mixin list-items-common-styles {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background-color: $color-white;
+  padding: 1rem;
+  border-radius: $border-radius-primary;
+  color: inherit;
+
+  &:not(:last-child) {
+    margin-bottom: 1.25rem;
+  }
+
+  &__nr {
+    color: $color-orange;
+    margin-right: 3px;
+  }
+}

@@ -16,6 +16,8 @@
 
     & .custom-button {
       font-size: 1.7rem;
+      color: $color-text;
+      border-bottom: 1px solid $color-text;
     }
   }
 }

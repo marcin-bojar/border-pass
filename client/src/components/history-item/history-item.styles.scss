@@ -1,18 +1,11 @@
+@import '../../sass//mixins';
 @import '../../sass/variables';
 
 .history-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.8rem;
-  font-weight: 700;
-  background-color: $color-white;
-  padding: 1rem;
-  border-radius: $border-radius-primary;
-  color: inherit;
+  @include list-items-common-styles;
 
-  &:not(:last-child) {
-    margin-bottom: 1.25rem;
+  &__time {
+    color: $color-primary;
   }
 
   &.trip-start {
@@ -42,13 +35,5 @@
     .history-item__nr {
       color: $color-white;
     }
-  }
-
-  &__nr {
-    color: $color-orange;
-  }
-
-  &__time {
-    color: $color-primary;
   }
 }
