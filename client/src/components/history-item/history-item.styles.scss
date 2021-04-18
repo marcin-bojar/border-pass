@@ -25,4 +25,8 @@
       $color-green-transparent
     );
   }
+
+  &.selected {
+    background-image: none;
+  }
 }

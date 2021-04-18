@@ -9,16 +9,30 @@ import './archive-list.styles.scss';
 const ArchiveList = ({ list }) => {
   const {
     dataState: { selectedArchive },
+    setDataState,
   } = useContext(AppContext);
 
   const itemRefsArray = [];
-
-  useEffect(() => {
+  const removeSelectedClass = () =>
     itemRefsArray.forEach(itemRef => {
       itemRef.current.classList.remove('selected');
     });
+
+  useEffect(() => {
+    removeSelectedClass();
     if (selectedArchive) itemRefsArray[selectedArchive.i].current.classList.add('selected');
   }, [selectedArchive]);
+
+  useEffect(() => {
+    if (selectedArchive) {
+      removeSelectedClass();
+
+      const selectedIndex = list.findIndex(el => el._id === selectedArchive._id);
+      if (selectedIndex > -1) itemRefsArray[selectedIndex].current.classList.add('selected');
+    }
+  }, [list]);
+
+  useEffect(() => () => setDataState({ type: 'SET_SELECTED_ARCHIVE', payload: null }), []);
 
   return (
     <ul className="archive-list">
