@@ -14,6 +14,7 @@ import './archive.styles.scss';
 
 const Archive = () => {
   const {
+    dataState: { selectedArchive },
     userState: { currentUser },
     generalState: { isMakingApiCall },
     setUiState,
@@ -84,9 +85,10 @@ const Archive = () => {
           Wysłane
         </CustomButton>
       </div>
+      {selectedArchive && <div className="archive__options">Tu będą opcje</div>}
       {!archives.length ? (
         <div className="archive__info">
-          <p>Nie masz jeszcze nic w archiwum.</p>
+          <p>Nic tu jeszcze nie masz.</p>
         </div>
       ) : (
         <ArchiveList list={archives} />

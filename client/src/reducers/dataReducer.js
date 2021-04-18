@@ -9,6 +9,7 @@ export const DATA_INITIAL_STATE = {
   editedItem: null,
   isSortedDesc: Boolean(localStorage.getItem('isSortedDesc') === 'true') || false,
   selection: { startIndex: null, endIndex: null },
+  selectedArchive: null,
 };
 
 export const dataReducer = (state, action) => {
@@ -94,6 +95,13 @@ export const dataReducer = (state, action) => {
       return {
         ...state,
         editedItem: payload,
+      };
+
+    case 'SET_SELECTED_ARCHIVE':
+      console.log(payload);
+      return {
+        ...state,
+        selectedArchive: payload,
       };
 
     default:

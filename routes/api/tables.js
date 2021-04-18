@@ -36,6 +36,7 @@ router.get('/', auth, (req, res) => {
   const { user } = req;
 
   Table.find({ user: user.id })
+    .select('-createdAt -__v -html')
     .then(tables => res.json({ success: true, data: tables }))
     .catch(() =>
       res.status(400).json({

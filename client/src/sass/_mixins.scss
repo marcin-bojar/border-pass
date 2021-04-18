@@ -145,4 +145,17 @@
     color: $color-orange;
     margin-right: 3px;
   }
+
+  &.selected {
+    background-color: $color-selection;
+    background-image: none;
+    color: white;
+
+    .history-item__time,
+    .history-item__nr,
+    .archive-item__nr,
+    .archive-item__status {
+      color: $color-white;
+    }
+  }
 }
