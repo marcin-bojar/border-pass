@@ -1,4 +1,4 @@
-import React, { useState, useContext, forwardRef, useEffect } from 'react';
+import React, { useContext, forwardRef } from 'react';
 
 import { AppContext } from '../../hooks/useAppState';
 
@@ -9,7 +9,7 @@ const ArchiveItem = forwardRef(({ data, ...props }, ref) => {
     dataState: { selectedArchive },
     setDataState,
   } = useContext(AppContext);
-  const { i, borders, status } = data;
+  const { index, borders, status } = data;
   const isSent = status === 'sent';
 
   return (
@@ -24,7 +24,7 @@ const ArchiveItem = forwardRef(({ data, ...props }, ref) => {
       {...props}
     >
       <div className="archive-item__block">
-        <span className="archive-item__nr">{i + 1}.</span>
+        <span className="archive-item__nr">{index + 1}.</span>
         <span className="archive-item__range">{`${borders[0].date} - ${
           borders[borders.length - 1].date
         }`}</span>

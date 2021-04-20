@@ -46,4 +46,24 @@ router.get('/', auth, (req, res) => {
     );
 });
 
+// @route DELETE /api/tables/:tableId
+// @desc Delete user's table
+// @private
+router.delete('/:tableId', auth, (req, res) => {
+  const { user } = req;
+  const { tableId } = req.params;
+
+  Table.findByIdAndDelete(tableId)
+    .then(table => {
+      if (table !== null) return res.json({ success: true, data: table });
+      else return res.status(404).json({ success: false, error: 'Brak danych do usunięcia.' });
+    })
+    .catch(() =>
+      res.status(500).json({
+        success: false,
+        error: 'Coś poszło nie tak, spróbuj ponownie.',
+      })
+    );
+});
+
 module.exports = router;

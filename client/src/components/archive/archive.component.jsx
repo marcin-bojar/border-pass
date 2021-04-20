@@ -85,7 +85,12 @@ const Archive = () => {
           Wysłane
         </CustomButton>
       </div>
-      {selectedArchive && <div className="archive__options">Tu będą opcje</div>}
+      {selectedArchive && (
+        <div className="archive__options">
+          <CustomButton disabled={selectedArchive.status === 'sent'}>Wyślij</CustomButton>
+          <CustomButton clear>Usuń</CustomButton>
+        </div>
+      )}
       {!archives.length ? (
         <div className="archive__info">
           <p>Nic tu jeszcze nie masz.</p>

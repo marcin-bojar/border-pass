@@ -20,7 +20,7 @@ const ArchiveList = ({ list }) => {
 
   useEffect(() => {
     removeSelectedClass();
-    if (selectedArchive) itemRefsArray[selectedArchive.i].current.classList.add('selected');
+    if (selectedArchive) itemRefsArray[selectedArchive.index].current.classList.add('selected');
   }, [selectedArchive]);
 
   useEffect(() => {
@@ -36,11 +36,11 @@ const ArchiveList = ({ list }) => {
 
   return (
     <ul className="archive-list">
-      {list.map((el, i) => {
+      {list.map((el, index) => {
         const itemRef = createRef();
         itemRefsArray.push(itemRef);
-        const data = { ...el, i };
-        return <ArchiveItem ref={itemRef} key={i} data={data} />;
+        const data = { ...el, index };
+        return <ArchiveItem ref={itemRef} key={index} data={data} />;
       })}
     </ul>
   );
