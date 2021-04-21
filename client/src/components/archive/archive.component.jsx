@@ -24,6 +24,36 @@ const Archive = () => {
   const [allArchives, setAllArchives] = useState(null);
   const [filterState, setFilterState] = useReducer(filterReducer, FILTER_INITIAL_STATE);
 
+  const deleteArchiveItem = () => {
+    setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
+    const { _id } = selectedArchive;
+
+    axios
+      .delete(`/api/tables/${_id}`, getConfig())
+      .then(res => {
+        const updatedArchives = archives.filter(el => el._id !== res.data.data._id);
+        setArchives(updatedArchives);
+        setAllArchives(updatedArchives);
+        setUiState({
+          type: 'SET_MODAL_DATA',
+          payload: {
+            type: 'info',
+            text: 'Element został usunięty z archiwum.',
+          },
+        });
+      })
+      .catch(err =>
+        setUiState({
+          type: 'SET_MODAL_DATA',
+          payload: {
+            type: 'error',
+            text: err?.response?.data.error || 'Coś poszło nie tak spróbuj ponownie.',
+          },
+        })
+      )
+      .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
+  };
+
   useEffect(() => {
     if (currentUser) {
       setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
@@ -87,8 +117,25 @@ const Archive = () => {
       </div>
       {selectedArchive && (
         <div className="archive__options">
-          <CustomButton disabled={selectedArchive.status === 'sent'}>Wyślij</CustomButton>
-          <CustomButton clear>Usuń</CustomButton>
+          <CustomButton disabled={selectedArchive.status === 'sent' || isMakingApiCall}>
+            Wyślij
+          </CustomButton>
+          <CustomButton
+            clear
+            disabled={isMakingApiCall}
+            handleClick={() =>
+              setUiState({
+                type: 'SET_MODAL_DATA',
+                payload: {
+                  type: 'confirm',
+                  text: 'Usuwasz wybrany element z listy. Czy chcesz kontynuować?',
+                  onConfirm: deleteArchiveItem,
+                },
+              })
+            }
+          >
+            Usuń
+          </CustomButton>
         </div>
       )}
       {!archives.length ? (
