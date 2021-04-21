@@ -53,10 +53,23 @@ router.delete('/:tableId', auth, (req, res) => {
   const { user } = req;
   const { tableId } = req.params;
 
-  Table.findByIdAndDelete(tableId)
+  Table.findOne({ _id: tableId, user: user.id })
     .then(table => {
-      if (table !== null) return res.json({ success: true, data: table });
-      else return res.status(404).json({ success: false, error: 'Brak danych do usunięcia.' });
+      if (table) {
+        Table.deleteOne(table)
+          .then(() => res.json({ success: true, data: table }))
+          .catch(() =>
+            res
+              .status(400)
+              .json({ success: false, error: 'Nie udało się usunąć tablicy, spróbuj ponownie.' })
+          );
+      } else
+        res
+          .status(404)
+          .json({
+            success: false,
+            error: 'Ta tablica nie istnieje w archiwum dla danego użytkownika.',
+          });
     })
     .catch(() =>
       res.status(500).json({
