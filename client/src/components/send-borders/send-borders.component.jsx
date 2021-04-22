@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 import HistoryList from '../history-list/history-list.component';
@@ -10,7 +10,7 @@ import { getConfig } from '../../utils';
 
 import './send-borders.styles.scss';
 
-const SendBorders = () => {
+const SendBorders = ({ location }) => {
   const {
     userState: { currentUser },
     dataState: { historyList, selection },
@@ -20,7 +20,7 @@ const SendBorders = () => {
     setUiState,
     setGeneralState,
   } = useContext(AppContext);
-  const [listToSend, setListToSend] = useState([]);
+  const [listToSend, setListToSend] = useState(location.state || historyList);
 
   useEffect(() => {
     setGeneralState({ type: 'TOGGLE_SEND_MODE' });
@@ -184,9 +184,9 @@ const SendBorders = () => {
           Archiwizuj dane
         </CustomButton>
       </div>
-      <HistoryList />
+      <HistoryList list={listToSend} />
     </div>
   );
 };
 
-export default SendBorders;
+export default withRouter(SendBorders);

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, createRef } from 'react';
+import React, { useContext, useEffect, createRef, useState } from 'react';
 
 import HistoryItem from '../history-item/history-item.component';
 
@@ -6,15 +6,20 @@ import { AppContext } from '../../hooks/useAppState';
 
 import './history-list.styles.scss';
 
-const HistoryList = () => {
+const HistoryList = ({ list }) => {
   const {
     userState: { currentUser },
     dataState: { historyList, isSortedDesc, selection },
     generalState: { sendMode },
     setDataState,
   } = useContext(AppContext);
+  const [listToDisplay, setListToDisplay] = useState(list || historyList);
 
   const itemRefsArray = [];
+
+  useEffect(() => {
+    if (!list) setListToDisplay(historyList);
+  }, [historyList]);
 
   useEffect(() => {
     if (currentUser && sendMode && isSortedDesc) {
@@ -43,7 +48,7 @@ const HistoryList = () => {
 
   return (
     <ul className="history-list">
-      {historyList.map((el, i) => {
+      {listToDisplay.map((el, i) => {
         const itemRef = createRef();
         itemRefsArray.push(itemRef);
         const data = { ...el, i };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useReducer } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 import Loader from '../loader/loader.component';
@@ -12,11 +12,12 @@ import { filterReducer, FILTER_INITIAL_STATE } from '../../reducers/filterReduce
 
 import './archive.styles.scss';
 
-const Archive = () => {
+const Archive = ({ history }) => {
   const {
     dataState: { selectedArchive },
     userState: { currentUser },
     generalState: { isMakingApiCall },
+    setDataState,
     setUiState,
     setGeneralState,
   } = useContext(AppContext);
@@ -117,7 +118,12 @@ const Archive = () => {
       </div>
       {selectedArchive && (
         <div className="archive__options">
-          <CustomButton disabled={selectedArchive.status === 'sent' || isMakingApiCall}>
+          <CustomButton
+            disabled={selectedArchive.status === 'sent' || isMakingApiCall}
+            handleClick={() => {
+              history.push('/send', selectedArchive.borders);
+            }}
+          >
             Wyślij
           </CustomButton>
           <CustomButton
@@ -149,4 +155,4 @@ const Archive = () => {
   );
 };
 
-export default Archive;
+export default withRouter(Archive);
