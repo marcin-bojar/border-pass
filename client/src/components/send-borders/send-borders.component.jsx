@@ -20,7 +20,9 @@ const SendBorders = ({ location }) => {
     setUiState,
     setGeneralState,
   } = useContext(AppContext);
-  const [listToSend, setListToSend] = useState(location.state || historyList);
+  const [listToDisplay, setListToDisplay] = useState(location.state || historyList);
+  const [listToSend, setListToSend] = useState(location.state || []);
+  const sendingDataFromArchive = location.state !== undefined;
 
   useEffect(() => {
     setGeneralState({ type: 'TOGGLE_SEND_MODE' });
@@ -32,11 +34,16 @@ const SendBorders = ({ location }) => {
   }, []);
 
   useEffect(() => {
-    const { startIndex, endIndex } = selection;
+    console.log(listToSend);
+  }, [listToSend]);
 
-    if (startIndex !== null && endIndex !== null) {
-      setListToSend(historyList.slice(startIndex, endIndex + 1));
-    } else setListToSend([]);
+  useEffect(() => {
+    const { startIndex, endIndex } = selection;
+    if (!sendingDataFromArchive) {
+      if (startIndex !== null && endIndex !== null) {
+        setListToSend(historyList.slice(startIndex, endIndex + 1));
+      } else setListToSend([]);
+    }
   }, [selection]);
 
   const sendAndArchive = () => {
@@ -80,6 +87,7 @@ const SendBorders = ({ location }) => {
       })
       .then(res => {
         setUserState({ type: 'SET_USER', payload: res.data.data });
+        setListToDisplay([...res.data.data.borders]);
         setUiState({
           type: 'SET_MODAL_DATA',
           payload: {
@@ -126,6 +134,8 @@ const SendBorders = ({ location }) => {
         return axios.put(`/api/users/${_id}/borders`, updatedBorders, getConfig());
       })
       .then(res => {
+        setUserState({ type: 'SET_USER', payload: res.data.data });
+        setListToDisplay([...res.data.data.borders]);
         setUiState({
           type: 'SET_MODAL_DATA',
           payload: {
@@ -133,7 +143,6 @@ const SendBorders = ({ location }) => {
             text: 'Dane zostały zarchiwizowane.',
           },
         });
-        setUserState({ type: 'SET_USER', payload: res.data.data });
         setDataState({ type: 'CLEAR_SELECTION' });
       })
       .catch(err => {
@@ -166,7 +175,7 @@ const SendBorders = ({ location }) => {
           handleClick={() =>
             setDataState({
               type: 'SET_SELECTION',
-              payload: { startIndex: 0, endIndex: historyList.length - 1 },
+              payload: { startIndex: 0, endIndex: listToDisplay.length - 1 },
             })
           }
         >
@@ -184,7 +193,7 @@ const SendBorders = ({ location }) => {
           Archiwizuj dane
         </CustomButton>
       </div>
-      <HistoryList list={listToSend} />
+      <HistoryList list={listToDisplay} />
     </div>
   );
 };

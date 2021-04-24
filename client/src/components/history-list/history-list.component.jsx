@@ -19,7 +19,8 @@ const HistoryList = ({ list }) => {
 
   useEffect(() => {
     if (!list) setListToDisplay(historyList);
-  }, [historyList]);
+    else setListToDisplay(list);
+  }, [list, historyList]);
 
   useEffect(() => {
     if (currentUser && sendMode && isSortedDesc) {
