@@ -20,8 +20,8 @@ const SendBorders = ({ history, location }) => {
     setUiState,
     setGeneralState,
   } = useContext(AppContext);
-  const [listToDisplay, setListToDisplay] = useState(location.state || historyList);
-  const [listToSend, setListToSend] = useState(location.state || []);
+  const [listToDisplay, setListToDisplay] = useState(location.state?.archiveBorders || historyList);
+  const [listToSend, setListToSend] = useState(location.state?.archiveBorders || []);
   const sendingDataFromArchive = location.state !== undefined;
 
   useEffect(() => {
@@ -157,6 +157,52 @@ const SendBorders = ({ history, location }) => {
       .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
   };
 
+  const sendArchivedItem = () => {
+    const {
+      _id,
+      company: { companyEmail },
+    } = currentUser;
+    const { archiveId } = location.state;
+
+    if (!companyEmail) {
+      setUiState({
+        type: 'SET_MODAL_DATA',
+        payload: {
+          type: 'error',
+          text: 'Aby wysłać zestawienie, zapisz adres email Twojej firmy w ustawieniach.',
+        },
+      });
+      return;
+    }
+
+    setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
+
+    axios
+      .post(`/api/users/${_id}/send`, { borders: listToSend, email: companyEmail }, getConfig())
+      .then(() => axios.delete(`/api/tables/${archiveId}/`, getConfig()))
+      .then(() => {
+        setListToDisplay([]);
+        setListToSend([]);
+        setUiState({
+          type: 'SET_MODAL_DATA',
+          payload: {
+            type: 'info',
+            text: `Zestawienie archiwalne wysłane.`,
+          },
+        });
+      })
+      .catch(err => {
+        setUiState({
+          type: 'SET_MODAL_DATA',
+          payload: {
+            type: 'error',
+            text: err?.response?.data.error || 'Coś poszło nie tak, spróbuj ponownie.',
+          },
+        });
+      })
+      .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
+  };
+
   if (!currentUser) return <Redirect to="/" />;
 
   return (
@@ -188,7 +234,13 @@ const SendBorders = ({ history, location }) => {
         </div>
       )}
       <div className="send-borders__button-wrapper">
-        <CustomButton disabled={isMakingApiCall || !listToSend.length} handleClick={sendAndArchive}>
+        <CustomButton
+          disabled={isMakingApiCall || !listToSend.length}
+          handleClick={() => {
+            if (sendingDataFromArchive) sendArchivedItem();
+            else sendAndArchive();
+          }}
+        >
           {sendingDataFromArchive ? 'Wyślij' : 'Wyślij i archiwizuj'}
         </CustomButton>
         <CustomButton

@@ -98,7 +98,6 @@ export const dataReducer = (state, action) => {
       };
 
     case 'SET_SELECTED_ARCHIVE':
-      console.log(payload);
       return {
         ...state,
         selectedArchive: payload,

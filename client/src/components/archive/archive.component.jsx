@@ -17,7 +17,6 @@ const Archive = ({ history }) => {
     dataState: { selectedArchive },
     userState: { currentUser },
     generalState: { isMakingApiCall },
-    setDataState,
     setUiState,
     setGeneralState,
   } = useContext(AppContext);
@@ -121,7 +120,10 @@ const Archive = ({ history }) => {
           <CustomButton
             disabled={selectedArchive.status === 'sent' || isMakingApiCall}
             handleClick={() => {
-              history.push('/send', selectedArchive.borders);
+              history.push('/send', {
+                archiveBorders: selectedArchive.borders,
+                archiveId: selectedArchive._id,
+              });
             }}
           >
             Wyślij
