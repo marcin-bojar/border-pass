@@ -8,7 +8,7 @@ const HistoryItem = forwardRef(({ data }, ref) => {
   const { type, from, to, time, date, i } = data;
   const {
     dataState: { historyList, isSortedDesc, selection },
-    generalState: { editMode, sendMode },
+    generalState: { editMode, sendMode, isSendingArchive },
     setDataState,
   } = useContext(AppContext);
 
@@ -35,6 +35,7 @@ const HistoryItem = forwardRef(({ data }, ref) => {
       onClick={() => {
         if (editMode) setDataState({ type: 'SET_EDITED_ITEM', payload: data });
         else if (sendMode) {
+          if (isSendingArchive) return;
           setSelected(!selected);
           handleSelection();
         }

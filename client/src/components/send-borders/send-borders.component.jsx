@@ -10,7 +10,7 @@ import { getConfig } from '../../utils';
 
 import './send-borders.styles.scss';
 
-const SendBorders = ({ location }) => {
+const SendBorders = ({ history, location }) => {
   const {
     userState: { currentUser },
     dataState: { historyList, selection },
@@ -26,25 +26,27 @@ const SendBorders = ({ location }) => {
 
   useEffect(() => {
     setGeneralState({ type: 'TOGGLE_SEND_MODE' });
+    if (sendingDataFromArchive) setGeneralState({ type: 'SET_IS_SENDING_ARCHIVE', payload: true });
 
     return () => {
       setGeneralState({ type: 'TOGGLE_SEND_MODE' });
+      setGeneralState({ type: 'SET_IS_SENDING_ARCHIVE', payload: false });
       setDataState({ type: 'CLEAR_SELECTION' });
     };
   }, []);
 
   useEffect(() => {
-    console.log(listToSend);
-  }, [listToSend]);
-
-  useEffect(() => {
     const { startIndex, endIndex } = selection;
     if (!sendingDataFromArchive) {
       if (startIndex !== null && endIndex !== null) {
-        setListToSend(historyList.slice(startIndex, endIndex + 1));
+        setListToSend(listToDisplay.slice(startIndex, endIndex + 1));
       } else setListToSend([]);
     }
   }, [selection]);
+
+  useEffect(() => {
+    if (!sendingDataFromArchive) setListToDisplay([...historyList]);
+  }, [historyList]);
 
   const sendAndArchive = () => {
     if (!listToSend.length) {
@@ -87,7 +89,6 @@ const SendBorders = ({ location }) => {
       })
       .then(res => {
         setUserState({ type: 'SET_USER', payload: res.data.data });
-        setListToDisplay([...res.data.data.borders]);
         setUiState({
           type: 'SET_MODAL_DATA',
           payload: {
@@ -135,7 +136,6 @@ const SendBorders = ({ location }) => {
       })
       .then(res => {
         setUserState({ type: 'SET_USER', payload: res.data.data });
-        setListToDisplay([...res.data.data.borders]);
         setUiState({
           type: 'SET_MODAL_DATA',
           payload: {
@@ -170,27 +170,35 @@ const SendBorders = ({ location }) => {
         <p className="send-borders__paragraph">2. Wyślij i/lub archiwizuj wybrane dane.</p>
         <p className="send-borders__paragraph">Dane w archiwum dostępne są przez 6 miesięcy.</p>
       </div>
-      <div className="send-borders__button-wrapper">
-        <CustomButton
-          handleClick={() =>
-            setDataState({
-              type: 'SET_SELECTION',
-              payload: { startIndex: 0, endIndex: listToDisplay.length - 1 },
-            })
-          }
-        >
-          Zaznacz wszystko
-        </CustomButton>
-        <CustomButton handleClick={() => setDataState({ type: 'CLEAR_SELECTION' })}>
-          Usuń zaznaczenie
-        </CustomButton>
-      </div>
+      {sendingDataFromArchive ? null : (
+        <div className="send-borders__button-wrapper">
+          <CustomButton
+            handleClick={() =>
+              setDataState({
+                type: 'SET_SELECTION',
+                payload: { startIndex: 0, endIndex: listToDisplay.length - 1 },
+              })
+            }
+          >
+            Zaznacz wszystko
+          </CustomButton>
+          <CustomButton handleClick={() => setDataState({ type: 'CLEAR_SELECTION' })}>
+            Usuń zaznaczenie
+          </CustomButton>
+        </div>
+      )}
       <div className="send-borders__button-wrapper">
         <CustomButton disabled={isMakingApiCall || !listToSend.length} handleClick={sendAndArchive}>
-          Wyślij i archiwizuj
+          {sendingDataFromArchive ? 'Wyślij' : 'Wyślij i archiwizuj'}
         </CustomButton>
-        <CustomButton disabled={isMakingApiCall || !listToSend.length} handleClick={onlyArchive}>
-          Archiwizuj dane
+        <CustomButton
+          disabled={isMakingApiCall || !listToSend.length}
+          handleClick={() => {
+            if (!sendingDataFromArchive) onlyArchive();
+            else history.push('/archive');
+          }}
+        >
+          {sendingDataFromArchive ? 'Anuluj' : 'Archiwizuj dane'}
         </CustomButton>
       </div>
       <HistoryList list={listToDisplay} />

@@ -5,6 +5,7 @@ export const GENERAL_INITIAL_STATE = {
   },
   editMode: false,
   sendMode: false,
+  isSendingArchive: false,
   isMakingApiCall: false,
 };
 
@@ -40,6 +41,12 @@ export const generalReducer = (state, action) => {
       return {
         ...state,
         sendMode: !state.sendMode,
+      };
+
+    case 'SET_IS_SENDING_ARCHIVE':
+      return {
+        ...state,
+        isSendingArchive: payload,
       };
 
     case 'SET_IS_MAKING_API_CALL':

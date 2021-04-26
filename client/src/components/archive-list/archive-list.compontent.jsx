@@ -13,10 +13,11 @@ const ArchiveList = ({ list }) => {
   } = useContext(AppContext);
 
   const itemRefsArray = [];
-  const removeSelectedClass = () =>
+  const removeSelectedClass = () => {
     itemRefsArray.forEach(itemRef => {
       itemRef.current.classList.remove('selected');
     });
+  };
 
   useEffect(() => {
     removeSelectedClass();
