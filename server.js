@@ -3,10 +3,12 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const path = require('path');
 const compression = require('compression');
+const secure = require('express-sslify');
 
 const app = express();
 app.use(express.json());
 app.use(compression());
+app.use(secure.HTTPS({ trustProtoHeader: true }));
 
 //Connect to MongoDB
 mongoose
