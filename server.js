@@ -2,10 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const path = require('path');
+const compression = require('compression');
 
 const app = express();
-
 app.use(express.json());
+app.use(compression());
 
 //Connect to MongoDB
 mongoose
