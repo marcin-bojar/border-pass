@@ -62,6 +62,7 @@ const HistoryEditorForm = () => {
         .put(`/api/users/${userId}/borders/${borderId}`, updatedBorderPass, getConfig())
         .then(res => {
           setUserState({ type: 'SET_USER', payload: res.data.data });
+          setError(null);
         })
         .catch(err => setError(err?.response?.data.error || 'Coś poszło nie tak spróbuj ponownie.'))
         .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));

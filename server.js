@@ -8,7 +8,6 @@ const secure = require('express-sslify');
 const app = express();
 app.use(express.json());
 app.use(compression());
-app.use(secure.HTTPS({ trustProtoHeader: true }));
 
 //Connect to MongoDB
 mongoose
@@ -28,9 +27,10 @@ app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/tables', require('./routes/api/tables'));
 
-//Serve static assets in production
+//Serve static assets and enforce https in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/dist'));
+  app.use(secure.HTTPS({ trustProtoHeader: true }));
 
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
