@@ -46,10 +46,7 @@ const CountryOption = ({ name }) => {
 
         axios
           .post(`/api/users/${_id}/borders`, borderPass, getConfig())
-          .then(res => {
-            setUserState({ type: 'SET_USER', payload: res.data.data });
-            return axios.post('/api/borders', { ...borderPass, user: _id });
-          })
+          .then(res => setUserState({ type: 'SET_USER', payload: res.data.data }))
           .catch(err =>
             setUiState({
               type: 'SET_MODAL_DATA',

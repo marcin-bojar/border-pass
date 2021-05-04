@@ -29,26 +29,6 @@ router.get('/:id', (req, res) => {
     .catch(err => res.status(400).json({ success: false, error: err.message }));
 });
 
-// @route POST /api/borders
-// @desc Post new border crossing
-// @public
-router.post('/', (req, res) => {
-  const newBorder = new Border({
-    type: req.body.type,
-    from: req.body.from,
-    to: req.body.to,
-    time: req.body.time,
-    date: req.body.date,
-    timestamp: req.body.timestamp,
-    user: req.body.user,
-  });
-
-  newBorder
-    .save()
-    .then(border => res.status(200).json({ success: true, data: border }))
-    .catch(err => res.status(400).json({ success: false, error: err.message }));
-});
-
 // @route PUT /api/borders/:id
 // @desc Update border crossing
 // @public
