@@ -47,15 +47,22 @@ const CountryOption = ({ name }) => {
         axios
           .post(`/api/users/${_id}/borders`, borderPass, getConfig())
           .then(res => setUserState({ type: 'SET_USER', payload: res.data.data }))
-          .catch(err =>
+          .catch(err => {
             setUiState({
               type: 'SET_MODAL_DATA',
               payload: {
                 type: 'error',
-                text: err?.response?.data.error || 'Coś poszło nie tak spróbuj ponownie.',
+                text: err?.response?.data.error || 'Coś poszło nie tak, spróbuj ponownie.',
               },
-            })
-          )
+            });
+
+            if (err?.response?.status === 401) {
+              setUserState({
+                type: 'USER_AUTH_ERROR',
+                payload: err.response.data.error || 'Coś poszło nie tak, spróbuj ponownie.',
+              });
+            }
+          })
           .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
       } else {
         const updatedHistoryList = sortHistoryListByTimeAndDate(

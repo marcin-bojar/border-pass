@@ -16,34 +16,29 @@ const validateEmail = require('../../middlewares/validateEmail.js');
 // @route POST /api/users/:userId/borders
 // @desc Post new border crossing to user's borders array
 // @private
-router.post('/:userId/borders', auth, (req, res) => {
-  let data;
-  User.findById(req.user.id)
-    .select('-password -__v')
-    .then(user => {
-      user.borders.push(req.body);
-      return user.save();
-    })
-    .then(savedUser => {
-      data = savedUser;
-      const newBorder = new Border({
-        type: req.body.type,
-        from: req.body.from,
-        to: req.body.to,
-        time: req.body.time,
-        date: req.body.date,
-        timestamp: req.body.timestamp,
-        user: req.user.id,
-      });
-      return newBorder.save();
-    })
-    .then(() => res.json({ success: true, data }))
-    .catch(() =>
-      res.status(400).json({
-        success: false,
-        error: 'Nie udało się dodać wpisu, spróbuj ponownie.',
-      })
-    );
+router.post('/:userId/borders', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password -__v');
+    user.borders.push(req.body);
+    const savedUser = await user.save();
+
+    const newBorder = new Border({
+      type: req.body.type,
+      from: req.body.from,
+      to: req.body.to,
+      time: req.body.time,
+      date: req.body.date,
+      timestamp: req.body.timestamp,
+      user: req.user.id,
+    });
+    await newBorder.save();
+    return res.json({ success: true, data: savedUser });
+  } catch {
+    res.status(500).json({
+      success: false,
+      error: 'Nie udało się dodać wpisu, spróbuj ponownie.',
+    });
+  }
 });
 
 // @route DELETE /api/users/:userId/borders/undo
