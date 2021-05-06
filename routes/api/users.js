@@ -20,7 +20,7 @@ router.post('/:userId/borders', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
     user.borders.push(req.body);
-    const savedUser = await user.save();
+    await user.save();
 
     const newBorder = new Border({
       type: req.body.type,
@@ -32,9 +32,9 @@ router.post('/:userId/borders', auth, async (req, res) => {
       user: req.user.id,
     });
     await newBorder.save();
-    return res.json({ success: true, data: savedUser });
+    return res.json({ success: true, data: user });
   } catch {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: 'Nie udało się dodać wpisu, spróbuj ponownie.',
     });
@@ -44,104 +44,94 @@ router.post('/:userId/borders', auth, async (req, res) => {
 // @route DELETE /api/users/:userId/borders/undo
 // @desc Delete last border crossing from user's borders array
 // @private
-router.delete('/:userId/borders/undo', auth, (req, res) => {
-  User.findById(req.user.id)
-    .select('-password -__v')
-    .then(user => {
-      user.borders.id(req.body.lastItemId).remove();
-      user.save();
-      return res.json({ success: true, data: user });
-    })
-    .catch(() =>
-      res.status(400).json({
-        success: false,
-        error: 'Nie udało sie usunąć ostatniego wpisu, spróbuj ponownie.',
-      })
-    );
+router.delete('/:userId/borders/undo', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password -__v');
+    await user.borders.id(req.body.lastItemId).remove();
+    await user.save();
+    return res.json({ success: true, data: user });
+  } catch {
+    return res.status(500).json({
+      success: false,
+      error: 'Nie udało sie usunąć ostatniego wpisu, spróbuj ponownie.',
+    });
+  }
 });
 
 // @route PUT /api/users/:userId/borders
 // @desc Update user's borders array
 // @private
-router.put('/:userId/borders', auth, (req, res) => {
-  User.findById(req.user.id)
-    .select('-password -__v')
-    .then(user => {
-      user.borders = req.body;
-      user.save();
-      return res.json({ success: true, data: user });
-    })
-    .catch(() =>
-      res.status(400).json({
-        success: false,
-        error: 'Aktualizacja nie powiodła się, spróbuj ponownie.',
-      })
-    );
+router.put('/:userId/borders', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password -__v');
+    user.borders = req.body;
+    await user.save();
+    return res.json({ success: true, data: user });
+  } catch {
+    return res.status(400).json({
+      success: false,
+      error: 'Aktualizacja nie powiodła się, spróbuj ponownie.',
+    });
+  }
 });
 
 // @route DELETE /api/users/:userId/borders
 // @desc Delete all border crossings from user's borders array
 // @private
-router.delete('/:userId/borders', auth, (req, res) => {
-  User.findById(req.user.id)
-    .select('-password -__v')
-    .then(user => {
-      user.borders = [];
-      user.save();
-      return res.json({ success: true, data: user });
-    })
-    .catch(() =>
-      res.status(400).json({
-        success: false,
-        error: 'Nie udało się usunąć danych, spróbuj ponownie.',
-      })
-    );
+router.delete('/:userId/borders', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password -__v');
+    user.borders = [];
+    await user.save();
+    return res.json({ success: true, data: user });
+  } catch {
+    return res.status(500).json({
+      success: false,
+      error: 'Nie udało się usunąć danych, spróbuj ponownie.',
+    });
+  }
 });
 
 // @route PUT /api/users/:userId/borders/:borderId
 // @desc Update border crossing in user's borders array
 // @private
-router.put('/:userId/borders/:borderId', [auth, validateTimeAndDate], (req, res) => {
-  User.findById(req.user.id)
-    .select('-password -__v')
-    .then(user => {
-      const borderToUpdate = user.borders.id(req.params.borderId);
-      borderToUpdate.set(req.body);
-      user.save();
-      return res.json({ success: true, data: user });
-    })
-    .catch(() =>
-      res.status(400).json({
-        success: false,
-        error: 'Aktualizacja nie powiodła się, spróbuj ponownie.',
-      })
-    );
+router.put('/:userId/borders/:borderId', [auth, validateTimeAndDate], async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password -__v');
+    const borderToUpdate = user.borders.id(req.params.borderId);
+    borderToUpdate.set(req.body);
+    await user.save();
+    return res.json({ success: true, data: user });
+  } catch {
+    return res.status(500).json({
+      success: false,
+      error: 'Aktualizacja nie powiodła się, spróbuj ponownie.',
+    });
+  }
 });
 
 // @route POST /api/users/:userId/countries
 // @desc Add new country to user's countries array
 // @private
-router.post('/:userId/countries', auth, (req, res) => {
-  User.findById(req.user.id)
-    .select('-password -__v')
-    .then(user => {
-      const countryExists = user.countries.find(el => el.name === req.body.name);
-      if (countryExists) {
-        return res.json({
-          success: false,
-          error: 'Ten kraj jest już na liście.',
-        });
-      }
-      user.countries.push(req.body);
-      user.save();
-      return res.json({ success: true, data: user });
-    })
-    .catch(() =>
-      res.status(400).json({
+router.post('/:userId/countries', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password -__v');
+    const countryExists = user.countries.find(el => el.name === req.body.name);
+    if (countryExists) {
+      return res.json({
         success: false,
-        error: 'Nie udało dodać się kraju, spróbuj ponownie.',
-      })
-    );
+        error: 'Ten kraj jest już na liście.',
+      });
+    }
+    user.countries.push(req.body);
+    await user.save();
+    return res.json({ success: true, data: user });
+  } catch {
+    return res.status(500).json({
+      success: false,
+      error: 'Nie udało dodać się kraju, spróbuj ponownie.',
+    });
+  }
 });
 
 // @route POST /api/users/:userId/send
@@ -149,76 +139,74 @@ router.post('/:userId/countries', auth, (req, res) => {
 // @private
 router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
   const pathToFile = path.join(path.dirname(require.main.filename), 'temp', req.filename);
-
-  fs.access(pathToFile, err => {
-    if (err)
-      return res.status(404).json({
-        success: false,
-        error: 'Brak danych do wysłania, spróbuj ponownie',
-      });
-
-    User.findById(req.user.id)
-      .select('name')
-      .then(user => {
-        const { transporter, createMailData } = nodemailerConfig;
-
-        const mailData = createMailData(req.body.email, user.name, pathToFile);
-
-        transporter.sendMail(mailData, (err, info) => {
-          if (err)
-            return res.status(500).json({
-              success: false,
-              error: 'Nie udało wysłać się zestawienia, spróbuj ponownie.',
-            });
-
-          const table = new Table({
-            user: req.user.id,
-            status: 'sent',
-            html: req.markup,
-            borders: req.body.borders,
-          });
-          table.save();
-
-          return res.json({ success: true, data: info });
+  try {
+    fs.access(pathToFile, async err => {
+      if (err)
+        return res.status(404).json({
+          success: false,
+          error: 'Brak danych do wysłania, spróbuj ponownie',
         });
+
+      const user = await User.findById(req.user.id).select('name');
+      const { transporter, createMailData } = nodemailerConfig;
+      const mailData = createMailData(req.body.email, user.name, pathToFile);
+      transporter.sendMail(mailData, async (err, info) => {
+        if (err)
+          return res.status(500).json({
+            success: false,
+            error: 'Nie udało wysłać się zestawienia, spróbuj ponownie.',
+          });
+
+        const table = new Table({
+          user: req.user.id,
+          status: 'sent',
+          html: req.markup,
+          borders: req.body.borders,
+        });
+        await table.save();
+        return res.json({ success: true, data: info });
       });
-  });
+    });
+  } catch {
+    return res.status(500).json({
+      success: false,
+      error: 'Coś poszło nie tak, spróbuj ponownie.',
+    });
+  }
 });
 
 // @route POST /api/users/:userId/company
 // @desc Set user's company details
 // @private
-router.post('/:userId/company', [auth, validateEmail], (req, res) => {
-  User.findById(req.user.id)
-    .then(user => {
-      user.company = req.body;
-      user.save();
-      return res.json({ success: true, data: user });
-    })
-    .catch(() =>
-      res.status(400).json({
-        success: false,
-        error: 'Nie udało się zapisać danych firmy, spróbuj ponownie.',
-      })
-    );
+router.post('/:userId/company', [auth, validateEmail], async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password -__v');
+    user.company = req.body;
+    await user.save();
+    return res.json({ success: true, data: user });
+  } catch {
+    return res.status(500).json({
+      success: false,
+      error: 'Nie udało się zapisać danych firmy, spróbuj ponownie.',
+    });
+  }
 });
 
 // @route POST /api/users/:userId/name
 // @desc Set user's name
 // @private
-router.post('/:userId/name', auth, (req, res) => {
-  User.findById(req.user.id)
-    .then(user => {
-      user.name = req.body.userName;
-      user.save();
-      return res.json({ success: true, data: user });
-    })
-    .catch(() => {
-      res.status(400).json({
-        success: false,
-        error: 'Nie udało się zapisać Twoich danych, spróbuj ponownie.',
-      });
+router.post('/:userId/name', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password -__v');
+    user.name = req.body.userName;
+    await user.save();
+    return res.json({ success: true, data: user });
+  } catch {
+    return res.status(500).json({
+      success: false,
+      error: 'Nie udało się zapisać Twoich danych, spróbuj ponownie.',
     });
+  }
 });
 
 module.exports = router;
