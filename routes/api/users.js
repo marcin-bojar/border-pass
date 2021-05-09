@@ -47,7 +47,7 @@ router.post('/:userId/borders', auth, async (req, res) => {
 router.delete('/:userId/borders/undo', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
-    await user.borders.id(req.body.lastItemId).remove();
+    user.borders.id(req.body.lastItemId).remove();
     await user.save();
     return res.json({ success: true, data: user });
   } catch {
