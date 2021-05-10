@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const BorderSchema = require('./Border').BorderSchema;
-const CountrySchema = require('./Country').CountrySchema;
+const CountrySchema = require('./Country');
 const Schema = mongoose.Schema;
 const defaultCountries = require('../helpers/defaultCountries');
 
