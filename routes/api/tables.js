@@ -64,12 +64,10 @@ router.delete('/:tableId', auth, (req, res) => {
               .json({ success: false, error: 'Nie udało się usunąć tablicy, spróbuj ponownie.' })
           );
       } else
-        res
-          .status(404)
-          .json({
-            success: false,
-            error: 'Ta tablica nie istnieje w archiwum dla danego użytkownika.',
-          });
+        res.status(404).json({
+          success: false,
+          error: 'Ta tablica nie istnieje w archiwum dla danego użytkownika.',
+        });
     })
     .catch(() =>
       res.status(500).json({

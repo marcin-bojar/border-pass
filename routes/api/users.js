@@ -7,6 +7,7 @@ const nodemailerConfig = require('../../helpers/nodemailer.js');
 
 const User = require('../../models/User');
 const Table = require('../../models/Table');
+const ArchivedTripEvent = require('../../models/ArchivedTripEvent');
 
 const auth = require('../../middlewares/auth');
 const validateTimeAndDate = require('../../middlewares/validateTimeAndDate');
@@ -22,7 +23,7 @@ router.post('/:userId/borders', auth, async (req, res) => {
     user.borders.push(req.body);
     await user.save();
 
-    const newBorder = new Border({
+    const newArchivedTripEvent = new ArchivedTripEvent({
       type: req.body.type,
       from: req.body.from,
       to: req.body.to,
@@ -31,7 +32,7 @@ router.post('/:userId/borders', auth, async (req, res) => {
       timestamp: req.body.timestamp,
       user: req.user.id,
     });
-    await newBorder.save();
+    await newArchivedTripEvent.save();
     return res.json({ success: true, data: user });
   } catch {
     return res.status(500).json({

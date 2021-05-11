@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const BorderSchema = require('./Border').BorderSchema;
+const BorderSchema = require('./Border');
 const CountrySchema = require('./Country');
-const Schema = mongoose.Schema;
 const defaultCountries = require('../helpers/defaultCountries');
+const { Schema } = mongoose;
 
 const UserSchema = new Schema({
   name: {

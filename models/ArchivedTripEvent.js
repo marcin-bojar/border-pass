@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const BorderSchema = new Schema(
+const ArchivedTripEventSchema = Schema(
   {
     type: {
       type: String,
@@ -32,12 +32,17 @@ const BorderSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
+    createdAt: {
+      type: Date,
+      expires: '180d',
+      default: Date.now,
+    },
   },
   { toJSON: { virtuals: true } }
 );
 
-BorderSchema.virtual('timestamp_ms').get(function () {
+ArchivedTripEventSchema.virtual('timestamp_ms').get(function () {
   return this.timestamp.getTime();
 });
 
-module.exports = BorderSchema;
+module.exports = ArchivedTripEvent = mongoose.model('archived_trip_event', ArchivedTripEventSchema);
