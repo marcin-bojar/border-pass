@@ -28,7 +28,7 @@ const ArchivedTripEventSchema = Schema(
       type: Date,
       default: Date.now,
     },
-    user: {
+    _user: {
       type: Schema.Types.ObjectId,
       ref: 'User',
     },

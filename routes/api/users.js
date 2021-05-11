@@ -20,17 +20,19 @@ const validateEmail = require('../../middlewares/validateEmail.js');
 router.post('/:userId/borders', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
+    const { type, from, to, time, date, timestamp } = req.body;
+
     user.borders.push(req.body);
     await user.save();
 
     const newArchivedTripEvent = new ArchivedTripEvent({
-      type: req.body.type,
-      from: req.body.from,
-      to: req.body.to,
-      time: req.body.time,
-      date: req.body.date,
-      timestamp: req.body.timestamp,
-      user: req.user.id,
+      type,
+      from,
+      to,
+      time,
+      date,
+      timestamp,
+      _user: req.user.id,
     });
     await newArchivedTripEvent.save();
     return res.json({ success: true, data: user });

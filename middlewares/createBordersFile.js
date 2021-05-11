@@ -6,7 +6,7 @@ const createTableMarkup = require('../helpers/createTableMarkup');
 
 const createBordersFile = (req, res, next) => {
   const userId = req.user.id;
-  const borders = req.body.borders;
+  const { borders } = req.body;
 
   if (!borders) {
     return res.status(400).json({
