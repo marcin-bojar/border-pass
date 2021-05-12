@@ -35,6 +35,7 @@ const createMailData = (to, driverName, path) => {
     from: process.env.EMAIL_ADDRESS,
     to,
     subject: `${driverName} - zestawienie przekroczeń granic`,
+    text: `Dzień dobry,\n\nPaństwa kierowca - ${driverName} - właśnie wysłał zestawienie przekroczeń granic.\nPlik znajduje się w załączniku.\n\nCzym jest Border-Pass? Border-Pass to aplikacja, dzięki której w łatwy sposób można rejestrować swoje delegacje zagraniczne - rozpoczęcia, przekroczenia granic oraz zakończenia podróży - za pomocą telefonu komórkowego, lub innego urządzenia mobilnego jak również laptopa.\nAplikacja udostępnia również możliwość wysyłania gotowego zestawienia w formie tabeli wprost do Firmy, co w znaczący sposób ułatwia oraz przyśpiesza proces rozliczania podróży służbowych.\nZapraszamy na stronę www.border-pass.pl, gdzie znajdą Państwo więcej informacji.\n\nPozdrawiamy,\nzespół Border-Pass.`,
     attachments: [{ path, filename: `${driverName}.html` }],
   };
 };
