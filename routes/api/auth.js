@@ -23,15 +23,14 @@ router.post(
     hashPassword,
   ],
   async (req, res) => {
-    const { name, email, password } = req.body;
-
-    const newUser = new User({
-      name,
-      email: email.toLowerCase().trim(),
-      password,
-    });
-
     try {
+      const { name, email, password } = req.body;
+      const newUser = new User({
+        name,
+        email: email.toLowerCase().trim(),
+        password,
+      });
+      
       const user = await newUser.save();
       jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '6d' }, (err, token) => {
         if (err) throw err;

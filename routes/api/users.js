@@ -141,8 +141,8 @@ router.post('/:userId/countries', auth, async (req, res) => {
 // @desc Send an email with user's borders' table
 // @private
 router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
-  const pathToFile = path.join(path.dirname(require.main.filename), 'temp', req.filename);
   try {
+    const pathToFile = path.join(path.dirname(require.main.filename), 'temp', req.filename);
     fs.access(pathToFile, async err => {
       if (err)
         return res.status(404).json({
