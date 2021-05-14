@@ -161,7 +161,7 @@ router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
           });
 
         const table = new Table({
-          user: req.user.id,
+          _user: req.user.id,
           status: 'sent',
           html: req.markup,
           borders: req.body.borders,
