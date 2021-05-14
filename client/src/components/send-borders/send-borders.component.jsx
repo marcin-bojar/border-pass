@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import HistoryList from '../history-list/history-list.component';
 import CustomButton from '../custom-button/custom-button.component';
+import Spinner from '../spinner/spinner.component';
 
 import { AppContext } from '../../hooks/useAppState';
 import { getConfig } from '../../utils';
@@ -243,6 +244,7 @@ const SendBorders = ({ history, location }) => {
         >
           {sendingDataFromArchive ? 'Wyślij' : 'Wyślij i archiwizuj'}
         </CustomButton>
+        <Spinner isLoading={isMakingApiCall} />
         <CustomButton
           disabled={isMakingApiCall || !listToSend.length}
           handleClick={() => {

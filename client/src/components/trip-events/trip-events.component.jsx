@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import axios from 'axios';
 
 import CustomButton from '../custom-button/custom-button.component';
+import Spinner from '../spinner/spinner.component';
 
 import { parseTimestamp, sortHistoryListByTimeAndDate, getConfig } from '../../utils';
 import { AppContext } from '../../hooks/useAppState';
@@ -82,6 +83,7 @@ const TripEvents = () => {
         >
           Wyjazd z bazy
         </CustomButton>
+        <Spinner isLoading={isMakingApiCall} />
         <CustomButton
           type="button"
           disabled={isMakingApiCall}

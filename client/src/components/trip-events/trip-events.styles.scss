@@ -1,4 +1,4 @@
-@import '../../sass//mixins';
+@import '../../sass/mixins';
 
 .trip-events {
   @include sections-common-styles;
@@ -11,6 +11,7 @@
   &__button-wrapper {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     width: 100%;
   }
 }

@@ -54,7 +54,7 @@ const History = () => {
 
   return (
     <div className="history">
-      <h3 className="history__title">Historia przekroczeń granic:</h3>
+      <h3 className="history__title">Historia podróży</h3>
 
       <div className="history__button-wrapper">
         <CustomButton handleClick={() => setGeneralState({ type: 'TOGGLE_EDIT_MODE' })}>
@@ -77,8 +77,7 @@ const History = () => {
               type: 'SET_MODAL_DATA',
               payload: {
                 type: 'prompt',
-                text:
-                  "Spowoduje to NIEODWRACALNE usunięcie całej historii.\nWpisz 'TAK', aby usunąć.",
+                text: "Spowoduje to NIEODWRACALNE usunięcie całej historii.\nWpisz 'TAK', aby usunąć.",
                 expectedValue: 'TAK',
                 onConfirm: handleDeleteAll,
               },
