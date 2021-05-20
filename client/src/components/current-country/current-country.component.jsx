@@ -21,6 +21,7 @@ const CurrentCountry = () => {
       <span className="current-country__country">{currentCountry}</span>
       <div className="current-country__button-wrapper">
         <CustomButton
+          setWidth="8.4rem"
           clear
           handleClick={() => setDataState({ type: 'SET_CURRENT_COUNTRY', payload: '' })}
         >

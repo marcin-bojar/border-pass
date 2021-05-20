@@ -70,11 +70,16 @@ const CountrySelect = () => {
       </div>
 
       <div className="country-select__button-wrapper">
-        <CustomButton disabled={countries.length <= 10} handleClick={() => setShowAll(!showAll)}>
+        <CustomButton
+          setWidth="8.4rem"
+          disabled={countries.length <= 10}
+          handleClick={() => setShowAll(!showAll)}
+        >
           {!showAll ? 'Więcej' : 'Ukryj'}
         </CustomButton>
 
         <CustomButton
+          setWidth="8.4rem"
           clear
           disabled={historyList.length === 0 || isMakingApiCall}
           handleClick={() =>

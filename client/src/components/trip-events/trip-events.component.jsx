@@ -77,6 +77,7 @@ const TripEvents = () => {
       <h3 className="trip-events__title">Zdarzenia</h3>
       <div className="trip-events__button-wrapper">
         <CustomButton
+          setWidth="13rem"
           type="button"
           disabled={isMakingApiCall}
           handleClick={() => onTripEvent('tripStart')}
@@ -85,6 +86,7 @@ const TripEvents = () => {
         </CustomButton>
         <Spinner isLoading={isMakingApiCall} />
         <CustomButton
+          setWidth="13rem"
           type="button"
           disabled={isMakingApiCall}
           handleClick={() => onTripEvent('tripEnd')}

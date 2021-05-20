@@ -220,6 +220,7 @@ const SendBorders = ({ history, location }) => {
       {sendingDataFromArchive ? null : (
         <div className="send-borders__button-wrapper">
           <CustomButton
+            setWidth="14rem"
             handleClick={() =>
               setDataState({
                 type: 'SET_SELECTION',
@@ -229,13 +230,17 @@ const SendBorders = ({ history, location }) => {
           >
             Zaznacz wszystko
           </CustomButton>
-          <CustomButton handleClick={() => setDataState({ type: 'CLEAR_SELECTION' })}>
+          <CustomButton
+            setWidth="14rem"
+            handleClick={() => setDataState({ type: 'CLEAR_SELECTION' })}
+          >
             Usuń zaznaczenie
           </CustomButton>
         </div>
       )}
       <div className="send-borders__button-wrapper">
         <CustomButton
+          setWidth="14rem"
           disabled={isMakingApiCall || !listToSend.length}
           handleClick={() => {
             if (sendingDataFromArchive) sendArchivedItem();
@@ -246,6 +251,7 @@ const SendBorders = ({ history, location }) => {
         </CustomButton>
         <Spinner isLoading={isMakingApiCall} />
         <CustomButton
+          setWidth="14rem"
           disabled={isMakingApiCall || !listToSend.length}
           handleClick={() => {
             if (!sendingDataFromArchive) onlyArchive();

@@ -57,7 +57,10 @@ const History = () => {
       <h3 className="history__title">Historia podróży</h3>
 
       <div className="history__button-wrapper">
-        <CustomButton handleClick={() => setGeneralState({ type: 'TOGGLE_EDIT_MODE' })}>
+        <CustomButton
+          setWidth="8.4rem"
+          handleClick={() => setGeneralState({ type: 'TOGGLE_EDIT_MODE' })}
+        >
           {editMode ? 'Zamknij' : 'Edytuj'}
         </CustomButton>
 
@@ -71,6 +74,7 @@ const History = () => {
         </div>
 
         <CustomButton
+          setWidth="8.4rem"
           clear
           handleClick={() =>
             setUiState({

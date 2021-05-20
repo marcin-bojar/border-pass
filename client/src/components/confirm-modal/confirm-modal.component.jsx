@@ -20,11 +20,16 @@ const ConfirmModal = () => {
         <h3 className="modal__title">Potwierdź</h3>
         <div className="modal__text">{text}</div>
         <div className="modal__button-wrapper">
-          <CustomButton clear handleClick={() => setUiState({ type: 'HIDE_MODAL' })}>
+          <CustomButton
+            setWidth="9.4rem"
+            clear
+            handleClick={() => setUiState({ type: 'HIDE_MODAL' })}
+          >
             Anuluj
           </CustomButton>
 
           <CustomButton
+            setWidth="9.4rem"
             handleClick={() => {
               onConfirm();
               setUiState({ type: 'HIDE_MODAL' });

@@ -42,11 +42,16 @@ const PromptModal = () => {
         </form>
 
         <div className="modal__button-wrapper">
-          <CustomButton type="button" handleClick={() => setUiState({ type: 'HIDE_MODAL' })}>
+          <CustomButton
+            setWidth="7.1rem"
+            clear
+            type="button"
+            handleClick={() => setUiState({ type: 'HIDE_MODAL' })}
+          >
             Anuluj
           </CustomButton>
 
-          <CustomButton type="submit" form="prompt-form" clear>
+          <CustomButton setWidth="7.1rem" type="submit" form="prompt-form">
             OK
           </CustomButton>
         </div>

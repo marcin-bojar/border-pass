@@ -118,6 +118,7 @@ const Archive = ({ history }) => {
       {selectedArchive && (
         <div className="archive__options">
           <CustomButton
+            setWidth="6.7rem"
             disabled={selectedArchive.status === 'sent' || isMakingApiCall}
             handleClick={() => {
               history.push('/send', {
@@ -129,6 +130,7 @@ const Archive = ({ history }) => {
             Wyślij
           </CustomButton>
           <CustomButton
+            setWidth="6.7rem"
             clear
             disabled={isMakingApiCall}
             handleClick={() =>

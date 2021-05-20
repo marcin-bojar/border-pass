@@ -11,10 +11,11 @@ const CustomButton = ({
   navbarUser,
   link,
   active,
+  setWidth,
   ...props
 }) => (
   <button
-    tabIndex="1"
+    style={setWidth ? { width: setWidth } : null}
     className={`${active ? 'active' : ''} ${clear ? 'clear' : ''} ${inline ? 'inline' : ''} ${
       navbar ? 'navbar' : ''
     } ${navbarUser ? 'navbar--user' : ''} ${link ? 'link' : ''} custom-button`}
