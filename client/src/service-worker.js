@@ -2,7 +2,6 @@ import { Workbox, messageSW } from 'workbox-window';
 
 export const registerSW = setGeneralState => {
   if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
-    console.log(process.env.NODE_ENV);
     const swURL = 'sw.js';
     const wb = new Workbox(swURL);
     let registration;
