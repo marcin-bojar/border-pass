@@ -69,13 +69,21 @@ const SignUp = () => {
           <CustomInput
             name="name"
             label="Imię i nazwisko"
+            aria-label="Imię i nazwisko"
             value={user.name}
             handleChange={handleChange}
           />
-          <CustomInput name="email" label="Email" value={user.email} handleChange={handleChange} />
+          <CustomInput
+            name="email"
+            label="Email"
+            aria-label="Email"
+            value={user.email}
+            handleChange={handleChange}
+          />
           <CustomInput
             name="password"
             label="Hasło"
+            aria-label="Hasło"
             type="password"
             value={user.password}
             handleChange={handleChange}
@@ -83,6 +91,7 @@ const SignUp = () => {
           <CustomInput
             name="confirmPassword"
             label=" Powtórz hasło"
+            aria-label="Powtórz hasło"
             type="password"
             value={user.confirmPassword}
             handleChange={handleChange}

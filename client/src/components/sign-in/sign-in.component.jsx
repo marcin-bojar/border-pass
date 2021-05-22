@@ -61,12 +61,14 @@ const SignIn = () => {
           <CustomInput
             name="email"
             label="Email"
+            aria-label="Email"
             value={userCredentials.email}
             handleChange={handleChange}
           />
           <CustomInput
             name="password"
             label="Hasło"
+            aria-label="Hasło"
             type="password"
             value={userCredentials.password}
             handleChange={handleChange}

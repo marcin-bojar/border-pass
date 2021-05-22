@@ -82,6 +82,7 @@ const AddCountry = () => {
           maxLength="3"
           disabled={isMakingApiCall}
           label="Dodaj kraj"
+          aria-label="Dodaj kraj"
         />
       </form>
       <div className="add-country__spinner-wrapper">
