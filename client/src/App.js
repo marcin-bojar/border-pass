@@ -14,6 +14,7 @@ import NavBar from './components/nav-bar/nav-bar.component';
 import Modal from './components/modal/modal.component';
 import NewVersionBar from './components/new-version-bar/new-version-bar.component';
 import Loader from './components/loader/loader.component';
+import ErrorBoundary from './components/error-boundary/error-boundary.component';
 
 import { AppContext, useAppState } from './hooks/useAppState';
 
@@ -29,17 +30,19 @@ const App = () => {
           <NavBar />
           <Heading />
           <Modal />
-          <Suspense fallback={<Loader />}>
-            <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route exact path="/signup" component={SignUpPage} />
-              <Route exact path="/signin" component={SignInPage} />
-              <Route exact path="/preview" component={PreviewPage} />
-              <Route exact path="/send" component={SendPage} />
-              <Route exact path="/archive" component={ArchivePage} />
-              <Route exact path="/config" component={ConfigPage} />
-            </Switch>
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<Loader />}>
+              <Switch>
+                <Route exact path="/" component={HomePage} />
+                <Route exact path="/signup" component={SignUpPage} />
+                <Route exact path="/signin" component={SignInPage} />
+                <Route exact path="/preview" component={PreviewPage} />
+                <Route exact path="/send" component={SendPage} />
+                <Route exact path="/archive" component={ArchivePage} />
+                <Route exact path="/config" component={ConfigPage} />
+              </Switch>
+            </Suspense>
+          </ErrorBoundary>
           <NewVersionBar />
         </BrowserRouter>
       </AppContext.Provider>
