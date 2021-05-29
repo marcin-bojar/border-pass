@@ -30,7 +30,7 @@ router.post(
         email: email.toLowerCase().trim(),
         password,
       });
-      
+
       const user = await newUser.save();
       jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '6d' }, (err, token) => {
         if (err) throw err;
@@ -68,7 +68,8 @@ router.post('/signin', validateEmail, async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ success: false, error: 'Brak użytkownika' });
+    if (!user)
+      return res.status(404).json({ success: false, error: 'Podany użytkownik nie istnieje.' });
 
     bcrypt.compare(password, user.password).then(isValidPassword => {
       if (!isValidPassword)

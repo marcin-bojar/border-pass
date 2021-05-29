@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node dev-server.js",
-    "build": "parcel build ./src/index.html --public-url ./",
+    "build": "parcel build --no-source-maps ./src/index.html --public-url ./",
     "postbuild": "workbox generateSW",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
