@@ -5,42 +5,48 @@
   "display": "standalone",
   "background_color": "#540977",
   "theme_color": "#540977",
-  "description": "Register your business trip's border corssings with ease",
+  "description": "Rejestruj swoje przekroczenia granic z łatwością.",
   "icons": [
     {
       "src": "/assets/png/android-chrome-384x384.png",
       "sizes": "384x384",
-      "type": "image/png"
-    },
-    {
-      "src": "/assets/png/transfer192-maskable.png",
-      "sizes": "256x256",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "maskable any"
     },
     {
       "src": "/assets/png/android-chrome-192x192.png",
       "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/png/24x24.png",
+      "sizes": "24x24",
       "type": "image/png"
     },
     {
-      "src": "/assets/png/transfer128.png",
-      "sizes": "128x128",
-      "type": "image/png"
-    },
-    {
-      "src": "/assets/png/transfer64.png",
-      "sizes": "64x64",
-      "type": "image/png"
-    },
-    {
-      "src": "/assets/png/transfer32.png",
+      "src": "/assets/png/32x32.png",
       "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "/assets/png/transfer24.png",
-      "sizes": "24x24",
+      "src": "/assets/png/64x64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/png/128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/png/256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/png/512x512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
