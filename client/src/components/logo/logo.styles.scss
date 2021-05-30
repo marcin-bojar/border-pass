@@ -5,11 +5,11 @@
   margin: 0 auto;
   fill: $color-white;
 
-  @media only screen and (min-width: 31.25rem) {
+  @media only screen and (min-width: 31.25em) {
     width: 95%;
   }
 
-  @media only screen and (min-width: 68.75rem) {
+  @media only screen and (min-width: 68.75em) {
     width: 85%;
   }
 }

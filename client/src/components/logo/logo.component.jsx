@@ -7,7 +7,7 @@ import './logo.styles.scss';
 
 const Logo = () => (
   <Link to="/" className="logo">
-    <BorderPass />
+    <BorderPass aria-label="Home" />
   </Link>
 );
 
