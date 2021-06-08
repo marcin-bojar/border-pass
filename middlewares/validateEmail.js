@@ -1,15 +1,14 @@
+const getEmail = reqBody => reqBody.email || reqBody.companyEmail || '';
+const isCompanyEmail = reqBody => !reqBody.email && reqBody.hasOwnProperty('companyEmail');
+
 const validateEmail = (req, res, next) => {
-  const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-  let email = '';
-  let isCompanyEmail;
+  // Source of email regex: https://stackoverflow.com/questions/5342375/regex-email-validation
+  const emailRegex =
+    /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
-  if (req.body.email) email = req.body.email.toLowerCase().trim();
-  else if (req.body.companyEmail) {
-    email = req.body.companyEmail.toLowerCase().trim();
-    isCompanyEmail = true;
-  }
+  const email = getEmail(req.body).toLowerCase().trim();
 
-  if (isCompanyEmail && email.length === 0) return next();
+  if (isCompanyEmail(req.body) && email.length === 0) return next();
 
   if (!emailRegex.test(email))
     return res.status(400).json({
