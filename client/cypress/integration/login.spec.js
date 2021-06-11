@@ -23,13 +23,11 @@ describe('Logging in and out', () => {
 
   it('Doesnt log in with wrong email', () => {
     cy.login('wrong@test.pl', 'marcin1');
-
     cy.get('div.error-message').should('exist').contains('Podany użytkownik nie istnieje.');
   });
 
   it('Prompts for a valid email', () => {
     cy.get('input[name=email]').type('test@{enter}');
-
     cy.get('div.error-message').should('exist').contains('Podany adres email jest nieprawidłowy.');
   });
 });

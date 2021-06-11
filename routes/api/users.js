@@ -12,7 +12,8 @@ const ArchivedTripEvent = require('../../models/ArchivedTripEvent');
 const auth = require('../../middlewares/auth');
 const validateTimeAndDate = require('../../middlewares/validateTimeAndDate');
 const createBordersFile = require('../../middlewares/createBordersFile');
-const validateEmail = require('../../middlewares/validateEmail.js');
+const validateEmail = require('../../middlewares/validateEmail');
+const validateCountry = require('../../middlewares/validateCountry');
 
 // @route POST /api/users/:userId/borders
 // @desc Post new border crossing to user's borders array
@@ -116,17 +117,17 @@ router.put('/:userId/borders/:borderId', [auth, validateTimeAndDate], async (req
 // @route POST /api/users/:userId/countries
 // @desc Add new country to user's countries array
 // @private
-router.post('/:userId/countries', auth, async (req, res) => {
+router.post('/:userId/countries', [auth, validateCountry], async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
-    const countryExists = user.countries.find(el => el.name === req.body.name);
+    const countryExists = user.countries.find(el => el.name === req.country);
     if (countryExists) {
       return res.json({
         success: false,
         error: 'Ten kraj jest już na liście.',
       });
     }
-    user.countries.push(req.body);
+    user.countries.push({ name: req.country });
     await user.save();
     return res.json({ success: true, data: user });
   } catch {
