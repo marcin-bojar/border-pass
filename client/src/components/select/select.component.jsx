@@ -9,12 +9,12 @@ import AddCountry from '../add-country/add-country.component';
 
 import { AppContext } from '../../hooks/useAppState';
 
-import './country-select.styles.scss';
+import './select.styles.scss';
 
-const CountrySelect = () => {
+const Select = ({ placesSelect }) => {
   const {
     userState: { currentUser },
-    dataState: { countries, currentCountry, historyList, isSortedDesc },
+    dataState: { countries, places, currentCountry, historyList, isSortedDesc },
     generalState: { isMakingApiCall },
     setUserState,
     setDataState,
@@ -57,22 +57,12 @@ const CountrySelect = () => {
     }
   };
 
-  return (
-    <div className="country-select">
-      {currentCountry && <h3 className="country-select__title">Do jakiego kraju wjeżdżasz?</h3>}
-
-      <div className="country-select__options">
-        {showAll
-          ? countries.map(country => <CountryOption key={country.name} name={country.name} />)
-          : countries
-              .filter((_, i) => i < 10)
-              .map(country => <CountryOption key={country.name} name={country.name} />)}
-      </div>
-
-      <div className="country-select__button-wrapper">
+  const commonMarkup = (
+    <>
+      <div className="select__button-wrapper">
         <CustomButton
           setWidth="8.4rem"
-          disabled={countries.length <= 10}
+          disabled={placesSelect ? places.length < 6 : countries.length <= 10}
           handleClick={() => setShowAll(!showAll)}
         >
           {!showAll ? 'Więcej' : 'Ukryj'}
@@ -87,7 +77,7 @@ const CountrySelect = () => {
               type: 'SET_MODAL_DATA',
               payload: {
                 type: 'confirm',
-                text: 'Usuwasz ostatni wpis z listy. Czy chcesz kontynuować?',
+                text: 'Usuwasz ostatni wpis z Historii Podróży. Czy chcesz kontynuować?',
                 onConfirm: undoLastEntry,
               },
             })
@@ -95,11 +85,66 @@ const CountrySelect = () => {
         >
           Cofnij
         </CustomButton>
-      </div>
-
-      <AddCountry label="Dodaj kraj" />
-    </div>
+      </div>{' '}
+    </>
   );
+
+  const countryMarkup = (
+    <>
+      {' '}
+      <div className="select">
+        {currentCountry && <h3 className="select__title">Do jakiego kraju wjeżdżasz?</h3>}
+
+        <div className="select__options">
+          {showAll
+            ? countries.map(country => <CountryOption key={country.name} name={country.name} />)
+            : countries
+                .filter((_, i) => i < 10)
+                .map(country => <CountryOption key={country.name} name={country.name} />)}
+        </div>
+
+        {commonMarkup}
+
+        <AddCountry label="Dodaj kraj" />
+      </div>{' '}
+    </>
+  );
+
+  const placesMarkup = (
+    <>
+      {' '}
+      <div className="select">
+        <h3 className="select__title">Punkty podróży</h3>
+        <div className="select__options select__options--places">
+          {places.length ? (
+            showAll ? (
+              places.map(place => <CountryOption place key={place.name} name={place.name} />)
+            ) : (
+              places
+                .filter((_, i) => i < 6)
+                .map(place => <CountryOption place key={place.name} name={place.name} />)
+            )
+          ) : (
+            <div className="select__info">
+              <p className="select__text">
+                Jeśli musisz rejestrować również punkty pośrednie swojej podróży służbowej, takie
+                jak miasta, firmy, przystanki itp, tutaj możesz je dodawać.
+              </p>
+              <p className="select__text">
+                Jeśli nie musisz tego robić, możesz ukryć ten element w swoich ustawieniach.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {commonMarkup}
+
+        <AddCountry place label="Dodaj punkt" />
+      </div>{' '}
+    </>
+  );
+
+  return placesSelect ? placesMarkup : countryMarkup;
 };
 
-export default CountrySelect;
+export default Select;
