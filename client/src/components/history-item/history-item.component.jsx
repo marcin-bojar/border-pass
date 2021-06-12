@@ -5,7 +5,7 @@ import { AppContext } from '../../hooks/useAppState';
 import './history-item.styles.scss';
 
 const HistoryItem = forwardRef(({ data }, ref) => {
-  const { type, from, to, time, date, i } = data;
+  const { type, from, to, name, time, date, i } = data;
   const {
     dataState: { historyList, isSortedDesc, selection },
     generalState: { editMode, sendMode, isSendingArchive },
@@ -53,7 +53,7 @@ const HistoryItem = forwardRef(({ data }, ref) => {
             </span>
           ) : (
             <span className="history-item__event-type">
-              {type === 'tripStart' ? 'Wyjazd z bazy' : 'Powrót na bazę'}
+              {type === 'place' ? name : type === 'tripStart' ? 'Wyjazd z bazy' : 'Powrót na bazę'}
             </span>
           )}
         </div>

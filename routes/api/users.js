@@ -21,7 +21,7 @@ const validateCountry = require('../../middlewares/validateCountry');
 router.post('/:userId/borders', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
-    const { type, from, to, time, date, timestamp } = req.body;
+    const { type, from, to, name, time, date, timestamp } = req.body;
 
     user.borders.push(req.body);
     await user.save();
@@ -30,6 +30,7 @@ router.post('/:userId/borders', auth, async (req, res) => {
       type,
       from,
       to,
+      name,
       time,
       date,
       timestamp,
@@ -154,8 +155,7 @@ router.post('/:userId/places', auth, async (req, res) => {
     user.places.push(req.body);
     await user.save();
     return res.json({ success: true, data: user });
-  } catch (err) {
-    console.dir(err);
+  } catch {
     return res.status(500).json({
       success: false,
       error: 'Nie udało się dodać punktu, spróbuj ponownie.',

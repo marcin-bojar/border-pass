@@ -7,7 +7,7 @@ import { AppContext } from '../../hooks/useAppState';
 
 import './select-option.styles.scss';
 
-const SelectOption = ({ name, place }) => {
+const SelectOption = ({ name, placeOption }) => {
   const {
     userState: { currentUser },
     dataState: { historyList, isSortedDesc, currentCountry },
@@ -20,7 +20,7 @@ const SelectOption = ({ name, place }) => {
 
   const handleClick = () => {
     if (currentCountry) {
-      if (currentCountry === name) {
+      if (currentCountry === name && !placeOption) {
         setUiState({
           type: 'SET_MODAL_DATA',
           payload: { type: 'error', text: 'Jesteś już w tym kraju.' },
@@ -31,21 +31,30 @@ const SelectOption = ({ name, place }) => {
       const timestamp = Date.now();
       const { time, date } = parseTimestamp(timestamp);
 
-      const borderPass = {
-        type: 'borderPass',
-        from: currentCountry,
-        to: name,
-        time,
-        date,
-        timestamp,
-      };
+      const tripEvent = placeOption
+        ? {
+            type: 'place',
+            to: currentCountry,
+            name,
+            time,
+            date,
+            timestamp,
+          }
+        : {
+            type: 'borderPass',
+            from: currentCountry,
+            to: name,
+            time,
+            date,
+            timestamp,
+          };
 
       if (currentUser) {
         setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
         const { _id } = currentUser;
 
         axios
-          .post(`/api/users/${_id}/borders`, borderPass, getConfig())
+          .post(`/api/users/${_id}/borders`, tripEvent, getConfig())
           .then(res => setUserState({ type: 'SET_USER', payload: res.data.data }))
           .catch(err => {
             setUiState({
@@ -66,7 +75,7 @@ const SelectOption = ({ name, place }) => {
           .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
       } else {
         const updatedHistoryList = sortHistoryListByTimeAndDate(
-          [...historyList, borderPass],
+          [...historyList, tripEvent],
           !isSortedDesc,
           'timestamp'
         );
@@ -78,7 +87,7 @@ const SelectOption = ({ name, place }) => {
   return (
     <button
       type="button"
-      className={`${place ? 'place' : ''} select-option`}
+      className={`${placeOption ? 'place' : ''} select-option`}
       onClick={handleClick}
       disabled={isMakingApiCall}
     >

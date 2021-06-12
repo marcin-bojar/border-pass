@@ -118,11 +118,11 @@ const Select = ({ placesSelect }) => {
         <div className="select__options select__options--places">
           {places.length ? (
             showAll ? (
-              places.map(place => <SelectOption place key={place.name} name={place.name} />)
+              places.map(place => <SelectOption placeOption key={place.name} name={place.name} />)
             ) : (
               places
                 .filter((_, i) => i < 6)
-                .map(place => <SelectOption place key={place.name} name={place.name} />)
+                .map(place => <SelectOption placeOption key={place.name} name={place.name} />)
             )
           ) : (
             <div className="select__info">

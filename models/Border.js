@@ -6,7 +6,7 @@ const BorderSchema = new Schema(
     type: {
       type: String,
       required: true,
-      enum: ['tripStart', 'tripEnd', 'borderPass'],
+      enum: ['tripStart', 'tripEnd', 'borderPass', 'place'],
     },
     from: {
       type: String,
@@ -15,6 +15,10 @@ const BorderSchema = new Schema(
     to: {
       type: String,
       required: true,
+    },
+    name: {
+      type: String,
+      required: () => this.type === 'place',
     },
     time: {
       type: String,
