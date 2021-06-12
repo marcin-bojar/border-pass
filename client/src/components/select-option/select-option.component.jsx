@@ -5,9 +5,9 @@ import { parseTimestamp, sortHistoryListByTimeAndDate, getConfig } from '../../u
 
 import { AppContext } from '../../hooks/useAppState';
 
-import './country-option.styles.scss';
+import './select-option.styles.scss';
 
-const CountryOption = ({ name, place }) => {
+const SelectOption = ({ name, place }) => {
   const {
     userState: { currentUser },
     dataState: { historyList, isSortedDesc, currentCountry },
@@ -78,7 +78,7 @@ const CountryOption = ({ name, place }) => {
   return (
     <button
       type="button"
-      className={`${place ? 'place' : ''} country-option`}
+      className={`${place ? 'place' : ''} select-option`}
       onClick={handleClick}
       disabled={isMakingApiCall}
     >
@@ -87,4 +87,4 @@ const CountryOption = ({ name, place }) => {
   );
 };
 
-export default CountryOption;
+export default SelectOption;

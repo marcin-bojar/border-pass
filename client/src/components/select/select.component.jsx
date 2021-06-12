@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { getConfig } from '../../utils';
 
-import CountryOption from '../country-option/country-option.component';
+import SelectOption from '../select-option/select-option.component';
 import CustomButton from '../custom-button/custom-button.component';
 import AddCountry from '../add-country/add-country.component';
 
@@ -97,10 +97,10 @@ const Select = ({ placesSelect }) => {
 
         <div className="select__options">
           {showAll
-            ? countries.map(country => <CountryOption key={country.name} name={country.name} />)
+            ? countries.map(country => <SelectOption key={country.name} name={country.name} />)
             : countries
                 .filter((_, i) => i < 10)
-                .map(country => <CountryOption key={country.name} name={country.name} />)}
+                .map(country => <SelectOption key={country.name} name={country.name} />)}
         </div>
 
         {commonMarkup}
@@ -118,11 +118,11 @@ const Select = ({ placesSelect }) => {
         <div className="select__options select__options--places">
           {places.length ? (
             showAll ? (
-              places.map(place => <CountryOption place key={place.name} name={place.name} />)
+              places.map(place => <SelectOption place key={place.name} name={place.name} />)
             ) : (
               places
                 .filter((_, i) => i < 6)
-                .map(place => <CountryOption place key={place.name} name={place.name} />)
+                .map(place => <SelectOption place key={place.name} name={place.name} />)
             )
           ) : (
             <div className="select__info">
