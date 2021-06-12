@@ -7,7 +7,7 @@ import { AppContext } from '../../hooks/useAppState';
 
 import './country-option.styles.scss';
 
-const CountryOption = ({ name }) => {
+const CountryOption = ({ name, place }) => {
   const {
     userState: { currentUser },
     dataState: { historyList, isSortedDesc, currentCountry },
@@ -78,7 +78,7 @@ const CountryOption = ({ name }) => {
   return (
     <button
       type="button"
-      className="country-option"
+      className={`${place ? 'place' : ''} country-option`}
       onClick={handleClick}
       disabled={isMakingApiCall}
     >

@@ -14,6 +14,10 @@
   border: none;
   cursor: pointer;
 
+  &.place {
+    width: 13rem;
+  }
+
   &:focus {
     outline: none;
   }

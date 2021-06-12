@@ -18,7 +18,7 @@ export const useAppState = () => {
   const [generalState, setGeneralState] = useReducer(generalReducer, GENERAL_INITIAL_STATE);
 
   const { currentUser, token } = userState;
-  const { historyList, countries, isSortedDesc } = dataState;
+  const { historyList, countries, places, isSortedDesc } = dataState;
   const { modalData } = uiState;
 
   useEffect(() => {
@@ -30,6 +30,10 @@ export const useAppState = () => {
   }, [countries]);
 
   useEffect(() => {
+    if (!currentUser) localStorage.setItem('places', JSON.stringify(places));
+  }, [places]);
+
+  useEffect(() => {
     localStorage.setItem('isSortedDesc', isSortedDesc);
   }, [isSortedDesc]);
 
@@ -38,7 +42,11 @@ export const useAppState = () => {
       const user = sortUsersBorders(currentUser, !isSortedDesc);
       setDataState({
         type: 'SET_USER_DATA',
-        payload: { historyList: [...user.borders], countries: [...user.countries] },
+        payload: {
+          historyList: [...user.borders],
+          countries: [...user.countries],
+          places: [...user.places],
+        },
       });
     } else {
       setDataState({ type: 'SET_GUEST_DATA' });

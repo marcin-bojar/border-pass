@@ -27,6 +27,9 @@ const UserSchema = new Schema({
     type: [CountrySchema],
     default: defaultCountries,
   },
+  places: {
+    type: [CountrySchema],
+  },
   company: {
     type: Object,
     default: {

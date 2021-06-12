@@ -5,6 +5,7 @@ import { sortHistoryListByTimeAndDate, setCurrentCountry } from '../utils';
 export const DATA_INITIAL_STATE = {
   currentCountry: '',
   countries: JSON.parse(localStorage.getItem('countries')) || defaultCountries,
+  places: JSON.parse(localStorage.getItem('places')) || [],
   historyList: JSON.parse(localStorage.getItem('borders')) || [],
   editedItem: null,
   isSortedDesc: Boolean(localStorage.getItem('isSortedDesc') === 'true') || false,
@@ -62,6 +63,7 @@ export const dataReducer = (state, action) => {
         ...state,
         historyList: payload.historyList,
         countries: payload.countries,
+        places: payload.places,
         currentCountry: setCurrentCountry(payload.historyList, state.isSortedDesc),
       };
 
@@ -76,6 +78,7 @@ export const dataReducer = (state, action) => {
         ...state,
         historyList: guestHistoryList,
         countries: [...JSON.parse(localStorage.getItem('countries'))],
+        places: [...JSON.parse(localStorage.getItem('places'))],
         currentCountry: setCurrentCountry(guestHistoryList, state.isSortedDesc),
       };
 

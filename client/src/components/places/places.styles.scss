@@ -1,6 +1,6 @@
 @import '../../sass/mixins.scss';
 
-.country-select {
+.places {
   @include sections-common-styles;
 
   &__title {
@@ -11,13 +11,7 @@
   &__options {
     display: grid;
     gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(4.5rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
     justify-items: center;
-  }
-
-  &__button-wrapper {
-    display: flex;
-    justify-content: space-between;
-    margin: 2rem 0;
   }
 }

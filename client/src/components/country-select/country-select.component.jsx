@@ -97,7 +97,7 @@ const CountrySelect = () => {
         </CustomButton>
       </div>
 
-      <AddCountry />
+      <AddCountry label="Dodaj kraj" />
     </div>
   );
 };

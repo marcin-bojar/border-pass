@@ -133,7 +133,7 @@ router.post('/:userId/countries', [auth, validateCountry], async (req, res) => {
   } catch {
     return res.status(500).json({
       success: false,
-      error: 'Nie udało dodać się kraju, spróbuj ponownie.',
+      error: 'Nie udało się dodać kraju, spróbuj ponownie.',
     });
   }
 });

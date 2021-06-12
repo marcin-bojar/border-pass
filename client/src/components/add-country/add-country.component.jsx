@@ -10,7 +10,7 @@ import { AppContext } from '../../hooks/useAppState';
 
 import './add-country.styles.scss';
 
-const AddCountry = () => {
+const AddCountry = ({ label }) => {
   const { inputValue, setInputValue, handleChange } = useSingleInput();
   const {
     userState: { currentUser },
@@ -81,8 +81,8 @@ const AddCountry = () => {
           handleChange={handleChange}
           maxLength="3"
           disabled={isMakingApiCall}
-          label="Dodaj kraj"
-          aria-label="Dodaj kraj"
+          label={label}
+          aria-label={label}
         />
       </form>
       <div className="add-country__spinner-wrapper">
