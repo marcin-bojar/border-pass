@@ -30,7 +30,11 @@ const BordersTable = () => {
         <thead>
           <tr>
             <th>Wyjazd z bazy</th>
-            <th>Przekroczenie granicy</th>
+            <th>
+              Punkt na trasie
+              <br />
+              Przekroczenie granicy
+            </th>
             <th>Data</th>
             <th>Godzina</th>
             <th>Powrót na bazę</th>
@@ -53,9 +57,13 @@ const BordersTable = () => {
               const row = (
                 <tr key={i}>
                   <td></td>
-                  <td>
-                    {border.from} &nbsp; {'->'} &nbsp; {border.to}
-                  </td>
+                  {border.type === 'place' ? (
+                    <td>{border.name}</td>
+                  ) : (
+                    <td>
+                      {border.from} &nbsp; {'->'} &nbsp; {border.to}
+                    </td>
+                  )}
                   <td>{border.date}</td>
                   <td>{border.time}</td>
                   <td></td>

@@ -97,7 +97,7 @@ const createTableMarkup = (user, borders) => {
                     <thead>
                     <tr>
                         <th>Wyjazd z bazy</th>
-                        <th>Przekroczenie granicy</th>
+                        <th>Punkt na trasie<br/>Przekroczenie granicy</th>
                         <th>Data</th>
                         <th>Godzina</th>
                         <th>Powrót na bazę</th>
@@ -127,8 +127,11 @@ const createTableMarkup = (user, borders) => {
                           const row = `
                             <tr>
                             <td></td>
-                            <td>
-                                ${border.from} &nbsp; -> &nbsp; ${border.to}
+                            <td> ${
+                              border.type === 'place'
+                                ? border.name
+                                : `${border.from} &nbsp; -> &nbsp; ${border.to}`
+                            }                        
                             </td>
                             <td>${border.date}</td>
                             <td>${border.time}</td>
