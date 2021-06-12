@@ -138,6 +138,31 @@ router.post('/:userId/countries', [auth, validateCountry], async (req, res) => {
   }
 });
 
+// @route POST /api/users/:userId/places
+// @desc Add new place to user's places' array
+// @private
+router.post('/:userId/places', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password -__v');
+    const placeExists = user.places.find(el => el.name === req.body.name);
+    if (placeExists) {
+      return res.json({
+        success: false,
+        error: 'Ten punkt jest już na liście.',
+      });
+    }
+    user.places.push(req.body);
+    await user.save();
+    return res.json({ success: true, data: user });
+  } catch (err) {
+    console.dir(err);
+    return res.status(500).json({
+      success: false,
+      error: 'Nie udało się dodać punktu, spróbuj ponownie.',
+    });
+  }
+});
+
 // @route POST /api/users/:userId/send
 // @desc Send an email with user's borders' table
 // @private

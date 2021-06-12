@@ -10,11 +10,11 @@ import { AppContext } from '../../hooks/useAppState';
 
 import './add-country.styles.scss';
 
-const AddCountry = ({ label }) => {
+const AddCountry = ({ label, place }) => {
   const { inputValue, setInputValue, handleChange } = useSingleInput();
   const {
     userState: { currentUser },
-    dataState: { countries },
+    dataState: { countries, places },
     generalState: { isMakingApiCall },
     setDataState,
     setUiState,
@@ -28,16 +28,19 @@ const AddCountry = ({ label }) => {
     if (!name) return;
 
     setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
-    const newCountry = { name };
+    const newOption = { name };
 
     if (currentUser) {
       const { _id } = currentUser;
+      const url = place ? `/api/users/${_id}/places` : `/api/users/${_id}/countries`;
 
       axios
-        .post(`/api/users/${_id}/countries`, newCountry, getConfig())
+        .post(url, newOption, getConfig())
         .then(res => {
           if (res.data.success) {
-            setDataState({ type: 'SET_COUNTRIES', payload: [...res.data.data.countries] });
+            const type = place ? 'SET_PLACES' : 'SET_COUNTRIES';
+            const payload = place ? [...res.data.data.places] : [...res.data.data.countries];
+            setDataState({ type, payload });
             setInputValue('');
           } else {
             setUiState({
@@ -57,15 +60,22 @@ const AddCountry = ({ label }) => {
         })
         .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
     } else {
-      const countryExists = countries.find(el => el.name === name);
+      const optionExists = place
+        ? places.find(el => el.name === name)
+        : countries.find(el => el.name === name);
 
-      if (countryExists) {
+      if (optionExists) {
         setUiState({
           type: 'SET_MODAL_DATA',
-          payload: { type: 'error', text: 'Ten kraj jest już na liście.' },
+          payload: {
+            type: 'error',
+            text: places ? 'Ten punkt jest już na liście.' : 'Ten kraj jest już na liście.',
+          },
         });
       } else {
-        setDataState({ type: 'SET_COUNTRIES', payload: [...countries, { name }] });
+        const type = place ? 'SET_PLACES' : 'SET_COUNTRIES';
+        const payload = place ? [...places, { name }] : [...countries, { name }];
+        setDataState({ type, payload });
         setInputValue('');
       }
       setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false });
@@ -79,7 +89,7 @@ const AddCountry = ({ label }) => {
           type="text"
           value={inputValue}
           handleChange={handleChange}
-          maxLength="3"
+          maxLength={place ? '15' : '3'}
           disabled={isMakingApiCall}
           label={label}
           aria-label={label}

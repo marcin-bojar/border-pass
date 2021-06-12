@@ -94,6 +94,12 @@ export const dataReducer = (state, action) => {
         countries: payload,
       };
 
+    case 'SET_PLACES':
+      return {
+        ...state,
+        places: payload,
+      };
+
     case 'SET_EDITED_ITEM':
       return {
         ...state,

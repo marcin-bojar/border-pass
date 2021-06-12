@@ -16,7 +16,7 @@ const Places = () => {
 
   return (
     <div className="places">
-      <h3 className="places__title">Twoje miejsca</h3>
+      <h3 className="places__title">Punkty podróży</h3>
       <div className="places__options">
         {places.length ? (
           places.map(el => <CountryOption place key={el.name} name={el.name} />)
@@ -24,7 +24,7 @@ const Places = () => {
           <p>Brak danych</p>
         )}
       </div>
-      <AddCountry label="Dodaj miejsce" />
+      <AddCountry place label="Dodaj punkt" />
     </div>
   );
 };
