@@ -24,8 +24,8 @@ const HistoryEditorForm = () => {
     setGeneralState,
   } = useContext(AppContext);
 
-  const { type, from, to, time, date, timestamp, i, _id } = editedItem;
-  const borderFields = { type, from, to, time, date, timestamp, _id };
+  const { type, from, to, name, time, date, timestamp, i, _id } = editedItem;
+  const borderFields = { type, from, to, name, time, date, timestamp, _id };
 
   const [fields, setFields] = useState(borderFields);
   const [error, setError] = useState(null);
@@ -86,7 +86,7 @@ const HistoryEditorForm = () => {
       <form id="editor-form" onSubmit={handleSubmit} className="history-editor-form__form">
         <div className="history-editor-form__block">
           <span className="history-editor-form__nr">{i + 1}. </span>
-          {fields.type !== 'borderPass' && (
+          {(fields.type === 'tripStart' || fields.type === 'tripEnd') && (
             <div className="history-editor-form__trip-event">
               <select
                 className="history-editor-form__select"
@@ -118,6 +118,20 @@ const HistoryEditorForm = () => {
                   maxLength="3"
                   autoComplete="off"
                   value={fields.to}
+                />
+              </fieldset>
+            </div>
+          )}
+          {fields.type === 'place' && (
+            <div className="history-editor-form__country">
+              <fieldset className="history-editor-form__input-wrapper place">
+                <CustomInput
+                  type="text"
+                  handleChange={handleChange}
+                  name="name"
+                  maxLength="15"
+                  autoComplete="off"
+                  value={fields.name}
                 />
               </fieldset>
             </div>
