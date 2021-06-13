@@ -5,6 +5,7 @@ import axios from 'axios';
 import CustomButton from '../custom-button/custom-button.component';
 import CustomInput from '../custom-input/custom-input.component';
 import Loader from '../loader/loader.component';
+import Switch from '../switch/switch.component';
 
 import { AppContext } from '../../hooks/useAppState';
 import { getConfig } from '../../utils';
@@ -148,6 +149,7 @@ const SetConfig = () => {
       });
       setUserName(currentUser.name);
       setIsUserNameUpdated(userName !== currentUser.name);
+      setUserPreferences(currentUser.preferences);
     }
   }, [currentUser]);
 
@@ -209,18 +211,13 @@ const SetConfig = () => {
       <section className="set-config__section">
         <h3 className="set-config__section-title">Twoje ustawienia</h3>
         <form onSubmit={submitUserPreferences} className="set-config__form">
-          <div className="set-config__checkbox-container">
-            <input
-              name="showPlaces"
-              type="checkbox"
-              id="showPlaces"
-              checked={userPreferences.showPlaces}
-              onChange={handleUserPreferencesChange}
-            />
-            <label htmlFor="showPlaces" checked={showPlaces}>
-              Pokazuj Punkty na trasie
-            </label>
-          </div>
+          <Switch
+            id="showPlaces"
+            name="showPlaces"
+            label="Pokazuj punkty na trasie"
+            handleChange={handleUserPreferencesChange}
+            isOn={userPreferences.showPlaces}
+          />
           <CustomButton disabled={isMakingApiCall || !isUserPreferencesUpdated} type="submit">
             Zapisz
           </CustomButton>
