@@ -28,6 +28,7 @@
     width: 100%;
     border-radius: 2.5rem;
     background-color: $color-grey-light-3;
+    transition: background-color 0.3s;
   }
 
   &__checkbox:checked ~ div {

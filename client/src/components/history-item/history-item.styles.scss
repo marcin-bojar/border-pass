@@ -8,6 +8,10 @@
     color: $color-primary;
   }
 
+  &__event-type {
+    word-break: break-all;
+  }
+
   &.trip-start {
     background-image: linear-gradient(
       to left,

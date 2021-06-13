@@ -14,6 +14,7 @@ const validateTimeAndDate = require('../../middlewares/validateTimeAndDate');
 const createBordersFile = require('../../middlewares/createBordersFile');
 const validateEmail = require('../../middlewares/validateEmail');
 const validateCountry = require('../../middlewares/validateCountry');
+const validatePlace = require('../../middlewares/validatePlace');
 
 // @route POST /api/users/:userId/borders
 // @desc Post new border crossing to user's borders array
@@ -142,7 +143,7 @@ router.post('/:userId/countries', [auth, validateCountry], async (req, res) => {
 // @route POST /api/users/:userId/places
 // @desc Add new place to user's places' array
 // @private
-router.post('/:userId/places', auth, async (req, res) => {
+router.post('/:userId/places', [auth, validatePlace], async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
     const placeExists = user.places.find(el => el.name === req.body.name);
@@ -152,7 +153,7 @@ router.post('/:userId/places', auth, async (req, res) => {
         error: 'Ten punkt jest już na liście.',
       });
     }
-    user.places.push(req.body);
+    user.places.push({ name: req.place });
     await user.save();
     return res.json({ success: true, data: user });
   } catch {

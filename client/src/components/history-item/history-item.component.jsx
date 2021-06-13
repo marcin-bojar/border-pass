@@ -27,19 +27,21 @@ const HistoryItem = forwardRef(({ data }, ref) => {
     else setDataState({ type: 'SET_SELECTION', payload: { startIndex: i, endIndex: null } });
   };
 
+  const handleClick = () => {
+    if (editMode) setDataState({ type: 'SET_EDITED_ITEM', payload: data });
+    else if (sendMode) {
+      if (isSendingArchive) return;
+      setSelected(!selected);
+      handleSelection();
+    }
+  };
+
   return (
     <li
       className={`${isTripStart ? 'trip-start' : ''} ${isTripEnd ? 'trip-end' : ''} ${
         selected ? 'selected' : ''
       } history-item`}
-      onClick={() => {
-        if (editMode) setDataState({ type: 'SET_EDITED_ITEM', payload: data });
-        else if (sendMode) {
-          if (isSendingArchive) return;
-          setSelected(!selected);
-          handleSelection();
-        }
-      }}
+      onClick={handleClick}
       ref={ref}
     >
       <div className="history-item__event">
