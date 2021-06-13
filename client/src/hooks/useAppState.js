@@ -48,6 +48,7 @@ export const useAppState = () => {
           places: [...user.places],
         },
       });
+      setUiState({ type: 'SET_SHOW_PLACES', payload: user?.preferences.showPlaces });
     } else {
       setDataState({ type: 'SET_GUEST_DATA' });
     }

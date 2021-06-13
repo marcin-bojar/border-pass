@@ -15,6 +15,7 @@ const Select = ({ placesSelect }) => {
   const {
     userState: { currentUser },
     dataState: { countries, places, currentCountry, historyList, isSortedDesc },
+    uiState: { showPlaces },
     generalState: { isMakingApiCall },
     setUserState,
     setDataState,
@@ -57,12 +58,39 @@ const Select = ({ placesSelect }) => {
     }
   };
 
+  const hidePlaces = e => {
+    e.preventDefault();
+    const { _id } = currentUser;
+
+    setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
+
+    axios
+      .post(`/api/users/${_id}/preferences`, { showPlaces: false }, getConfig())
+      .then(res => {
+        setUserState({ type: 'SET_USER', payload: res.data.data });
+        setUiState({
+          type: 'SET_MODAL_DATA',
+          payload: { type: 'info', text: 'Punkty na trasie zostały ukryte.' },
+        });
+      })
+      .catch(err =>
+        setUiState({
+          type: 'SET_MODAL_DATA',
+          payload: {
+            type: 'error',
+            text: err?.response?.data.error || 'Coś poszło nie tak spróbuj ponownie.',
+          },
+        })
+      )
+      .finally(() => setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: false }));
+  };
+
   const commonMarkup = (
     <>
       <div className="select__button-wrapper">
         <CustomButton
           setWidth="8.4rem"
-          disabled={placesSelect ? places.length < 6 : countries.length <= 10}
+          disabled={placesSelect ? places.length <= 6 : countries.length <= 10}
           handleClick={() => setShowAll(!showAll)}
         >
           {!showAll ? 'Więcej' : 'Ukryj'}
@@ -85,13 +113,14 @@ const Select = ({ placesSelect }) => {
         >
           Cofnij
         </CustomButton>
-      </div>{' '}
+      </div>
+
+      <AddCountry label={placesSelect ? 'Dodaj punkt' : 'Dodaj kraj'} />
     </>
   );
 
   const countryMarkup = (
     <>
-      {' '}
       <div className="select">
         {currentCountry && <h3 className="select__title">Do jakiego kraju wjeżdżasz?</h3>}
 
@@ -104,15 +133,12 @@ const Select = ({ placesSelect }) => {
         </div>
 
         {commonMarkup}
-
-        <AddCountry label="Dodaj kraj" />
-      </div>{' '}
+      </div>
     </>
   );
 
   const placesMarkup = (
     <>
-      {' '}
       <div className="select">
         <h3 className="select__title">Punkty podróży</h3>
         <div className="select__options select__options--places">
@@ -131,18 +157,29 @@ const Select = ({ placesSelect }) => {
                 jak miasta, firmy, przystanki itp, tutaj możesz je dodawać.
               </p>
               <p className="select__text">
-                Jeśli nie musisz tego robić, możesz ukryć ten element w swoich ustawieniach.
+                Jeśli nie musisz tego robić, możesz ukryć ten element. W ustawieniach możesz
+                ponownie go włączyć (dostępne dla zalogowanych użytkowników). &nbsp;
+                <CustomButton
+                  link
+                  handleClick={e => {
+                    currentUser
+                      ? hidePlaces(e)
+                      : setUiState({ type: 'SET_SHOW_PLACES', payload: false });
+                  }}
+                >
+                  Ukryj ten element
+                </CustomButton>
               </p>
             </div>
           )}
         </div>
 
         {commonMarkup}
-
-        <AddCountry place label="Dodaj punkt" />
-      </div>{' '}
+      </div>
     </>
   );
+
+  if (placesSelect && (!showPlaces || !currentCountry)) return null;
 
   return placesSelect ? placesMarkup : countryMarkup;
 };

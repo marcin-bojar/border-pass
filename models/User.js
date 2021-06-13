@@ -37,6 +37,12 @@ const UserSchema = new Schema({
       companyEmail: '',
     },
   },
+  preferences: {
+    type: Object,
+    default: {
+      showPlaces: true,
+    },
+  },
 });
 
 module.exports = User = mongoose.model('user', UserSchema);

@@ -2,6 +2,7 @@ export const UI_INITIAL_STATE = {
   showModal: false,
   modalData: null,
   showUserMenu: false,
+  showPlaces: true,
 };
 
 export const uiReducer = (state, action) => {
@@ -36,6 +37,12 @@ export const uiReducer = (state, action) => {
       return {
         ...state,
         modalData: payload,
+      };
+
+    case 'SET_SHOW_PLACES':
+      return {
+        ...state,
+        showPlaces: payload,
       };
 
     default:

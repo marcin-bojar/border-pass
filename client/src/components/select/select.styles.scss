@@ -26,7 +26,16 @@
   }
 
   &__text {
-    font-size: 1.7rem;
+    font-size: 1.8rem;
     font-weight: 500;
+
+    &:not(:last-of-type) {
+      margin-bottom: 1.5rem;
+    }
+
+    & .custom-button {
+      font-size: 1.8rem;
+      font-weight: 500;
+    }
   }
 }

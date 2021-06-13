@@ -210,7 +210,7 @@ router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
 router.post('/:userId/company', [auth, validateEmail], async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
-    user.company = req.body;
+    user.company = { ...req.body };
     await user.save();
     return res.json({ success: true, data: user });
   } catch {
@@ -234,6 +234,23 @@ router.post('/:userId/name', auth, async (req, res) => {
     return res.status(500).json({
       success: false,
       error: 'Nie udało się zapisać Twoich danych, spróbuj ponownie.',
+    });
+  }
+});
+
+// @route POST /api/users/:userId/preferences
+// @desc Set user's preferences
+// @private
+router.post('/:userId/preferences', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password -__v');
+    user.preferences = { ...user.preferences, ...req.body };
+    await user.save();
+    return res.json({ success: true, data: user });
+  } catch {
+    return res.status(500).json({
+      success: false,
+      error: 'Nie udało się zapisać Twoich ustawień, spróbuj ponownie.',
     });
   }
 });
