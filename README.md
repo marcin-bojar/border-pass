@@ -1,4 +1,53 @@
-# Border Pass v0.2.2
+# Border Pass v0.2.3
+
+Register your business trip's details with ease.
+
+This web app allows to register cross-border business trips' details like time and date the trip started, border crossings and points on route to anyone who needs to calculate his subsistence allowance. Designed with truck drivers in mind, but can be used by anyone who travels abroad and needs to document the trip.  
+Version 0.2.3 brings new trip event - points on route. User can add custom cities/companies/stops etc and register the time and date of arrival to them.  
+The app gives the possibility to send the already preformated table with all the data about the trips from selected timeframe by email. 
+Other features:  
+  - possibility to register trip's start and end time, apart from the border crossings,  
+  - the archive, where user has all his sent and unsent tables available for 6 months.  
+
+All user data is stored in MongoDB database. JSON web tokens are used for user authentication and authorization.  
+Sensitive data like users' passwords are hashed before stored in database.  
+It is still possible to use this app as guest user, without signing in/up, as all functionalities from version 0.1 are still available to the user.  
+**This app is PWA compliant which makes it installable on mobile devices. Using this app in guest mode makes it 100% functional offline.**
+
+### Tech stack:
+
+#### Backend
+
+built with **Node/Express**  
+**jsonwebtoken** used for user auth  
+all data stored in **MongoDB**  
+**Mongoose** ODM for MongoDB  
+**bcrypt** used to encrypt sensitive data  
+**dotenv** used to manage environment variables  
+**nodemailer** used to send email from the server  
+**googleapis** used to connect to the Google API using **OAuth2**  
+**html-minifier** used to minify the sent file
+
+#### Frontend
+
+built with **React**  
+**Context API** used to manage app state  
+**React Hooks**  
+**Parcel** used to bundle all the assets  
+**Workbox** used to generate service worker  
+**RWD** and **mobile-first** approach  
+**SASS** preprocessor
+
+Deployed live with **nazwa.pl** hosting provider.  
+Staging deployed live with **Heroku**.
+
+Landing page: https://border-pass.pl  
+Visit https://app.border-pass.pl to start using this app and to install it on your smartphone/tablet.
+
+
+## EARLIER VERSIONS
+
+### Border Pass v0.2.2
 
 Register your business trip's border crossings with ease.
 
@@ -40,8 +89,6 @@ Staging deployed live with **Heroku**.
 
 Landing page: https://border-pass.pl  
 Visit https://app.border-pass.pl to start using this app and to install it on your smartphone/tablet.
-
-## EARLIER VERSIONS
 
 ### Border Pass v0.2.1
 
