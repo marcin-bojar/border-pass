@@ -13,7 +13,7 @@
 Cypress.Commands.add('login', (email, password) => {
   cy.get('input[name=email]').type(email).should('have.value', email);
   cy.get('input[name=password]').type(password).should('have.value', password);
-  cy.get('button').contains('Zaloguj').should('exist').click();
+  cy.contains('button', 'Zaloguj').click();
 });
 //
 //
