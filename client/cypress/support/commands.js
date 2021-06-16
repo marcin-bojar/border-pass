@@ -1,29 +1,25 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
 Cypress.Commands.add('login', (email, password) => {
   cy.get('input[name=email]').type(email).should('have.value', email);
   cy.get('input[name=password]').type(password).should('have.value', password);
   cy.contains('button', 'Zaloguj').click();
 });
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('checkGuestHeader', () => {
+  cy.get('div.nav-bar__guest a').should('have.length', 2).and('have.class', 'nav-bar__link');
+});
+
+Cypress.Commands.add('checkUserHeader', () => {
+  cy.get('div.nav-bar__user button', { timeout: 10000 })
+    .as('navbarButtons')
+    .should('have.length', 2);
+  cy.get('@navbarButtons').first().should('have.class', 'navbar navbar--user custom-button');
+  cy.get('@navbarButtons').contains('Wyloguj').should('have.length', 1);
+});
+
+Cypress.Commands.add('checkHeading', () => {
+  cy.get('div.heading a')
+    .should('have.class', 'logo')
+    .and('have.attr', 'href')
+    .then($href => expect($href).to.eq('/'));
+  cy.get('div.heading h2').should('contain', 'Rejestruj swoje przekroczenia granic');
+});

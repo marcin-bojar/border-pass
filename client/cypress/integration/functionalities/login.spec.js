@@ -6,7 +6,8 @@ describe('Logging in and out', () => {
   it('Logs in with valid data and logs out', () => {
     cy.login('test@test.pl', 'marcin1');
 
-    cy.contains('button.navbar--user', 'Test Testowy', { timeout: 12000 });
+    cy.checkUserHeader();
+    cy.contains('button.navbar--user', 'Test Testowy');
     cy.contains('button.navbar', 'Wyloguj').click();
   });
 
