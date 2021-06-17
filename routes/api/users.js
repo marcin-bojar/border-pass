@@ -15,6 +15,7 @@ const createBordersFile = require('../../middlewares/createBordersFile');
 const validateEmail = require('../../middlewares/validateEmail');
 const validateCountry = require('../../middlewares/validateCountry');
 const validatePlace = require('../../middlewares/validatePlace');
+const validateUserName = require('../../middlewares/validateUserName');
 
 // @route POST /api/users/:userId/borders
 // @desc Post new border crossing to user's borders array
@@ -225,10 +226,10 @@ router.post('/:userId/company', [auth, validateEmail], async (req, res) => {
 // @route POST /api/users/:userId/name
 // @desc Set user's name
 // @private
-router.post('/:userId/name', auth, async (req, res) => {
+router.post('/:userId/name', [auth, validateUserName], async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
-    user.name = req.body.userName;
+    user.name = req.body.name;
     await user.save();
     return res.json({ success: true, data: user });
   } catch {

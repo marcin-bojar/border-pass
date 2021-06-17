@@ -92,7 +92,7 @@ const SetConfig = () => {
     setGeneralState({ type: 'SET_IS_MAKING_API_CALL', payload: true });
 
     axios
-      .post(`/api/users/${_id}/name`, { userName }, getConfig())
+      .post(`/api/users/${_id}/name`, { name: userName }, getConfig())
       .then(res => {
         setUserState({ type: 'SET_USER', payload: res.data.data });
         setUiState({

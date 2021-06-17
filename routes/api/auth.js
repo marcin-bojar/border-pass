@@ -9,6 +9,7 @@ const signupValidation = require('../../middlewares/signupValidation');
 const hashPassword = require('../../middlewares/hashPassword');
 const auth = require('../../middlewares/auth');
 const validateEmail = require('../../middlewares/validateEmail');
+const validateUserName = require('../../middlewares/validateUserName');
 
 // @route POST /api/auth/signup
 // @desc Register new user
@@ -19,6 +20,7 @@ router.post(
     signupValidation.checkIfAllFieldsAreFilledIn,
     signupValidation.checkIfUserAlreadyExists,
     validateEmail,
+    validateUserName,
     signupValidation.validatePassword,
     hashPassword,
   ],
