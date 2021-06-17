@@ -7,7 +7,8 @@ describe('Logging in and out', () => {
     cy.login('test@test.pl', 'marcin1');
 
     cy.checkUserHeader();
-    cy.contains('button.navbar--user', 'Test Testowy');
+    cy.checkUserName('Test Testowy');
+    cy.getLocalStorage('token').should('exist');
     cy.contains('button.navbar', 'Wyloguj').click();
   });
 

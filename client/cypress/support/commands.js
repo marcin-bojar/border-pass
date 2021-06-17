@@ -1,3 +1,5 @@
+import 'cypress-localstorage-commands';
+
 Cypress.Commands.add('login', (email, password) => {
   cy.get('input[name=email]').type(email).should('have.value', email);
   cy.get('input[name=password]').type(password).should('have.value', password);
@@ -22,4 +24,8 @@ Cypress.Commands.add('checkHeading', () => {
     .and('have.attr', 'href')
     .then($href => expect($href).to.eq('/'));
   cy.get('div.heading h2').should('contain', 'Rejestruj swoje przekroczenia granic');
+});
+
+Cypress.Commands.add('checkUserName', name => {
+  cy.contains('button.navbar--user', name);
 });

@@ -3,7 +3,7 @@ describe('Sign up page', () => {
     cy.visit('/signup');
   });
 
-  it.only('renders the sign up page correctly', () => {
+  it('renders the sign up page correctly', () => {
     cy.checkGuestHeader();
     cy.checkHeading();
     cy.get('.sign-up__title').contains('Zarejestruj się');
