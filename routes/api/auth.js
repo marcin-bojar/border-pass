@@ -28,7 +28,7 @@ router.post(
     try {
       const { name, email, password } = req.body;
       const newUser = new User({
-        name,
+        name: name.trim(),
         email: email.toLowerCase().trim(),
         password,
       });

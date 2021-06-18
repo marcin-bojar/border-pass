@@ -1,9 +1,17 @@
 import 'cypress-localstorage-commands';
 
-Cypress.Commands.add('login', (email, password) => {
+Cypress.Commands.add('loginUser', (email, password) => {
   cy.get('input[name=email]').type(email).should('have.value', email);
   cy.get('input[name=password]').type(password).should('have.value', password);
   cy.contains('button', 'Zaloguj').click();
+});
+
+Cypress.Commands.add('registerUser', (userName, email, password, confirmPassword) => {
+  cy.get('input[name=name]').type(userName).should('have.value', userName);
+  cy.get('input[name=email]').type(email).should('have.value', email);
+  cy.get('input[name=password]').type(password).should('have.value', password);
+  cy.get('input[name=confirmPassword]').type(confirmPassword).should('have.value', confirmPassword);
+  cy.contains('button', 'Zarejestruj').click();
 });
 
 Cypress.Commands.add('checkGuestHeader', () => {

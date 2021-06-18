@@ -4,7 +4,7 @@ describe('Logging in and out', () => {
   });
 
   it('Logs in with valid data and logs out', () => {
-    cy.login('test@test.pl', 'marcin1');
+    cy.loginUser('test@test.pl', 'marcin1');
 
     cy.checkUserHeader();
     cy.checkUserName('Test Testowy');
@@ -13,7 +13,7 @@ describe('Logging in and out', () => {
   });
 
   it('Doesnt log in with wrong password', () => {
-    cy.login('test@test.pl', 'wrong');
+    cy.loginUser('test@test.pl', 'wrong');
     cy.contains('div.error-message', 'Podane dane logowania są błędne.');
   });
 
@@ -24,7 +24,7 @@ describe('Logging in and out', () => {
   });
 
   it('Doesnt log in with wrong email', () => {
-    cy.login('wrong@test.pl', 'marcin1');
+    cy.loginUser('wrong@test.pl', 'marcin1');
     cy.contains('div.error-message', 'Podany użytkownik nie istnieje.');
   });
 

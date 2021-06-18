@@ -34,7 +34,7 @@ const SignUp = () => {
     e.preventDefault();
 
     if (user.password !== user.confirmPassword) {
-      setUserState({ type: 'USER_AUTH_ERROR', payload: 'Hasła nie są takie same' });
+      setUserState({ type: 'USER_AUTH_ERROR', payload: 'Hasła nie są takie same.' });
       return;
     }
 

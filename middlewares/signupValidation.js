@@ -31,7 +31,7 @@ const validatePassword = (req, res, next) => {
   if (!passwordRegex.test(password))
     return res.status(400).json({
       success: false,
-      error: 'Hasło musi składać się z co najmniej pięcu liter i jednej cyfry.',
+      error: 'Hasło musi składać się z co najmniej pięciu liter i jednej cyfry.',
     });
 
   next();
