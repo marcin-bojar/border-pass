@@ -18,55 +18,45 @@ describe('Sign up functionality', () => {
       'password123',
       'password123'
     );
-    cy.contains('div', 'Imię i nazwisko nie może mieć wiecej niż 25 znaków.').should(
-      'have.class',
-      'error-message'
-    );
+    cy.checkErrorMessage('Imię i nazwisko nie może mieć wiecej niż 25 znaków.');
     cy.checkGuestHeader();
   });
 
   it('Validates the email address', () => {
     cy.registerUser('Tester Name', 'notanemailaddress@test', 'password123', 'password123');
-    cy.contains('div', 'Podany adres email jest nieprawidłowy.').should(
-      'have.class',
-      'error-message'
-    );
+    cy.checkErrorMessage('Podany adres email jest nieprawidłowy.');
     cy.checkGuestHeader();
   });
 
   it('Validates the length of the password', () => {
     cy.registerUser('Tester Name', 'testing@test.pl', 'pass1', 'pass1');
-    cy.contains('div', 'Hasło musi składać się z co najmniej pięciu liter i jednej cyfry.').should(
-      'have.class',
-      'error-message'
-    );
+    cy.checkErrorMessage('Hasło musi składać się z co najmniej pięciu liter i jednej cyfry.');
     cy.checkGuestHeader();
   });
 
   it('Checks if password contains at least one number', () => {
     cy.registerUser('Tester Name', 'testing@test.pl', 'password', 'password');
-    cy.contains('div', 'Hasło musi składać się z co najmniej pięciu liter i jednej cyfry.').should(
-      'have.class',
-      'error-message'
-    );
+    cy.checkErrorMessage('Hasło musi składać się z co najmniej pięciu liter i jednej cyfry.');
     cy.checkGuestHeader();
   });
 
   it('Checks if passwords matches', () => {
     cy.registerUser('Tester Name', 'testing@test.pl', 'password123', 'password321');
-    cy.contains('div', 'Hasła nie są takie same.').should('have.class', 'error-message');
+    cy.checkErrorMessage('Hasła nie są takie same.');
     cy.checkGuestHeader();
   });
 
-  // it.only('Makes sure that all fields are filled in', () => {
-  //   cy.registerUser('          ', 'testing@test.pl', 'password123', 'password123');
-  //   cy.contains('div', 'Imię i nazwisko nie może być krótsze niż 3 znaki.').should(
-  //     'have.class',
-  //     'error-message'
-  //   );
-  //   cy.checkGuestHeader();
-  //   cy.registerUser('Tester Name', ' ', 'password123', 'password321');
-  //   cy.registerUser('Tester Name', 'testing@test.pl', '', 'password321');
-  //   cy.registerUser('Tester Name', 'testing@test.pl', 'password123', '');
-  // });
+  it('Makes sure that all fields are filled in', () => {
+    cy.registerUser('', 'testing@test.pl', 'password123', 'password123');
+    cy.checkErrorMessage('Wypełnij wszystkie pola.');
+    cy.checkGuestHeader();
+    cy.clearAllInputs();
+    cy.registerUser('Tester Name', '', 'password123', 'password123');
+    cy.checkErrorMessage('Wypełnij wszystkie pola.');
+    cy.checkGuestHeader();
+    cy.clearAllInputs();
+    cy.registerUser('Tester Name', 'testing@test.pl', '', '');
+    cy.checkErrorMessage('Wypełnij wszystkie pola.');
+    cy.checkGuestHeader();
+  });
 });

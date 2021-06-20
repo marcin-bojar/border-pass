@@ -5,7 +5,6 @@ describe('Logging in and out', () => {
 
   it('Logs in with valid data and logs out', () => {
     cy.loginUser('test@test.pl', 'marcin1');
-
     cy.checkUserHeader();
     cy.checkUserName('Test Testowy');
     cy.getLocalStorage('token').should('exist');
@@ -14,22 +13,25 @@ describe('Logging in and out', () => {
 
   it('Doesnt log in with wrong password', () => {
     cy.loginUser('test@test.pl', 'wrong');
-    cy.contains('div.error-message', 'Podane dane logowania są błędne.');
+    cy.checkErrorMessage('Podane dane logowania są błędne.');
+    cy.checkGuestHeader();
   });
 
   it('Doesnt log in without password', () => {
-    cy.get('input[name=email]').type('test@test.pl').should('have.value', 'test@test.pl');
-    cy.contains('button', 'Zaloguj').click();
-    cy.contains('div.error-message', 'Podane dane logowania są błędne.');
+    cy.get('input[name=email]').type('test@test.pl{enter}').should('have.value', 'test@test.pl');
+    cy.checkErrorMessage('Podane dane logowania są błędne.');
+    cy.checkGuestHeader();
   });
 
   it('Doesnt log in with wrong email', () => {
     cy.loginUser('wrong@test.pl', 'marcin1');
-    cy.contains('div.error-message', 'Podany użytkownik nie istnieje.');
+    cy.checkErrorMessage('Podany użytkownik nie istnieje.');
+    cy.checkGuestHeader();
   });
 
   it('Prompts for a valid email', () => {
     cy.get('input[name=email]').type('test@{enter}');
-    cy.contains('div.error-message', 'Podany adres email jest nieprawidłowy.');
+    cy.checkErrorMessage('Podany adres email jest nieprawidłowy.');
+    cy.checkGuestHeader();
   });
 });

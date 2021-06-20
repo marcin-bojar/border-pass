@@ -7,10 +7,14 @@ Cypress.Commands.add('loginUser', (email, password) => {
 });
 
 Cypress.Commands.add('registerUser', (userName, email, password, confirmPassword) => {
-  cy.get('input[name=name]').type(userName).should('have.value', userName);
-  cy.get('input[name=email]').type(email).should('have.value', email);
-  cy.get('input[name=password]').type(password).should('have.value', password);
-  cy.get('input[name=confirmPassword]').type(confirmPassword).should('have.value', confirmPassword);
+  userName && cy.get('input[name=name]').type(userName).should('have.value', userName);
+  email && cy.get('input[name=email]').type(email).should('have.value', email);
+  password && cy.get('input[name=password]').type(password).should('have.value', password);
+  confirmPassword &&
+    cy
+      .get('input[name=confirmPassword]')
+      .type(confirmPassword)
+      .should('have.value', confirmPassword);
   cy.contains('button', 'Zarejestruj').click();
 });
 
@@ -36,4 +40,12 @@ Cypress.Commands.add('checkHeading', () => {
 
 Cypress.Commands.add('checkUserName', name => {
   cy.contains('button.navbar--user', name);
+});
+
+Cypress.Commands.add('clearAllInputs', () => {
+  cy.get('input').each($input => cy.wrap($input).clear());
+});
+
+Cypress.Commands.add('checkErrorMessage', errorMessage => {
+  cy.contains('div', errorMessage).should('have.class', 'error-message');
 });
