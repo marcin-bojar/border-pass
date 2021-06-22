@@ -1,9 +1,6 @@
 describe('Sign up page', () => {
-  beforeEach(() => {
+  it('Renders the sign up page correctly', () => {
     cy.visit('/signup');
-  });
-
-  it('renders the sign up page correctly', () => {
     cy.checkGuestHeader();
     cy.checkHeading();
     cy.get('.sign-up__title').contains('Zarejestruj się');

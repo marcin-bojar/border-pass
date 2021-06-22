@@ -1,9 +1,6 @@
 describe('Sign in page', () => {
-  beforeEach(() => {
-    cy.visit('/signin');
-  });
-
   it('Renders the sign in page correctly', () => {
+    cy.visit('/signin');
     cy.checkGuestHeader();
     cy.checkHeading();
     cy.get('.sign-in__title').contains('Zaloguj się');
