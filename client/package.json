@@ -11,7 +11,8 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "cypress:open": "cypress open",
-    "reset:db": "node ./db-manager/resetDB.js"
+    "reset:db": "node ./db-manager/resetDB.js",
+    "seed:db": "node ./db-manager/seedDB.js"
   },
   "author": "Marcin Bojar",
   "license": "ISC",
