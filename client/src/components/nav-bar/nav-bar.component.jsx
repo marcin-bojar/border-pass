@@ -22,7 +22,7 @@ const NavBar = () => {
       {userLoading ? (
         <Spinner isLoading={userLoading} />
       ) : currentUser ? (
-        <div className="nav-bar__user">
+        <div className="nav-bar__user" data-test="userNavbar">
           <div className="nav-bar__block">
             <CustomButton
               navbar
@@ -33,12 +33,16 @@ const NavBar = () => {
             </CustomButton>
             <div className={`${showUserMenu ? 'open' : ''} nav-bar__arrow`}>&#x25BC;</div>
           </div>
-          <CustomButton navbar handleClick={() => setUserState({ type: 'USER_LOGOUT' })}>
+          <CustomButton
+            navbar
+            data-test="logout"
+            handleClick={() => setUserState({ type: 'USER_LOGOUT' })}
+          >
             Wyloguj
           </CustomButton>
         </div>
       ) : (
-        <div className="nav-bar__guest">
+        <div className="nav-bar__guest" data-test="guestNavbar">
           <Link className="nav-bar__link" to="/signin">
             Zaloguj
           </Link>

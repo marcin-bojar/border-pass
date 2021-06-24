@@ -6,7 +6,7 @@ describe('Sign up functionality', () => {
   it('Signs up with correct data', () => {
     cy.registerUser('Tester Name', 'testing@test.pl', 'password123', 'password123');
     cy.checkUserName('Tester Name');
-    cy.checkUserHeader();
+    cy.checkUserHeader('Tester Name');
     cy.contains('button', 'Wyloguj').click();
     cy.exec('npm run reset:db');
   });

@@ -6,7 +6,7 @@ import BorderPass from '../../assets/icons/logo.svg';
 import './logo.styles.scss';
 
 const Logo = () => (
-  <Link to="/" className="logo">
+  <Link to="/" className="logo" data-test="headingLogo">
     <BorderPass aria-label="Home" />
   </Link>
 );

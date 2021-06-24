@@ -13,7 +13,7 @@ describe('Log in functionality', () => {
 
   it('Logs in with valid data and logs out', () => {
     cy.loginUser('testing@test.pl', 'password123');
-    cy.checkUserHeader();
+    cy.checkUserHeader('Tester Name');
     cy.checkUserName('Tester Name');
     cy.getLocalStorage('token').should('exist');
     cy.contains('button.navbar', 'Wyloguj').click();

@@ -20,27 +20,34 @@ Cypress.Commands.add('registerUser', (userName, email, password, confirmPassword
 });
 
 Cypress.Commands.add('checkGuestHeader', () => {
-  cy.get('div.nav-bar__guest a').should('have.length', 2).and('have.class', 'nav-bar__link');
+  cy.getByData('guestNavbar')
+    .children('a')
+    .should($links => {
+      expect($links).to.have.length(2);
+      expect($links).to.contain('Zaloguj');
+      expect($links).to.contain('Zarejestruj');
+    });
 });
 
-Cypress.Commands.add('checkUserHeader', () => {
-  cy.get('div.nav-bar__user button', { timeout: 10000 })
+Cypress.Commands.add('checkUserHeader', userName => {
+  cy.getByData('userNavbar', { timeout: 10000 })
+    .find('button')
     .as('navbarButtons')
     .should('have.length', 2);
-  cy.get('@navbarButtons').first().should('have.class', 'navbar navbar--user custom-button');
+  cy.get('@navbarButtons').first().should('contain', userName);
   cy.get('@navbarButtons').contains('Wyloguj').should('have.length', 1);
 });
 
 Cypress.Commands.add('checkHeading', () => {
-  cy.get('div.heading a')
+  cy.getByData('headingLogo')
     .should('have.class', 'logo')
     .and('have.attr', 'href')
     .then($href => expect($href).to.eq('/'));
-  cy.get('div.heading h2').should('contain', 'Rejestruj swoje przekroczenia granic');
+  cy.getByData('headingSubtitle').should('contain', 'Rejestruj swoje przekroczenia granic');
 });
 
 Cypress.Commands.add('checkUserName', name => {
-  cy.contains('button.navbar--user', name);
+  cy.contains('button', name);
 });
 
 Cypress.Commands.add('clearAllInputs', () => {
