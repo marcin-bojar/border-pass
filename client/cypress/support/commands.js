@@ -1,20 +1,21 @@
 import 'cypress-localstorage-commands';
 
+Cypress.Commands.add('getByData', (selector, ...args) => {
+  return cy.get(`[data-test=${selector}]`, ...args);
+});
+
 Cypress.Commands.add('loginUser', (email, password) => {
-  cy.get('input[name=email]').type(email).should('have.value', email);
-  cy.get('input[name=password]').type(password).should('have.value', password);
+  cy.getByData('email').type(email).should('have.value', email);
+  cy.getByData('password').type(password).should('have.value', password);
   cy.contains('button', 'Zaloguj').click();
 });
 
 Cypress.Commands.add('registerUser', (userName, email, password, confirmPassword) => {
-  userName && cy.get('input[name=name]').type(userName).should('have.value', userName);
-  email && cy.get('input[name=email]').type(email).should('have.value', email);
-  password && cy.get('input[name=password]').type(password).should('have.value', password);
+  userName && cy.getByData('name').type(userName).should('have.value', userName);
+  email && cy.getByData('email').type(email).should('have.value', email);
+  password && cy.getByData('password').type(password).should('have.value', password);
   confirmPassword &&
-    cy
-      .get('input[name=confirmPassword]')
-      .type(confirmPassword)
-      .should('have.value', confirmPassword);
+    cy.getByData('confirmPassword').type(confirmPassword).should('have.value', confirmPassword);
   cy.contains('button', 'Zarejestruj').click();
 });
 

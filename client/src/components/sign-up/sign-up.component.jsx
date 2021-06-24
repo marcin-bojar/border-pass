@@ -70,6 +70,7 @@ const SignUp = () => {
             name="name"
             label="Imię i nazwisko"
             aria-label="Imię i nazwisko"
+            data-test="name"
             value={user.name}
             handleChange={handleChange}
           />
@@ -77,6 +78,7 @@ const SignUp = () => {
             name="email"
             label="Email"
             aria-label="Email"
+            data-test="email"
             value={user.email}
             handleChange={handleChange}
           />
@@ -84,6 +86,7 @@ const SignUp = () => {
             name="password"
             label="Hasło"
             aria-label="Hasło"
+            data-test="password"
             type="password"
             value={user.password}
             handleChange={handleChange}
@@ -92,6 +95,7 @@ const SignUp = () => {
             name="confirmPassword"
             label=" Powtórz hasło"
             aria-label="Powtórz hasło"
+            data-test="confirmPassword"
             type="password"
             value={user.confirmPassword}
             handleChange={handleChange}

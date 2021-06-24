@@ -62,6 +62,7 @@ const SignIn = () => {
             name="email"
             label="Email"
             aria-label="Email"
+            data-test="email"
             value={userCredentials.email}
             handleChange={handleChange}
           />
@@ -69,6 +70,7 @@ const SignIn = () => {
             name="password"
             label="Hasło"
             aria-label="Hasło"
+            data-test="password"
             type="password"
             value={userCredentials.password}
             handleChange={handleChange}

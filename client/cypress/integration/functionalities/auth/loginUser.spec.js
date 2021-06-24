@@ -26,9 +26,7 @@ describe('Log in functionality', () => {
   });
 
   it('Doesnt log in without password', () => {
-    cy.get('input[name=email]')
-      .type('testing@test.pl{enter}')
-      .should('have.value', 'testing@test.pl');
+    cy.getByData('email').type('testing@test.pl{enter}').should('have.value', 'testing@test.pl');
     cy.checkErrorMessage('Podane dane logowania są błędne.');
     cy.checkGuestHeader();
   });
@@ -40,7 +38,7 @@ describe('Log in functionality', () => {
   });
 
   it('Prompts for a valid email', () => {
-    cy.get('input[name=email]').type('test@{enter}');
+    cy.getByData('email').type('test@{enter}');
     cy.checkErrorMessage('Podany adres email jest nieprawidłowy.');
     cy.checkGuestHeader();
   });

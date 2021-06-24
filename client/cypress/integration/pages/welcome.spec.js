@@ -1,5 +1,5 @@
 describe('Welcome page', () => {
-  it.only('Renders the Welcome page correctly', () => {
+  it('Renders the Welcome page correctly', () => {
     cy.visit('/');
     cy.checkGuestHeader();
     cy.checkHeading();
