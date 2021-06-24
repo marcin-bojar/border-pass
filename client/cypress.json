@@ -1,4 +1,9 @@
 {
     "baseUrl": "http://localhost:1234",
-    "chromeWebSecurity": false
+    "chromeWebSecurity": false,
+    "env": {
+        "username": "Tester Name",
+        "email": "testing@test.pl",
+        "password": "password123"
+    }
 }

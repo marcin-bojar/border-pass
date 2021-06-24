@@ -12,27 +12,29 @@ describe('Log in functionality', () => {
   });
 
   it('Logs in with valid data and logs out', () => {
-    cy.loginUser('testing@test.pl', 'password123');
-    cy.checkUserHeader('Tester Name');
-    cy.checkUserName('Tester Name');
+    cy.loginUser(Cypress.env('email'), Cypress.env('password'));
+    cy.checkUserHeader(Cypress.env('username'));
+    cy.checkUserName(Cypress.env('username'));
     cy.getLocalStorage('token').should('exist');
     cy.contains('button.navbar', 'Wyloguj').click();
   });
 
   it('Doesnt log in with wrong password', () => {
-    cy.loginUser('testing@test.pl', 'wrong');
+    cy.loginUser(Cypress.env('email'), 'wrong');
     cy.checkErrorMessage('Podane dane logowania są błędne.');
     cy.checkGuestHeader();
   });
 
   it('Doesnt log in without password', () => {
-    cy.getByData('email').type('testing@test.pl{enter}').should('have.value', 'testing@test.pl');
+    cy.getByData('email')
+      .type(`${Cypress.env('email')}{enter}`)
+      .should('have.value', Cypress.env('email'));
     cy.checkErrorMessage('Podane dane logowania są błędne.');
     cy.checkGuestHeader();
   });
 
   it('Doesnt log in with wrong email', () => {
-    cy.loginUser('wrong@test.pl', 'password123');
+    cy.loginUser('wrong@test.pl', Cypress.env('password'));
     cy.checkErrorMessage('Podany użytkownik nie istnieje.');
     cy.checkGuestHeader();
   });
