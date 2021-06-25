@@ -7,14 +7,14 @@ const hashPassword = (req, res, next) => {
     if (err)
       return res.status(500).json({
         success: false,
-        error: 'Coś poszło nie tak... spróbuj ponownie.',
+        error: 'Coś poszło nie tak, spróbuj ponownie.',
       });
 
     bcrypt.hash(password, salt, (err, hash) => {
       if (err)
         return res.status(500).json({
           success: false,
-          error: 'Coś poszło nie tak... spróbuj ponownie.',
+          error: 'Coś poszło nie tak, spróbuj ponownie.',
         });
 
       req.body.password = hash;

@@ -1,18 +1,19 @@
 const User = require('../models/User');
 
-const checkIfUserAlreadyExists = (req, res, next) => {
-  const email = req.body.email.toLowerCase().trim();
+const checkIfUserAlreadyExists = async (req, res, next) => {
+  try {
+    const email = req.body.email.toLowerCase().trim();
+    const user = await User.findOne({ email });
+    if (user)
+      return res.status(400).json({
+        success: false,
+        error: 'Podany adres email jest już w użyciu.',
+      });
 
-  User.findOne({ email })
-    .then(user => {
-      if (user)
-        return res.status(400).json({
-          success: false,
-          error: 'Podany adres email jest już w użyciu.',
-        });
-      next();
-    })
-    .catch(err => res.status(400).json({ success: false, error: err.message }));
+    next();
+  } catch {
+    res.status(500).json({ success: false, error: 'Coś poszło nie tak, spróbuj ponownie.' });
+  }
 };
 
 const checkIfAllFieldsAreFilledIn = (req, res, next) => {

@@ -75,7 +75,7 @@ router.put('/:userId/borders', auth, async (req, res) => {
     await user.save();
     return res.json({ success: true, data: user });
   } catch {
-    return res.status(400).json({
+    return res.status(500).json({
       success: false,
       error: 'Aktualizacja nie powiodła się, spróbuj ponownie.',
     });
