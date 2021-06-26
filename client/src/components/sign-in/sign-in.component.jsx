@@ -54,7 +54,9 @@ const SignIn = () => {
 
   return (
     <div className="sign-in">
-      <h3 className="sign-in__title">Zaloguj się</h3>
+      <h3 className="sign-in__title" data-test="title">
+        Zaloguj się
+      </h3>
       <form className="sign-in__form" onSubmit={handleSubmit}>
         <div className="sign-in__inputs-wrapper">
           {authError && <ErrorMessage error={authError} />}
@@ -62,7 +64,7 @@ const SignIn = () => {
             name="email"
             label="Email"
             aria-label="Email"
-            data-test="email"
+            data-test="input-email"
             value={userCredentials.email}
             handleChange={handleChange}
           />
@@ -70,14 +72,14 @@ const SignIn = () => {
             name="password"
             label="Hasło"
             aria-label="Hasło"
-            data-test="password"
+            data-test="input-password"
             type="password"
             value={userCredentials.password}
             handleChange={handleChange}
           />
         </div>
         <div className="sign-in__button-wrapper">
-          <CustomButton>Zaloguj</CustomButton>
+          <CustomButton data-test="submit">Zaloguj</CustomButton>
         </div>
         <div className="sign-in__spinner-wrapper">
           <Spinner isLoading={userLoading} />

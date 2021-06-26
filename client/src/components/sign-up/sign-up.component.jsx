@@ -62,7 +62,9 @@ const SignUp = () => {
 
   return (
     <div className="sign-up">
-      <h3 className="sign-up__title">Zarejestruj się</h3>
+      <h3 className="sign-up__title" data-test="title">
+        Zarejestruj się
+      </h3>
       <form className="sign-up__form" onSubmit={handleSubmit}>
         <div className="sign-up__inputs-wrapper">
           {authError && <ErrorMessage error={authError} />}
@@ -70,7 +72,7 @@ const SignUp = () => {
             name="name"
             label="Imię i nazwisko"
             aria-label="Imię i nazwisko"
-            data-test="name"
+            data-test="input-name"
             value={user.name}
             handleChange={handleChange}
           />
@@ -78,7 +80,7 @@ const SignUp = () => {
             name="email"
             label="Email"
             aria-label="Email"
-            data-test="email"
+            data-test="input-email"
             value={user.email}
             handleChange={handleChange}
           />
@@ -86,7 +88,7 @@ const SignUp = () => {
             name="password"
             label="Hasło"
             aria-label="Hasło"
-            data-test="password"
+            data-test="input-password"
             type="password"
             value={user.password}
             handleChange={handleChange}
@@ -95,14 +97,14 @@ const SignUp = () => {
             name="confirmPassword"
             label=" Powtórz hasło"
             aria-label="Powtórz hasło"
-            data-test="confirmPassword"
+            data-test="input-confirmPassword"
             type="password"
             value={user.confirmPassword}
             handleChange={handleChange}
           />
         </div>
         <div className="sign-up__button-wrapper">
-          <CustomButton>Zarejestruj</CustomButton>
+          <CustomButton data-test="submit">Zarejestruj</CustomButton>
         </div>
         <div className="sign-up__spinner-wrapper">
           <Spinner isLoading={userLoading} />

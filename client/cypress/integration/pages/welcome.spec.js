@@ -1,11 +1,11 @@
 describe('Welcome page', () => {
-  it('Renders the Welcome page correctly', () => {
+  it.only('Renders the Welcome page correctly', () => {
     cy.visit('/');
     cy.checkGuestHeader();
     cy.checkHeading();
-    cy.contains('h3', 'Witaj w Border Pass');
-    cy.get('div.welcome').children('p').should('have.length', 3);
-    cy.get('a.welcome__link').should('have.length', 2);
-    cy.contains('button', 'Kontynuuj jako gość');
+    cy.getByData('title').contains('Witaj w Border Pass').should('be.visible');
+    cy.getByData('text').should('have.length', 3);
+    cy.getByData('link').should('have.length', 2);
+    cy.contains('button', 'Kontynuuj jako gość').should('be.visible');
   });
 });

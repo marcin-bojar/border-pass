@@ -1,7 +1,11 @@
 import 'cypress-localstorage-commands';
 
-Cypress.Commands.add('getByData', (selector, ...args) => {
-  return cy.get(`[data-test=${selector}]`, ...args);
+Cypress.Commands.add('getByData', selector => {
+  return cy.get(`[data-test=${selector}]`);
+});
+
+Cypress.Commands.add('getByDataLike', selector => {
+  return cy.get(`[data-test*=${selector}]`);
 });
 
 Cypress.Commands.add('loginUser', (email, password) => {
@@ -21,6 +25,7 @@ Cypress.Commands.add('registerUser', (userName, email, password, confirmPassword
 
 Cypress.Commands.add('checkGuestHeader', () => {
   cy.getByData('guestNavbar')
+    .should('be.visible')
     .children('a')
     .should($links => {
       expect($links).to.have.length(2);
@@ -31,6 +36,7 @@ Cypress.Commands.add('checkGuestHeader', () => {
 
 Cypress.Commands.add('checkUserHeader', userName => {
   cy.getByData('userNavbar', { timeout: 10000 })
+    .should('be.visible')
     .find('button')
     .as('navbarButtons')
     .should('have.length', 2);
@@ -40,6 +46,7 @@ Cypress.Commands.add('checkUserHeader', userName => {
 
 Cypress.Commands.add('checkHeading', () => {
   cy.getByData('headingLogo')
+    .should('be.visible')
     .should('have.class', 'logo')
     .and('have.attr', 'href')
     .then($href => expect($href).to.eq('/'));

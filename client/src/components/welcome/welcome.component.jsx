@@ -15,19 +15,19 @@ const Welcome = () => {
 
   const noUserContent = (
     <>
-      <p className="welcome__text">
-        <Link to="/signin" className="welcome__link">
+      <p className="welcome__text" data-test="text">
+        <Link to="/signin" className="welcome__link" data-test="link">
           Zaloguj się
         </Link>
         , aby wczytać swoją historię przekroczeń granic.
       </p>
-      <p className="welcome__text">
-        <Link to="/signup" className="welcome__link">
+      <p className="welcome__text" data-test="text">
+        <Link to="/signup" className="welcome__link" data-test="link">
           Zarejestruj się
         </Link>
         , aby utworzyć nowe konto.
       </p>
-      <p className="welcome__text">
+      <p className="welcome__text" data-test="text">
         <CustomButton
           link
           handleClick={() => setUserState({ type: 'SET_GUEST_USER', payload: true })}
@@ -43,9 +43,13 @@ const Welcome = () => {
 
   return (
     <div className="welcome">
-      <h3 className="welcome__title">Witaj w Border Pass!</h3>
+      <h3 className="welcome__title" data-test="title">
+        Witaj w Border Pass!
+      </h3>
       {currentUser || guestUser ? (
-        <p className="welcome__text">W jakim obecnie znajdujesz się kraju?</p>
+        <p className="welcome__text" data-test="text">
+          W jakim obecnie znajdujesz się kraju?
+        </p>
       ) : (
         noUserContent
       )}
