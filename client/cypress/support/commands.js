@@ -9,17 +9,24 @@ Cypress.Commands.add('getByDataLike', selector => {
 });
 
 Cypress.Commands.add('loginUser', (email, password) => {
-  cy.getByData('email').type(email).should('have.value', email);
-  cy.getByData('password').type(password).should('have.value', password);
+  cy.getByData('input-email').type(email).should('have.value', email);
+  cy.getByData('input-password').type(password).should('have.value', password);
   cy.contains('button', 'Zaloguj').click();
 });
 
+Cypress.Commands.add('loginUserWithoutUI', (email, password) => {
+  cy.request('POST', '/api/auth/signin', { email, password });
+});
+
 Cypress.Commands.add('registerUser', (userName, email, password, confirmPassword) => {
-  userName && cy.getByData('name').type(userName).should('have.value', userName);
-  email && cy.getByData('email').type(email).should('have.value', email);
-  password && cy.getByData('password').type(password).should('have.value', password);
+  userName && cy.getByData('input-name').type(userName).should('have.value', userName);
+  email && cy.getByData('input-email').type(email).should('have.value', email);
+  password && cy.getByData('input-password').type(password).should('have.value', password);
   confirmPassword &&
-    cy.getByData('confirmPassword').type(confirmPassword).should('have.value', confirmPassword);
+    cy
+      .getByData('input-confirmPassword')
+      .type(confirmPassword)
+      .should('have.value', confirmPassword);
   cy.contains('button', 'Zarejestruj').click();
 });
 

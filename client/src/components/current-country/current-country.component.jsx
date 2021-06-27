@@ -17,12 +17,17 @@ const CurrentCountry = () => {
 
   return (
     <div className="current-country">
-      <h2 className="current-country__title">Obecnie znajdujesz się w: </h2>
-      <span className="current-country__country">{currentCountry}</span>
+      <h2 className="current-country__title" data-test="title">
+        Obecnie znajdujesz się w:{' '}
+      </h2>
+      <span className="current-country__country" data-test="current-country">
+        {currentCountry}
+      </span>
       <div className="current-country__button-wrapper">
         <CustomButton
           setWidth="8.4rem"
           clear
+          data-test="clear-current-country"
           handleClick={() => setDataState({ type: 'SET_CURRENT_COUNTRY', payload: '' })}
         >
           Wyczyść

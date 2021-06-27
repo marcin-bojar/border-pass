@@ -11,11 +11,12 @@ describe('Log in functionality', () => {
     cy.exec('npm run reset:db');
   });
 
-  it('Logs in with valid data and logs out', () => {
+  it('Logs in with valid data, redirects to homepage and logs out', () => {
     cy.loginUser(Cypress.env('email'), Cypress.env('password'));
     cy.checkUserHeader(Cypress.env('username'));
     cy.checkUserName(Cypress.env('username'));
     cy.getLocalStorage('token').should('exist');
+    cy.location('pathname').should('eq', '/');
     cy.contains('button.navbar', 'Wyloguj').click();
   });
 

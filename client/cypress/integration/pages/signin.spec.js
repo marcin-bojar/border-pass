@@ -1,5 +1,5 @@
 describe('Sign in page', () => {
-  it.only('Renders the sign in page correctly', () => {
+  it('Renders the sign in page correctly', () => {
     cy.visit('/signin');
     cy.checkGuestHeader();
     cy.checkHeading();
