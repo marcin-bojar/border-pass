@@ -25,11 +25,24 @@ describe.only('Registering trip functionality', () => {
     cy.getByData('current-country').should('be.visible').and('contain', 'PL');
   });
 
-  it('Clears the current country', () => {
+  it('Clears the current country and selects again', () => {
     cy.contains('button', 'PL').should('be.visible').click();
     cy.getByData('clear-current-country').contains('Wyczyść').click();
     cy.contains('h3', 'Witaj w Border Pass!').should('be.visible');
     cy.contains('W jakim obecnie znajdujesz się kraju?').should('be.visible');
     cy.getByData('current-country').should('not.exist');
+    cy.contains('button', 'CZ').should('be.visible').click();
+    cy.getByData('current-country').should('be.visible').and('contain', 'CZ');
+  });
+
+  it('Starts a trip', () => {
+    cy.contains('button', 'PL').should('be.visible').click();
+    cy.getByData('trip-start-button').should('be.visible').click();
+    cy.getByData('trip-start-item').contains('Wyjazd z bazy').should('be.visible');
+  });
+
+  it('Ends a trip', () => {
+    cy.getByData('trip-end-button').should('be.visible').click();
+    cy.getByData('trip-end-item').contains('Powrót na bazę').should('be.visible');
   });
 });

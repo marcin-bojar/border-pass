@@ -79,6 +79,7 @@ const TripEvents = () => {
         <CustomButton
           setWidth="13rem"
           type="button"
+          data-test="trip-start-button"
           disabled={isMakingApiCall}
           handleClick={() => onTripEvent('tripStart')}
         >
@@ -88,6 +89,7 @@ const TripEvents = () => {
         <CustomButton
           setWidth="13rem"
           type="button"
+          data-test="trip-end-button"
           disabled={isMakingApiCall}
           handleClick={() => onTripEvent('tripEnd')}
         >

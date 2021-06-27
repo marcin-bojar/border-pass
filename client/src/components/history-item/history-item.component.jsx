@@ -41,6 +41,9 @@ const HistoryItem = forwardRef(({ data }, ref) => {
       className={`${isTripStart ? 'trip-start' : ''} ${isTripEnd ? 'trip-end' : ''} ${
         selected ? 'selected' : ''
       } history-item`}
+      data-test={`${
+        isTripStart ? 'trip-start-item' : isTripEnd ? 'trip-end-item' : 'history-item'
+      }`}
       onClick={handleClick}
       ref={ref}
     >
