@@ -35,14 +35,45 @@ describe.only('Registering trip functionality', () => {
     cy.getByData('current-country').should('be.visible').and('contain', 'CZ');
   });
 
+  it('Adds a new palce to the list', () => {});
+
   it('Starts a trip', () => {
-    cy.contains('button', 'PL').should('be.visible').click();
-    cy.getByData('trip-start-button').should('be.visible').click();
-    cy.getByData('trip-start-item').contains('Wyjazd z bazy').should('be.visible');
+    cy.getCurrentTimeAndDate().then(({ now, h, min, date }) => {
+      cy.clock(now);
+      cy.contains('button', 'PL').should('be.visible').click();
+      cy.getByData('trip-start-button').should('be.visible').click();
+      cy.getByData('trip-start-item').within(() => {
+        cy.contains('Wyjazd z bazy').should('be.visible');
+        cy.contains(`${h}:${min}`).should('be.visible');
+        cy.contains(date).should('be.visible');
+      });
+      cy.getByData('history-list').children('li').should('have.length', 1);
+    });
+  });
+
+  it('Registers border pass', () => {
+    cy.getCurrentTimeAndDate().then(({ now, h, min, date }) => {
+      cy.clock(now);
+      cy.contains('button', 'CZ').should('be.visible').click();
+      cy.getByData('history-item').within(() => {
+        cy.contains(/^PL.*CZ$/).should('be.visible');
+        cy.contains(`${h}:${min}`).should('be.visible');
+        cy.contains(date).should('be.visible');
+      });
+      cy.getByData('history-list').children('li').should('have.length', 2);
+    });
   });
 
   it('Ends a trip', () => {
-    cy.getByData('trip-end-button').should('be.visible').click();
-    cy.getByData('trip-end-item').contains('Powrót na bazę').should('be.visible');
+    cy.getCurrentTimeAndDate().then(({ now, h, min, date }) => {
+      cy.clock(now);
+      cy.getByData('trip-end-button').should('be.visible').click();
+      cy.getByData('trip-end-item').within(() => {
+        cy.contains('Powrót na bazę').should('be.visible');
+        cy.contains(`${h}:${min}`).should('be.visible');
+        cy.contains(date).should('be.visible');
+      });
+      cy.getByData('history-list').children('li').should('have.length', 3);
+    });
   });
 });

@@ -48,7 +48,7 @@ const HistoryList = ({ list }) => {
   }, [selection]);
 
   return (
-    <ul className="history-list">
+    <ul className="history-list" data-test="history-list">
       {listToDisplay.map((el, i) => {
         const itemRef = createRef();
         itemRefsArray.push(itemRef);

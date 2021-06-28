@@ -31,6 +31,7 @@ const HistoryItem = forwardRef(({ data }, ref) => {
     if (editMode) setDataState({ type: 'SET_EDITED_ITEM', payload: data });
     else if (sendMode) {
       if (isSendingArchive) return;
+
       setSelected(!selected);
       handleSelection();
     }
