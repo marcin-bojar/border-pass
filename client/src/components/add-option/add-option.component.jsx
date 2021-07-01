@@ -93,6 +93,7 @@ const AddOption = ({ label, place }) => {
           disabled={isMakingApiCall}
           label={label}
           aria-label={label}
+          data-test={place ? 'add-place' : 'add-country'}
         />
       </form>
       <div className="add-option__spinner-wrapper">

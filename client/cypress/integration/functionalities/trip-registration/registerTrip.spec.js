@@ -30,6 +30,7 @@ describe.only('Registering trip functionality', () => {
     cy.getByData('current-country').should('not.exist');
     cy.contains('button', 'CZ').should('be.visible').click();
     cy.getByData('current-country').should('be.visible').and('contain', 'CZ');
+    cy.getByData('clear-current-country').contains('Wyczyść').click();
   });
 
   it('Starts a trip', () => {
@@ -43,7 +44,6 @@ describe.only('Registering trip functionality', () => {
         cy.contains(`${h}:${min}`).should('be.visible');
         cy.contains(date).should('be.visible');
       });
-      cy.getByData('history-list').children('li').should('exist');
     });
   });
 
@@ -52,12 +52,25 @@ describe.only('Registering trip functionality', () => {
     cy.getCurrentTimeAndDate().then(({ now, h, min, date }) => {
       cy.clock(now);
       cy.contains('button', 'CZ').should('be.visible').click();
-      cy.getByData('history-item').within(() => {
+      cy.getByData('history-list').within(() => {
         cy.contains(/^PL.*CZ$/).should('be.visible');
         cy.contains(`${h}:${min}`).should('be.visible');
         cy.contains(date).should('be.visible');
       });
-      cy.getByData('history-list').children('li').should('exist');
+    });
+  });
+
+  it('Registers point on the route', () => {
+    cy.contains('button', 'DE').should('be.visible').click();
+    cy.getByData('add-place').type('Opole{enter}').should('have.value', 'OPOLE');
+    cy.getCurrentTimeAndDate().then(({ now, h, min, date }) => {
+      cy.clock(now);
+      cy.contains('button', 'OPOLE').should('be.visible').click();
+      cy.getByData('history-list').within(() => {
+        cy.contains('OPOLE').should('be.visible');
+        cy.contains(`${h}:${min}`).should('be.visible');
+        cy.contains(date).should('be.visible');
+      });
     });
   });
 
@@ -71,7 +84,6 @@ describe.only('Registering trip functionality', () => {
         cy.contains(`${h}:${min}`).should('be.visible');
         cy.contains(date).should('be.visible');
       });
-      cy.getByData('history-list').children('li').should('exist');
     });
   });
 });

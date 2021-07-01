@@ -115,11 +115,7 @@ const Select = ({ placesSelect }) => {
         </CustomButton>
       </div>
 
-      <AddOption
-        place={placesSelect}
-        label={placesSelect ? 'Dodaj punkt' : 'Dodaj kraj'}
-        data-test={placesSelect ? 'add-place' : 'add-country'}
-      />
+      <AddOption place={placesSelect} label={placesSelect ? 'Dodaj punkt' : 'Dodaj kraj'} />
     </>
   );
 
