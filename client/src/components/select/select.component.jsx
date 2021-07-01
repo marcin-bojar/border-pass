@@ -5,7 +5,7 @@ import { getConfig } from '../../utils';
 
 import SelectOption from '../select-option/select-option.component';
 import CustomButton from '../custom-button/custom-button.component';
-import AddCountry from '../add-country/add-country.component';
+import AddOption from '../add-option/add-option.component';
 
 import { AppContext } from '../../hooks/useAppState';
 
@@ -115,7 +115,11 @@ const Select = ({ placesSelect }) => {
         </CustomButton>
       </div>
 
-      <AddCountry place={placesSelect} label={placesSelect ? 'Dodaj punkt' : 'Dodaj kraj'} />
+      <AddOption
+        place={placesSelect}
+        label={placesSelect ? 'Dodaj punkt' : 'Dodaj kraj'}
+        data-test={placesSelect ? 'add-place' : 'add-country'}
+      />
     </>
   );
 

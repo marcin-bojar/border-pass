@@ -5,12 +5,12 @@ import CustomInput from '../custom-input/custom-input.component';
 import Spinner from '../spinner/spinner.component';
 
 import { getConfig } from '../../utils';
-import useSingleInput from '../../hooks/useSingleInput';
 import { AppContext } from '../../hooks/useAppState';
+import useSingleInput from '../../hooks/useSingleInput';
 
-import './add-country.styles.scss';
+import './add-option.styles.scss';
 
-const AddCountry = ({ label, place }) => {
+const AddOption = ({ label, place }) => {
   const { inputValue, setInputValue, handleChange } = useSingleInput();
   const {
     userState: { currentUser },
@@ -83,8 +83,8 @@ const AddCountry = ({ label, place }) => {
   };
 
   return (
-    <div className="add-country">
-      <form className="add-country__form" onSubmit={handleSubmit}>
+    <div className="add-option">
+      <form className="add-option__form" onSubmit={handleSubmit}>
         <CustomInput
           type="text"
           value={inputValue}
@@ -95,11 +95,11 @@ const AddCountry = ({ label, place }) => {
           aria-label={label}
         />
       </form>
-      <div className="add-country__spinner-wrapper">
+      <div className="add-option__spinner-wrapper">
         <Spinner isLoading={isMakingApiCall} />
       </div>
     </div>
   );
 };
 
-export default AddCountry;
+export default AddOption;
