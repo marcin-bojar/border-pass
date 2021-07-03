@@ -14,7 +14,7 @@ describe('Add country functionality', () => {
   it('Ads new country option to the list', () => {
     cy.getByData('add-country').should('be.visible').type('se{enter}').should('have.value', 'SE');
     cy.getByData('show-all-countries').should('contain', 'Więcej').click();
-    cy.contains('button', 'SE').should('be.visible');
+    cy.contains('button', 'SE').should('be.visible').and('be.enabled');
   });
 
   it('Allows to input only 3 characters as country name', () => {
