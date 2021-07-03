@@ -15,7 +15,9 @@ Cypress.Commands.add('loginUser', (email, password) => {
 });
 
 Cypress.Commands.add('loginUserWithoutUI', (email, password) => {
-  cy.request('POST', '/api/auth/signin', { email, password });
+  cy.request('POST', '/api/auth/signin', { email, password }).then($body => {
+    cy.setLocalStorage('token', JSON.stringify($body.body.data.token));
+  });
 });
 
 Cypress.Commands.add('registerUser', (userName, email, password, confirmPassword) => {

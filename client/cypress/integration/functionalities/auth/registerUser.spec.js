@@ -1,4 +1,8 @@
 describe('Sign up functionality', () => {
+  before(() => {
+    cy.exec('npm run reset:db');
+  });
+
   beforeEach(() => {
     cy.visit('/signup');
   });

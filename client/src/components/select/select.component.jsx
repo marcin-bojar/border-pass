@@ -92,6 +92,7 @@ const Select = ({ placesSelect }) => {
           setWidth="8.4rem"
           disabled={placesSelect ? places.length <= 6 : countries.length <= 10}
           handleClick={() => setShowAll(!showAll)}
+          data-test={placesSelect ? 'show-all-places' : 'show-all-countries'}
         >
           {!showAll ? 'Więcej' : 'Ukryj'}
         </CustomButton>

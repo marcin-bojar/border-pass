@@ -1,18 +1,13 @@
-describe.only('Registering trip functionality', () => {
-  let token;
-
+describe('Registering trip functionality', () => {
   before(() => {
     cy.exec('npm run reset:db');
     cy.exec('npm run seed:db');
-    cy.loginUserWithoutUI(Cypress.env('email'), Cypress.env('password'))
-      .its('body')
-      .then($body => {
-        token = $body.data.token;
-      });
+    cy.loginUserWithoutUI(Cypress.env('email'), Cypress.env('password'));
+    cy.saveLocalStorage();
   });
 
   beforeEach(() => {
-    cy.setLocalStorage('token', JSON.stringify(token));
+    cy.restoreLocalStorage();
     cy.visit('/');
   });
 
@@ -51,9 +46,15 @@ describe.only('Registering trip functionality', () => {
     cy.contains('button', 'PL').should('be.visible').click();
     cy.getCurrentTimeAndDate().then(({ now, h, min, date }) => {
       cy.clock(now);
-      cy.contains('button', 'CZ').should('be.visible').click();
+      cy.contains('button', 'DE').should('be.visible').click();
+      cy.contains('button', 'NL').should('be.visible').click();
+      cy.contains('button', 'DE').should('be.visible').click();
+      cy.contains('button', 'PL').should('be.visible').click();
       cy.getByData('history-list').within(() => {
-        cy.contains(/^PL.*CZ$/).should('be.visible');
+        cy.contains(/^PL.*DE$/).should('be.visible');
+        cy.contains(/^DE.*NL$/).should('be.visible');
+        cy.contains(/^NL.*DE$/).should('be.visible');
+        cy.contains(/^DE.*PL$/).should('be.visible');
         cy.contains(`${h}:${min}`).should('be.visible');
         cy.contains(date).should('be.visible');
       });

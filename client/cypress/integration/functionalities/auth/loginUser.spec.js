@@ -1,14 +1,11 @@
 describe('Log in functionality', () => {
   before(() => {
+    cy.exec('npm run reset:db');
     cy.exec('npm run seed:db');
   });
 
   beforeEach(() => {
     cy.visit('/signin');
-  });
-
-  after(() => {
-    cy.exec('npm run reset:db');
   });
 
   it('Logs in with valid data, redirects to homepage and logs out', () => {
@@ -27,7 +24,7 @@ describe('Log in functionality', () => {
   });
 
   it('Doesnt log in without password', () => {
-    cy.getByData('email')
+    cy.getByData('input-email')
       .type(`${Cypress.env('email')}{enter}`)
       .should('have.value', Cypress.env('email'));
     cy.checkErrorMessage('Podane dane logowania są błędne.');
@@ -41,7 +38,7 @@ describe('Log in functionality', () => {
   });
 
   it('Prompts for a valid email', () => {
-    cy.getByData('email').type('test@{enter}');
+    cy.getByData('input-email').type('test@{enter}');
     cy.checkErrorMessage('Podany adres email jest nieprawidłowy.');
     cy.checkGuestHeader();
   });
