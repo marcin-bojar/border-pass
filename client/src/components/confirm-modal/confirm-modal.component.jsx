@@ -18,7 +18,7 @@ const ConfirmModal = () => {
     <div className="modal">
       <div className="modal__main">
         <h3 className="modal__title">Potwierdź</h3>
-        <div className="modal__text">{text}</div>
+        <p className="modal__text">{text}</p>
         <div className="modal__button-wrapper">
           <CustomButton
             setWidth="9.4rem"

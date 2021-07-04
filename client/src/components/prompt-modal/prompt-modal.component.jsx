@@ -36,7 +36,7 @@ const PromptModal = () => {
     <div className="modal">
       <div className="modal__main">
         <h3 className="modal__title">Potwierdź</h3>
-        <div className="modal__text">{text}</div>
+        <p className="modal__text">{text}</p>
         <form className="modal__form" id="prompt-form" onSubmit={handleSubmit}>
           <CustomInput ref={inputRef} type="text" value={inputValue} handleChange={handleChange} />
         </form>

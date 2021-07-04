@@ -27,10 +27,10 @@ const AlertModal = () => {
   const mainRef = useRef(null);
 
   return (
-    <div className="modal" onClick={handleClick}>
+    <div className="modal" onClick={handleClick} data-test="alert-modal">
       <div ref={mainRef} className="modal__main">
         <h3 className="modal__title">{titleMap[type]}</h3>
-        <div className="modal__text">{text}</div>
+        <p className="modal__text">{text}</p>
         <CustomButton handleClick={() => setUiState({ type: 'HIDE_MODAL' })}>Zamknij</CustomButton>
       </div>
     </div>

@@ -23,4 +23,15 @@ describe('Add country functionality', () => {
       .type('TOOLONG{enter}')
       .should('have.value', 'TOO');
   });
+
+  it('Not allows to add same country twice', () => {
+    cy.getByData('add-country').type('PL{enter}');
+    cy.getByData('alert-modal')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('h3', 'Błąd').should('be.visible');
+        cy.contains('p', 'Ten kraj jest już na liście.').should('be.visible');
+        cy.contains('button', 'Zamknij').should('be.visible').and('be.enabled');
+      });
+  });
 });
