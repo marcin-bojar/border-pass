@@ -15,7 +15,7 @@ const ConfirmModal = () => {
   const onConfirm = modalData?.onConfirm;
 
   return (
-    <div className="modal">
+    <div className="modal" data-test="confirm-modal">
       <div className="modal__main">
         <h3 className="modal__title">Potwierdź</h3>
         <p className="modal__text">{text}</p>

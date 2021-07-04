@@ -101,6 +101,7 @@ const Select = ({ placesSelect }) => {
           setWidth="8.4rem"
           clear
           disabled={historyList.length === 0 || isMakingApiCall}
+          data-test={placesSelect ? 'remove-last-palce' : 'remove-last-country'}
           handleClick={() =>
             setUiState({
               type: 'SET_MODAL_DATA',

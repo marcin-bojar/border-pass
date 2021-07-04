@@ -1,4 +1,4 @@
-describe('Registering trip functionality', () => {
+describe.only('Registering trip functionality', () => {
   before(() => {
     cy.exec('npm run reset:db');
     cy.exec('npm run seed:db');
@@ -72,6 +72,38 @@ describe('Registering trip functionality', () => {
         cy.contains(`${h}:${min}`).should('be.visible');
         cy.contains(date).should('be.visible');
       });
+    });
+  });
+
+  it.only("Removes last history list's entry", function () {
+    cy.intercept('**/api/users/**').as('users');
+    cy.contains('button', 'PL').click();
+    cy.contains('button', 'DE').click();
+    cy.contains('button', 'CZ').click();
+    cy.contains('button', 'SK').click();
+    cy.wait('@users');
+    cy.wait(1000); // NEEDS RESEARCH! wait for app's state to update, otherwise test fails.
+    cy.getByData('history-list')
+      .children()
+      .then($items => {
+        cy.get($items[$items.length - 1]).as('last');
+      });
+    cy.get('@last').within(() => {
+      cy.contains('span', /^CZ.*SK$/).should('be.visible');
+    });
+    cy.getByData('remove-last-country').should('be.visible').and('be.enabled').click();
+    cy.getByData('confirm-modal')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('h3', 'Potwierdź').should('be.visible');
+        cy.contains('p', 'Usuwasz ostatni wpis z Historii Podróży. Czy chcesz kontynuować?').should(
+          'be.visible'
+        );
+        cy.contains('button', 'Kontynuuj').should('be.visible').and('be.enabled').click();
+      });
+    cy.wait('@users');
+    cy.wait(1000).then(() => {
+      expect(this.last).to.not.exist;
     });
   });
 
