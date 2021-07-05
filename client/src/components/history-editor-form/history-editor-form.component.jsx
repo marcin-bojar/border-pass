@@ -81,7 +81,7 @@ const HistoryEditorForm = () => {
   };
 
   return (
-    <div className="history-editor-form">
+    <div className="history-editor-form" data-test="editor-form">
       {error && <ErrorMessage error={error} />}
       <form id="editor-form" onSubmit={handleSubmit} className="history-editor-form__form">
         <div className="history-editor-form__block">
@@ -109,6 +109,7 @@ const HistoryEditorForm = () => {
                   maxLength="3"
                   autoComplete="off"
                   value={fields.from}
+                  data-test="input-from"
                 />
                 &#8594;
                 <CustomInput
@@ -118,6 +119,7 @@ const HistoryEditorForm = () => {
                   maxLength="3"
                   autoComplete="off"
                   value={fields.to}
+                  data-test="input-to"
                 />
               </fieldset>
             </div>
@@ -146,6 +148,7 @@ const HistoryEditorForm = () => {
               maxLength="5"
               autoComplete="off"
               value={fields.time}
+              data-test="input-time"
             />
             &nbsp;
             <CustomInput
@@ -155,6 +158,7 @@ const HistoryEditorForm = () => {
               maxLength="10"
               autoComplete="off"
               value={fields.date}
+              data-test="input-date"
             />
           </fieldset>
         </div>

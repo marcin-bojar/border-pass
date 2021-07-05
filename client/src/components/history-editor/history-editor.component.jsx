@@ -19,7 +19,7 @@ const HistoryEditor = () => {
   }, []);
 
   return (
-    <div className="history-editor">
+    <div className="history-editor" data-test="history-editor">
       <h3 className="history-editor__title">Edytor historii</h3>
       {!editedItem && (
         <p className="history-editor__text">
@@ -32,7 +32,12 @@ const HistoryEditor = () => {
 
           <HistoryEditorForm />
 
-          <CustomButton type="submit" form="editor-form" disabled={isMakingApiCall}>
+          <CustomButton
+            type="submit"
+            form="editor-form"
+            disabled={isMakingApiCall}
+            data-test="confirm-edit"
+          >
             Zatwierdź
           </CustomButton>
         </div>

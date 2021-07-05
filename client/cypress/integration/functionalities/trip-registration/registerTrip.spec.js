@@ -75,7 +75,7 @@ describe.only('Registering trip functionality', () => {
     });
   });
 
-  it.only("Removes last history list's entry", function () {
+  it("Removes last history list's entry", function () {
     cy.intercept('**/api/users/**').as('users');
     cy.contains('button', 'PL').click();
     cy.contains('button', 'DE').click();
@@ -102,8 +102,47 @@ describe.only('Registering trip functionality', () => {
         cy.contains('button', 'Kontynuuj').should('be.visible').and('be.enabled').click();
       });
     cy.wait('@users');
+    // wait 1sec for app's state update again
     cy.wait(1000).then(() => {
       expect(this.last).to.not.exist;
+    });
+  });
+
+  it.only('Edits the history item (border pass)', function () {
+    cy.getCurrentTimeAndDate().then(({ now, h, min, date }) => {
+      cy.intercept('POST', '**/api/users/**').as('users');
+      cy.clock(now);
+      cy.contains('button', 'SK').should('be.visible').click();
+      cy.contains('button', 'CZ').should('be.visible').click();
+      cy.getByData('history-list')
+        .children()
+        .then($items => {
+          cy.get($items[$items.length - 1]).as('last');
+        });
+      cy.getByData('toggle-edit').should('be.visible').and('be.enabled').click();
+      cy.getByData('history-editor').should('be.visible');
+      cy.get('@last').click();
+      cy.getByData('editor-form')
+        .should('be.visible')
+        .within(() => {
+          cy.getByData('input-from').should('have.value', 'SK');
+          cy.getByData('input-to').should('have.value', 'CZ');
+          cy.getByData('input-time').should('have.value', `${h}:${min}`);
+          cy.getByData('input-date').should('have.value', date);
+        });
+      cy.getByData('input-time').clear().type('1234').should('have.value', '1234');
+      cy.getByData('confirm-edit').should('be.visible').and('be.enabled').click();
+      cy.checkErrorMessage('Niepoprawny format godziny');
+      cy.getByData('input-time').clear().type('12:34').should('have.value', '12:34');
+      cy.getByData('input-date').clear().type('0607.2019').should('have.value', '0607.2019');
+      cy.getByData('confirm-edit').should('be.visible').and('be.enabled').click();
+      cy.checkErrorMessage('Niepoprawny format daty');
+      cy.getByData('input-date').clear().type('06.07.2019').should('have.value', '06.07.2019');
+      cy.getByData('confirm-edit').should('be.visible').and('be.enabled').click();
+      cy.wait('@users');
+      //wait for app's state to update
+      cy.wait(1000);
+      cy.get('@last').should('contain', '12:34').and('contain', '06.07.2019');
     });
   });
 

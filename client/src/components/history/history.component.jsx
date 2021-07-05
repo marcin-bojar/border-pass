@@ -60,6 +60,7 @@ const History = () => {
         <CustomButton
           setWidth="8.4rem"
           handleClick={() => setGeneralState({ type: 'TOGGLE_EDIT_MODE' })}
+          data-test="toggle-edit"
         >
           {editMode ? 'Zamknij' : 'Edytuj'}
         </CustomButton>
