@@ -16,7 +16,7 @@ const CurrentCountry = () => {
   if (!currentCountry) return <Welcome />;
 
   return (
-    <div className="current-country">
+    <div className="current-country" data-test="current-country-container">
       <h2 className="current-country__title" data-test="title">
         Obecnie znajdujesz się w:{' '}
       </h2>

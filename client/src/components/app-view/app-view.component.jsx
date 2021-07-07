@@ -6,7 +6,7 @@ import CurrentCountry from '../current-country/current-country.component';
 import History from '../history/history.component';
 
 const AppView = () => (
-  <div className="app-view">
+  <div className="app-view" data-test="app">
     <CurrentCountry />
     <TripEvents />
     <Select />
