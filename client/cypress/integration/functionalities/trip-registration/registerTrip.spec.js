@@ -1,4 +1,4 @@
-describe.only('Registering trip functionality', function () {
+describe('Registering trip functionality', function () {
   before(() => {
     cy.exec('npm run reset:db');
     cy.exec('npm run seed:db');
@@ -96,11 +96,10 @@ describe.only('Registering trip functionality', function () {
     cy.wait('@users');
     cy.contains('button', 'AT').click();
     cy.wait('@users');
-    cy.wait(1000); // NEEDS RESEARCH! wait for app's state to update, otherwise test fails.
-    cy.getByData('history-list').children().last().as('last');
-    cy.get('@last').within(() => {
-      cy.contains('span', /^CZ.*AT$/).should('be.visible');
-    });
+    cy.getByData('history-list')
+      .contains('span', /^CZ.*AT$/)
+      .as('last')
+      .should('be.visible');
     cy.getByData('remove-last-country').should('be.visible').and('be.enabled').click();
     cy.getByData('confirm-modal')
       .should('be.visible')
@@ -112,8 +111,7 @@ describe.only('Registering trip functionality', function () {
         cy.contains('button', 'Kontynuuj').should('be.visible').and('be.enabled').click();
       });
     cy.wait('@users');
-    // wait 1sec for app's state update again
-    cy.wait(1000).then(() => {
+    cy.wait(1).then(() => {
       expect(this.last).to.not.exist;
     });
   });
@@ -154,8 +152,6 @@ describe.only('Registering trip functionality', function () {
       cy.getByData('input-date').clear().type('06.07.2032').should('have.value', '06.07.2032');
       cy.getByData('confirm-edit').should('be.visible').and('be.enabled').click();
       cy.wait('@users');
-      //wait for app's state to update
-      cy.wait(1000);
       cy.get('@last')
         .should('contain', 'DE')
         .and('contain', 'SK')
@@ -164,14 +160,14 @@ describe.only('Registering trip functionality', function () {
     });
   });
 
-  it('Edits the history item (trip start / end)', () => {
+  it.only('Edits the history item (trip start / end)', () => {
     cy.getCurrentTimeAndDate().then(({ now, h, min, date }) => {
       cy.clock(now);
       cy.getByData('app').then($app => {
         if ($app.find('[data-test=current-country-container]').length === 0) {
           cy.contains('button', 'PL').should('be.visible').and('be.enabled').click();
         }
-        cy.getByData('trip-start-button').should('be.visible').should('be.enabled').click();
+        cy.getByData('trip-start-button').should('be.visible').and('be.enabled').click();
         cy.wait('@users');
         cy.getByData('trip-start-item')
           .last()
@@ -202,13 +198,18 @@ describe.only('Registering trip functionality', function () {
       });
       cy.getByData('confirm-edit').should('be.visible').and('be.enabled').click();
       cy.wait('@users');
-      cy.wait(1000);
-      cy.getByData('trip-end-item').then($tripStart => {
-        expect($tripStart).to.contain('Powrót na bazę');
-        expect($tripStart).to.contain(h);
-        expect($tripStart).to.contain(min);
-        expect($tripStart).to.contain(date);
-      });
+      cy.getByData('trip-end-item')
+        .contains(`${h}:${min} ${date}`)
+        .then($tripStart => {
+          cy.wrap($tripStart).click();
+        });
+      cy.getByData('input-event')
+        .select('Wyjazd z bazy')
+        .should('have.value', 'tripStart')
+        .and('contain', 'Wyjazd z bazy');
+      cy.getByData('confirm-edit').should('be.visible').and('be.enabled').click();
+      cy.wait('@users');
+      cy.getByData('trip-start-item').contains(`${h}:${min} ${date}`).should('be.visible');
     });
   });
 
