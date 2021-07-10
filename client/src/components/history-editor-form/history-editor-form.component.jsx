@@ -92,6 +92,7 @@ const HistoryEditorForm = () => {
                 className="history-editor-form__select"
                 name="type"
                 value={fields.type}
+                data-test="input-event"
                 onChange={handleSelectChange}
               >
                 <option value="tripStart">Wyjazd z bazy</option>
