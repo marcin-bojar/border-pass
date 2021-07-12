@@ -135,6 +135,7 @@ const HistoryEditorForm = () => {
                   maxLength="15"
                   autoComplete="off"
                   value={fields.name}
+                  data-test="input-place"
                 />
               </fieldset>
             </div>
