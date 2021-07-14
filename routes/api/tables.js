@@ -6,10 +6,12 @@ const createBordersFile = require('../../middlewares/createBordersFile');
 
 const Table = require('../../models/Table');
 
+router.use(auth);
+
 // @route POST /api/tables/
 // @desc Post new table
 // @private
-router.post('/', [auth, createBordersFile], async (req, res) => {
+router.post('/', createBordersFile, async (req, res) => {
   try {
     const table = new Table({
       _user: req.user.id,
@@ -30,7 +32,7 @@ router.post('/', [auth, createBordersFile], async (req, res) => {
 // @route GET /api/tables/
 // @desc Get user's table
 // @private
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const { user } = req;
     const userTables = await Table.find({ _user: user.id }).select('-createdAt -__v -html');
@@ -46,7 +48,7 @@ router.get('/', auth, async (req, res) => {
 // @route DELETE /api/tables/:tableId
 // @desc Delete user's table
 // @private
-router.delete('/:tableId', auth, async (req, res) => {
+router.delete('/:tableId', async (req, res) => {
   try {
     const { user } = req;
     const { tableId } = req.params;

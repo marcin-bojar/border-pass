@@ -17,10 +17,12 @@ const validateCountry = require('../../middlewares/validateCountry');
 const validatePlace = require('../../middlewares/validatePlace');
 const validateUserName = require('../../middlewares/validateUserName');
 
+router.use(auth);
+
 // @route POST /api/users/:userId/borders
 // @desc Post new border crossing to user's borders array
 // @private
-router.post('/:userId/borders', auth, async (req, res) => {
+router.post('/:userId/borders', async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
     const { type, from, to, name, time, date, timestamp } = req.body;
@@ -51,7 +53,7 @@ router.post('/:userId/borders', auth, async (req, res) => {
 // @route DELETE /api/users/:userId/borders/undo
 // @desc Delete last border crossing from user's borders array
 // @private
-router.delete('/:userId/borders/undo', auth, async (req, res) => {
+router.delete('/:userId/borders/undo', async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
     user.borders.id(req.body.lastItemId).remove();
@@ -68,7 +70,7 @@ router.delete('/:userId/borders/undo', auth, async (req, res) => {
 // @route PUT /api/users/:userId/borders
 // @desc Update user's borders array
 // @private
-router.put('/:userId/borders', auth, async (req, res) => {
+router.put('/:userId/borders', async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
     user.borders = req.body;
@@ -85,7 +87,7 @@ router.put('/:userId/borders', auth, async (req, res) => {
 // @route DELETE /api/users/:userId/borders
 // @desc Delete all border crossings from user's borders array
 // @private
-router.delete('/:userId/borders', auth, async (req, res) => {
+router.delete('/:userId/borders', async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
     user.borders = [];
@@ -102,7 +104,7 @@ router.delete('/:userId/borders', auth, async (req, res) => {
 // @route PUT /api/users/:userId/borders/:borderId
 // @desc Update border crossing in user's borders array
 // @private
-router.put('/:userId/borders/:borderId', [auth, validateTimeAndDate], async (req, res) => {
+router.put('/:userId/borders/:borderId', validateTimeAndDate, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
     const borderToUpdate = user.borders.id(req.params.borderId);
@@ -120,7 +122,7 @@ router.put('/:userId/borders/:borderId', [auth, validateTimeAndDate], async (req
 // @route POST /api/users/:userId/countries
 // @desc Add new country to user's countries array
 // @private
-router.post('/:userId/countries', [auth, validateCountry], async (req, res) => {
+router.post('/:userId/countries', validateCountry, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
     const countryExists = user.countries.find(el => el.name === req.country);
@@ -144,7 +146,7 @@ router.post('/:userId/countries', [auth, validateCountry], async (req, res) => {
 // @route POST /api/users/:userId/places
 // @desc Add new place to user's places' array
 // @private
-router.post('/:userId/places', [auth, validatePlace], async (req, res) => {
+router.post('/:userId/places', validatePlace, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
     const placeExists = user.places.find(el => el.name === req.body.name);
@@ -168,7 +170,7 @@ router.post('/:userId/places', [auth, validatePlace], async (req, res) => {
 // @route POST /api/users/:userId/send
 // @desc Send an email with user's borders' table
 // @private
-router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
+router.post('/:userId/send', createBordersFile, (req, res) => {
   try {
     const pathToFile = path.join(path.dirname(require.main.filename), 'temp', req.filename);
     fs.access(pathToFile, async err => {
@@ -209,7 +211,7 @@ router.post('/:userId/send', [auth, createBordersFile], (req, res) => {
 // @route POST /api/users/:userId/company
 // @desc Set user's company details
 // @private
-router.post('/:userId/company', [auth, validateEmail], async (req, res) => {
+router.post('/:userId/company', validateEmail, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
     user.company = { ...req.body };
@@ -226,7 +228,7 @@ router.post('/:userId/company', [auth, validateEmail], async (req, res) => {
 // @route POST /api/users/:userId/name
 // @desc Set user's name
 // @private
-router.post('/:userId/name', [auth, validateUserName], async (req, res) => {
+router.post('/:userId/name', validateUserName, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
     user.name = req.body.name;
@@ -243,7 +245,7 @@ router.post('/:userId/name', [auth, validateUserName], async (req, res) => {
 // @route POST /api/users/:userId/preferences
 // @desc Set user's preferences
 // @private
-router.post('/:userId/preferences', auth, async (req, res) => {
+router.post('/:userId/preferences', async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password -__v');
     user.preferences = { ...user.preferences, ...req.body };
