@@ -73,7 +73,7 @@ const TripEvents = () => {
   if (!currentCountry) return null;
 
   return (
-    <div className="trip-events">
+    <div className="trip-events" data-test="trip-events-container">
       <h3 className="trip-events__title">Zdarzenia</h3>
       <div className="trip-events__button-wrapper">
         <CustomButton

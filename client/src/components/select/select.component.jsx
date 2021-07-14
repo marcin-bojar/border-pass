@@ -123,7 +123,7 @@ const Select = ({ placesSelect }) => {
 
   const countryMarkup = (
     <>
-      <div className="select">
+      <div className="select" data-test="country-select-container">
         {currentCountry && <h3 className="select__title">Do jakiego kraju wjeżdżasz?</h3>}
 
         <div className="select__options">
@@ -141,7 +141,7 @@ const Select = ({ placesSelect }) => {
 
   const placesMarkup = (
     <>
-      <div className="select">
+      <div className="select" data-test="place-select-container">
         <h3 className="select__title">Punkty podróży</h3>
         <div className="select__options select__options--places">
           {places.length ? (

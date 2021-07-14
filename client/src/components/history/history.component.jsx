@@ -53,7 +53,7 @@ const History = () => {
   if (historyList.length === 0) return null;
 
   return (
-    <div className="history">
+    <div className="history" data-test="history-container">
       <h3 className="history__title">Historia podróży</h3>
 
       <div className="history__button-wrapper">
