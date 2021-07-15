@@ -1,4 +1,4 @@
-describe.only('App view', () => {
+describe('App view', () => {
   before(() => {
     cy.exec('npm run reset:db');
     cy.exec('npm run seed:db');
@@ -24,7 +24,9 @@ describe.only('App view', () => {
   });
 
   it("Hides the places' component", () => {
+    cy.intercept('/api/users/*/preferences').as('config');
     cy.contains('button', 'Ukryj ten element').should('be.visible').and('be.enabled').click();
+    cy.wait('@config');
     cy.contains('h3', 'Informacja').should('be.visible');
     cy.contains('p', 'Punkty na trasie zostały ukryte').should('be.visible');
     cy.contains('button', 'Zamknij').should('be.visible').and('be.enabled').click();

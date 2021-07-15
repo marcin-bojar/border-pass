@@ -25,19 +25,30 @@ const UserMenu = () => {
   if (!showUserMenu) return null;
 
   return (
-    <div className="user-menu" ref={menuRef}>
-      <Link className="user-menu__link" to="/preview">
-        Podgląd zestawienia
-      </Link>
-      <Link className="user-menu__link" to="/send">
-        Wyślij zestawienie
-      </Link>
-      <Link className="user-menu__link" to="/archive">
-        Archiwum
-      </Link>
-      <Link className="user-menu__link" to="/config">
-        Ustawienia
-      </Link>
+    <div className="user-menu" ref={menuRef} data-test="user-menu">
+      <ul className="user-menu__list">
+        <li className="user-menu__list-item">
+          <Link className="user-menu__link" to="/preview">
+            Podgląd zestawienia
+          </Link>
+        </li>
+        <li className="user-menu__list-item">
+          {' '}
+          <Link className="user-menu__link" to="/send">
+            Wyślij zestawienie
+          </Link>
+        </li>
+        <li className="user-menu__list-item">
+          <Link className="user-menu__link" to="/archive">
+            Archiwum
+          </Link>
+        </li>
+        <li className="user-menu__list-item">
+          <Link className="user-menu__link" to="/config">
+            Ustawienia
+          </Link>
+        </li>
+      </ul>
     </div>
   );
 };

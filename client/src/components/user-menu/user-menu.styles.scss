@@ -11,14 +11,20 @@
   padding: 2rem;
   min-width: 20rem;
 
-  &__link {
-    text-decoration: none;
-    color: $color-primary;
+  &__list {
+    list-style: none;
+  }
+
+  &__list-item {
     font-size: 2.1rem;
     font-weight: 500;
-
     &:not(:last-child) {
       margin-bottom: 1.5rem;
     }
+  }
+
+  &__link {
+    color: $color-primary;
+    text-decoration: none;
   }
 }
