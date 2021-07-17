@@ -24,10 +24,12 @@ const BordersTable = () => {
   if (!currentUser) return <Redirect to="/" />;
 
   return (
-    <div className="borders-table">
+    <div className="borders-table" data-test="preview-table">
       <table ref={tableRef}>
-        <caption className="borders-table__name">{currentUser.name}</caption>
-        <thead>
+        <caption className="borders-table__name" data-test="preview-username">
+          {currentUser.name}
+        </caption>
+        <thead data-test="table-head">
           <tr>
             <th>Wyjazd z bazy</th>
             <th>
@@ -40,7 +42,7 @@ const BordersTable = () => {
             <th>Powrót na bazę</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody data-test="table-body">
           {tableData.map((border, i) => {
             if (border.type === 'tripStart' || border.type === 'tripEnd') {
               const row = (

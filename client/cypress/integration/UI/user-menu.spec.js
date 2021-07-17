@@ -1,4 +1,4 @@
-describe.only('User menu', () => {
+describe('User menu', () => {
   before(() => {
     cy.exec('npm run reset:db');
     cy.exec('npm run seed:db');
