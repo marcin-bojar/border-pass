@@ -1,17 +1,16 @@
-describe.only('Preview page', () => {
+describe('Preview page', () => {
   let hFirst, minFirst, dateFirst;
   let hSecond, minSecond, dateSecond;
   let hThird, minThird, dateThird;
   let hFourth, minFourth, dateFourth;
   let hFifth, minFifth, dateFifth;
 
-  before(() => {
+  beforeEach(() => {
     cy.exec('npm run reset:db');
     cy.exec('npm run seed:db');
     cy.intercept('/api/users/*/borders').as('borders');
     cy.loginUserWithoutUI(Cypress.env('email'), Cypress.env('password'));
     cy.visit('/');
-    cy.saveLocalStorage();
     cy.contains('button', 'PL').click();
     cy.getCurrentTimeAndDate().then(({ now, h, min, date }) => {
       hFirst = h;
@@ -51,10 +50,6 @@ describe.only('Preview page', () => {
     cy.wait('@borders');
     cy.contains('button', Cypress.env('username')).click();
     cy.contains('li', 'Podgląd zestawienia').click();
-  });
-
-  beforeEach(() => {
-    cy.restoreLocalStorage();
   });
 
   it('Renders the Preview page correctly', () => {
@@ -115,6 +110,12 @@ describe.only('Preview page', () => {
     cy.getByData('input-date').clear().type('19.07.2020');
     cy.getByData('confirm-edit').click();
     cy.wait('@edit');
+    cy.getByData('history-item').first().click();
+    cy.getByData('input-from').clear().type('FIN');
+    cy.getByData('input-to').clear().type('SE');
+    cy.getByData('input-time').clear().type('09:11');
+    cy.getByData('confirm-edit').click();
+    cy.wait('@edit');
     cy.go('forward');
     cy.getByData('table-body').within(() => {
       cy.get('tr').then($rows => {
@@ -127,9 +128,9 @@ describe.only('Preview page', () => {
         expect($rows.eq(0).children().eq(4).text()).to.eq(`19.07.2020 ${hFifth}:${minFifth}`);
         // second row
         expect($rows.eq(1).children().eq(0).text()).to.eq('');
-        expect($rows.eq(1).children().eq(1).text()).to.eq('PL   ->   CZ');
+        expect($rows.eq(1).children().eq(1).text()).to.eq('FIN   ->   SE');
         expect($rows.eq(1).children().eq(2).text()).to.eq(dateSecond);
-        expect($rows.eq(1).children().eq(3).text()).to.eq(`${hSecond}:${minSecond}`);
+        expect($rows.eq(1).children().eq(3).text()).to.eq('09:11');
         expect($rows.eq(1).children().eq(4).text()).to.eq('');
         // third row
         expect($rows.eq(2).children().eq(0).text()).to.eq('');

@@ -207,8 +207,10 @@ const SendBorders = ({ history, location }) => {
   if (!currentUser) return <Redirect to="/" />;
 
   return (
-    <div className="send-borders">
-      <h2 className="send-borders__title">Wysyłanie zestawienia</h2>
+    <div className="send-borders" data-test="send-borders-container">
+      <h2 className="send-borders__title" data-test="title">
+        Wysyłanie zestawienia
+      </h2>
       <div className="send-borders__block">
         <p className="send-borders__paragraph">
           1. Wybierz dane z listy. Możesz wybrać zakres danych klikając na pierwszy i ostatni
@@ -218,7 +220,7 @@ const SendBorders = ({ history, location }) => {
         <p className="send-borders__paragraph">Dane w archiwum dostępne są przez 6 miesięcy.</p>
       </div>
       {sendingDataFromArchive ? null : (
-        <div className="send-borders__button-wrapper">
+        <div className="send-borders__button-wrapper" data-test="button-wrapper">
           <CustomButton
             setWidth="14.2rem"
             handleClick={() =>
@@ -238,7 +240,7 @@ const SendBorders = ({ history, location }) => {
           </CustomButton>
         </div>
       )}
-      <div className="send-borders__button-wrapper">
+      <div className="send-borders__button-wrapper" data-test="button-wrapper">
         <CustomButton
           setWidth="14.2rem"
           disabled={isMakingApiCall || !listToSend.length}
