@@ -48,8 +48,7 @@ describe('Preview page', () => {
     });
     cy.getByData('trip-end-button').click();
     cy.wait('@borders');
-    cy.contains('button', Cypress.env('username')).click();
-    cy.contains('li', 'Podgląd zestawienia').click();
+    cy.openMenuItem('Podgląd zestawienia');
   });
 
   it('Renders the Preview page correctly', () => {

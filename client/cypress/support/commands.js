@@ -99,3 +99,20 @@ Cypress.Commands.add('moveTimeForward', timeElapsed => {
     return cy.getCurrentTimeAndDate(newNow);
   });
 });
+
+Cypress.Commands.add(
+  'fillHistoryList',
+  (arr = ['Wyjazd z bazy', 'CZ', 'SK', 'HU', 'SK', 'PL', 'Powrót na bazę']) => {
+    cy.intercept('/api/users/*/borders').as('borders');
+    cy.contains('button', 'PL').click();
+    arr.forEach(el => {
+      cy.contains('button', el).click();
+      cy.wait('@borders');
+    });
+  }
+);
+
+Cypress.Commands.add('openMenuItem', itemName => {
+  cy.contains('button', Cypress.env('username')).click();
+  cy.contains('li', itemName).click();
+});

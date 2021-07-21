@@ -2,27 +2,11 @@ describe.only('Send page', () => {
   before(() => {
     cy.exec('npm run reset:db');
     cy.exec('npm run seed:db');
-    cy.intercept('/api/users/*/borders').as('borders');
+    cy.intercept('/api/tables').as('tables');
     cy.loginUserWithoutUI(Cypress.env('email'), Cypress.env('password'));
     cy.visit('/');
-
-    // TODO Refactor with function iterating through the array - for each item cy.contains('button', array[i]).click()
-    cy.contains('button', 'PL').click();
-    cy.getByData('trip-start-button').click();
-    cy.wait('@borders');
-    cy.contains('button', 'CZ').click();
-    cy.wait('@borders');
-    cy.contains('button', 'SK').click();
-    cy.wait('@borders');
-    cy.contains('button', 'HU').click();
-    cy.wait('@borders');
-    cy.contains('button', 'SK').click();
-    cy.wait('@borders');
-    cy.contains('button', 'PL').click();
-    cy.wait('@borders');
-    cy.getByData('trip-end-button').click();
-    cy.contains('button', Cypress.env('username')).click();
-    cy.contains('li', 'Wyślij zestawienie').click();
+    cy.fillHistoryList();
+    cy.openMenuItem('Wyślij zestawienie');
   });
 
   it('Renders the Send page correctly', () => {
@@ -56,5 +40,19 @@ describe.only('Send page', () => {
     cy.getByData('history-list').then($historyList => {
       $historyList.children('li').each((i, item) => expect(item).to.have.class('selected'));
     });
+    // Archive data
+    cy.contains('button', 'Archiwizuj dane').click();
+    cy.wait('@tables');
+    cy.contains('h3', 'Informacja').should('be.visible');
+    cy.contains('p', 'Dane zostały zarchiwizowane').should('be.visible');
+    cy.contains('button', 'Zamknij').should('be.visible').and('be.enabled').click();
+    cy.get('@history-list').children().should('have.length', 0);
+    // Resore data
+    cy.go('back');
+    cy.fillHistoryList();
+    cy.openMenuItem('Wyślij zestawienie');
+    // Send data
+
+    // TODO
   });
 });
