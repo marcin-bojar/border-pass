@@ -1,4 +1,4 @@
-describe.only('Registering trip functionality', function () {
+describe('Registering trip functionality', () => {
   before(() => {
     cy.exec('npm run reset:db');
     cy.exec('npm run seed:db');

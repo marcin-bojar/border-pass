@@ -12,22 +12,13 @@ describe('Editing trip items', () => {
     cy.visit('/');
   });
 
-  it('Edits the history item (border pass)', function () {
+  it('Edits the history item (border pass)', () => {
     cy.getCurrentTimeAndDate().then(({ now, h, min, date }) => {
       cy.clock(now);
-      cy.getByData('app').then($app => {
-        if ($app.find('[data-test=current-country-container]').length > 0) {
-          cy.contains('button', 'SK').should('be.visible').click();
-          cy.wait('@users');
-        } else {
-          cy.contains('button', 'SK').should('be.visible').click();
-        }
-      });
-      cy.contains('button', 'CZ').should('be.visible').click();
-      cy.wait('@users');
+      cy.fillHistoryList(['SK', 'CZ']);
       cy.getByData('toggle-edit').should('be.visible').and('be.enabled').click();
       cy.getByData('history-editor').should('be.visible');
-      cy.getByData('history-list').children().should('have.length.gt', 0).last().as('last').click();
+      cy.getByData('history-list').children().should('have.length', 2).last().as('last').click();
       cy.getByData('editor-form')
         .should('be.visible')
         .within(() => {
@@ -54,20 +45,15 @@ describe('Editing trip items', () => {
         .and('contain', '12:34')
         .and('contain', '06.07.2032');
     });
+    cy.clearHistoryList();
   });
 
   it('Edits the history item (trip start / end)', () => {
     cy.getCurrentTimeAndDate().then(({ now, h, min, date }) => {
       cy.clock(now);
-      cy.getByData('app').then($app => {
-        if ($app.find('[data-test=current-country-container]').length === 0) {
-          cy.contains('button', 'PL').should('be.visible').and('be.enabled').click();
-        }
-      });
-      cy.getByData('trip-start-button').should('be.visible').and('be.enabled').click();
-      cy.wait('@users');
+      cy.fillHistoryList(['Wyjazd z bazy']);
       cy.getByData('trip-start-item')
-        .should('have.length.gt', 0)
+        .should('have.length', 1)
         .last()
         .as('trip-start')
         .then($tripStart => {
@@ -109,16 +95,13 @@ describe('Editing trip items', () => {
       cy.wait('@users');
       cy.getByData('trip-start-item').contains(`${h}:${min} ${date}`).should('be.visible');
     });
+    cy.clearHistoryList();
   });
 
   it('Edits the history item (place)', () => {
     cy.getCurrentTimeAndDate().then(({ now, h, min, date }) => {
       cy.clock(now);
-      cy.getByData('app').then($app => {
-        if ($app.find('[data-test=current-country-container]').length === 0) {
-          cy.contains('button', 'PL').should('be.visible').and('be.enabled').click();
-        }
-      });
+      cy.contains('button', 'PL').should('be.visible').and('be.enabled').click();
       cy.getByData('add-place')
         .should('be.visible')
         .focus()
