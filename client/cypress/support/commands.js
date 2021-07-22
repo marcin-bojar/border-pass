@@ -112,6 +112,14 @@ Cypress.Commands.add(
   }
 );
 
+Cypress.Commands.add('clearHistoryList', () => {
+  cy.intercept('/api/users/*/borders').as('borders');
+  cy.getByData('clear-history-list').click();
+  cy.getByData('confirm-input').type('TAK');
+  cy.contains('button', 'OK').click();
+  cy.wait('@borders');
+});
+
 Cypress.Commands.add('openMenuItem', itemName => {
   cy.contains('button', Cypress.env('username')).click();
   cy.contains('li', itemName).click();

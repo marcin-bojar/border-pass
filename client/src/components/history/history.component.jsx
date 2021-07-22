@@ -77,6 +77,7 @@ const History = () => {
         <CustomButton
           setWidth="8.4rem"
           clear
+          data-test="clear-history-list"
           handleClick={() =>
             setUiState({
               type: 'SET_MODAL_DATA',

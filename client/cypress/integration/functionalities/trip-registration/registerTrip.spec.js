@@ -1,4 +1,4 @@
-describe('Registering trip functionality', function () {
+describe.only('Registering trip functionality', function () {
   before(() => {
     cy.exec('npm run reset:db');
     cy.exec('npm run seed:db');
@@ -33,74 +33,63 @@ describe('Registering trip functionality', function () {
     cy.contains('button', 'PL').should('be.visible').click();
     cy.getCurrentTimeAndDate().then(({ now, h, min, date }) => {
       cy.clock(now);
-      cy.contains('button', 'CZ').should('be.visible').click();
-      cy.wait('@users');
       cy.getByData('trip-start-button').should('be.visible').and('be.enabled').click();
+      cy.wait('@users');
       cy.getByData('trip-start-item').within(() => {
         cy.contains('Wyjazd z bazy').should('be.visible');
         cy.contains(`${h}:${min}`).should('be.visible');
         cy.contains(date).should('be.visible');
       });
     });
+    cy.getByData('history-list').children().should('have.length', 1);
+    cy.clearHistoryList();
   });
 
   it('Registers border pass', () => {
-    cy.contains('button', 'PL').should('be.visible').click();
     cy.getCurrentTimeAndDate().then(({ now, h, min, date }) => {
       cy.clock(now);
-      cy.contains('button', 'DE').should('be.visible').click();
-      cy.wait('@users');
-      cy.contains('button', 'NL').should('be.visible').click();
-      cy.wait('@users');
-      cy.contains('button', 'DE').should('be.visible').click();
-      cy.wait('@users');
-      cy.contains('button', 'PL').should('be.visible').click();
-      cy.wait('@users');
-      cy.getByData('history-list').within(() => {
-        cy.contains(/^PL.*DE$/).should('be.visible');
-        cy.contains(/^DE.*NL$/).should('be.visible');
-        cy.contains(/^NL.*DE$/).should('be.visible');
-        cy.contains(/^DE.*PL$/).should('be.visible');
-        cy.contains(`${h}:${min}`).should('be.visible');
-        cy.contains(date).should('be.visible');
-      });
+      cy.fillHistoryList(['DE', 'NL', 'DE', 'PL']);
+      cy.getByData('history-list')
+        .children()
+        .should('have.length', 4)
+        .within(() => {
+          cy.contains(/^PL.*DE$/).should('be.visible');
+          cy.contains(/^DE.*NL$/).should('be.visible');
+          cy.contains(/^NL.*DE$/).should('be.visible');
+          cy.contains(/^DE.*PL$/).should('be.visible');
+          cy.contains(`${h}:${min}`).should('be.visible');
+          cy.contains(date).should('be.visible');
+        });
+      cy.clearHistoryList();
     });
   });
 
   it('Registers point on the route', () => {
-    cy.contains('button', 'DE').should('be.visible').click();
+    cy.fillHistoryList(['CZ']);
     cy.getByData('add-place').type('Opole{enter}').should('have.value', 'OPOLE');
     cy.getCurrentTimeAndDate().then(({ now, h, min, date }) => {
       cy.clock(now);
       cy.contains('button', 'OPOLE').should('be.visible').click();
-      cy.getByData('history-list').within(() => {
-        cy.contains('OPOLE').should('be.visible');
-        cy.contains(`${h}:${min}`).should('be.visible');
-        cy.contains(date).should('be.visible');
-      });
+      cy.getByData('history-list')
+        .children()
+        .should('have.length', 2)
+        .within(() => {
+          cy.contains('OPOLE').should('be.visible');
+          cy.contains(`${h}:${min}`).should('be.visible');
+          cy.contains(date).should('be.visible');
+        });
     });
+    cy.clearHistoryList();
   });
 
   it("Removes last history list's entry", function () {
-    cy.getByData('app').then($app => {
-      if ($app.find('[data-test=current-country-container]').length > 0) {
-        cy.contains('button', 'CZ').click();
-        cy.wait('@users');
-      } else {
-        cy.contains('button', 'PL').click();
-      }
-    });
-    cy.contains('button', 'DE').click();
-    cy.wait('@users');
-    cy.contains('button', 'CZ').click();
-    cy.wait('@users');
-    cy.contains('button', 'AT').click();
-    cy.wait('@users');
+    cy.fillHistoryList(['CZ', 'AT']);
     cy.getByData('history-list')
-      .contains('span', /^CZ.*AT$/)
-      .as('last')
+      .children()
+      .should('have.length', 2)
+      .contains(/^CZ.*AT$/)
       .should('be.visible');
-    cy.getByData('remove-last-country').should('be.visible').and('be.enabled').click();
+    cy.getByData('remove-last-item').should('be.visible').and('be.enabled').click();
     cy.getByData('confirm-modal')
       .should('be.visible')
       .within(() => {
@@ -111,9 +100,8 @@ describe('Registering trip functionality', function () {
         cy.contains('button', 'Kontynuuj').should('be.visible').and('be.enabled').click();
       });
     cy.wait('@users');
-    cy.wait(1).then(() => {
-      expect(this.last).to.not.exist;
-    });
+    cy.getByData('history-list').children().should('have.length', 1);
+    cy.clearHistoryList();
   });
 
   it('Ends a trip', () => {
