@@ -36,7 +36,7 @@ const ArchiveList = ({ list }) => {
   useEffect(() => () => setDataState({ type: 'SET_SELECTED_ARCHIVE', payload: null }), []);
 
   return (
-    <ul className="archive-list">
+    <ul className="archive-list" data-test="archive-list">
       {list.map((el, index) => {
         const itemRef = createRef();
         itemRefsArray.push(itemRef);

@@ -12,17 +12,14 @@ const ArchiveItem = forwardRef(({ data, ...props }, ref) => {
   const { index, borders, status } = data;
   const isSent = status === 'sent';
 
+  const handleClick = () => {
+    if (selectedArchive && selectedArchive._id === data._id)
+      setDataState({ type: 'SET_SELECTED_ARCHIVE', payload: null });
+    else setDataState({ type: 'SET_SELECTED_ARCHIVE', payload: data });
+  };
+
   return (
-    <li
-      onClick={() => {
-        if (selectedArchive && selectedArchive._id === data._id)
-          setDataState({ type: 'SET_SELECTED_ARCHIVE', payload: null });
-        else setDataState({ type: 'SET_SELECTED_ARCHIVE', payload: data });
-      }}
-      className="archive-item"
-      ref={ref}
-      {...props}
-    >
+    <li onClick={handleClick} className="archive-item" ref={ref} {...props}>
       <div className="archive-item__block">
         <span className="archive-item__nr">{index + 1}.</span>
         <span className="archive-item__range">{`${borders[0].date} - ${

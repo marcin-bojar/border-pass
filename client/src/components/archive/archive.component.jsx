@@ -116,7 +116,7 @@ const Archive = ({ history }) => {
         </CustomButton>
       </div>
       {selectedArchive && (
-        <div className="archive__options">
+        <div className="archive__options" data-test="archive-options">
           <CustomButton
             setWidth="6.7rem"
             disabled={selectedArchive.status === 'sent' || isMakingApiCall}
