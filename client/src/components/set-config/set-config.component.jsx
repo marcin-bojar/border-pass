@@ -174,7 +174,7 @@ const SetConfig = () => {
   return (
     <div className="set-config">
       <h2 className="set-config__title">Ustawienia</h2>
-      <section className="set-config__section">
+      <section className="set-config__section" data-test="config-section">
         <h3 className="set-config__section-title">Twoje dane</h3>
         <form onSubmit={submitUserName} className="set-config__form">
           <CustomInput
@@ -188,7 +188,7 @@ const SetConfig = () => {
           </CustomButton>
         </form>
       </section>
-      <section className="set-config__section">
+      <section className="set-config__section" data-test="config-section">
         <h3 className="set-config__section-title">Dane Twojej Firmy</h3>
         <form onSubmit={submitCompanyData} className="set-config__form">
           <CustomInput
@@ -208,7 +208,7 @@ const SetConfig = () => {
           </CustomButton>
         </form>
       </section>
-      <section className="set-config__section">
+      <section className="set-config__section" data-test="config-section">
         <h3 className="set-config__section-title">Twoje ustawienia</h3>
         <form onSubmit={submitUserPreferences} className="set-config__form">
           <Switch
