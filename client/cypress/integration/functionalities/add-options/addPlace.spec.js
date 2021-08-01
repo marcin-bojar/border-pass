@@ -15,8 +15,9 @@ describe('Add place functionality', () => {
     cy.contains('button', 'PL').click();
     cy.getByData('add-place')
       .should('be.visible')
-      .type('opole{enter}')
-      .should('have.value', 'OPOLE');
+      .type('opole')
+      .should('have.value', 'OPOLE')
+      .type('{enter}');
     cy.contains('button', 'OPOLE').should('be.visible').and('be.enabled');
   });
 
@@ -24,8 +25,9 @@ describe('Add place functionality', () => {
     cy.contains('button', 'PL').click();
     cy.getByData('add-place')
       .should('be.visible')
-      .type('TOOLONGNAMEFORTHEPLACE{enter}')
-      .should('have.value', 'TOOLONGNAMEFORT');
+      .type('TOOLONGNAMEFORTHEPLACE')
+      .should('have.value', 'TOOLONGNAMEFORT')
+      .type('{enter}');
     cy.contains('button', 'TOOLONGNAMEFORT').should('be.visible').and('be.enabled');
   });
 

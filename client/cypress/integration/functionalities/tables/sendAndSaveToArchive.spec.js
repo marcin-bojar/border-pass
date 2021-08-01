@@ -1,4 +1,4 @@
-describe.only('Saving items to archive', () => {
+describe('Sending tables and saving them to archive', () => {
   beforeEach(() => {
     cy.exec('npm run reset:db');
     cy.exec('npm run seed:db');
@@ -12,7 +12,7 @@ describe.only('Saving items to archive', () => {
       cy.clock(startNow);
       cy.fillHistoryList(['CZ', 'SK']);
       cy.moveTimeForward(76 * 60 * 60 * 1000).then(({ date: finishDate }) => {
-        cy.contains('button', 'PL').click();
+        cy.fillHistoryList(['PL']);
         cy.openMenuItem('Wyślij zestawienie');
         cy.contains('button', 'Zaznacz wszystko').click();
         cy.contains('button', 'Archiwizuj dane').click();
@@ -52,7 +52,7 @@ describe.only('Saving items to archive', () => {
       cy.clock(startNow);
       cy.fillHistoryList(['CZ', 'SK']);
       cy.moveTimeForward(176 * 60 * 60 * 1000).then(({ date: finishDate }) => {
-        cy.contains('button', 'PL').click();
+        cy.fillHistoryList(['PL']);
         cy.openMenuItem('Wyślij zestawienie');
         cy.contains('button', 'Zaznacz wszystko').click();
         cy.contains('button', 'Wyślij i archiwizuj').click();

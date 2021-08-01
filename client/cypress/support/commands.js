@@ -104,7 +104,10 @@ Cypress.Commands.add(
   'fillHistoryList',
   (arr = ['Wyjazd z bazy', 'CZ', 'SK', 'HU', 'SK', 'PL', 'Powrót na bazę']) => {
     cy.intercept('/api/users/*/borders').as('borders');
-    cy.contains('button', 'PL').click();
+    cy.getByData('app').then($app => {
+      if ($app.find('[data-test=current-country]').length === 0)
+        cy.contains('button', 'PL').click();
+    });
     arr.forEach(el => {
       cy.contains('button', el).click();
       cy.wait('@borders');

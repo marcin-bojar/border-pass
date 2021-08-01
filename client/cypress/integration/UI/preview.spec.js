@@ -70,7 +70,7 @@ describe('Preview page', () => {
         expect($headings.eq(4).text()).to.eq('Powrót na bazę');
       });
     });
-    cy.wait(500);
+    cy.wait(750);
     // table's body
     cy.getByData('table-body').within(() => {
       cy.get('tr').then($rows => {

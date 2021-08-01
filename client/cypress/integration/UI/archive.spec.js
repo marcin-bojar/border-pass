@@ -1,4 +1,4 @@
-describe.only('Archive page', () => {
+describe('Archive page', () => {
   before(() => {
     cy.exec('npm run reset:db');
     cy.exec('npm run seed:db');

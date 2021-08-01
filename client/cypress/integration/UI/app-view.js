@@ -9,10 +9,10 @@ describe('App view', () => {
   beforeEach(() => {
     cy.restoreLocalStorage();
     cy.visit('/');
-    cy.fillHistoryList(['CZ']);
   });
 
   it('Renders the app view correctly', () => {
+    cy.fillHistoryList(['CZ']);
     cy.checkUserHeader(Cypress.env('username'));
     cy.checkHeading();
     cy.getByData('current-country-container')
