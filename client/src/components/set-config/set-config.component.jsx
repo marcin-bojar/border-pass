@@ -181,6 +181,7 @@ const SetConfig = () => {
             value={userName}
             name="userName"
             label="Imię i nazwisko"
+            data-test="input-username"
             handleChange={handleUserNameChange}
           />
           <CustomButton disabled={isMakingApiCall || !isUserNameUpdated} type="submit">
@@ -195,12 +196,14 @@ const SetConfig = () => {
             value={companyDetails.companyName}
             name="companyName"
             label="Nazwa Firmy"
+            data-test="input-company-name"
             handleChange={handleCompanyDataChange}
           />
           <CustomInput
             value={companyDetails.companyEmail}
             name="companyEmail"
             label="Adres Email"
+            data-test="input-company-email"
             handleChange={handleCompanyDataChange}
           />
           <CustomButton disabled={isMakingApiCall || !isCompanyUpdated} type="submit">

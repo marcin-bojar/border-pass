@@ -1,4 +1,4 @@
-describe.only("Settings' page", () => {
+describe("Settings' page", () => {
   before(() => {
     cy.exec('npm run reset:db');
     cy.exec('npm run seed:db');
