@@ -228,6 +228,7 @@ const SetConfig = () => {
             label="Pokazuj punkty na trasie"
             handleChange={handleUserPreferencesChange}
             isOn={userPreferences.showPlaces}
+            data-test="switch-places"
           />
           <CustomButton
             disabled={isMakingApiCall || !isUserPreferencesUpdated}
