@@ -1,4 +1,4 @@
-describe.only('Change users settings functionality', () => {
+describe('Change users settings functionality', () => {
   const changedName = 'Changed name';
   const changedCompanyName = 'New Company Name';
   const changedEmail = 'changed@test.com';

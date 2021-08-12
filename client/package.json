@@ -17,6 +17,7 @@
   "author": "Marcin Bojar",
   "license": "ISC",
   "devDependencies": {
+    "@playwright/test": "^1.13.1",
     "cypress": "^7.5.0",
     "cypress-localstorage-commands": "^1.4.5",
     "express": "^4.17.1",

@@ -10,7 +10,7 @@ describe("Settings' page", () => {
     cy.checkUserHeader(Cypress.env('username'));
     cy.checkHeading();
     cy.contains('h2', 'Ustawienia').should('be.visible');
-    cy.getByData('config-section')
+    cy.get('section')
       .should('have.length', 3)
       .then($sections => {
         // first section
