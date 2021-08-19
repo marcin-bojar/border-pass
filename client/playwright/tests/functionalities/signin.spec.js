@@ -44,7 +44,15 @@ test.describe.only('Log in functionality', () => {
     expect(await signInPage.isErrorMessageVisible('Podany użytkownik nie istnieje.')).toBe(true);
   });
 
-  test.only('It validates the email address', async ({ page }) => {
+  test("It doesn't log in without email and password", async ({ page }) => {
+    const signInPage = new SignInPage(page);
+    await page.click('data-test=submit');
+    expect(await signInPage.isErrorMessageVisible('Podany adres email jest nieprawidłowy.')).toBe(
+      true
+    );
+  });
+
+  test('It validates the email address', async ({ page }) => {
     const signInPage = new SignInPage(page);
     const wrongEmails = [
       'wrong@.pl',
@@ -63,5 +71,15 @@ test.describe.only('Log in functionality', () => {
       );
       await signInPage.clearInputs();
     }
+  });
+
+  test('Email address input is not case sensitive', async ({ page }) => {
+    const signInPage = new SignInPage(page);
+    await signInPage.loginUser('TESting@test.pl', testData.password);
+
+    // verify that user is logged in
+    const userNavbar = await page.waitForSelector('data-test=userNavbar');
+    expect(await userNavbar.innerText()).toContain(testData.username);
+    expect(await userNavbar.innerText()).toContain('Wyloguj');
   });
 });
