@@ -47,15 +47,14 @@ test.describe.only('Log in functionality', () => {
   test.only('It validates the email address', async ({ page }) => {
     const signInPage = new SignInPage(page);
     const wrongEmails = [
-      'wrong@pl',
+      'wrong@.pl',
       'wrong@test',
       'wrong@test.',
       'wrong@',
       'wrong',
-      'wrong@test.pl',
+      'wrong@.s.pl',
+      '@wrong.pl',
     ];
-
-    // TODO have to await for response, otherwise it's flaky and passes even with valid email address (different error message displayed)
 
     for (let i = 0; i < wrongEmails.length; i++) {
       await signInPage.loginUser(wrongEmails[i], testData.password);
