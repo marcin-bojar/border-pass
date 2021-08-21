@@ -10,7 +10,7 @@ const testData = {
   username: 'Tester Name',
 };
 
-test.describe.only('Log in functionality', () => {
+test.describe('Log in functionality', () => {
   test.beforeAll(async () => {
     await resetDB();
     await seedDB();
