@@ -6,7 +6,7 @@ class CommonElements {
   }
 
   async checkGuestNavbar() {
-    const guestNavbar = await this.page.$('data-test=guestNavbar');
+    const guestNavbar = await this.page.waitForSelector('data-test=guestNavbar');
     const loginLink = await guestNavbar.$('a >> text="Zaloguj"');
     const registerLink = await guestNavbar.$('a >> text="Zarejestruj"');
     expect(await guestNavbar.isVisible()).toBe(true);
@@ -14,6 +14,19 @@ class CommonElements {
     expect(await loginLink.getAttribute('href')).toEqual('/signin');
     expect(await registerLink.isVisible()).toBe(true);
     expect(await registerLink.getAttribute('href')).toEqual('/signup');
+  }
+
+  async checkUserNavbar(username) {
+    const userNavbar = await this.page.waitForSelector('data-test=userNavbar');
+    const userMenuBtn = await userNavbar.$(`button >> text="${username}"`);
+    const logoutBtn = await userNavbar.$('button >> text="Wyloguj"');
+    expect(await userNavbar.isVisible()).toBe(true);
+    expect(await userMenuBtn.isVisible()).toBe(true);
+    expect(await userMenuBtn.innerText()).toBe(username);
+    expect(await userMenuBtn.isEnabled()).toBe(true);
+    expect(await logoutBtn.isVisible()).toBe(true);
+    expect(await logoutBtn.innerText()).toBe('Wyloguj');
+    expect(await logoutBtn.isEnabled()).toBe(true);
   }
 
   async checkHeading() {

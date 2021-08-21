@@ -11,7 +11,6 @@ module.exports = class SignInPage {
     await this.page.type('data-test=input-email', email);
     await this.page.type('data-test=input-password', password);
     await this.page.click('data-test=submit');
-    await this.page.waitForResponse('/api/auth/signin');
   }
 
   async clearInputs() {

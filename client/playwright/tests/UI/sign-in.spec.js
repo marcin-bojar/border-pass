@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test');
 const SignInPage = require('../../pages/sign-in.page');
 const CommonElements = require('../../pages/common-elements');
 
-test.describe.only('Sign in page', () => {
+test.describe('Sign in page', () => {
   test('It renders the Sign in page correctly', async ({ page }) => {
     const commonElements = new CommonElements(page);
     const signInPage = new SignInPage(page);

@@ -3,14 +3,12 @@ const seedDB = require('../../../db-manager/seedDB');
 const resetDB = require('../../../db-manager/resetDB');
 
 const SignInPage = require('../../pages/sign-in.page');
-
-const testData = {
-  email: 'testing@test.pl',
-  password: 'password123',
-  username: 'Tester Name',
-};
+const TestData = require('../../utils/testData');
+const CommonElements = require('../../pages/common-elements');
 
 test.describe('Log in functionality', () => {
+  const { userData } = TestData;
+
   test.beforeAll(async () => {
     await resetDB();
     await seedDB();
@@ -22,24 +20,22 @@ test.describe('Log in functionality', () => {
 
   test('It logs in with correct data', async ({ page }) => {
     const signInPage = new SignInPage(page);
-    await signInPage.loginUser(testData.email, testData.password);
+    const commonElements = new CommonElements(page);
+    await signInPage.loginUser(userData.email, userData.password);
 
-    // verify that user is logged in
-    const userNavbar = await page.waitForSelector('data-test=userNavbar');
-    expect(await userNavbar.innerText()).toContain(testData.username);
-    expect(await userNavbar.innerText()).toContain('Wyloguj');
+    await commonElements.checkUserNavbar(userData.username);
   });
 
   test("It doesn't log in with incorrect password", async ({ page }) => {
     const signInPage = new SignInPage(page);
-    await signInPage.loginUser(testData.email, 'wrongPassword');
+    await signInPage.loginUser(userData.email, 'wrongPassword');
 
     expect(await signInPage.isErrorMessageVisible('Podane dane logowania są błędne.')).toBe(true);
   });
 
   test("It doesn't log in with incorrect email", async ({ page }) => {
     const signInPage = new SignInPage(page);
-    await signInPage.loginUser('wrong@test.pl', testData.password);
+    await signInPage.loginUser('wrong@test.pl', userData.password);
 
     expect(await signInPage.isErrorMessageVisible('Podany użytkownik nie istnieje.')).toBe(true);
   });
@@ -54,18 +50,10 @@ test.describe('Log in functionality', () => {
 
   test('It validates the email address', async ({ page }) => {
     const signInPage = new SignInPage(page);
-    const wrongEmails = [
-      'wrong@.pl',
-      'wrong@test',
-      'wrong@test.',
-      'wrong@',
-      'wrong',
-      'wrong@.s.pl',
-      '@wrong.pl',
-    ];
+    const { wrongEmails } = TestData;
 
     for (let i = 0; i < wrongEmails.length; i++) {
-      await signInPage.loginUser(wrongEmails[i], testData.password);
+      await signInPage.loginUser(wrongEmails[i], userData.password);
       expect(await signInPage.isErrorMessageVisible('Podany adres email jest nieprawidłowy.')).toBe(
         true
       );
@@ -75,11 +63,9 @@ test.describe('Log in functionality', () => {
 
   test('Email address input is not case sensitive', async ({ page }) => {
     const signInPage = new SignInPage(page);
-    await signInPage.loginUser('TESting@test.pl', testData.password);
+    const commonElements = new CommonElements(page);
+    await signInPage.loginUser('TESting@test.pl', userData.password);
 
-    // verify that user is logged in
-    const userNavbar = await page.waitForSelector('data-test=userNavbar');
-    expect(await userNavbar.innerText()).toContain(testData.username);
-    expect(await userNavbar.innerText()).toContain('Wyloguj');
+    await commonElements.checkUserNavbar(userData.username);
   });
 });
