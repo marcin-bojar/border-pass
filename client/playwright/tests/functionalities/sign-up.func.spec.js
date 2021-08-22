@@ -140,7 +140,7 @@ test.describe('Sign up functionality', () => {
 
     // too long (more than 25 chars)
     await signUpPage.registerUser(
-      'This user name is way to long, mate...',
+      'This user name is way too long, mate...',
       userData.email,
       userData.password,
       userData.password

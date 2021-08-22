@@ -9,17 +9,18 @@ test.describe('Sign in page', () => {
 
   test('It renders the Sign in page correctly', async ({ page }) => {
     const commonTests = new CommonTests(page);
+    const signInPage = new SignInPage(page);
 
     await commonTests.checkGuestNavbar();
     await commonTests.checkHeading();
 
     // content
-    const title = await page.$('data-test=title');
-    const emailInput = await page.$('data-test=input-email');
-    const emailLabel = await page.$('data-test=label-email');
-    const passwordInput = await page.$('data-test=input-password');
-    const passwordLabel = await page.$('data-test=label-password');
-    const submitBtn = await page.$('data-test=submit');
+    const title = await signInPage.title;
+    const emailInput = await signInPage.emailInput;
+    const emailLabel = await signInPage.emailLabel;
+    const passwordInput = await signInPage.passwordInput;
+    const passwordLabel = await signInPage.passwordLabel;
+    const submitBtn = await signInPage.submitBtn;
 
     expect(await title.innerText()).toBe('Zaloguj się');
     expect(await emailInput.isVisible()).toBe(true);
@@ -34,8 +35,8 @@ test.describe('Sign in page', () => {
   });
 
   test("Check the inputs' labels", async ({ page, browserName }) => {
-    const emailInput = await page.$('data-test=input-email');
-    const passwordInput = await page.$('data-test=input-password');
+    const emailInput = await signInPage.emailInput;
+    const passwordInput = await signInPage.passwordInput;
 
     test.skip(
       browserName === 'firefox' || browserName === 'webkit',

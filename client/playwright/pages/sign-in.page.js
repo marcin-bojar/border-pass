@@ -3,18 +3,51 @@ module.exports = class SignInPage {
     this.page = page;
   }
 
+  get title() {
+    return this.page.$('data-test=title');
+  }
+
+  get emailInput() {
+    return this.page.$('data-test=input-email');
+  }
+
+  get emailLabel() {
+    return this.page.$('data-test=input-label');
+  }
+
+  get passwordInput() {
+    return this.page.$('data-test=input-password');
+  }
+
+  get passwordLabel() {
+    return this.page.$('data-test=input-label');
+  }
+
+  get submitBtn() {
+    return this.page.$('data-test=submit');
+  }
+  get passwordInput() {
+    return this.page.$('data-test=input-password');
+  }
+
   async goto() {
     await this.page.goto('/signin');
   }
 
   async loginUser(email, password) {
-    await this.page.type('data-test=input-email', email);
-    await this.page.type('data-test=input-password', password);
-    await this.page.click('data-test=submit');
+    const eleEmailInput = await this.emailInput;
+    const elePasswordInput = await this.passwordInput;
+    const eleSubmitBtn = await this.submitBtn;
+    await eleEmailInput.type(email);
+    await elePasswordInput.type(password);
+    await eleSubmitBtn.click();
   }
 
   async clearInputs() {
-    await this.page.fill('data-test=input-email', '');
-    await this.page.fill('data-test=input-password', '');
+    const inputs = await this.page.$$('input');
+
+    for (let input of inputs) {
+      await input.fill('');
+    }
   }
 };

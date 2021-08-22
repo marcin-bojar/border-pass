@@ -6,7 +6,7 @@ const SignInPage = require('../../pages/sign-in.page');
 const TestData = require('../../utils/testData');
 const CommonTests = require('../../utils/commonTests');
 
-test.describe('Log in functionality', () => {
+test.describe.only('Log in functionality', () => {
   const { userData } = TestData;
 
   test.beforeAll(async () => {
