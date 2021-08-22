@@ -3,7 +3,7 @@ import React from 'react';
 import './spinner.styles.scss';
 
 const Spinner = ({ isLoading }) => (
-  <div className="spinner">
+  <div className="spinner" data-test="spinner">
     {isLoading ? (
       <div className="spinner__overlay">
         <div className="spinner__circle"></div>

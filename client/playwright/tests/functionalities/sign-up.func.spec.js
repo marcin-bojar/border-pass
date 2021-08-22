@@ -3,7 +3,7 @@ const resetDB = require('../../../db-manager/resetDB');
 
 const TestData = require('../../utils/testData');
 const SignUpPage = require('../../pages/sign-up.page');
-const CommonElements = require('../../pages/common-elements');
+const CommonTests = require('../../utils/commonTests');
 
 test.describe('Sign up functionality', () => {
   const { newUserData } = TestData;
@@ -18,13 +18,14 @@ test.describe('Sign up functionality', () => {
 
   test('Registers new user with correct data', async ({ page }) => {
     const signUpPage = new SignUpPage(page);
-    const commonElements = new CommonElements(page);
+    const commonTests = new CommonTests(page);
     await signUpPage.registerUser(
       newUserData.username,
       newUserData.email,
       newUserData.password,
       newUserData.password
     );
-    await commonElements.checkUserNavbar(newUserData.username);
+    await commonTests.checkSpinners(2);
+    await commonTests.checkUserNavbar(newUserData.username);
   });
 });

@@ -4,7 +4,7 @@ const resetDB = require('../../../db-manager/resetDB');
 
 const SignInPage = require('../../pages/sign-in.page');
 const TestData = require('../../utils/testData');
-const CommonElements = require('../../pages/common-elements');
+const CommonTests = require('../../utils/commonTests');
 
 test.describe('Log in functionality', () => {
   const { userData } = TestData;
@@ -20,10 +20,11 @@ test.describe('Log in functionality', () => {
 
   test('It logs in with correct data', async ({ page }) => {
     const signInPage = new SignInPage(page);
-    const commonElements = new CommonElements(page);
+    const commonTests = new CommonTests(page);
     await signInPage.loginUser(userData.email, userData.password);
 
-    await commonElements.checkUserNavbar(userData.username);
+    await commonTests.checkSpinners(2);
+    await commonTests.checkUserNavbar(userData.username);
   });
 
   test("It doesn't log in with incorrect password", async ({ page }) => {
@@ -43,6 +44,7 @@ test.describe('Log in functionality', () => {
   test("It doesn't log in without email and password", async ({ page }) => {
     const signInPage = new SignInPage(page);
     await page.click('data-test=submit');
+
     expect(await signInPage.isErrorMessageVisible('Podany adres email jest nieprawidłowy.')).toBe(
       true
     );
@@ -52,8 +54,9 @@ test.describe('Log in functionality', () => {
     const signInPage = new SignInPage(page);
     const { wrongEmails } = TestData;
 
-    for (let i = 0; i < wrongEmails.length; i++) {
-      await signInPage.loginUser(wrongEmails[i], userData.password);
+    for (let email of wrongEmails) {
+      await signInPage.loginUser(email, userData.password);
+
       expect(await signInPage.isErrorMessageVisible('Podany adres email jest nieprawidłowy.')).toBe(
         true
       );
@@ -61,11 +64,14 @@ test.describe('Log in functionality', () => {
     }
   });
 
-  test('Email address input is not case sensitive', async ({ page }) => {
+  test('Email address input is not case sensitive', async ({ page, context }) => {
+    await context.tracing.start({ screenshots: true, snapshots: true });
     const signInPage = new SignInPage(page);
-    const commonElements = new CommonElements(page);
+    const commonTests = new CommonTests(page);
     await signInPage.loginUser('TESting@test.pl', userData.password);
 
-    await commonElements.checkUserNavbar(userData.username);
+    await commonTests.checkSpinners(2);
+    await commonTests.checkUserNavbar(userData.username);
+    await context.tracing.stop({ path: './playwright/case.zip' });
   });
 });

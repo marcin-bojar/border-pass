@@ -1,13 +1,13 @@
 const { test, expect } = require('@playwright/test');
-const CommonElements = require('../../pages/common-elements');
+const CommonTests = require('../../utils/commonTests');
 
 test.describe('Welcome page', () => {
   test('It renders the Welcome page correctly', async ({ page }) => {
-    const commonElements = new CommonElements(page);
+    const commonTests = new CommonTests(page);
     await page.goto('/');
 
-    await commonElements.checkGuestNavbar();
-    await commonElements.checkHeading();
+    await commonTests.checkGuestNavbar();
+    await commonTests.checkHeading();
 
     //content
     const title = await page.$('data-test=title');

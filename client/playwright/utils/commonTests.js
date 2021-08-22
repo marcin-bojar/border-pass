@@ -1,6 +1,6 @@
 const { expect } = require('@playwright/test');
 
-class CommonElements {
+class CommonTests {
   constructor(page) {
     this.page = page;
   }
@@ -56,6 +56,11 @@ class CommonElements {
     await input.fill('abc');
     expect(await label.getAttribute('class')).toBe('shrink custom-input__label');
   }
+
+  async checkSpinners(quantity) {
+    const spinners = await this.page.$$('data-test=spinner');
+    expect(spinners).toHaveLength(quantity);
+  }
 }
 
-module.exports = CommonElements;
+module.exports = CommonTests;

@@ -1,6 +1,6 @@
 const config = {
   use: {
-    headless: false,
+    headless: true,
     baseURL: 'http://localhost:1234/',
   },
   testDir: 'playwright/tests',

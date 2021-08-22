@@ -1,15 +1,17 @@
 const { test, expect } = require('@playwright/test');
 const SignInPage = require('../../pages/sign-in.page');
-const CommonElements = require('../../pages/common-elements');
+const CommonTests = require('../../utils/commonTests');
 
 test.describe('Sign in page', () => {
-  test('It renders the Sign in page correctly', async ({ page }) => {
-    const commonElements = new CommonElements(page);
-    const signInPage = new SignInPage(page);
-    await signInPage.goto();
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/signin');
+  });
 
-    await commonElements.checkGuestNavbar();
-    await commonElements.checkHeading();
+  test('It renders the Sign in page correctly', async ({ page }) => {
+    const commonTests = new CommonTests(page);
+
+    await commonTests.checkGuestNavbar();
+    await commonTests.checkHeading();
 
     // content
     const title = await page.$('data-test=title');
@@ -29,8 +31,19 @@ test.describe('Sign in page', () => {
     expect(await submitBtn.isVisible()).toBe(true);
     expect(await submitBtn.isEnabled()).toBe(true);
     expect(await submitBtn.innerText()).toBe('Zaloguj');
+  });
 
-    await commonElements.checkLabelStylesOfFocusedOrFilledInput(emailInput);
-    await commonElements.checkLabelStylesOfFocusedOrFilledInput(passwordInput);
+  test("Check the inputs' labels", async ({ page, browserName }) => {
+    const emailInput = await page.$('data-test=input-email');
+    const passwordInput = await page.$('data-test=input-password');
+
+    test.skip(
+      browserName === 'firefox' || browserName === 'webkit',
+      'Checking styles not supported'
+    );
+    const commonTests = new CommonTests(page);
+
+    await commonTests.checkLabelStylesOfFocusedOrFilledInput(emailInput);
+    await commonTests.checkLabelStylesOfFocusedOrFilledInput(passwordInput);
   });
 });
