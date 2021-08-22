@@ -5,7 +5,6 @@ const seedDB = require('../../../db-manager/seedDB');
 const TestData = require('../../utils/testData');
 const SignUpPage = require('../../pages/sign-up.page');
 const CommonTests = require('../../utils/commonTests');
-const { wrongEmails } = require('../../utils/testData');
 
 test.describe('Sign up functionality', () => {
   const { newUserData, userData, wrongPasswords } = TestData;

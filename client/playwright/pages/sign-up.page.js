@@ -1,25 +1,33 @@
-module.exports = class SignUpPage {
+const AuthPage = require('./auth.base-page');
+
+module.exports = class SignUpPage extends AuthPage {
   constructor(page) {
-    this.page = page;
+    super(page);
+  }
+
+  get nameInput() {
+    return this.page.$('data-test=input-name');
+  }
+
+  get confirmPasswordInput() {
+    return this.page.$('data-test=input-confirmPassword');
   }
 
   async goto() {
-    await this.page.goto('/signup');
+    await super.goto('/signup');
   }
 
   async registerUser(name, email, password, confirmPassword) {
-    await this.page.type('data-test=input-name', name);
-    await this.page.type('data-test=input-email', email);
-    await this.page.type('data-test=input-password', password);
-    await this.page.type('data-test=input-confirmPassword', confirmPassword);
-    await this.page.click('data-test=submit');
-  }
+    const eleNameInput = await this.nameInput;
+    const eleEmailInput = await this.emailInput;
+    const elePasswordInput = await this.passwordInput;
+    const eleConfirmPassword = await this.confirmPasswordInput;
+    const eleSubmitBtn = await this.submitBtn;
 
-  async clearInputs() {
-    const inputs = await this.page.$$('input');
-
-    for (let input of inputs) {
-      await input.fill('');
-    }
+    await eleNameInput.type(name);
+    await eleEmailInput.type(email);
+    await elePasswordInput.type(password);
+    await eleConfirmPassword.type(confirmPassword);
+    await eleSubmitBtn.click();
   }
 };

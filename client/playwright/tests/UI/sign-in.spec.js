@@ -35,6 +35,7 @@ test.describe('Sign in page', () => {
   });
 
   test("Check the inputs' labels", async ({ page, browserName }) => {
+    const signInPage = new SignInPage(page);
     const emailInput = await signInPage.emailInput;
     const passwordInput = await signInPage.passwordInput;
 
