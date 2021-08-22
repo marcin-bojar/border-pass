@@ -19,4 +19,6 @@ module.exports = class TestData {
     'wrong@.s.pl',
     '@wrong.pl',
   ];
+
+  static wrongPasswords = ['marcin', 'mar12', '12345678', '321', 'mbs'];
 };

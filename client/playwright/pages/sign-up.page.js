@@ -14,4 +14,12 @@ module.exports = class SignUpPage {
     await this.page.type('data-test=input-confirmPassword', confirmPassword);
     await this.page.click('data-test=submit');
   }
+
+  async clearInputs() {
+    const inputs = await this.page.$$('input');
+
+    for (let input of inputs) {
+      await input.fill('');
+    }
+  }
 };

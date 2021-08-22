@@ -17,11 +17,4 @@ module.exports = class SignInPage {
     await this.page.fill('data-test=input-email', '');
     await this.page.fill('data-test=input-password', '');
   }
-
-  async isErrorMessageVisible(message) {
-    const errorMessage = await this.page.waitForSelector(`text="${message}"`, {
-      timeout: 4000,
-    });
-    return await errorMessage.isVisible();
-  }
 };

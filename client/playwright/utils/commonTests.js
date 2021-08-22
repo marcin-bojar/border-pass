@@ -61,6 +61,13 @@ class CommonTests {
     const spinners = await this.page.$$('data-test=spinner');
     expect(spinners).toHaveLength(quantity);
   }
+
+  async isErrorMessageVisible(message) {
+    const errorMessage = await this.page.waitForSelector(`text="${message}"`, {
+      timeout: 4000,
+    });
+    return await errorMessage.isVisible();
+  }
 }
 
 module.exports = CommonTests;
