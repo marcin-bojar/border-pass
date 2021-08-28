@@ -9,8 +9,16 @@ module.exports = class SignUpPage extends AuthPage {
     return this.page.$('data-test=input-name');
   }
 
+  get nameLabel() {
+    return this.page.$('data-test=label-name');
+  }
+
   get confirmPasswordInput() {
     return this.page.$('data-test=input-confirmPassword');
+  }
+
+  get confirmPasswordLabel() {
+    return this.page.$('data-test=label-confirmPassword');
   }
 
   async goto() {

@@ -26,8 +26,9 @@ module.exports = class AuthPage {
   get submitBtn() {
     return this.page.$('data-test=submit');
   }
-  get passwordInput() {
-    return this.page.$('data-test=input-password');
+
+  get getAllInputs() {
+    return this.page.$$('input');
   }
 
   async goto(path) {

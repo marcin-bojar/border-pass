@@ -35,17 +35,17 @@ test.describe('Sign in page', () => {
   });
 
   test("Check the inputs' labels", async ({ page, browserName }) => {
-    const signInPage = new SignInPage(page);
-    const emailInput = await signInPage.emailInput;
-    const passwordInput = await signInPage.passwordInput;
-
     test.skip(
       browserName === 'firefox' || browserName === 'webkit',
       'Checking styles not supported'
     );
-    const commonTests = new CommonTests(page);
 
-    await commonTests.checkLabelStylesOfFocusedOrFilledInput(emailInput);
-    await commonTests.checkLabelStylesOfFocusedOrFilledInput(passwordInput);
+    const signInPage = new SignInPage(page);
+    const commonTests = new CommonTests(page);
+    const inputs = await signInPage.getAllInputs;
+
+    for (let input of inputs) {
+      await commonTests.checkLabelStylesOfFocusedOrFilledInput(input);
+    }
   });
 });
