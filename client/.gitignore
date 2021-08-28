@@ -154,5 +154,5 @@ $RECYCLE.BIN/
 
 stack
 border-pass-lighthouse.png
-db-manager
+db-manager/connectionUri.js
 cypress.json
